@@ -1,0 +1,17 @@
+input:focus-visible {
+  outline: 2px solid #38C390;
+
+}
+::placeholder {
+  font-family: 'Poppins' ;
+  font-size: 13px;
+  padding-left: 5px;
+}
+.w-96{
+
+width: 15rem;
+}
+
+.col-span-full {
+  width: 100%;
+}

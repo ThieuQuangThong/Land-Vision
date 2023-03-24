@@ -1,0 +1,12 @@
+input:focus-visible {
+  outline: 2px solid #38C390;
+
+}
+::placeholder {
+  font-family: 'Poppins' ;
+  font-size: 13px;
+  padding-left: 5px;
+}
+body{
+  background-color: aquamarine;
+}
