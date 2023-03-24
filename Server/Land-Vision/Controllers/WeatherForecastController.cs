@@ -8,7 +8,7 @@ namespace Land_Vision.Controllers
     {
         private static readonly string[] Summaries = new[]
         {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
+        "Lanh VLz", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "DaumA"
     };
 
         private readonly ILogger<WeatherForecastController> _logger;

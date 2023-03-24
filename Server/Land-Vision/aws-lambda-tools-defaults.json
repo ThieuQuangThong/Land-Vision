@@ -1,0 +1,21 @@
+
+{
+    "region" : "ap-southeast-1",
+    "profile" : "picoadmin",
+    "configuration" : "Release",
+    "framework"     : "net6.0",
+    "function-name" : "land-vision-api-on-lambda-try-1",
+    "function-description" : "",
+    "package-type"         : "Zip",
+    "function-handler"     : "Land-Vision",
+    "function-memory-size" : 256,
+    "function-role"        : "arn:aws:iam::577308446673:role/lambda_exec_land-vision-api-on-lambda-try-1",
+    "function-timeout"     : 30,
+    "function-runtime"     : "dotnet6",
+    "function-architecture" : "x86_64",
+    "function-subnets"      : "",
+    "function-security-groups" : "",
+    "tracing-mode"             : "PassThrough",
+    "environment-variables"    : "\"ASPNETCORE_ENVIRONMENT\"=\"Development\"",
+    "image-tag"                : ""
+}
