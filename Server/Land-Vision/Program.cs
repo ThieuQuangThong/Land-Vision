@@ -1,4 +1,5 @@
 using Land_Vision.Data;
+using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -11,14 +12,14 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddAWSLambdaHosting(LambdaEventSource.HttpApi);
 
 //My SQL
-//var serverVersion = new MySqlServerVersion(new Version(8, 0, 28));
-//builder.Services.AddDbContext<DataContext>(
-//    dbContextOptions => dbContextOptions
-//        .UseMySql(connectionString, serverVersion)
-//        .LogTo(Console.WriteLine, LogLevel.Information)
-//        .EnableSensitiveDataLogging()
-//        .EnableDetailedErrors()
-//);
+var serverVersion = new MySqlServerVersion(new Version(8, 0, 28));
+builder.Services.AddDbContext<DataContext>(
+    dbContextOptions => dbContextOptions
+        .UseMySql(connectionString, serverVersion)
+        .LogTo(Console.WriteLine, LogLevel.Information)
+        .EnableSensitiveDataLogging()
+        .EnableDetailedErrors()
+);
 
 var app = builder.Build();
 

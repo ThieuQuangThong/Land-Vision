@@ -18,6 +18,8 @@
         public City City { get; set; }
         public District District { get; set; }
         public Street Street { get; set; }
+        public Post Post { get; set; }
+        public List<Position> Positions    { get; set; }
 
     }
 }
