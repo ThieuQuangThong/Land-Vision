@@ -1,6 +1,6 @@
-﻿namespace Land_Vision.dto.PositionsDto
+﻿namespace Land_Vision.dto.PositionDtos
 {
-    public class PositionDto
+    public class PositionDtos
     {
         public int Id { get; set; }
         public string Longtitude { get; set; }

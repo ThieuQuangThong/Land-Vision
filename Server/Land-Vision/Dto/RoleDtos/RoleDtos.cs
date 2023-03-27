@@ -1,6 +1,6 @@
-﻿namespace Land_Vision.dto.RolesDto
+﻿namespace Land_Vision.dto.RoleDtos
 {
-    public class RoleDto
+    public class RoleDtos
     {
         public int Id { get; set; }
         public bool IsAdmin { get; set; } = false;

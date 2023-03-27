@@ -1,6 +1,6 @@
-﻿namespace Land_Vision.dto.CategoriesDto
+﻿namespace Land_Vision.dto.CategoryDtos
 {
-    public class CategoryDto
+    public class CategoryDtos
     {
         public int Id { get; set; }
         public string Name { get; set; }
