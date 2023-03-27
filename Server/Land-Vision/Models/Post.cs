@@ -6,6 +6,8 @@
         public string Title { get; set; }
         public string Description { get; set; }
         public int NumberOfView { get; set; }
+
+        public bool isVerified {get; set;}
         public Status Status { get; set; }
         public User User { get; set; }
         public Property Property { get; set; }

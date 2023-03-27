@@ -6,7 +6,5 @@
         public string Longtitude { get; set; }
         public string Latitude { get; set; }
         public Property Property { get; set; }
-
-
     }
 }
