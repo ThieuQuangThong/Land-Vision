@@ -12,23 +12,5 @@ namespace Land_Vision.Controllers
         {
             _imageService = imageService;
         }
-
-        /// <summary>
-        /// Convert file image to url.
-        /// </summary>
-        [HttpPost]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<string>))]
-        public async Task<IActionResult> CovertFileToUrl(IFormFile file)
-        {
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            var url = await _imageService.ConvertFileToUrl(file);
-            return Ok(url);
-        }
-
-
     }
 }

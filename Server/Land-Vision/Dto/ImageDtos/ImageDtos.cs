@@ -1,6 +1,6 @@
-﻿namespace Land_Vision.dto.ImageDtos
+﻿namespace Land_Vision.DTO.ImageDtos
 {
-    public class ImageDtos
+    public class ImageDto
     {
         public int Id { get; set; }
         public string LinkImage { get; set; }

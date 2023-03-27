@@ -1,6 +1,6 @@
-﻿namespace Land_Vision.dto.PropertyDtos
+﻿namespace Land_Vision.DTO.PropertyDtos
 {
-    public class PropertyDtos
+    public class PropertyDto
     {
         public int Id { get; set; }
         public double Area { get; set; }
