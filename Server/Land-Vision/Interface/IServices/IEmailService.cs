@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
 using System.Threading.Tasks;
+using Land_Vision.DTO;
+using MimeKit;
 
 namespace Land_Vision.Interface.IServices
 {
     public interface IEmailService
     {
-        Task<bool> SendMail(string _from, string _to, string _subject, string _body, SmtpClient client);
+        void SendMail(Message message);
     }
 }
