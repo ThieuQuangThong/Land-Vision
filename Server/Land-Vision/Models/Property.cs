@@ -1,4 +1,6 @@
-﻿namespace Land_Vision.Models
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Land_Vision.Models
 {
     public class Property
     {
@@ -9,17 +11,20 @@
         public string Juridical { get; set; }
         public string Interior { get; set; }
         public string Direction { get; set; }
+        public int AddressNumber {get; set;}
         public double WayIn { get; set; }
         public int NumberOfFloor { get; set; }
         public int NumberOfBed { get; set; }
         public int NumberOfBath { get; set; }
+        public int PostId {get; set;}
+        public int DistrictId {get;set;}
+        public int StreetId {get;set;}
+        [Required]
         public Category Category { get; set; }
-        public User User { get; set; }
-        public City City { get; set; }
-        public District District { get; set; }
+        [Required]
         public Street Street { get; set; }
+        [Required]
         public Post Post { get; set; }
-        public List<Position> Positions    { get; set; }
-
+        public List<Position> Positions { get; set; }
     }
 }
