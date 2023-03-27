@@ -1,6 +1,6 @@
-﻿namespace Land_Vision.dto.StreetDtos
+﻿namespace Land_Vision.DTO.StreetDtos
 {
-    public class StreetDtos
+    public class StreetDto
     {
         public int Id { get; set; }
         public string Name { get; set; }

@@ -1,6 +1,6 @@
-﻿namespace Land_Vision.dto.StatusDtos
+﻿namespace Land_Vision.DTO.StatusDtos
 {
-    public class StatusDtos
+    public class StatusDto
     {
         public int Id { get; set; }
         public string Name { get; set; }
