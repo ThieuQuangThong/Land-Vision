@@ -3,6 +3,7 @@ using System;
 using Land_Vision.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Land_Vision.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230328040246_test")]
+    partial class test
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -139,17 +142,11 @@ namespace Land_Vision.Migrations
                     b.Property<bool>("isVerified")
                         .HasColumnType("tinyint(1)");
 
-                    b.Property<int>("propertyId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
 
                     b.HasIndex("StatusId");
 
                     b.HasIndex("UserId");
-
-                    b.HasIndex("propertyId")
-                        .IsUnique();
 
                     b.ToTable("Posts");
                 });
@@ -211,6 +208,9 @@ namespace Land_Vision.Migrations
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("PostId")
+                        .IsUnique();
 
                     b.HasIndex("StreetId");
 
@@ -388,14 +388,6 @@ namespace Land_Vision.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Land_Vision.Models.Property", "Property")
-                        .WithOne("Post")
-                        .HasForeignKey("Land_Vision.Models.Post", "propertyId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Property");
-
                     b.Navigation("Status");
 
                     b.Navigation("User");
@@ -409,6 +401,12 @@ namespace Land_Vision.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Land_Vision.Models.Post", "Post")
+                        .WithOne("Property")
+                        .HasForeignKey("Land_Vision.Models.Property", "PostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Land_Vision.Models.Street", "Street")
                         .WithMany("Properties")
                         .HasForeignKey("StreetId")
@@ -416,6 +414,8 @@ namespace Land_Vision.Migrations
                         .IsRequired();
 
                     b.Navigation("Category");
+
+                    b.Navigation("Post");
 
                     b.Navigation("Street");
                 });
@@ -460,14 +460,14 @@ namespace Land_Vision.Migrations
             modelBuilder.Entity("Land_Vision.Models.Post", b =>
                 {
                     b.Navigation("Images");
+
+                    b.Navigation("Property")
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Land_Vision.Models.Property", b =>
                 {
                     b.Navigation("Positions");
-
-                    b.Navigation("Post")
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("Land_Vision.Models.Role", b =>

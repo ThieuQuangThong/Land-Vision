@@ -6,7 +6,8 @@ namespace Land_Vision.Interface.IRepositories
     {
         Task<User> GetUserByEmailAsync(string email);
         Task<bool> CreateUserAsync(User user);
-        Task<bool> UpdateUserAsync(User user); 
+        Task<bool> UpdateUserAsync(User user);
+        Task<List<User>> GetUsersAsync();
         Task<bool> SaveChangesAsync(); 
     }
 }

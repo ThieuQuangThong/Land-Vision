@@ -1,3 +1,5 @@
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
 using AutoMapper;
@@ -7,6 +9,7 @@ using Land_Vision.DTO.UserDtos;
 using Land_Vision.Interface.IRepositories;
 using Land_Vision.Interface.IServices;
 using Land_Vision.Models;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Land_Vision.service
 {
@@ -33,10 +36,35 @@ namespace Land_Vision.service
             _emailService = emailService;
         }
 
+        public bool CompareHashPassword(byte[] currentPassword, byte[] password)
+        {
+            return CryptographicOperations.FixedTimeEquals(currentPassword, password);
+        }
+
+        public string GenerateToken(User user)
+        {
+            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]));
+            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+            var claims = new[]
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Role, user.Role.Name),
+                new Claim(ClaimTypes.Name, user.Name),
+                new Claim(ClaimTypes.Email, user.Email),
+            };
+
+            var token = new JwtSecurityToken(_config["Jwt:Issuer"],
+                _config["JWT:Audience"],
+                claims,
+                expires: DateTime.Now.AddMinutes(20),
+                signingCredentials: credentials);
+            return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
         public PasswordAndHashDto HashPassword(string password)
         {
-            using var hmac = new HMACSHA512();
             var passwordBytes = Encoding.UTF8.GetBytes(password);
+            using var hmac = new HMACSHA512();
 
             var passwordObject = new PasswordAndHashDto {
                 hashedPassword = hmac.ComputeHash(passwordBytes),
@@ -44,6 +72,44 @@ namespace Land_Vision.service
             };
             
             return passwordObject;
+        }
+
+        public PasswordAndHashDto HashPasswordWithSalt(string password, byte[] passwordSalt)
+        {
+            var passwordBytes = Encoding.UTF8.GetBytes(password);
+            using var hmac = new HMACSHA512(passwordSalt);
+
+            var passwordObject = new PasswordAndHashDto {
+                hashedPassword = hmac.ComputeHash(passwordBytes),
+                PasswordSalt = hmac.Key,
+            };
+            
+            return passwordObject;
+        }
+
+        public PasswordAndHashDto HashPasswordWithSalt(string password, string passwordSalt = "")
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<string> LoginAsync(LoginDto loginDto)
+        {
+            var user = await _userRepository.GetUserByEmailAsync(loginDto.Email);
+
+            if(user == null){
+                throw new Exception("Not found!");
+            }
+            
+            if(!user.EmailConfirmed){
+                 throw new Exception("Please, confirm your email!");               
+            }
+            
+            var  hashedInputpassword = HashPasswordWithSalt(loginDto.Password, user.PasswordSalt).hashedPassword;
+            if(!CompareHashPassword(user.PasswordHash,hashedInputpassword)){
+                throw new Exception("Wrong password!");
+            }
+            
+            return GenerateToken(user); 
         }
 
         public async Task<bool> RegisterAccountAsync(RegisterUserDto registerUserDto)
@@ -64,7 +130,7 @@ namespace Land_Vision.service
             };
 
             var confirmEmailToken = _emailService.GenerateEmailConfirmToken(user);
-            var confirmationLinkUrl = _config["Url"] + "api/Account/confirmEmail" + confirmEmailToken.ToString();
+            var confirmationLinkUrl = _config["Url"] + "api/Account/confirmEmail/" + confirmEmailToken.ToString();
             var Content = $"<p>Hello {user.Name},"
             + "</p><p><b>Please click the link below to confirm your email address:</b></p><p>"
             + $"<a href='{confirmationLinkUrl}'>{confirmationLinkUrl}</a></p>";

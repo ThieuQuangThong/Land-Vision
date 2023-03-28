@@ -19,6 +19,10 @@ namespace Land_Vision.Data
         public DbSet<Image> Images { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<Property>()
+            .HasOne(a => a.Post)
+            .WithOne(b => b.Property)
+            .HasForeignKey<Post>(b => b.propertyId);
             base.OnModelCreating(modelBuilder);
         }
     }

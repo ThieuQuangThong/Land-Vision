@@ -24,8 +24,10 @@
 		<PackageReference Include="MySql.Data.EntityFrameworkCore" Version="8.0.22" />
 		<PackageReference Include="MySql.EntityFrameworkCore" Version="7.0.0" />
 		<PackageReference Include="NETCore.MailKit" Version="2.1.0" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
 		<PackageReference Include="Pomelo.EntityFrameworkCore.MySql" Version="7.0.0" />
 		<PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+		<PackageReference Include="Swashbuckle.AspNetCore.Newtonsoft" Version="6.5.0" />
 	</ItemGroup>
 
 	<ItemGroup>

@@ -88,12 +88,16 @@ namespace Land_Vision.service
             }
 
             string email = parts[0];
-            DateTime exprireDateTime = DateTime.ParseExact(parts[1].ToString(), "yyyy-MM-dd HH:mm:ss", CultureInfo.InvariantCulture);
+            DateTime exprireDateTime = DateTime.Parse(parts[1]);
 
             var user = await _userRepository.GetUserByEmailAsync(email);
 
             if(user == null){
                 throw new Exception("Person not found!");               
+            }
+
+            if( user.EmailConfirmed == true){
+                throw new Exception("Your email is already confirmed");     
             }
 
             if(exprireDateTime < DateTime.Now){
