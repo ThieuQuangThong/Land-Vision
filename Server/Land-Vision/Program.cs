@@ -48,11 +48,14 @@ builder.Services.AddSingleton(emailConfig);
 //Repository Scope
 builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<ICityRepository, CityRepository>();
+
 
 //Service Scope
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IImageService, ImageService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
+
 
 var app = builder.Build();
 
