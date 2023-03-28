@@ -19,6 +19,11 @@ namespace Land_Vision.Repositories
             return await SaveChangesAsync();
         }
 
+        public async Task<Role> GetRoleByIdAsync(int id)
+        {
+            return await _dbContext.Roles.Where(x => x.Id == id).FirstOrDefaultAsync();
+        }
+
         public async Task<Role> GetRoleByNameAsync(string name)
         {
             return await _dbContext.Roles.Where(x => x.Name == name).FirstOrDefaultAsync();

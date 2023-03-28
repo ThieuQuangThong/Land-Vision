@@ -6,6 +6,7 @@ namespace Land_Vision.Interface.IRepositories
     public interface IRoleRepository
     {
         Task<Role> GetRoleByNameAsync(string name);
+        Task<Role> GetRoleByIdAsync(int id);
         Task<bool> AddRoleAsync(Role role);
         Task<bool> SaveChangesAsync();
     }

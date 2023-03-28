@@ -1,3 +1,4 @@
+using System.Text.Json.Serialization;
 using Land_Vision.Data;
 using Land_Vision.DTO;
 using Land_Vision.Interface.IRepositories;
@@ -16,6 +17,11 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddSwaggerGen();
 builder.Services.AddAWSLambdaHosting(LambdaEventSource.HttpApi);
+
+builder.Services.AddControllers().AddJsonOptions(x =>
+                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+builder.Services.AddControllers().AddJsonOptions(options =>
+                options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull);
 
 //My SQL
 var serverVersion = new MySqlServerVersion(new Version(8, 0, 28));

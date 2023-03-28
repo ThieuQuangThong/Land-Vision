@@ -21,7 +21,7 @@ namespace Land_Vision.Repositories
 
         public async Task<User> GetUserByEmailAsync(string email)
         {
-           return await _dbContext.Users.Where(x => x.Email == email).FirstOrDefaultAsync();
+           return await _dbContext.Users.Where(x => x.Email == email).Include(p => p.Role).FirstOrDefaultAsync();
         }
 
         public async Task<bool> UpdateUserAsync(User user)
@@ -33,6 +33,11 @@ namespace Land_Vision.Repositories
         public async Task<bool> SaveChangesAsync()
         {
             return await _dbContext.SaveChangesAsync() > 0;
+        }
+
+        public async Task<List<User>> GetUsersAsync()
+        {
+            return await _dbContext.Users.Include(x => x.Role).AsNoTracking().ToListAsync();
         }
     }
 }
