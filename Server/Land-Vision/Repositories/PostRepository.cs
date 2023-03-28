@@ -26,7 +26,7 @@ namespace Land_Vision.Repositories
 
         public async Task<Post> GetPostByNameAsync(string name)
         {
-            return await _dbContext.Posts
+            
         }
 
         public Task<List<Post>> GetPostsAsync()
