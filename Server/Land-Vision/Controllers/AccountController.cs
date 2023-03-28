@@ -77,7 +77,7 @@ namespace Land_Vision.Controllers
         /// </summary>
         [HttpPost("login")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<string>))]
-        public async Task<IActionResult> Login(LoginDto loginDto)
+        public async Task<ActionResult<string>> Login(LoginDto loginDto)
         {     
             if (!ModelState.IsValid)
             {
