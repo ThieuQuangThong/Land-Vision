@@ -1,6 +1,6 @@
-﻿namespace Land_Vision.dto.StatusDtos
+﻿namespace Land_Vision.DTO.DistrictDtos
 {
-    public class StatusDtos
+    public class DistrictDto
     {
         public int Id { get; set; }
         public string Name { get; set; }

@@ -1,6 +1,9 @@
+using System.Text.Json.Serialization;
 using Land_Vision.Data;
 using Land_Vision.DTO;
+using Land_Vision.Interface.IRepositories;
 using Land_Vision.Interface.IServices;
+using Land_Vision.Repositories;
 using Land_Vision.service;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,8 +14,14 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddSwaggerGen();
 builder.Services.AddAWSLambdaHosting(LambdaEventSource.HttpApi);
+
+builder.Services.AddControllers().AddJsonOptions(x =>
+                x.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles);
+builder.Services.AddControllers().AddJsonOptions(options =>
+                options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull);
 
 //My SQL
 var serverVersion = new MySqlServerVersion(new Version(8, 0, 28));
@@ -37,11 +46,13 @@ var emailConfig = builder.Configuration
 builder.Services.AddSingleton(emailConfig);
 
 //Repository Scope
-
+builder.Services.AddScoped<IRoleRepository, RoleRepository>();
+builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 //Service Scope
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IImageService, ImageService>();
+builder.Services.AddScoped<IAccountService, AccountService>();
 
 var app = builder.Build();
 

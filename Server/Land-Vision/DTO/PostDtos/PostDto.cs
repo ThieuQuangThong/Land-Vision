@@ -1,6 +1,6 @@
-﻿namespace Land_Vision.dto.PostDtos
+﻿namespace Land_Vision.DTO.PostDtos
 {
-    public class PostDtos
+    public class PostDto
     {
         public int Id { get; set; }
         public string Title { get; set; }
