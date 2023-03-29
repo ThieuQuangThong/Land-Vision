@@ -47,29 +47,29 @@ namespace Land_Vision.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var city = await  _cityRepository.GetCityAsync(cityId);
+            var city = await _cityRepository.GetCityAsync(cityId);
             return Ok(city);
         }
 
         // POST City
         /// <summary>
-        /// Get city by id.
+        /// Add city.
         /// </summary>
         [HttpPost]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         public async Task<IActionResult> AddCity([FromBody] CityDto cityDto)
         {
-            if(cityDto == null)
+            if (cityDto == null)
                 return BadRequest(ModelState);
 
             var city = await _cityRepository.GetCityByNameAsync(cityDto.Name);
-            if(city != null)
+            if (city != null)
             {
                 ModelState.AddModelError("", "City already exists");
                 return StatusCode(422, ModelState);
             }
-                
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -77,7 +77,7 @@ namespace Land_Vision.Controllers
 
 
             var cityCreate = _mapper.Map<City>(cityDto);
-            if(!await _cityRepository.AddCityAsync(cityCreate))
+            if (!await _cityRepository.AddCityAsync(cityCreate))
             {
                 ModelState.AddModelError("", "Something went wrong while saving");
                 return StatusCode(500, ModelState);
@@ -87,13 +87,13 @@ namespace Land_Vision.Controllers
 
         // UPDATE City
         /// <summary>
-        /// UPDATE city by id.
+        /// Update city by id.
         /// </summary>
         [HttpPut("{cityId}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> UpdateCity(int cityId,[FromBody] CityDto cityDto)
+        public async Task<IActionResult> UpdateCity(int cityId, [FromBody] CityDto cityDto)
         {
             if (cityDto == null)
                 return BadRequest(ModelState);
