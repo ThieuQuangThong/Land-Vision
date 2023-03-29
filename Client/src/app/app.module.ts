@@ -56,8 +56,10 @@ import { StorageService } from '../app/_service/storage.service';
 import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { AuthGuard } from './_helper/http.guard';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AuthTokenInterceptor } from './_helper/http.interceptor';
+// import { AuthTokenInterceptor } from './_helper/http.interceptor';
 import { ReactiveFormsModule } from '@angular/forms';
+import { CodeVerifyComponent } from './code-verify/code-verify.component';
+import { NewPasswordComponent } from './new-password/new-password.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -96,6 +98,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     LandingComponent,
     ProfileComponent,
     ResetPasswordComponent,
+    CodeVerifyComponent,
+    NewPasswordComponent,
     // LoginComponent,
     // RegisterComponent,
   ],
@@ -113,10 +117,10 @@ import { ReactiveFormsModule } from '@angular/forms';
     })
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS,
-      useClass: AuthTokenInterceptor,
-      multi: true
-    },
+    // { provide: HTTP_INTERCEPTORS,
+    //   // useClass: AuthTokenInterceptor,
+    //   multi: true
+    // },
     [AuthGuard],
 
   ],
@@ -125,14 +129,14 @@ import { ReactiveFormsModule } from '@angular/forms';
 export class AppModule { }
 export function jwtOptionsFactor(storage:StorageService){
   return {
-    tokenGetter:() => {
-      return storage.getAccessToken();
-    },
-    allowedDomains:["https://localhost:7165"],
-    disallowedRoutes:[
-      "https://localhost:7165/api/Authorization/Login",
-      "https://localhost:7165/api/Token/Refresh"
-    ],
-    skipWhenExpired: false,
+    // tokenGetter:() => {
+    //   return storage.getAccessToken();
+    // },
+    // allowedDomains:["https://localhost:7165"],
+    // disallowedRoutes:[
+    //   "https://localhost:7165/api/Authorization/Login",
+    //   "https://localhost:7165/api/Token/Refresh"
+    // ],
+    // skipWhenExpired: false,
   }
 }

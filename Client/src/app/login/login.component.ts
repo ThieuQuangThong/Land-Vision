@@ -50,14 +50,13 @@ export class LoginComponent implements OnInit{
     const email = this.loginForm?.get('email')?.value;
     const password = this.loginForm?.get('password')?.value;
     this.auth.login(email, password).subscribe((response) => {
-
-
-          var token = response as TokenModel
+        const token:TokenModel = new TokenModel()
+        token.accessToken = response
           localStorage.setItem("token",JSON.stringify(token));
           this.route.navigate(['dashboard'],)
-          response.message
+          alert("Successful")
           // this.toast.success({detail: "Welcome you !", summary:response.message, duration: 5000})
-         
+
         // console.log(this.userProfile)
     },err=>{
       // this.toast.error({detail: "Error Message", summary:"Something was wrong !", duration: 5000})

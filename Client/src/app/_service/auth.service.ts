@@ -22,9 +22,12 @@ export class AuthService {
       email: email,
       password: password,
     };
-    return this.http.post<any>('https://localhost:7165/api/Account/login', body).pipe(
+    return this.http.post('https://localhost:7165/api/Account/login', body,{responseType: 'text'}
+    )
+    .pipe(
       tap((response) => {
-        let token = response as TokenModel;
+        const token:TokenModel = new TokenModel()
+        token.accessToken = response
         this.storage.setToken(token);
         var userInfo = this.jwtService.decodeToken(token.accessToken) as User;
         this.userProfile.next(userInfo);
@@ -36,6 +39,7 @@ export class AuthService {
         return of(false);
       }),
     );
+
   }
 
   refreshToken(login: TokenModel) {

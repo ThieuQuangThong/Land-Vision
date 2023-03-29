@@ -12,29 +12,14 @@ import { StorageService } from "../_service/storage.service";
 export class AuthGuard implements CanActivate {
   constructor(private auth: AuthService, private router: Router, private storage: StorageService) {}
 
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ):
-    | boolean
-    | UrlTree
-    | Observable<boolean | UrlTree>
-    | Promise<boolean | UrlTree> {
-    var check = this.auth.checkAccessTokenAndRefresh();
-    console.log(check.status);
-    var token = this.storage.isLoggedIn();
-    if (token) {
-      if (state.url == "/login"){
-        this.router.navigate(['/']);
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    if (localStorage.getItem('currentUser')) {
+        // logged in so return true
         return true;
-      }
-      return true;
-    } else {
-      if (route.data['requiredAuth'] == true) {
-        this.router.navigate(['/**']);
-        return false;
-      }
-      return true;
     }
-  }
+
+    // not logged in so redirect to login page with the return url
+    this.router.navigate(['/login'], { queryParams: { returnUrl: state.url }});
+    return false;
+}
 }

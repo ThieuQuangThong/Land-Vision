@@ -23,11 +23,13 @@ import { IndexComponent } from "./views/index/index.component";
 import { LandingComponent } from "./views/landing/landing.component";
 import { ProfileComponent } from "./views/profile/profile.component";
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { NewPasswordComponent } from './new-password/new-password.component';
 const routes: Routes = [
   {path: '', redirectTo: 'login', pathMatch: 'full'},
   {path: "login", component: LoginComponent},
   {path: "signup", component: SignupComponent},
   {path: "reset-password", component: ResetPasswordComponent},
+  {path: "new-password", component: NewPasswordComponent},
 
   // admin views
   {

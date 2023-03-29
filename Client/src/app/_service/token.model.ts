@@ -1,3 +1,3 @@
-export interface TokenModel {
+export class TokenModel {
   accessToken: any;
 }
