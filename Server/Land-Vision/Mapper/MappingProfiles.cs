@@ -13,6 +13,8 @@ namespace Land_Vision.Mapper
         {
             //User
             CreateMap<RegisterUserDto, User>();
+            CreateMap<User, UserDto>()
+            .ForMember(x => x.roleName, y => y.MapFrom(src => src.Role.Name));
 
             //Role
             CreateMap<RoleDto, Role>();
