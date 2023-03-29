@@ -36,9 +36,35 @@ namespace Land_Vision.service
             _emailService = emailService;
         }
 
+        public async Task<bool> CheckIsExistVerifyCode(ValidateCodeDto validateCodeDto)
+        {
+            return await _userRepository.CheckCodeIsExistWithEmail(validateCodeDto);
+        }
+
         public bool CompareHashPassword(byte[] currentPassword, byte[] password)
         {
             return CryptographicOperations.FixedTimeEquals(currentPassword, password);
+        }
+
+        
+
+        public async Task<bool> ForgotPasswordAsync(User user)
+        {
+            user.Code = await GenerateVerifyCodeAsync();
+            user.CodeExpires = DateTime.Now.AddMinutes(15);
+
+            var content = $"<p>Hello {user.Name},"
+            + "</p><p><b>This is your verify code:</b></p><p>"
+            + $"{user.Code}</p>";
+            var message = new Message
+            (
+                new string[] {user.Email},
+                TextField.VERIFY_CODE,
+                content
+            );
+            _emailService.SendMail(message);
+
+            return await _userRepository.UpdateUserAsync(user);
         }
 
         public string GenerateToken(User user)
@@ -59,6 +85,18 @@ namespace Land_Vision.service
                 expires: DateTime.Now.AddMinutes(20),
                 signingCredentials: credentials);
             return new JwtSecurityTokenHandler().WriteToken(token);
+        }
+
+        public async Task<string> GenerateVerifyCodeAsync()
+        {
+            Random random = new Random();
+            string randomNumber = random.Next(100000, 999999).ToString();
+
+            if(await _userRepository.CodeIsExistAsync(randomNumber)){
+                return await GenerateVerifyCodeAsync();
+            }
+
+            return randomNumber;
         }
 
         public PasswordAndHashDto HashPassword(string password)
@@ -85,11 +123,6 @@ namespace Land_Vision.service
             };
             
             return passwordObject;
-        }
-
-        public PasswordAndHashDto HashPasswordWithSalt(string password, string passwordSalt = "")
-        {
-            throw new NotImplementedException();
         }
 
         public async Task<string> LoginAsync(LoginDto loginDto)
@@ -131,18 +164,38 @@ namespace Land_Vision.service
 
             var confirmEmailToken = _emailService.GenerateEmailConfirmToken(user);
             var confirmationLinkUrl = _config["Url"] + "api/Account/confirmEmail/" + confirmEmailToken.ToString();
-            var Content = $"<p>Hello {user.Name},"
+            var content = $"<p>Hello {user.Name},"
             + "</p><p><b>Please click the link below to confirm your email address:</b></p><p>"
             + $"<a href='{confirmationLinkUrl}'>{confirmationLinkUrl}</a></p>";
             var message = new Message
             (
                 new string[] {user.Email},
                 TextField.CONFIRM_EMAIL_SUBJECT,
-                Content
+                content
             );
             _emailService.SendMail(message);
 
             return true;
+        }
+
+        public async Task<bool> ResetPassword(ResetPasswordDto resetPasswordDto)
+        {
+            var user = await _userRepository.GetUserByEmailAsync(resetPasswordDto.Email);
+            if(user == null){
+                throw new Exception("Not found");                
+            }
+
+            if(user.CodeExpires < DateTime.Now){
+                throw new Exception("Code expried");   
+            }
+
+            var newPassword = HashPassword(resetPasswordDto.Password);
+            user.PasswordHash = newPassword.hashedPassword;
+            user.PasswordSalt = newPassword.PasswordSalt;
+            user.Code = "";
+            user.CodeExpires = DateTime.MaxValue;
+
+            return await _userRepository.UpdateUserAsync(user);
         }
     }
 }
