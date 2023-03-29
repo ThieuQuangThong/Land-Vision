@@ -7,13 +7,14 @@ import { LoginComponent } from '../login/login.component';
 import { StorageService } from './storage.service';
 import { User } from './user.model';
 import { API_URL } from '../apiurl';
+import { Router } from '@angular/router';
 HttpClient;
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   jwtService: JwtHelperService = new JwtHelperService();
-  constructor(private http: HttpClient, private storage: StorageService, private jwtHelper: JwtHelperService ) {}
+  constructor(private http: HttpClient, private storage: StorageService, private jwtHelper: JwtHelperService, private router: Router) {}
   userProfile = new BehaviorSubject<User | null>(null);
 
   login(email: string, password: string) {
@@ -40,10 +41,19 @@ export class AuthService {
     );
 
   }
-  sendMail(email: string){
-    // return this.http.post('https://localhost:7165/api/Account/forgotPassword/{email}')
-  }
 
+
+
+
+
+  sendEmailForVarification(user : any) {
+    console.log(user);
+    user.sendEmailVerification().then((res : any) => {
+      this.router.navigate(['/varify-email']);
+    }, (err : any) => {
+      alert('Something went wrong. Not able to send mail to your email.')
+    })
+  }
   refreshToken(login: TokenModel) {
     return this.http.post<TokenModel>(
       'https://localhost:44380/api/Token/Refresh',

@@ -10,19 +10,22 @@ import { Router } from '@angular/router';
 export class ResetPasswordComponent implements OnInit {
   resetForm!: FormGroup;
   submitted = false;
-  email: any;
+
    get f(){
     return this.resetForm.controls
   }
 
 
-  constructor(private fb: FormBuilder, private router: Router, ){}
+  constructor(private fb: FormBuilder, private router: Router){}
   ngOnInit(): void {
     this.resetForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]]
     })
   }
 
+  sendEmail(data: string){
+    return
+  }
   OnSubmit(){
     this.submitted = true;
     if(this.resetForm.invalid){

@@ -26,6 +26,10 @@ export class SignupComponent implements OnInit {
   }
   constructor(private http: HttpClient, private route: Router, private fb: FormBuilder, @Inject(DOCUMENT) private document: Document){}
 
+  backHome(){
+    this.route.navigate(['login'])
+  }
+
   ngOnInit(): void {
     this.signup = this.fb.group({
       name: ['',Validators.required, Validators.name],
