@@ -17,25 +17,25 @@
       <form action="" class="flex flex-col gap-1 mt-2" >
 
         <div class="mb-2">
-          <label for="email" class="block mb-2 text-xs font-medium text-[#002D74] dark:text-white">Your email</label>
-          <input type="email" id="email" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:[#002D74]e-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="name@flowbite.com" required>
+          <label for="email" class="block mb-2 text-xs font-medium  dark:text-[#002D74]">Your email</label>
+          <input type="email" id="email" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:[#002D74]e-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="name@flowbite.com" required>
         </div>
-        <div class="mb-2">
-          <label for="password" class="block mb-2 text-xs font-medium text-[#002D74] dark:text-white">Your password</label>
-          <input type="password" id="password" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:[#002D74]e-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required>
+        <div class="">
+          <label for="password" class="block mb-2 text-xs font-medium  dark:text-[#002D74]">Your password</label>
+          <input type="password" id="password" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:[#002D74]e-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-[#002D74] dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required>
         </div>
+        <div class="flex items-center justify-between mt-2">
+          <div class="flex items-start">
+              <div class="flex items-center h-5">
+                <input id="remember" aria-describedby="remember" type="radio" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800" required="">
+              </div>
+              <div class="ml-3 text-sm">
+                <label for="remember" class="text-xs dark:text-[#002D74] ">Remember me</label>
+              </div>
+          </div>
+      </div>
         <button class="bg-[#38C390] rounded-xl text-white py-2 hover:scale-105 duration-300">Login</button>
       </form>
-      <div class="flex items-center justify-between mt-2">
-        <div class="flex items-start">
-            <div class="flex items-center h-5">
-              <input id="remember" aria-describedby="remember" type="radio" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800" required="">
-            </div>
-            <div class="ml-3 text-sm">
-              <label for="remember" class="text-[#002D74] text-xs dark:text-gray-300">Remember me</label>
-            </div>
-        </div>
-    </div>
       <div class="mt-2 grid grid-cols-3 items-center text-gray-400">
         <hr class="border-gray-400">
         <p class="text-center text-sm">OR</p>
@@ -54,12 +54,12 @@
 
       <div class=" text-xs border-b border-[#002D74] py-4 text-[#002D74]">
         <a
-         href="#">Forgot your password?</a>
+        [routerLink]="['/reset-password']" >Forgot your password?</a>
       </div>
 
       <div class="mt-1 text-xs flex justify-between items-center text-[#002D74]">
         <p>Don't have an account?</p>
-        <button class="py-2 px-5 bg-white border rounded-xl hover:scale-110 duration-300"> <a [routerLink]="['/signup']" >Register</a>
+        <button class="py-2 px-5 bg-white border rounded-xl hover:scale-110 duration-300"> <a [routerLink]="['/signup']" >Signup</a>
 
         </button>
       </div>
@@ -73,8 +73,5 @@
 
 
 <!-- Modal toggle -->
-<button data-modal-target="authentication-modal" data-modal-toggle="authentication-modal" class="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">
-  Toggle modal
-</button>
 
 <!-- Main modal -->

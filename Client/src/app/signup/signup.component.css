@@ -2,6 +2,11 @@ input:focus-visible {
   outline: 2px solid #38C390;
 
 }
+.with-signup{
+  width: 70% !important;
+  padding: 30px;
+  margin: 0 auto;
+}
 ::placeholder {
   font-family: 'Poppins' ;
   font-size: 13px;
