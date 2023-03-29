@@ -46,8 +46,6 @@ namespace Land_Vision.service
             return CryptographicOperations.FixedTimeEquals(currentPassword, password);
         }
 
-        
-
         public async Task<bool> ForgotPasswordAsync(User user)
         {
             user.Code = await GenerateVerifyCodeAsync();

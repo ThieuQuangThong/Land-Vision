@@ -1,4 +1,5 @@
 using Land_Vision.Data;
+using Land_Vision.DTO;
 using Land_Vision.DTO.UserDtos;
 using Land_Vision.Interface.IRepositories;
 using Land_Vision.Models;
@@ -36,9 +37,12 @@ namespace Land_Vision.Repositories
             return await _dbContext.SaveChangesAsync() > 0;
         }
 
-        public async Task<List<User>> GetUsersAsync()
+        public async Task<List<User>> GetUsersAsync(Pagination pagination)
         {
-            return await _dbContext.Users.Include(x => x.Role).AsNoTracking().ToListAsync();
+            return await _dbContext.Users.Include(x => x.Role).AsNoTracking()
+            .Skip(pagination.SkipCount)
+            .Take(pagination.MaxResultCount)
+            .ToListAsync();
         }
 
         public async Task<bool> CodeIsExistAsync(string code)
@@ -50,6 +54,11 @@ namespace Land_Vision.Repositories
         {
             return await _dbContext.Users.AnyAsync(x => 
                         x.Code == validateCodeDto.Code && x.Email == validateCodeDto.Email);
+        }
+
+        public async Task<int> GetUserTotalAsync()
+        {
+            return await _dbContext.Users.CountAsync();
         }
     }
 }   
