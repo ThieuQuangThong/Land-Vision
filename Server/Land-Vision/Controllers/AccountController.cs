@@ -73,18 +73,94 @@ namespace Land_Vision.Controllers
         }
 
         /// <summary>
+        /// Get verify code to reset password.
+        /// </summary>
+        [HttpPost("forgotPassword/{email}")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult> ForgotPassword(string email)
+        {
+            var user = await _userRepository.GetUserByEmailAsync(email);
+            
+            if(user == null){
+                return NotFound();
+            }
+
+            if(!ModelState.IsValid){
+                return BadRequest(ModelState);
+            }
+            if(!await _accountService.ForgotPasswordAsync(user)){
+                ModelState.AddModelError("", "Something went wrong"); 
+            };
+
+            return Ok();
+        }
+
+        /// <summary>
+        /// Checking code is verified or not.
+        /// </summary>  
+        [HttpPost("validateCode")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(200)]
+        public async Task<ActionResult> ValidateCode(ValidateCodeDto valadateCodeDto)
+        {
+            if(!ModelState.IsValid){
+                return BadRequest(ModelState);
+            }
+
+            if(!await _accountService.CheckIsExistVerifyCode(valadateCodeDto)){
+                return NotFound();
+            }
+
+            return Ok();
+        }
+
+        /// <summary>
+        /// Get verify code to reset password.
+        /// </summary>
+        [HttpPost("resetPassword")]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult> ResetPassword(ResetPasswordDto resetPasswordDto)
+        {
+            if(!await _accountService.CheckIsExistVerifyCode(new ValidateCodeDto{
+                Code = resetPasswordDto.Code,
+                Email = resetPasswordDto.Email
+            }))
+            {
+                return NotFound();
+            }
+
+            if(!ModelState.IsValid){
+                return BadRequest(ModelState);
+            }
+
+            if(!await _accountService.ResetPassword(resetPasswordDto)){
+                ModelState.AddModelError("", "Something went wrong"); 
+            };
+            
+            return Ok();
+        } 
+
+        /// <summary>
         /// Login
         /// </summary>
         [HttpPost("login")]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<string>))]
-        public async Task<IActionResult> Login(LoginDto loginDto)
+        [ProducesResponseType(200, Type = typeof(TokenDto))]
+        public async Task<ActionResult<TokenDto>> Login(LoginDto loginDto)
         {     
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
             
-            return Ok(await _accountService.LoginAsync(loginDto));
+            return Ok(new TokenDto {
+                accessToken = await _accountService.LoginAsync(loginDto)
+            });
         } 
     }
 }

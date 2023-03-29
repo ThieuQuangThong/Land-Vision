@@ -6,6 +6,7 @@ namespace Land_Vision.Interface.IRepositories
     {
         Task<List<City>> GetCitiesAsync();
         Task<City> GetCityAsync(int cityId);
+        Task<City> GetCityByNameAsync(string cityName);
         Task<bool> AddCityAsync(City city);
         Task<bool> UpdateCityAsync(City city);
         Task<bool> DeleteCityAsync(City city);

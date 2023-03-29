@@ -22,7 +22,13 @@ import { TablesComponent } from "./views/admin/tables/tables.component";
 import { IndexComponent } from "./views/index/index.component";
 import { LandingComponent } from "./views/landing/landing.component";
 import { ProfileComponent } from "./views/profile/profile.component";
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 const routes: Routes = [
+  {path: '', redirectTo: 'login', pathMatch: 'full'},
+  {path: "login", component: LoginComponent},
+  {path: "signup", component: SignupComponent},
+  {path: "reset-password", component: ResetPasswordComponent},
+
   // admin views
   {
     path: "admin",
@@ -52,9 +58,7 @@ const routes: Routes = [
   { path: "**", redirectTo: "", pathMatch: "full" },
 
 
-  {path: '', redirectTo: 'login', pathMatch: 'full'},
-  {path: 'login', component: LoginComponent},
-  {path: 'signup', component: SignupComponent},
+
 ];
 
 @NgModule({

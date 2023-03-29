@@ -21,7 +21,7 @@ namespace Land_Vision.Repositories
 
         public async Task<bool> DeleteCityAsync(City city)
         {
-            _dbContext.Remove(city);
+             _dbContext.Remove(city);
             return await SaveChangeAsync();
         }
 
@@ -33,6 +33,11 @@ namespace Land_Vision.Repositories
         public async Task<City> GetCityAsync(int cityId)
         {
             return await _dbContext.Citys.AsNoTracking().Where(c => c.Id == cityId).FirstOrDefaultAsync();
+        }
+
+        public async Task<City> GetCityByNameAsync(string cityName)
+        {
+            return await _dbContext.Citys.AsNoTracking().Where(c => c.Name == cityName).FirstOrDefaultAsync();
         }
 
         public async Task<bool> SaveChangeAsync()
