@@ -6,15 +6,14 @@ import { TokenModel } from './token.model';
 import { LoginComponent } from '../login/login.component';
 import { StorageService } from './storage.service';
 import { User } from './user.model';
-
+import { API_URL } from '../apiurl';
 HttpClient;
-// const URL_BASE = 'https://localhost:7165/';
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
   jwtService: JwtHelperService = new JwtHelperService();
-  constructor(private http: HttpClient, private storage: StorageService, private jwtHelper: JwtHelperService) {}
+  constructor(private http: HttpClient, private storage: StorageService, private jwtHelper: JwtHelperService ) {}
   userProfile = new BehaviorSubject<User | null>(null);
 
   login(email: string, password: string) {
@@ -22,7 +21,7 @@ export class AuthService {
       email: email,
       password: password,
     };
-    return this.http.post('https://localhost:7165/api/Account/login', body,{responseType: 'text'}
+    return this.http.post(API_URL.LOGIN(), body,{responseType: 'text'}
     )
     .pipe(
       tap((response) => {
@@ -40,6 +39,9 @@ export class AuthService {
       }),
     );
 
+  }
+  sendMail(email: string){
+    // return this.http.post('https://localhost:7165/api/Account/forgotPassword/{email}')
   }
 
   refreshToken(login: TokenModel) {

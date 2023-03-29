@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-code-verify',
@@ -6,5 +7,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./code-verify.component.css']
 })
 export class CodeVerifyComponent {
-
+  constructor(private router: Router){}
+  route(){
+    this.router.navigate(['reset-password'])
+  }
 }

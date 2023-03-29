@@ -16,18 +16,18 @@ export class ResetPasswordComponent implements OnInit {
   }
 
 
-  constructor(private fb: FormBuilder, private router: Router){}
+  constructor(private fb: FormBuilder, private router: Router, ){}
   ngOnInit(): void {
     this.resetForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]]
     })
   }
-  
+
   OnSubmit(){
     this.submitted = true;
     if(this.resetForm.invalid){
       return
     }
-    this.router.navigate(['new-password'])
+    this.router.navigate(['code-verify'])
   }
 }
