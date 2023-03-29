@@ -1,4 +1,5 @@
 using Land_Vision.Data;
+using Land_Vision.DTO.UserDtos;
 using Land_Vision.Interface.IRepositories;
 using Land_Vision.Models;
 using Microsoft.EntityFrameworkCore;
@@ -39,5 +40,16 @@ namespace Land_Vision.Repositories
         {
             return await _dbContext.Users.Include(x => x.Role).AsNoTracking().ToListAsync();
         }
+
+        public async Task<bool> CodeIsExistAsync(string code)
+        {
+            return await _dbContext.Users.AnyAsync(p => p.Code == code);
+        }
+
+        public async Task<bool> CheckCodeIsExistWithEmail(ValidateCodeDto validateCodeDto)
+        {
+            return await _dbContext.Users.AnyAsync(x => 
+                        x.Code == validateCodeDto.Code && x.Email == validateCodeDto.Email);
+        }
     }
-}
+}   
