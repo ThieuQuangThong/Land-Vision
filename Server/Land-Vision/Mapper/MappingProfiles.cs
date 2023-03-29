@@ -1,4 +1,5 @@
 using AutoMapper;
+using Land_Vision.DTO.CityDtos;
 using Land_Vision.DTO.RoleDtos;
 using Land_Vision.DTO.UserDtos;
 using Land_Vision.Models;
@@ -13,7 +14,12 @@ namespace Land_Vision.Mapper
             CreateMap<RegisterUserDto, User>();
 
             //Role
-            CreateMap<RoleDto, Role>();           
+            CreateMap<RoleDto, Role>();         
+            
+            //City
+            CreateMap<CityDto,  City>();
+            CreateMap<City, CityDto>();
+
         }
     }
 }
