@@ -99,9 +99,8 @@ namespace Land_Vision.Controllers
 
         /// <summary>
         /// Checking code is verified or not.
-        /// </summary>
-        /// <param name="code">code</param>     
-        [HttpPost("validateCode/{code}")]
+        /// </summary>  
+        [HttpPost("validateCode")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
         [ProducesResponseType(404)]
@@ -151,7 +150,7 @@ namespace Land_Vision.Controllers
         /// Login
         /// </summary>
         [HttpPost("login")]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<TokenDto>))]
+        [ProducesResponseType(200, Type = typeof(TokenDto))]
         public async Task<ActionResult<TokenDto>> Login(LoginDto loginDto)
         {     
             if (!ModelState.IsValid)
