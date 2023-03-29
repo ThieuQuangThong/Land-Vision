@@ -151,15 +151,17 @@ namespace Land_Vision.Controllers
         /// Login
         /// </summary>
         [HttpPost("login")]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<string>))]
-        public async Task<ActionResult<string>> Login(LoginDto loginDto)
+        [ProducesResponseType(200, Type = typeof(IEnumerable<TokenDto>))]
+        public async Task<ActionResult<TokenDto>> Login(LoginDto loginDto)
         {     
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
             
-            return Ok(await _accountService.LoginAsync(loginDto));
+            return Ok(new TokenDto {
+                accessToken = await _accountService.LoginAsync(loginDto)
+            });
         } 
     }
 }
