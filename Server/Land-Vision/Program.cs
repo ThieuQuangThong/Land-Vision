@@ -18,7 +18,8 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo {
+    c.SwaggerDoc("v1", new OpenApiInfo
+    {
         Title = "Landing API",
         Version = "v1",
     });
@@ -65,14 +66,14 @@ builder.Services.AddAuthentication(options =>
 builder.Services.AddSwaggerGen(c =>
 {
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
-      {
+    {
         In = ParameterLocation.Header,
         Description = "Please enter a valid token",
         Name = "Authorization",
         Type = SecuritySchemeType.Http,
         BearerFormat = "JWT",
         Scheme = "Bearer"
-       });
+    });
 
     c.AddSecurityRequirement(new OpenApiSecurityRequirement()
       {
@@ -120,6 +121,8 @@ builder.Services.AddScoped<IRoleRepository, RoleRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ICityRepository, CityRepository>();
 builder.Services.AddScoped<IDistrictRepository, DistrictRepository>();
+builder.Services.AddScoped<IStreetRepository, StreetRepository>();
+
 
 
 //Service Scope

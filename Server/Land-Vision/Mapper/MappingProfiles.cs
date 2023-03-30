@@ -2,6 +2,7 @@ using AutoMapper;
 using Land_Vision.DTO.CityDtos;
 using Land_Vision.DTO.DistrictDtos;
 using Land_Vision.DTO.RoleDtos;
+using Land_Vision.DTO.StreetDtos;
 using Land_Vision.DTO.UserDtos;
 using Land_Vision.Models;
 
@@ -25,6 +26,11 @@ namespace Land_Vision.Mapper
 
             //District
             CreateMap<DistrictDto, District>();
+
+            //Street
+            CreateMap<StreetDto, Street>();
+            CreateMap<Street, StreetDto>();
+
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using Land_Vision.DTO.DistrictDtos;
+using Land_Vision.DTO.StreetDtos;
 using Land_Vision.Interface.IRepositories;
 using Land_Vision.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -7,13 +8,16 @@ using Microsoft.AspNetCore.Mvc;
 namespace Land_Vision.Controllers
 {
     [Route("api/[controller]")]
+    [ApiController]
     public class DistrictController : ControllerBase
     {
         private readonly IDistrictRepository _districtRepository;
+        private readonly ICityRepository _cityRepository;
         private readonly IMapper _mapper;
-        public DistrictController(IDistrictRepository districtRepository, IMapper mapper)
+        public DistrictController(IDistrictRepository districtRepository, ICityRepository cityRepository, IMapper mapper)
         {
             _districtRepository = districtRepository;
+            _cityRepository = cityRepository;
             _mapper = mapper;
         }
 
@@ -49,6 +53,22 @@ namespace Land_Vision.Controllers
             return Ok(district);
         }
 
+        // GET Street of District
+        /// <summary>
+        /// Get street of district
+        /// </summary>
+        [HttpGet("{districtId}/street")]
+        [ProducesResponseType(200, Type = typeof(StreetDto))]
+        public async Task<IActionResult> GetStreetOfDistrict(int districtId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var streets = await _districtRepository.GetStreetOfDistrictAsync(districtId);
+            return Ok(streets);
+        }
+
         // POST District
         /// <summary>
         /// Add district
@@ -61,9 +81,9 @@ namespace Land_Vision.Controllers
             if (districtDto == null)
                 return BadRequest(ModelState);
 
-            var district = await _districtRepository.GetDistrictByNameAsync(districtDto.Name);
+            var district = await _cityRepository.GetDistrictOfCityAsync(cityId);
 
-            if (district != null)
+            if (district.Any(d => d.Name == districtDto.Name))
             {
                 ModelState.AddModelError("", "District alredy exists");
                 return StatusCode(422, ModelState);
@@ -143,7 +163,7 @@ namespace Land_Vision.Controllers
             }
 
             var districtDelete = _mapper.Map<District>(district);
-            if (!await _districtRepository.UpdateDistrictAsync(district))
+            if (!await _districtRepository.DeleteDistrictAsync(district))
             {
                 ModelState.AddModelError("", "Something went wrong while saving");
                 return StatusCode(500, ModelState);
