@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 using Land_Vision.DTO.CityDtos;
+using Land_Vision.DTO.DistrictDtos;
 using Land_Vision.Interface.IRepositories;
 using Land_Vision.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Land_Vision.Controllers
@@ -49,6 +49,22 @@ namespace Land_Vision.Controllers
             }
             var city = await _cityRepository.GetCityAsync(cityId);
             return Ok(city);
+        }
+
+        // GET District of city
+        /// <summary>
+        /// Get district of city
+        /// </summary>
+        [HttpGet("{cityId}/district")]
+        [ProducesResponseType(200, Type = typeof(DistrictDto))]
+        public async Task<IActionResult> GetDistrictOfCity(int cityId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var districts = await _cityRepository.GetDistrictOfCityAsync(cityId);
+            return Ok(districts);
         }
 
         // POST City

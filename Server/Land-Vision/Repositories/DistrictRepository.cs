@@ -53,5 +53,10 @@ namespace Land_Vision.Repositories
             _dbContext.Update(district);
             return await SaveChangeAsync();
         }
+
+        public async Task<List<Street>> GetStreetOfDistrictAsync(int districtId)
+        {
+            return await _dbContext.Streets.AsNoTracking().Where(s => s.District.Id == districtId).ToListAsync();
+        }
     }
 }
