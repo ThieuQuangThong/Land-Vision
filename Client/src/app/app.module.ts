@@ -52,6 +52,9 @@ import { NotificationDropdownComponent } from "./components/dropdowns/notificati
 import { SidebarComponent } from "./components/sidebar/sidebar.component";
 import { UserDropdownComponent } from "./components/dropdowns/user-dropdown/user-dropdown.component";
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { ProductListComponent } from './components/product-list/product-list.component';
+import { SingleProductComponent } from './components/single-product/single-product.component';
+import { ProductDetailComponent } from './components/product-detail/product-detail.component';
 
 @NgModule({
   declarations: [
@@ -91,6 +94,9 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
     LandingComponent,
     ProfileComponent,
     ResetPasswordComponent,
+    ProductListComponent,
+    SingleProductComponent,
+    ProductDetailComponent,
     // LoginComponent,
     // RegisterComponent,
   ],
