@@ -60,6 +60,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CodeVerifyComponent } from './code-verify/code-verify.component';
 import { NewPasswordComponent } from './new-password/new-password.component';
+import { CodeInputModule } from 'angular-code-input';
 @NgModule({
   declarations: [
     AppComponent,
@@ -108,13 +109,19 @@ import { NewPasswordComponent } from './new-password/new-password.component';
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
+    CodeInputModule,
     JwtModule.forRoot({
       jwtOptionsProvider:{
         provide:JWT_OPTIONS,
         useFactory: jwtOptionsFactor,
         deps:[StorageService]
       }
-    })
+    }),
+    CodeInputModule.forRoot({
+      codeLength: 6,
+      isCharsCode: true,
+      code: 'abcdef'
+    }),
   ],
   providers: [
     // { provide: HTTP_INTERCEPTORS,
