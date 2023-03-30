@@ -69,7 +69,7 @@ namespace Land_Vision.Controllers
 
             if (street.Any(s => s.Name == streetDto.Name))
             {
-                ModelState.AddModelError("", "Street alredy exists");
+                ModelState.AddModelError("error", "Street alredy exists");
                 return StatusCode(422, ModelState);
             }
 

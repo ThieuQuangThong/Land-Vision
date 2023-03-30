@@ -122,6 +122,7 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ICityRepository, CityRepository>();
 builder.Services.AddScoped<IDistrictRepository, DistrictRepository>();
 builder.Services.AddScoped<IStreetRepository, StreetRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
 
 

@@ -48,6 +48,11 @@ namespace Land_Vision.Controllers
                 return BadRequest(ModelState);
             }
             var city = await _cityRepository.GetCityAsync(cityId);
+            if (city == null)
+            {
+                ModelState.AddModelError("", "City not exist");
+                return StatusCode(422, ModelState);
+            }
             return Ok(city);
         }
 
@@ -64,6 +69,7 @@ namespace Land_Vision.Controllers
                 return BadRequest(ModelState);
             }
             var districts = await _cityRepository.GetDistrictOfCityAsync(cityId);
+
             return Ok(districts);
         }
 
