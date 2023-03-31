@@ -14,15 +14,29 @@
       <h2 class="font-bold text-2xl pt-2 text-[#002D74]">Login</h2>
       <p class="text-sm mt-4 text-[#002D74]">If you are already a member, easily log in.</p>
 
-      <form action="" class="flex flex-col gap-1 mt-2" >
+      <form  action="" class="flex flex-col gap-1 mt-2"  [formGroup]="loginForm"  (ngSubmit)="onSubmit()">
 
         <div class="mb-2">
           <label for="email" class="block mb-2 text-xs font-medium  dark:text-[#002D74]">Your email</label>
-          <input type="email" id="email" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:[#002D74]e-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" placeholder="name@flowbite.com" required>
+          <input type="email" id="email" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:[#002D74]e-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+           placeholder="name@flowbite.com"  formControlName="email"  [ngClass]="{ 'is-invalid': submitted && f['email'].errors }" required>
+
+           <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
+            <div *ngIf="f['email'].errors['required']">Email is required</div>
+            <div *ngIf="f['email'].errors['email']">Email must be a valid email address</div>
+        </div>
+
         </div>
         <div class="">
           <label for="password" class="block mb-2 text-xs font-medium  dark:text-[#002D74]">Your password</label>
-          <input type="password" id="password" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:[#002D74]e-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-[#002D74] dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" required>
+          <input type="password" formControlName="password" id="password" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-xs rounded-lg focus:[#002D74]e-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-[#002D74] dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+          formControlName="password" type="password" placeholder="Type Password"
+          [ngClass]="{ 'is-invalid': submitted && f['password'].errors }" required="">
+
+          <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
+            <div *ngIf="f['password'].errors['required']">Password is required</div>
+            <div *ngIf="f['password'].errors['minlength']">Password must be at least 6 characters</div>
+        </div>
         </div>
         <div class="flex items-center justify-between mt-2">
           <div class="flex items-start">
@@ -34,7 +48,7 @@
               </div>
           </div>
       </div>
-        <button class="bg-[#38C390] rounded-xl text-white py-2 hover:scale-105 duration-300">Login</button>
+        <button type="submit" class="bg-[#38C390] rounded-xl text-white py-2 hover:scale-105 duration-300">Login</button>
       </form>
       <div class="mt-2 grid grid-cols-3 items-center text-gray-400">
         <hr class="border-gray-400">
