@@ -60,19 +60,15 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CodeVerifyComponent } from './code-verify/code-verify.component';
 import { NewPasswordComponent } from './new-password/new-password.component';
-<<<<<<< HEAD
-import { ProductListComponent } from './components/product-list/product-list.component';
-import { SingleProductComponent } from './components/single-product/single-product.component';
 import { ProductDetailComponent } from './components/product-detail/product-detail.component';
-ProductDetailComponent
-CardSettingsComponent
-CardBarChartComponent
-=======
+import { SingleProductComponent } from './components/single-product/single-product.component';
+import { ProductListComponent } from './components/product-list/product-list.component';
 
->>>>>>> 4deafd7 (ok)
+
 @NgModule({
   declarations: [
     AppComponent,
+    ProfileComponent,
     ProductDetailComponent,
     CardSettingsComponent,
     CardBarChartComponent,
