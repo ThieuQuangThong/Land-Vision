@@ -2,6 +2,9 @@ using AutoMapper;
 using Land_Vision.DTO.CategoryDtos;
 using Land_Vision.DTO.CityDtos;
 using Land_Vision.DTO.DistrictDtos;
+using Land_Vision.DTO.PositionDtos;
+using Land_Vision.DTO.PostDtos;
+using Land_Vision.DTO.PropertyDtos;
 using Land_Vision.DTO.RoleDtos;
 using Land_Vision.DTO.StreetDtos;
 using Land_Vision.DTO.UserDtos;
@@ -35,6 +38,18 @@ namespace Land_Vision.Mapper
             //Category
             CreateMap<CategoryDto, Category>();
 
+            //Post
+            CreateMap<PostDto, Post>();
+            CreateMap<Post, PostDto>();
+
+
+            //Property
+            CreateMap<PropertyDto, Property>();
+            CreateMap<Property, PropertyDto>();
+
+            //Position
+            CreateMap<PositionDto, Position>();
+            CreateMap<Position, PositionDto>();
         }
     }
 }

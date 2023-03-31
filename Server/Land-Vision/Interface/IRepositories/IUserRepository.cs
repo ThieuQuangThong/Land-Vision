@@ -13,6 +13,8 @@ namespace Land_Vision.Interface.IRepositories
         Task<bool> CreateUserAsync(User user);
         Task<bool> UpdateUserAsync(User user);
         Task<List<User>> GetUsersAsync(Pagination pagination);
+        Task<User> GetUserAsync(int userId);
+
         Task<bool> SaveChangesAsync();
     }
 }
