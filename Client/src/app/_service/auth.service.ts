@@ -123,17 +123,8 @@ export class AuthService {
   }
 
 
-  verifyEmail() {
-    this.http.post('https://localhost:7165/api/Account/validateCode', JSON.stringify(this.data), {headers: this.headers})
-  .subscribe(
-    (response) => {
-      console.log(response); // Handle the response here
-    },
-    (error) => {
-      console.log(error); // Handle the error here
-    }
-  )}
-
   
+
+
 }
 

@@ -25,35 +25,26 @@ export class CodeVerifyComponent implements OnInit {
       code: ['', Validators.required],
     });
   }
-  route() {
-    this.router.navigate(['reset-password'])
-  }
 
-  compareCode(data: any) {
-
-    return this.http.post('https://localhost:7165/api/Account/validateCode', data, { responseType: 'text' })
-  }
-   mycode!: string;
   getData(email: any, code: any) {
     const data = {
       email: email,
       code: code
     };
-
-
     const url = 'https://localhost:7165/api/Account/validateCode';
     return this.http.post(url, data).subscribe((response: any) => {
       console.log(response);
       alert("ok")
-      this.router.navigate(['new-password/' + this.code])
+      this.router.navigate(['new-password/'+this.code])
 
     });
   }
   OnSubmit() {
     console.log(this.auth.email)
-    this.getData(this.auth.email, this.code=this.verifyForm?.get('code')?.value)
+    const code = this.verifyForm?.get('code')?.value;
+    this.getData(this.auth.email, code);
 
-    // this.auth.verifyEmail(this.first)
   }
+
 
 }
