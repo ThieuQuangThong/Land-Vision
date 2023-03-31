@@ -52,16 +52,33 @@ import { NotificationDropdownComponent } from "./components/dropdowns/notificati
 import { SidebarComponent } from "./components/sidebar/sidebar.component";
 import { UserDropdownComponent } from "./components/dropdowns/user-dropdown/user-dropdown.component";
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { StorageService } from '../app/_service/storage.service';
+import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
+import { AuthGuard } from './_helper/http.guard';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+// import { AuthTokenInterceptor } from './_helper/http.interceptor';
+import { ReactiveFormsModule } from '@angular/forms';
+import { CodeVerifyComponent } from './code-verify/code-verify.component';
+import { NewPasswordComponent } from './new-password/new-password.component';
+<<<<<<< HEAD
 import { ProductListComponent } from './components/product-list/product-list.component';
 import { SingleProductComponent } from './components/single-product/single-product.component';
 import { ProductDetailComponent } from './components/product-detail/product-detail.component';
+ProductDetailComponent
+CardSettingsComponent
+CardBarChartComponent
+=======
 
+>>>>>>> 4deafd7 (ok)
 @NgModule({
   declarations: [
     AppComponent,
+    ProductDetailComponent,
+    CardSettingsComponent,
+    CardBarChartComponent,
     LoginComponent,
     SignupComponent,
-
+    SingleProductComponent,
     DashboardComponent,
     CardBarChartComponent,
     CardLineChartComponent,
@@ -94,17 +111,46 @@ import { ProductDetailComponent } from './components/product-detail/product-deta
     LandingComponent,
     ProfileComponent,
     ResetPasswordComponent,
-    ProductListComponent,
-    SingleProductComponent,
-    ProductDetailComponent,
+    CodeVerifyComponent,
+    NewPasswordComponent,
+    ProductListComponent
     // LoginComponent,
     // RegisterComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    JwtModule.forRoot({
+      jwtOptionsProvider:{
+        provide:JWT_OPTIONS,
+        useFactory: jwtOptionsFactor,
+        deps:[StorageService]
+      }
+    })
   ],
-  providers: [],
+  providers: [
+    // { provide: HTTP_INTERCEPTORS,
+    //   // useClass: AuthTokenInterceptor,
+    //   multi: true
+    // },
+    [AuthGuard],
+
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+export function jwtOptionsFactor(storage:StorageService){
+  return {
+    // tokenGetter:() => {
+    //   return storage.getAccessToken();
+    // },
+    // allowedDomains:["https://localhost:7165"],
+    // disallowedRoutes:[
+    //   "https://localhost:7165/api/Authorization/Login",
+    //   "https://localhost:7165/api/Token/Refresh"
+    // ],
+    // skipWhenExpired: false,
+  }
+}
