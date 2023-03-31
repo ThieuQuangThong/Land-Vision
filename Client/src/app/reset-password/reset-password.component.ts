@@ -33,9 +33,6 @@ export class ResetPasswordComponent implements OnInit {
     this.auth.email = this.resetForm.value['email']
     this.forgotPassword(this.resetForm.value['email'])
 
-    setTimeout(() => {
-      this.Routerloader()
-    }, 5000);
 
   }
 
@@ -44,11 +41,14 @@ export class ResetPasswordComponent implements OnInit {
   }
   forgotPassword(email: string) {
     this.auth.forgotPassword(email).subscribe(res => {
-      alert("ok, The code verify will send in 5 seconds")
+      alert("ok, Check your email to get code")
+      setTimeout(() => {
+        this.Routerloader()
+      }, 2000);
 
     },
       (err) => {
-        alert("not ok")
+        alert("The account was not registed!")
         console.log(err);
       })
     }

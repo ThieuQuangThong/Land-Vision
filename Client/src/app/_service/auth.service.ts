@@ -1,4 +1,4 @@
-import { HttpClient, HttpEvent } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { BehaviorSubject, catchError, map, Observable, of, tap } from 'rxjs';
@@ -15,8 +15,10 @@ HttpClient;
 export class AuthService {
   jwtService: JwtHelperService = new JwtHelperService();
   code: any;
- public email: any;
-  constructor(private http: HttpClient, private storage: StorageService, private jwtHelper: JwtHelperService, private router: Router) {}
+  data = {email: '', code: ''};
+  headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  public email: any;
+  constructor(private http: HttpClient, private storage: StorageService, private jwtHelper: JwtHelperService, private router: Router) { }
   userProfile = new BehaviorSubject<User | null>(null);
 
   login(email: string, password: string) {
@@ -24,23 +26,23 @@ export class AuthService {
       email: email,
       password: password,
     };
-    return this.http.post('https://localhost:7165/api/Account/login', body,{responseType: 'text'}
+    return this.http.post('https://localhost:7165/api/Account/login', body, { responseType: 'text' }
     )
-    .pipe(
-      tap((response) => {
-        const token:TokenModel = new TokenModel()
-        token.accessToken = response
-        this.storage.setToken(token);
-        var userInfo = this.jwtService.decodeToken(token.accessToken) as User;
-        this.userProfile.next(userInfo);
-        return true;
-      }),
-      catchError((error) => {
-        error.
-        this.toast.error({detail: "Error Message", summary:" Please check your email or password again!", duration: 5000})
-        return of(false);
-      }),
-    );
+      .pipe(
+        tap((response) => {
+          const token: TokenModel = new TokenModel()
+          token.accessToken = response
+          this.storage.setToken(token);
+          var userInfo = this.jwtService.decodeToken(token.accessToken) as User;
+          this.userProfile.next(userInfo);
+          return true;
+        }),
+        catchError((error) => {
+          error.
+            this.toast.error({ detail: "Error Message", summary: " Please check your email or password again!", duration: 5000 })
+          return of(false);
+        }),
+      );
 
   }
 
@@ -48,11 +50,11 @@ export class AuthService {
 
 
 
-  sendEmailForVarification(user : any) {
+  sendEmailForVarification(user: any) {
     console.log(user);
-    user.sendEmailVerification().then((res : any) => {
+    user.sendEmailVerification().then((res: any) => {
       this.router.navigate(['/verify-email']);
-    }, (err : any) => {
+    }, (err: any) => {
       alert('Something went wrong. Not able to send mail to your email.')
     })
   }
@@ -86,19 +88,19 @@ export class AuthService {
     return null;
   }
 
-  public checkAccessTokenAndRefresh(): {status : "", token: ""} {
+  public checkAccessTokenAndRefresh(): { status: "", token: "" } {
     const localStorageTokens = localStorage.getItem('token');
     var check = true;
     if (localStorageTokens) {
       var token = JSON.parse(localStorageTokens) as TokenModel;
       var isTokenExpired = this.jwtHelper.isTokenExpired(token.accessToken);
-      if(isTokenExpired){
+      if (isTokenExpired) {
         this.refreshToken(token).subscribe(
           (tokenNew: TokenModel) => {
             localStorage.setItem('token', JSON.stringify(tokenNew));
             return Object({
-              status : check,
-              token : tokenNew,
+              status: check,
+              token: tokenNew,
             });
           },
           err => {
@@ -107,11 +109,11 @@ export class AuthService {
           }
         );
       }
-    }else{
+    } else {
       check = false;
     }
     return Object({
-      status : check,
+      status: check,
     });
   }
 
@@ -121,8 +123,17 @@ export class AuthService {
   }
 
 
-  verifyEmail(code: string) {
-    this.http.post('https://localhost:7165/api/Account/validateCode',this.code.value,{responseType: 'text'})
-  }
+  verifyEmail() {
+    this.http.post('https://localhost:7165/api/Account/validateCode', JSON.stringify(this.data), {headers: this.headers})
+  .subscribe(
+    (response) => {
+      console.log(response); // Handle the response here
+    },
+    (error) => {
+      console.log(error); // Handle the error here
+    }
+  )}
+
+
 }
 

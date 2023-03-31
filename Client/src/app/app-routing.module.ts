@@ -32,7 +32,7 @@ const routes: Routes = [
   {path: "signup", component: SignupComponent},
   {path: "mapstest", component: MapExampleComponent},
   {path: "reset-password", component: ResetPasswordComponent},
-  {path: "new-password", component: NewPasswordComponent},
+  {path: "new-password/:code", component: NewPasswordComponent},
   {path: "code-verify", component: CodeVerifyComponent},
   { path: "dashboard", component: DashboardComponent },
 
