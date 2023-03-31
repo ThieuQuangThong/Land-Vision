@@ -132,7 +132,7 @@ namespace Land_Vision.Controllers
                 return BadRequest(ModelState);
             }
 
-
+            cityDto.Id = cityId;
             var cityUpdate = _mapper.Map<City>(cityDto);
             if (!await _cityRepository.UpdateCityAsync(cityUpdate))
             {

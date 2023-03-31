@@ -15,13 +15,13 @@ namespace Land_Vision.Repositories
 
         public async Task<bool> AddCityAsync(City city)
         {
-            await _dbContext.AddAsync(city);
+            await _dbContext.Citys.AddAsync(city);
             return await SaveChangeAsync();
         }
 
         public async Task<bool> DeleteCityAsync(City city)
         {
-            _dbContext.Remove(city);
+            _dbContext.Citys.Remove(city);
             return await SaveChangeAsync();
         }
 

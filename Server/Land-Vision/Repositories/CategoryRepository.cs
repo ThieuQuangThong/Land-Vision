@@ -16,13 +16,13 @@ namespace Land_Vision.Repositories
         }
         public async Task<bool> AddCategoryAsync(Category category)
         {
-            await _dbContext.AddAsync(category);
+            await _dbContext.Categories.AddAsync(category);
             return await SaveChangeAsync();
         }
 
         public async Task<bool> DeleteCategoryAsync(Category category)
         {
-            _dbContext.Remove(category);
+            _dbContext.Categories.Remove(category);
             return await SaveChangeAsync();
         }
 
@@ -50,7 +50,7 @@ namespace Land_Vision.Repositories
 
         public async Task<bool> UpdateCategoryAsync(Category category)
         {
-            _dbContext.Update(category);
+            _dbContext.Categories.Update(category);
             return await SaveChangeAsync();
         }
     }

@@ -3,6 +3,7 @@ using System;
 using Land_Vision.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Land_Vision.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230331010517_InitialCreate")]
+    partial class InitialCreate
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -126,6 +129,9 @@ namespace Land_Vision.Migrations
                     b.Property<int>("NumberOfView")
                         .HasColumnType("int");
 
+                    b.Property<int>("StatusId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Title")
                         .IsRequired()
                         .HasColumnType("longtext");
@@ -140,6 +146,8 @@ namespace Land_Vision.Migrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("StatusId");
 
                     b.HasIndex("UserId");
 
@@ -168,14 +176,19 @@ namespace Land_Vision.Migrations
                         .IsRequired()
                         .HasColumnType("longtext");
 
+                    b.Property<int>("DistrictId")
+                        .HasColumnType("int");
+
                     b.Property<double>("FrontangeArea")
                         .HasColumnType("double");
 
-                    b.Property<bool>("IsInterior")
-                        .HasColumnType("tinyint(1)");
+                    b.Property<string>("Interior")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
-                    b.Property<int>("Juridical")
-                        .HasColumnType("int");
+                    b.Property<string>("Juridical")
+                        .IsRequired()
+                        .HasColumnType("longtext");
 
                     b.Property<int>("NumberOfBath")
                         .HasColumnType("int");
@@ -226,6 +239,21 @@ namespace Land_Vision.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Roles");
+                });
+
+            modelBuilder.Entity("Land_Vision.Models.Status", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Statuses");
                 });
 
             modelBuilder.Entity("Land_Vision.Models.Street", b =>
@@ -351,6 +379,12 @@ namespace Land_Vision.Migrations
 
             modelBuilder.Entity("Land_Vision.Models.Post", b =>
                 {
+                    b.HasOne("Land_Vision.Models.Status", "Status")
+                        .WithMany("Posts")
+                        .HasForeignKey("StatusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Land_Vision.Models.User", "User")
                         .WithMany("Posts")
                         .HasForeignKey("UserId")
@@ -364,6 +398,8 @@ namespace Land_Vision.Migrations
                         .IsRequired();
 
                     b.Navigation("Property");
+
+                    b.Navigation("Status");
 
                     b.Navigation("User");
                 });
@@ -440,6 +476,11 @@ namespace Land_Vision.Migrations
             modelBuilder.Entity("Land_Vision.Models.Role", b =>
                 {
                     b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("Land_Vision.Models.Status", b =>
+                {
+                    b.Navigation("Posts");
                 });
 
             modelBuilder.Entity("Land_Vision.Models.Street", b =>

@@ -43,7 +43,7 @@ namespace Land_Vision.Controllers
         /// </summary>
         [HttpGet("{districtId}")]
         [ProducesResponseType(200, Type = typeof(DistrictDto))]
-        public async Task<IActionResult> GetDistrict(int districtId)
+        public async Task<IActionResult> GetDistrictAsync(int districtId)
         {
             if (!ModelState.IsValid)
             {

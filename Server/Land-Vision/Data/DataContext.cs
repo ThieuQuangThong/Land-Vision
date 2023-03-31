@@ -15,7 +15,6 @@ namespace Land_Vision.Data
         public DbSet<Position> Positions { get; set; }
         public DbSet<Property> Properties { get; set; }
         public DbSet<Post> Posts { get; set; }
-        public DbSet<Status> Statuses { get; set; }
         public DbSet<Image> Images { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

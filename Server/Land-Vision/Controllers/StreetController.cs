@@ -48,7 +48,7 @@ namespace Land_Vision.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var street = await _streetRepository.GetStreetAsync(streetId);
+            var street = await _streetRepository.GetStreetByIdAsync(streetId);
             return Ok(street);
         }
 
@@ -102,7 +102,7 @@ namespace Land_Vision.Controllers
                 return BadRequest(ModelState);
             }
 
-            var street = await _streetRepository.GetStreetAsync(streetId);
+            var street = await _streetRepository.GetStreetByIdAsync(streetId);
             if (street == null)
             {
                 ModelState.AddModelError("", "Street not exists");
@@ -134,7 +134,7 @@ namespace Land_Vision.Controllers
         [ProducesResponseType(404)]
         public async Task<IActionResult> DeleteStreet(int streetId)
         {
-            var street = await _streetRepository.GetStreetAsync(streetId);
+            var street = await _streetRepository.GetStreetByIdAsync(streetId);
             if (street == null)
             {
                 ModelState.AddModelError("", "Street not exists");

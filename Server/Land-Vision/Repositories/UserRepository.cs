@@ -60,5 +60,10 @@ namespace Land_Vision.Repositories
         {
             return await _dbContext.Users.CountAsync();
         }
+
+        public async Task<User> GetUserAsync(int userId)
+        {
+            return await _dbContext.Users.AsNoTracking().Where(u => u.Id == userId).FirstOrDefaultAsync();
+        }
     }
 }   
