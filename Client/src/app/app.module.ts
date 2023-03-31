@@ -60,13 +60,21 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CodeVerifyComponent } from './code-verify/code-verify.component';
 import { NewPasswordComponent } from './new-password/new-password.component';
-import { CodeInputModule } from 'angular-code-input';
+import { ProductListComponent } from './components/product-list/product-list.component';
+import { SingleProductComponent } from './components/single-product/single-product.component';
+import { ProductDetailComponent } from './components/product-detail/product-detail.component';
+ProductDetailComponent
+CardSettingsComponent
+CardBarChartComponent
 @NgModule({
   declarations: [
     AppComponent,
+    ProductDetailComponent,
+    CardSettingsComponent,
+    CardBarChartComponent,
     LoginComponent,
     SignupComponent,
-
+    SingleProductComponent,
     DashboardComponent,
     CardBarChartComponent,
     CardLineChartComponent,
@@ -101,6 +109,7 @@ import { CodeInputModule } from 'angular-code-input';
     ResetPasswordComponent,
     CodeVerifyComponent,
     NewPasswordComponent,
+    ProductListComponent
     // LoginComponent,
     // RegisterComponent,
   ],
@@ -109,7 +118,6 @@ import { CodeInputModule } from 'angular-code-input';
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
-    CodeInputModule,
     JwtModule.forRoot({
       jwtOptionsProvider:{
         provide:JWT_OPTIONS,
@@ -117,11 +125,7 @@ import { CodeInputModule } from 'angular-code-input';
         deps:[StorageService]
       }
     }),
-    CodeInputModule.forRoot({
-      codeLength: 6,
-      isCharsCode: true,
-      code: 'abcdef'
-    }),
+
   ],
   providers: [
     // { provide: HTTP_INTERCEPTORS,
