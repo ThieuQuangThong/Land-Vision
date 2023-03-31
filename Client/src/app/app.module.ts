@@ -60,6 +60,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CodeVerifyComponent } from './code-verify/code-verify.component';
 import { NewPasswordComponent } from './new-password/new-password.component';
+<<<<<<< HEAD
 import { ProductListComponent } from './components/product-list/product-list.component';
 import { SingleProductComponent } from './components/single-product/single-product.component';
 import { ProductDetailComponent } from './components/product-detail/product-detail.component';
@@ -69,6 +70,17 @@ CardBarChartComponent
 @NgModule({
   declarations: [
     AppComponent,
+=======
+import { ProductDetailComponent } from './components/product-detail/product-detail.component';
+import { SingleProductComponent } from './components/single-product/single-product.component';
+import { ProductListComponent } from './components/product-list/product-list.component';
+
+
+@NgModule({
+  declarations: [
+    AppComponent,
+    ProfileComponent,
+>>>>>>> 54bdd7e69e5efe03b007c4fddedce24dc67a378d
     ProductDetailComponent,
     CardSettingsComponent,
     CardBarChartComponent,
@@ -124,8 +136,7 @@ CardBarChartComponent
         useFactory: jwtOptionsFactor,
         deps:[StorageService]
       }
-    }),
-
+    })
   ],
   providers: [
     // { provide: HTTP_INTERCEPTORS,

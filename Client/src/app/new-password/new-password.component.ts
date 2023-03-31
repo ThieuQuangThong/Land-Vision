@@ -6,5 +6,4 @@ import { Component } from '@angular/core';
   styleUrls: ['./new-password.component.css']
 })
 export class NewPasswordComponent {
-
 }
