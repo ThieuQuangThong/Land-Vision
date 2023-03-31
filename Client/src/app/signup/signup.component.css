@@ -20,3 +20,6 @@ width: 15rem;
 .col-span-full {
   width: 100%;
 }
+.md:px-6{
+  margin: 1rem 6rem 1rem 6rem;
+}

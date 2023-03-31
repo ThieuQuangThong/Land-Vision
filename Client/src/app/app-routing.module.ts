@@ -23,11 +23,17 @@ import { IndexComponent } from "./views/index/index.component";
 import { LandingComponent } from "./views/landing/landing.component";
 import { ProfileComponent } from "./views/profile/profile.component";
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { NewPasswordComponent } from './new-password/new-password.component';
+import { CodeVerifyComponent } from './code-verify/code-verify.component';
 const routes: Routes = [
   {path: '', redirectTo: 'login', pathMatch: 'full'},
   {path: "login", component: LoginComponent},
   {path: "signup", component: SignupComponent},
   {path: "reset-password", component: ResetPasswordComponent},
+  {path: "new-password", component: NewPasswordComponent},
+  {path: "code-verify", component: CodeVerifyComponent},
+  { path: "dashboard", component: DashboardComponent },
+
 
   // admin views
   {
@@ -39,7 +45,7 @@ const routes: Routes = [
       { path: "tables", component: TablesComponent },
       { path: "maps", component: MapsComponent },
       { path: "", redirectTo: "dashboard", pathMatch: "full" },
-    ],
+    ]
   },
   // auth views
   {
