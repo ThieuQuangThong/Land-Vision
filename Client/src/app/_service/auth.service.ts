@@ -14,6 +14,8 @@ HttpClient;
 })
 export class AuthService {
   jwtService: JwtHelperService = new JwtHelperService();
+  code: any;
+ public email: any;
   constructor(private http: HttpClient, private storage: StorageService, private jwtHelper: JwtHelperService, private router: Router) {}
   userProfile = new BehaviorSubject<User | null>(null);
 
@@ -22,7 +24,7 @@ export class AuthService {
       email: email,
       password: password,
     };
-    return this.http.post(API_URL.LOGIN(), body,{responseType: 'text'}
+    return this.http.post('https://localhost:7165/api/Account/login', body,{responseType: 'text'}
     )
     .pipe(
       tap((response) => {
@@ -118,5 +120,9 @@ export class AuthService {
     return this.http.post<any>(url, email);
   }
 
+
+  verifyEmail(code: string) {
+    this.http.post('https://localhost:7165/api/Account/validateCode',this.code.value,{responseType: 'text'})
+  }
 }
 
