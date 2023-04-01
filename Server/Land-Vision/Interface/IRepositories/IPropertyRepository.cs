@@ -5,8 +5,11 @@ namespace Land_Vision.Interface.IRepositories
 {
     public interface IPropertyRepository
     {
-        Task<List<Property>> GetPropertiesAsync();
+        Task<bool> DeletePropertyByIdAsync(int propertyId);
 
+        Task<int> GetPropertyIdByPostIdAsync(int postId);
+        Task<List<Property>> GetPropertiesAsync();
+        Task<bool> IsExistProperty(int propertyId);  
         Task<Property> GetPropertyAsync(int propertyId);
         Task<bool> AddPropertyAsync(Property property);
         Task<bool> UpdatePropertyAsync(Property property);

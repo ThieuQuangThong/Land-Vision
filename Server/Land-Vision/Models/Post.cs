@@ -10,9 +10,9 @@ namespace Land_Vision.Models
         public string Description { get; set; }
         public int NumberOfView { get; set; }
         public bool isVerified { get; set; } = false;
-        public int propertyId { get; set; }
         [Required]
         public User User { get; set; }
+        public int PropertyId {get; set;}
         [Required]
         public Property Property { get; set; }
         [Required]

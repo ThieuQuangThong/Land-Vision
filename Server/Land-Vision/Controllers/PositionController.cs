@@ -1,10 +1,8 @@
 ﻿using AutoMapper;
-using Land_Vision.DTO.CityDtos;
-using Land_Vision.DTO.DistrictDtos;
 using Land_Vision.DTO.PositionDtos;
 using Land_Vision.Interface.IRepositories;
+using Land_Vision.Interface.IServices;
 using Land_Vision.Models;
-using Land_Vision.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Land_Vision.Controllers
@@ -13,12 +11,16 @@ namespace Land_Vision.Controllers
     [ApiController]
     public class PositionController : ControllerBase
     {
+        private readonly IPropertyRepository _propertyRepository;
+        private readonly IPositionService _positionService;
         private readonly IPositionRepository _positionRepository;
         private readonly IMapper _mapper;
-        public PositionController(IPositionRepository positionRepository, IMapper mapper)
+        public PositionController(IPositionService positionService, IPropertyRepository propertyRepository, IPositionRepository positionRepository, IMapper mapper)
         {
             _positionRepository = positionRepository;
             _mapper = mapper;
+            _propertyRepository = propertyRepository;
+            _positionService = positionService;
         }
 
         // GET Positions
@@ -121,6 +123,38 @@ namespace Land_Vision.Controllers
                 return StatusCode(500, ModelState);
             }
             return Ok(positionUpdate);
+        }
+
+        /// <summary>
+        /// Update position list of property by property id.
+        /// </summary>
+        [HttpPut("updatePositionList/{propertyId}/PropertyId")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> UpdatePositionListByPropertyId(int propertyId, [FromBody] List<PositionDto> positionDtos)
+        {
+            if (positionDtos == null)
+                return BadRequest(ModelState);
+
+            if (!await _propertyRepository.IsExistProperty(propertyId))
+            {
+                ModelState.AddModelError("", "Property not exists");
+                return StatusCode(404, ModelState);
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var positions = _mapper.Map<List<Position>>(positionDtos);
+            if(!await _positionService.DeleteAndUpdatePositionAsync(propertyId, positions)){
+                ModelState.AddModelError("", "Some thing went wrong when update positions");
+                return StatusCode(500, ModelState);   
+            }
+            
+            return Ok();
         }
 
         // Delete Position

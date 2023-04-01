@@ -18,7 +18,6 @@ namespace Land_Vision.Models
         public int NumberOfFloor { get; set; }
         public int NumberOfBed { get; set; }
         public int NumberOfBath { get; set; }
-        public int PostId { get; set; }
         public int CategoryId { get; set; }
         public int StreetId { get; set; }
 

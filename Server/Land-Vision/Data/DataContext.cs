@@ -21,7 +21,7 @@ namespace Land_Vision.Data
             modelBuilder.Entity<Property>()
             .HasOne(a => a.Post)
             .WithOne(b => b.Property)
-            .HasForeignKey<Post>(b => b.propertyId);
+            .HasForeignKey<Post>(c =>c.PropertyId);
             base.OnModelCreating(modelBuilder);
         }
     }
