@@ -2,7 +2,6 @@
 using Land_Vision.Interface.IRepositories;
 using Land_Vision.Models;
 using Microsoft.EntityFrameworkCore;
-using Mysqlx;
 
 namespace Land_Vision.Repositories
 {

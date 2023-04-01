@@ -24,6 +24,12 @@ namespace Land_Vision.Repositories
             return await SaveChangeAsync();
         }
 
+        public async Task<bool> DeletePositionListAsync(List<Position> positions)
+        {
+            _dbContext.Positions.RemoveRange(positions);
+            return await SaveChangeAsync();
+        }
+
         public async Task<Position> GetPositionByIdAsync(int positionId)
         {
             return await _dbContext.Positions.Where(p => p.Id == positionId).FirstOrDefaultAsync();
@@ -33,6 +39,12 @@ namespace Land_Vision.Repositories
         public async Task<List<Position>> GetPositionsAsync()
         {
             return await _dbContext.Positions.OrderBy(p => p.Id).ToListAsync();
+        }
+
+        public async Task<List<Position>> GetPositionsByPropertyIdAsync(int propertyId)
+        {
+            var positions = await _dbContext.Positions.Where(x => x.Property.Id == propertyId).ToListAsync();
+            return positions;
         }
 
         public async Task<bool> SaveChangeAsync()

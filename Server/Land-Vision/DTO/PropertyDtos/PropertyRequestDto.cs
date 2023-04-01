@@ -1,12 +1,13 @@
-﻿using Land_Vision.DTO.CategoryDtos;
-using Land_Vision.DTO.PositionDtos;
-using Land_Vision.DTO.StreetDtos;
-using Land_Vision.Models;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
+using System.Threading.Tasks;
+using Land_Vision.DTO.PositionDtos;
 
 namespace Land_Vision.DTO.PropertyDtos
 {
-    public class PropertyDto
+    public class PropertyRequestDto
     {
         [Required]
         public double Area { get; set; }
@@ -21,10 +22,9 @@ namespace Land_Vision.DTO.PropertyDtos
         public int NumberOfFloor { get; set; }
         public int NumberOfBed { get; set; }
         public int NumberOfBath { get; set; }
-        public List<PositionDto> positions {get; set;}
-        public CategoryDto Category { get; set; }
-        public StreetDto Street { get; set; }
+        public int CategoryId { get; set; }
+        public int StreetId { get; set; }
         [Required]
-        public List<PositionDto> PositionDtos { get; set; }
+        public List<PositionDto> PositionDtos { get; set; }       
     }
 }

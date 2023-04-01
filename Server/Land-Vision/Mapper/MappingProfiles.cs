@@ -37,15 +37,19 @@ namespace Land_Vision.Mapper
 
             //Category
             CreateMap<CategoryDto, Category>();
+            CreateMap<Category, CategoryDto>();
 
             //Post
             CreateMap<PostDto, Post>();
             CreateMap<Post, PostDto>();
-
+            CreateMap<PostRequestDto, Post>();
+            CreateMap<Post, PostRequestDto>();
 
             //Property
             CreateMap<PropertyDto, Property>();
             CreateMap<Property, PropertyDto>();
+            CreateMap<Property, PropertyRequestDto>();
+            CreateMap<PropertyRequestDto, Property>();
 
             //Position
             CreateMap<PositionDto, Position>();

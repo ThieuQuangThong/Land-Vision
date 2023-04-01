@@ -3,8 +3,6 @@ using Land_Vision.DTO;
 using Land_Vision.DTO.UserDtos;
 using Land_Vision.Interface.IRepositories;
 using Land_Vision.Interface.IServices;
-using Land_Vision.Models;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Land_Vision.Controllers
@@ -87,7 +85,7 @@ namespace Land_Vision.Controllers
         }
 
         /// <summary>
-        /// Get verify code to reset password.
+        /// Get verify code by email to reset password.
         /// </summary>
         [HttpPost("forgotPassword/{email}")]
         [ProducesResponseType(200)]

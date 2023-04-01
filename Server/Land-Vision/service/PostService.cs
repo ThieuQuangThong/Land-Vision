@@ -1,17 +1,16 @@
 ﻿using AutoMapper;
 using Land_Vision.Dto.PostDtos;
 using Land_Vision.DTO;
-using Land_Vision.DTO.PositionDtos;
 using Land_Vision.DTO.PostDtos;
 using Land_Vision.Interface.IRepositories;
 using Land_Vision.Interface.IServices;
 using Land_Vision.Models;
-using Microsoft.AspNetCore.Mvc.ModelBinding;
 
 namespace Land_Vision.service
 {
     public class PostService : IPostService
     {
+        private readonly IPositionService _positionService;
         private readonly IPostRepository _postRepository;
         private readonly IPropertyRepository _propertyRepository;
         private readonly IStreetRepository _streetRepository;
@@ -19,7 +18,14 @@ namespace Land_Vision.service
         private readonly IPositionRepository _positionRepository;
 
         private readonly IMapper _mapper;
-        public PostService(IMapper mapper, IPostRepository postRepository, IPropertyRepository propertyRepository, ICategoryRepository categoryRepository, IStreetRepository streetRepository, IPositionRepository positionRepository)
+        public PostService
+        (IPositionService positionService,
+         IMapper mapper,
+         IPostRepository postRepository, 
+         IPropertyRepository propertyRepository, 
+         ICategoryRepository categoryRepository, 
+         IStreetRepository streetRepository, 
+         IPositionRepository positionRepository)
         {
             _mapper = mapper;
             _postRepository = postRepository;
@@ -28,13 +34,14 @@ namespace Land_Vision.service
             _categoryRepository = categoryRepository;
             _streetRepository = streetRepository;
             _positionRepository = positionRepository;
+            _positionService = positionService;
         }
 
         public async Task<bool> AddPostPropertyAsync(int userId, CreatePostPropertyDto createPostPropertyDto)
         {
-            var property = _mapper.Map<Property>(createPostPropertyDto.propertyDto);
-            var street = await _streetRepository.GetStreetByIdAsync(createPostPropertyDto.propertyDto.StreetId);
-            var category = await _categoryRepository.GetCategoryAsync(createPostPropertyDto.propertyDto.CategoryId);
+            var property = _mapper.Map<Property>(createPostPropertyDto.property);
+            var street = await _streetRepository.GetStreetByIdAsync(createPostPropertyDto.property.StreetId);
+            var category = await _categoryRepository.GetCategoryAsync(createPostPropertyDto.property.CategoryId);
 
             if (street == null)
             {
@@ -47,24 +54,22 @@ namespace Land_Vision.service
 
             property.Street = street;
             property.Category = category;
-            if (
-             !await _propertyRepository.AddPropertyAsync(property))
+
+            if (!await _propertyRepository.AddPropertyAsync(property))
             {
                 throw new Exception("Some thing went wrong when add property");
             }
 
-            foreach (PositionDto p in createPostPropertyDto.propertyDto.PositionDtos)
-            {
-                var pMap = _mapper.Map<Position>(p);
-                pMap.Property = property;
-                await _positionRepository.AddPositionAsync(pMap);
+            var positions = _mapper.Map<List<Position>>(createPostPropertyDto.property.PositionDtos);
+            if(!await _positionService.AddPositionListAsync(property.Id, positions)){
+                throw new Exception("Some thing went wrong when add property"); 
             }
 
-            var post = _mapper.Map<Post>(createPostPropertyDto.postDto);
+            var post = _mapper.Map<Post>(createPostPropertyDto.post);
             post.Property = property;
             await _postRepository.AddPostAsync(userId, post);
-            return true;
 
+            return true;
         }
 
         public async Task<PaginationRespone<PostDto>> GetPostsAsync(Pagination pagination)
@@ -85,20 +90,73 @@ namespace Land_Vision.service
             return paginResult;
         }
 
-        public async Task<bool> UpdatePostPropertyAsync(CreatePostPropertyDto createPostPropertyDto)
+        public static void UpdateEntityFromDto<TEntity, TDto>(TEntity entity, TDto dto)
         {
-            var property = _mapper.Map<Property>(createPostPropertyDto.propertyDto);
-            property.Street = await _streetRepository.GetStreetByIdAsync(createPostPropertyDto.propertyDto.StreetId);
-            property.Category = await _categoryRepository.GetCategoryAsync(createPostPropertyDto.propertyDto.CategoryId);
+            // Lấy ra tất cả các thuộc tính của entity
+            var entityProperties = typeof(TEntity).GetProperties();
 
+            // Duyệt qua tất cả các thuộc tính của dto
+            foreach (var dtoProperty in typeof(TDto).GetProperties())
+            {
+                // Tìm kiếm thuộc tính tương ứng trong entity
+                var entityProperty = entityProperties.FirstOrDefault(p => p.Name == dtoProperty.Name);
+
+                // Nếu tìm thấy thì cập nhật giá trị của thuộc tính
+                if (entityProperty != null)
+                {
+                    var value = dtoProperty.GetValue(dto);
+                    entityProperty.SetValue(entity, value);
+                }
+            }
+        }
+
+        public async Task<bool> UpdatePostPropertyAsync(int postId, CreatePostPropertyDto createPostPropertyDto)
+        {
+            var propertyId = await _propertyRepository.GetPropertyIdByPostIdAsync(postId);
+            var property = await _propertyRepository.GetPropertyAsync(propertyId);
+
+            var street = await _streetRepository.GetStreetByIdAsync(createPostPropertyDto.property.StreetId);
+            var category = await _categoryRepository.GetCategoryAsync(createPostPropertyDto.property.CategoryId);
+            
+            if (street == null)
+            {
+                throw new Exception("Street is not found");
+            }
+
+            if (category == null)
+            {
+                throw new Exception("Category is not found");
+            }
+
+            if (property == null)
+            {
+                throw new Exception("Property is not found");
+            }
+
+            property.Street = street;
+            property.Category = category;
+
+            UpdateEntityFromDto(property, createPostPropertyDto.property);
 
             if (!await _propertyRepository.UpdatePropertyAsync(property))
             {
-                throw new Exception("Some thing went wrong when add property");
+                throw new Exception("Some thing went wrong when update property");
             }
-            var post = _mapper.Map<Post>(createPostPropertyDto.postDto);
-            post.Property = property;
-            await _postRepository.UpdatePostAsync(post);
+            
+            var positions = _mapper.Map<List<Position>>(createPostPropertyDto.property.PositionDtos);
+            await _positionService.DeleteAndUpdatePositionAsync(propertyId, positions);
+
+            var post = await _postRepository.GetPostAsync(postId);
+            if(post == null){
+                throw new Exception("Post is not found");               
+            }
+
+            UpdateEntityFromDto(post, createPostPropertyDto.post);
+
+            if(!await _postRepository.UpdatePostAsync(post)){
+                throw new Exception("Some thing went wrong when update post");
+            }
+
             return true;
         }
     }

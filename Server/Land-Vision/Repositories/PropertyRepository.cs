@@ -1,5 +1,4 @@
 ﻿using Land_Vision.Data;
-using Land_Vision.DTO;
 using Land_Vision.Interface.IRepositories;
 using Land_Vision.Models;
 using Microsoft.EntityFrameworkCore;
@@ -26,6 +25,13 @@ namespace Land_Vision.Repositories
             return await SaveChangeAsync();
         }
 
+        public async Task<bool> DeletePropertyByIdAsync(int propertyId)
+        {
+            var property = await _dbContext.Properties.Where(x => x.Id == propertyId).FirstOrDefaultAsync();
+            _dbContext.Properties.Remove(property);
+            return await SaveChangeAsync();
+        }
+
         public async Task<List<Property>> GetPropertiesAsync()
         {
             return await _dbContext.Properties.OrderBy(p => p.Id).ToListAsync();
@@ -35,6 +41,20 @@ namespace Land_Vision.Repositories
         public async Task<Property> GetPropertyAsync(int propertyId)
         {
             return await _dbContext.Properties.Where(p => p.Id == propertyId).FirstOrDefaultAsync();
+        }
+
+        public async Task<int> GetPropertyIdByPostIdAsync(int postId)
+        {
+            var test = await _dbContext.Posts.ToListAsync();
+            var propertyId = await _dbContext.Posts.Where(x => x.Id == postId)
+            .Select(p => p.PropertyId).FirstOrDefaultAsync();
+
+            return propertyId;
+        }
+
+        public async Task<bool> IsExistProperty(int propertyId)
+        {
+           return await  _dbContext.Properties.AnyAsync(x => x.Id == propertyId);
         }
 
         public async Task<bool> SaveChangeAsync()

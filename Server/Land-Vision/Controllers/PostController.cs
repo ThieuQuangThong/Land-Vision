@@ -1,12 +1,10 @@
 using AutoMapper;
+using Land_Vision.Data;
 using Land_Vision.Dto.PostDtos;
 using Land_Vision.DTO;
 using Land_Vision.DTO.PostDtos;
-using Land_Vision.DTO.PropertyDtos;
 using Land_Vision.Interface.IRepositories;
 using Land_Vision.Interface.IServices;
-using Land_Vision.Models;
-using Land_Vision.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Land_Vision.Controllers
@@ -16,13 +14,14 @@ namespace Land_Vision.Controllers
 
     public class PostController : ControllerBase
     {
+        private readonly DataContext _dbContext;
         private readonly IImageService _imageService;
         private readonly IMapper _mapper;
         private readonly IPostRepository _postRepository;
         private readonly IPostService _postService;
         private readonly IUserRepository _userRepository;
         private readonly IPositionRepository _positionRepository;
-        public PostController(IPostService postService, IImageService imageService, IMapper mapper, IPostRepository postRepository, IUserRepository userRepository, IPositionRepository positionRepository)
+        public PostController(DataContext dbContext, IPostService postService, IImageService imageService, IMapper mapper, IPostRepository postRepository, IUserRepository userRepository, IPositionRepository positionRepository)
         {
             _postService = postService;
             _imageService = imageService;
@@ -30,6 +29,7 @@ namespace Land_Vision.Controllers
             _postRepository = postRepository;
             _userRepository = userRepository;
             _positionRepository = positionRepository;
+            _dbContext = dbContext;
         }
 
         // GET Posts
@@ -100,20 +100,32 @@ namespace Land_Vision.Controllers
         [ProducesResponseType(400)]
         public async Task<IActionResult> AddPost(int userId, [FromBody] CreatePostPropertyDto postPropertyDto)
         {
-            if (postPropertyDto == null)
+            using var transaction = await _dbContext.Database.BeginTransactionAsync();
+            try
+            {
+                if (postPropertyDto == null)
                 return BadRequest(ModelState);
 
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
 
-            if (!await _postService.AddPostPropertyAsync(userId, postPropertyDto))
-            {
-                ModelState.AddModelError("", "Something went wrong while saving");
-                return StatusCode(500, ModelState);
+                if (!await _postService.AddPostPropertyAsync(userId, postPropertyDto))
+                {
+                    ModelState.AddModelError("", "Something went wrong while saving");
+                    return StatusCode(500, ModelState);
+                }
+
+                await transaction.CommitAsync();
+                return Ok(postPropertyDto);
             }
-            return Ok(postPropertyDto);
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                return StatusCode(500, ex.Message);
+            }
+            
         }
 
         // UPDATE Post
@@ -125,26 +137,62 @@ namespace Land_Vision.Controllers
         [ProducesResponseType(400)]
         public async Task<IActionResult> UpdatePost([FromQuery] int postId, [FromBody] CreatePostPropertyDto postPropertyDto)
         {
-            if (postPropertyDto == null)
-                return BadRequest(ModelState);
+            using var transaction = await _dbContext.Database.BeginTransactionAsync();
+
+                if (postPropertyDto == null){
+                    return BadRequest(ModelState);
+                }
+
+                var post = await _postRepository.GetPostAsync(postId);
+                if (post == null)
+                {
+                    ModelState.AddModelError("", "City not exists");
+                    return StatusCode(404, ModelState);
+                }
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                if (!await _postService.UpdatePostPropertyAsync(postId, postPropertyDto))
+                {
+                    ModelState.AddModelError("", "Something went wrong while saving");
+                    return StatusCode(500, ModelState);
+                }
+                await transaction.CommitAsync();
+                return Ok(postPropertyDto);
+
+
+        }
+
+        // DELETE street
+        /// <summary>
+        /// Delete street
+        /// </summary>
+        [HttpDelete("{postId}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> DeletePostById(int postId)
+        {
             var post = await _postRepository.GetPostAsync(postId);
             if (post == null)
             {
-                ModelState.AddModelError("", "City not exists");
-                return StatusCode(422, ModelState);
+                ModelState.AddModelError("", "Post is not exists");
+                return StatusCode(404, ModelState);
             }
-            if (ModelState.IsValid)
+
+            if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            postPropertyDto.postDto.Id = postId;
-            var postUpdate = _mapper.Map<CreatePostPropertyDto>(postPropertyDto);
-            if (!await _postService.UpdatePostPropertyAsync(postUpdate))
+
+            if (!await _postRepository.DeletePostAsync(post))
             {
                 ModelState.AddModelError("", "Something went wrong while saving");
                 return StatusCode(500, ModelState);
             }
-            return Ok(postUpdate);
+            return Ok();
         }
 
     }

@@ -1,9 +1,7 @@
 ﻿using AutoMapper;
 using Land_Vision.DTO.CategoryDtos;
-using Land_Vision.DTO.CityDtos;
 using Land_Vision.Interface.IRepositories;
 using Land_Vision.Models;
-using Land_Vision.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Land_Vision.Controllers
