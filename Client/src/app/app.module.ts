@@ -63,6 +63,8 @@ import { NewPasswordComponent } from './new-password/new-password.component';
 import { ProductDetailComponent } from './components/product-detail/product-detail.component';
 import { SingleProductComponent } from './components/single-product/single-product.component';
 import { ProductListComponent } from './components/product-list/product-list.component';
+import { AlertComponent } from './components/alert/alert.component';
+import {NgbModule, NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -109,15 +111,18 @@ import { ProductListComponent } from './components/product-list/product-list.com
     ResetPasswordComponent,
     CodeVerifyComponent,
     NewPasswordComponent,
-    ProductListComponent
+    ProductListComponent,
+    AlertComponent
     // LoginComponent,
     // RegisterComponent,
   ],
   imports: [
+    NgbAlertModule,
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
+    NgbModule,
     JwtModule.forRoot({
       jwtOptionsProvider:{
         provide:JWT_OPTIONS,

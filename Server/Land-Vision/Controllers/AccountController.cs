@@ -164,12 +164,16 @@ namespace Land_Vision.Controllers
         [HttpPost("login")]
         [ProducesResponseType(200, Type = typeof(TokenDto))]
         public async Task<ActionResult<TokenDto>> Login(LoginDto loginDto)
-        {     
+        { 
+            if(!await _userRepository.CheckIsExistUserByEmailAsync(loginDto.Email)){
+                ModelState.AddModelError("error", "Email is not exist");
+                return StatusCode(404, ModelState);
+            }    
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            
+     
             return Ok(new TokenDto {
                 accessToken = await _accountService.LoginAsync(loginDto)
             });
