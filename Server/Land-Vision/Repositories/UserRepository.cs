@@ -65,5 +65,10 @@ namespace Land_Vision.Repositories
         {
             return await _dbContext.Users.AsNoTracking().Where(u => u.Id == userId).FirstOrDefaultAsync();
         }
+
+        public async Task<bool> CheckIsExistUserByEmailAsync(string email)
+        {
+            return await _dbContext.Users.AnyAsync(x => x.Email == email);
+        }
     }
 }   

@@ -8,6 +8,8 @@ import { StorageService } from './storage.service';
 import { User } from './user.model';
 import { API_URL } from '../apiurl';
 import { Router } from '@angular/router';
+import { AlertService } from './alert.service';
+
 HttpClient;
 @Injectable({
   providedIn: 'root'
@@ -38,8 +40,11 @@ export class AuthService {
           return true;
         }),
         catchError((error) => {
+          const errorObject = JSON.parse(error.error);
+          const errorMessage = errorObject.error.errors[0].errorMessage;
+          AlertService.setAlertModel('danger',errorMessage)
           error.
-            this.toast.error({ detail: "Error Message", summary: " Please check your email or password again!", duration: 5000 })
+          this.toast.error({ detail: "Error Message", summary: " Please check your email or password again!", duration: 5000 })
           return of(false);
         }),
       );
@@ -134,6 +139,6 @@ export class AuthService {
     }
   )}
 
-  
+
 }
 

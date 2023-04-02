@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../_service/auth.service';
 import { TokenModel } from '../_service/token.model';
+import { AlertService } from '../_service/alert.service';
 
 @Component({
   selector: 'app-login',
@@ -53,15 +54,13 @@ export class LoginComponent implements OnInit{
         const token:TokenModel = new TokenModel()
         token.accessToken = response
           localStorage.setItem("token",JSON.stringify(token));
-          this.route.navigate(['dashboard'],)
-          alert("Successful")
-
+          AlertService.setAlertModel('success',"Login successfully")
+          this.route.navigate(['dashboard'])
           // this.toast.success({detail: "Welcome you !", summary:response.message, duration: 5000})
 
         // console.log(this.userProfile)
     },err=>{
       // this.toast.error({detail: "Error Message", summary:"Something was wrong !", duration: 5000})
-      alert("Something was wrong!")
     })
   }
 

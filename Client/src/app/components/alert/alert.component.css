@@ -1,0 +1,47 @@
+.alert-container{
+  justify-content: center;
+  position: fixed;
+  width: 100%;
+  bottom:-90px;
+  animation: goUp 1s forwards, goDown 1s forwards 2.5s;
+  z-index: 1000;
+}
+
+.alert{
+  width: 25%;
+}
+
+.danger{
+  color: #842029;
+  background-color: #f8d7da;
+  border-color: #f5c2c7;
+}
+
+.success{
+  color: #0f5132;
+  background-color: #d1e7dd;
+  border-color: #badbcc;
+}
+
+.danger,
+.success,
+.alert-child-container{
+  border: 1px solid transparent;
+  border-radius: 0.25rem;
+  padding: 1rem 1rem;
+}
+
+
+
+
+@keyframes goUp {
+  0% {bottom: -90px}
+  100% {bottom: 20px}
+}
+
+
+@keyframes goDown {
+  0% {bottom: 20px}
+  100% {bottom: -90px}
+}
+

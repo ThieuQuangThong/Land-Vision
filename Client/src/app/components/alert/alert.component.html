@@ -1,0 +1,4 @@
+<div [style.display]="alertModel[0].isAlert === true ? 'flex' :'none'"  class="alert-container" *ngFor="let alertChild of alertModel"
+>
+    <ngb-alert class="alert" [class] =alertChild.type  (closed)="close()" >{{alertChild.text}}</ngb-alert>
+</div>
