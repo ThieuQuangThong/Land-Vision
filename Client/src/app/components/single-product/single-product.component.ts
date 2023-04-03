@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { PostModel } from 'src/app/models/post-model';
 
 @Component({
   selector: 'app-single-product',
@@ -6,5 +7,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./single-product.component.css']
 })
 export class SingleProductComponent {
-
+  @Input() postItem: PostModel = new PostModel();
 }
