@@ -6,7 +6,6 @@ import { TokenModel } from './token.model';
 import { LoginComponent } from '../login/login.component';
 import { StorageService } from './storage.service';
 import { User } from './user.model';
-import { API_URL } from '../apiurl';
 import { Router } from '@angular/router';
 import { AlertService } from './alert.service';
 
@@ -36,6 +35,7 @@ export class AuthService {
           token.accessToken = response
           this.storage.setToken(token);
           var userInfo = this.jwtService.decodeToken(token.accessToken) as User;
+
           this.userProfile.next(userInfo);
           return true;
         }),
@@ -50,10 +50,6 @@ export class AuthService {
       );
 
   }
-
-
-
-
 
   sendEmailForVarification(user: any) {
     console.log(user);

@@ -1,6 +1,6 @@
-﻿using Land_Vision.DTO.PropertyDtos;
+﻿using Land_Vision.DTO.ImageDtos;
+using Land_Vision.DTO.PropertyDtos;
 using Land_Vision.DTO.UserDtos;
-using Land_Vision.Models;
 using System.ComponentModel.DataAnnotations;
 
 namespace Land_Vision.DTO.PostDtos
@@ -15,8 +15,6 @@ namespace Land_Vision.DTO.PostDtos
         public bool isVerified { get; set; } = false;
         public PropertyDto Property { get; set; }
         public UserDto User { get; set; }
-        
-        public List<Image> Images { get; set; }
-
+        public List<ImageDto> Images { get; set; }
     }
 }

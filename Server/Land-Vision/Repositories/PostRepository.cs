@@ -18,7 +18,7 @@ namespace Land_Vision.Repositories
         public async Task<bool> AddPostAsync(int userId, Post post)
         {
             post.User = await _dbContext.Users.Where(u => u.Id == userId).FirstOrDefaultAsync();
-            await _dbContext.AddAsync(post);
+            await _dbContext.Posts.AddAsync(post);
             return await SaveChangeAsync();
         }
 
@@ -51,6 +51,7 @@ namespace Land_Vision.Repositories
             .Skip(pagination.SkipCount)
             .Take(pagination.MaxResultCount)
             .Include(x => x.User)
+            .Include(l => l.Images)
             .Include(c => c.Property.Street)
             .Include(m => m.Property.Category)
             .Include(n => n.Property.Positions)

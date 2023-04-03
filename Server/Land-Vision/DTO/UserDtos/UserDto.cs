@@ -12,6 +12,6 @@ namespace Land_Vision.DTO.UserDtos
         public string AvatarLink { get; set; } = "";
         public string Phone { get; set; } = string.Empty;
         public string Email { get; set; }
-        public string roleName { get; set; }
+        public string Role { get; set; }
     }
 }

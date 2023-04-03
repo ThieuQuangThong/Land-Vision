@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { PostService } from "src/app/_service/post.service";
 
 @Component({
   selector: "app-landing",
@@ -7,7 +8,12 @@ import { Component, OnInit } from "@angular/core";
 
 })
 export class LandingComponent implements OnInit {
-  constructor() {}
+  constructor(private postService:PostService) {
 
-  ngOnInit(): void {}
+  }
+
+  ngOnInit(): void {
+
+  }
+
 }

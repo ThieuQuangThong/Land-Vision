@@ -25,6 +25,6 @@ namespace Land_Vision.DTO.PropertyDtos
         public int CategoryId { get; set; }
         public int StreetId { get; set; }
         [Required]
-        public List<PositionDto> PositionDtos { get; set; }       
+        public List<PositionDto> Positions { get; set; }       
     }
 }
