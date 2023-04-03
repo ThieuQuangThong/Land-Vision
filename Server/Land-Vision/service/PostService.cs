@@ -66,6 +66,7 @@ namespace Land_Vision.service
 
             var post = _mapper.Map<Post>(createPostPropertyDto.post);
             post.Property = property;
+            post.CreateDate = DateTime.Now;
             await _postRepository.AddPostAsync(userId, post);
             
             return true;
