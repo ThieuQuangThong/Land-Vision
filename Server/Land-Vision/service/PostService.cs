@@ -16,10 +16,13 @@ namespace Land_Vision.service
         private readonly IStreetRepository _streetRepository;
         private readonly ICategoryRepository _categoryRepository;
         private readonly IPositionRepository _positionRepository;
+        private readonly IImageService _imageService;
 
         private readonly IMapper _mapper;
         public PostService
-        (IPositionService positionService,
+        (
+         IImageService imageService,
+         IPositionService positionService,
          IMapper mapper,
          IPostRepository postRepository, 
          IPropertyRepository propertyRepository, 
@@ -27,6 +30,7 @@ namespace Land_Vision.service
          IStreetRepository streetRepository, 
          IPositionRepository positionRepository)
         {
+            _imageService = imageService;
             _mapper = mapper;
             _postRepository = postRepository;
             _propertyRepository = propertyRepository;
@@ -60,15 +64,10 @@ namespace Land_Vision.service
                 throw new Exception("Some thing went wrong when add property");
             }
 
-            var positions = _mapper.Map<List<Position>>(createPostPropertyDto.property.PositionDtos);
-            if(!await _positionService.AddPositionListAsync(property.Id, positions)){
-                throw new Exception("Some thing went wrong when add property"); 
-            }
-
             var post = _mapper.Map<Post>(createPostPropertyDto.post);
             post.Property = property;
             await _postRepository.AddPostAsync(userId, post);
-
+            
             return true;
         }
 
@@ -143,7 +142,7 @@ namespace Land_Vision.service
                 throw new Exception("Some thing went wrong when update property");
             }
             
-            var positions = _mapper.Map<List<Position>>(createPostPropertyDto.property.PositionDtos);
+            var positions = _mapper.Map<List<Position>>(createPostPropertyDto.property.Positions);
             await _positionService.DeleteAndUpdatePositionAsync(propertyId, positions);
 
             var post = await _postRepository.GetPostAsync(postId);

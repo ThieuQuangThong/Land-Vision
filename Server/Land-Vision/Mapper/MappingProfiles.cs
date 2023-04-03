@@ -2,6 +2,7 @@ using AutoMapper;
 using Land_Vision.DTO.CategoryDtos;
 using Land_Vision.DTO.CityDtos;
 using Land_Vision.DTO.DistrictDtos;
+using Land_Vision.DTO.ImageDtos;
 using Land_Vision.DTO.PositionDtos;
 using Land_Vision.DTO.PostDtos;
 using Land_Vision.DTO.PropertyDtos;
@@ -19,7 +20,7 @@ namespace Land_Vision.Mapper
             //User
             CreateMap<RegisterUserDto, User>();
             CreateMap<User, UserDto>()
-            .ForMember(x => x.roleName, y => y.MapFrom(src => src.Role.Name));
+            .ForMember(x => x.Role, y => y.MapFrom(src => src.Role.Name));
 
             //Role
             CreateMap<RoleDto, Role>();
@@ -54,6 +55,10 @@ namespace Land_Vision.Mapper
             //Position
             CreateMap<PositionDto, Position>();
             CreateMap<Position, PositionDto>();
+
+            //Image
+            CreateMap<Image, ImageDto>();
+            CreateMap<ImageDto, Image>();
         }
     }
 }

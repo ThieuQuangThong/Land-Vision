@@ -1,6 +1,7 @@
 export class User {
-  Id!: String;
-  UserName!: String;
-  Email!: String;
-  Roles!: string
+  nameid!: number;
+  unique_name!: String;
+  email!: String;
+  role!: string;
+  exp!: number;
 }

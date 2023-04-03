@@ -14,7 +14,6 @@ namespace Land_Vision.Repositories
         }
         public async Task<bool> AddPropertyAsync(Property property)
         {
-
             await _dbContext.Properties.AddAsync(property);
             return await SaveChangeAsync();
         }
