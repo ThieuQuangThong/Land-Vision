@@ -114,13 +114,13 @@ namespace Land_Vision.Controllers
                 return BadRequest(ModelState);
             }
 
-            var streetUpdate = _mapper.Map<Street>(streetDto);
-            if (!await _streetRepository.UpdateStreetAsync(streetUpdate))
+            street.Name = streetDto.Name;
+            if (!await _streetRepository.UpdateStreetAsync(street))
             {
                 ModelState.AddModelError("", "Something went wrong while saving");
                 return StatusCode(500, ModelState);
             }
-            return Ok(streetUpdate);
+            return Ok(street);
         }
 
 

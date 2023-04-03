@@ -13,6 +13,7 @@ namespace Land_Vision.DTO.PostDtos
         public string Description { get; set; }
         public int NumberOfView { get; set; }
         public bool isVerified { get; set; } = false;
+        public DateTime CreateDate {get; set;}
         public PropertyDto Property { get; set; }
         public UserDto User { get; set; }
         public List<ImageDto> Images { get; set; }
