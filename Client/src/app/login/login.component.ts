@@ -20,6 +20,7 @@ export class LoginComponent implements OnInit{
   submitted = false;
   show = false;
 
+  loading: boolean = false;
   get f(){
     return this.loginForm.controls;
   }
@@ -45,12 +46,12 @@ export class LoginComponent implements OnInit{
      }
    }
 
-
-
    login() {
+    this.loading = true;
     const email = this.loginForm?.get('email')?.value;
     const password = this.loginForm?.get('password')?.value;
     this.auth.login(email, password).subscribe((response) => {
+      this.loading = false;
         const token:TokenModel = new TokenModel()
         token.accessToken = response
           localStorage.setItem("token",JSON.stringify(token));
@@ -60,6 +61,7 @@ export class LoginComponent implements OnInit{
 
         // console.log(this.userProfile)
     },err=>{
+      this.loading = false;
       // this.toast.error({detail: "Error Message", summary:"Something was wrong !", duration: 5000})
     })
   }

@@ -65,6 +65,7 @@ import { SingleProductComponent } from './components/single-product/single-produ
 import { ProductListComponent } from './components/product-list/product-list.component';
 import { AlertComponent } from './components/alert/alert.component';
 import {NgbModule, NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
+import { NgxLoadingModule } from "ngx-loading";
 
 
 @NgModule({
@@ -123,6 +124,7 @@ import {NgbModule, NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
     ReactiveFormsModule,
     HttpClientModule,
     NgbModule,
+    NgxLoadingModule.forRoot({}),
     JwtModule.forRoot({
       jwtOptionsProvider:{
         provide:JWT_OPTIONS,
