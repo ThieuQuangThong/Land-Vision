@@ -5,7 +5,10 @@
   <div class="bg-white rounded-b-lg shadow-lg">
       <div class="flex items-center justify-between px-4 pt-4">
           <div>
-            <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-emerald-600 bg-emerald-200 last:mr-0 mr-1">
+            <span *ngIf = "!postItem.isVerified" class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-red-600 bg-red-200 last:mr-0 mr-1">
+              No Verified
+            </span>
+            <span *ngIf = "postItem.isVerified" class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-emerald-600 bg-emerald-200 last:mr-0 mr-1">
               Verified
             </span>
           </div>
