@@ -26,7 +26,6 @@ namespace Land_Vision.Repositories
         {  
             _dbContext.Remove(post); 
             return await SaveChangeAsync();
-
         }
 
         public async Task<Post> GetPostAsync(int postId)
@@ -53,6 +52,8 @@ namespace Land_Vision.Repositories
             .Include(x => x.User)
             .Include(l => l.Images)
             .Include(c => c.Property.Street)
+            .Include(j => j.Property.Street.District)
+            .Include(i => i.Property.Street.District.City)
             .Include(m => m.Property.Category)
             .Include(n => n.Property.Positions)
             .ToListAsync();

@@ -161,8 +161,6 @@ namespace Land_Vision.Controllers
                 }
                 await transaction.CommitAsync();
                 return Ok(postPropertyDto);
-
-
         }
 
         // DELETE street
