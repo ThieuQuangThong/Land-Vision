@@ -193,5 +193,63 @@ namespace Land_Vision.Controllers
             return Ok();
         }
 
+        // INCREASE View
+        /// <summary>
+        ///Increase View
+        /// </summary>
+        [HttpPost("increaseView/{postId}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> IncreaseView(int postId)
+        {
+            if (!await _postRepository.CheckIsPostExistByIdAsync(postId))
+            {
+                ModelState.AddModelError("", "Post is not exists");
+                return StatusCode(404, ModelState);
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (!await _postRepository.IncreaseViewByPostIdAsync(postId))
+            {
+                ModelState.AddModelError("", "Something went wrong while increasing");
+                return StatusCode(500, ModelState);
+            }
+            return Ok();
+        }
+
+        /// Verify post
+        /// <summary>
+        /// Verify post
+        /// </summary>
+        [HttpPost("verifyPost/{postId}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public async Task<IActionResult> VerifyPost(int postId)
+        {
+            if (!await _postRepository.CheckIsPostExistByIdAsync(postId))
+            {
+                ModelState.AddModelError("", "Post is not exists");
+                return StatusCode(404, ModelState);
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (!await _postRepository.VerifyPostAsync(postId))
+            {
+                ModelState.AddModelError("", "Something went wrong while Verifying");
+                return StatusCode(500, ModelState);
+            }
+            return Ok();
+        }
+
     }
 }

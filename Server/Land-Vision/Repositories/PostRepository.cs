@@ -22,6 +22,11 @@ namespace Land_Vision.Repositories
             return await SaveChangeAsync();
         }
 
+        public async Task<bool> CheckIsPostExistByIdAsync(int postId)
+        {
+            return await _dbContext.Posts.AnyAsync(x => x.Id == postId);
+        }
+
         public async Task<bool> DeletePostAsync(Post post)
         {  
             _dbContext.Remove(post); 
@@ -59,6 +64,14 @@ namespace Land_Vision.Repositories
             .ToListAsync();
         }
 
+        public async Task<bool> IncreaseViewByPostIdAsync(int postId)
+        {
+            var post = await GetPostAsync(postId);
+            post.NumberOfView += 1;
+            await UpdatePostAsync(post);
+            return await SaveChangeAsync();
+        }
+
         public async Task<bool> SaveChangeAsync()
         {
             var saved = await _dbContext.SaveChangesAsync();
@@ -68,6 +81,14 @@ namespace Land_Vision.Repositories
         public async Task<bool> UpdatePostAsync(Post post)
         {
             _dbContext.Posts.Update(post);
+            return await SaveChangeAsync();
+        }
+
+        public async Task<bool> VerifyPostAsync(int postId)
+        {
+            var post = await GetPostAsync(postId);
+            post.isVerified = true;
+            await UpdatePostAsync(post);
             return await SaveChangeAsync();
         }
     }
