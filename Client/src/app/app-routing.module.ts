@@ -26,6 +26,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { MapExampleComponent } from './components/maps/map-example/map-example.component';
 import { NewPasswordComponent } from './new-password/new-password.component';
 import { CodeVerifyComponent } from './code-verify/code-verify.component';
+import { PostingComponent } from './views/posting/posting.component';
 const routes: Routes = [
   {path: '', redirectTo: 'login', pathMatch: 'full'},
   {path: "login", component: LoginComponent},
@@ -48,6 +49,10 @@ const routes: Routes = [
       { path: "maps", component: MapsComponent },
       { path: "", redirectTo: "dashboard", pathMatch: "full" },
     ]
+  },
+  {
+    path:"posting",
+    component: PostingComponent
   },
   // auth views
   {
