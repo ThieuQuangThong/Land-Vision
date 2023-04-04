@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { Router } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -65,6 +67,7 @@ import { SingleProductComponent } from './components/single-product/single-produ
 import { ProductListComponent } from './components/product-list/product-list.component';
 import { AlertComponent } from './components/alert/alert.component';
 import {NgbModule, NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
+import { PostingComponent } from './views/posting/posting.component';
 import { NgxLoadingModule } from "ngx-loading";
 
 
@@ -113,11 +116,14 @@ import { NgxLoadingModule } from "ngx-loading";
     CodeVerifyComponent,
     NewPasswordComponent,
     ProductListComponent,
-    AlertComponent
+    AlertComponent,
+    PostingComponent
     // LoginComponent,
     // RegisterComponent,
   ],
   imports: [
+    CommonModule,
+    FormsModule,
     NgbAlertModule,
     BrowserModule,
     AppRoutingModule,
