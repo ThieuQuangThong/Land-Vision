@@ -31,6 +31,7 @@ namespace Land_Vision.Mapper
 
             //District
             CreateMap<DistrictDto, District>();
+            CreateMap<District, DistrictDto>();
 
             //Street
             CreateMap<StreetDto, Street>();
@@ -48,7 +49,10 @@ namespace Land_Vision.Mapper
 
             //Property
             CreateMap<PropertyDto, Property>();
-            CreateMap<Property, PropertyDto>();
+            CreateMap<Property, PropertyDto>()
+            .ForMember(x => x.District, y => y.MapFrom(src => src.Street.District))
+            .ForMember(p => p.City, l => l.MapFrom(src => src.Street.District.City));
+
             CreateMap<Property, PropertyRequestDto>();
             CreateMap<PropertyRequestDto, Property>();
 

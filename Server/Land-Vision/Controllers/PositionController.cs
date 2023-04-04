@@ -79,7 +79,6 @@ namespace Land_Vision.Controllers
                 return BadRequest(ModelState);
             }
 
-
             var positionCreate = _mapper.Map<Position>(positionDto);
             positionCreate.Id = propertyId;
             if (!await _positionRepository.AddPositionAsync(positionCreate))

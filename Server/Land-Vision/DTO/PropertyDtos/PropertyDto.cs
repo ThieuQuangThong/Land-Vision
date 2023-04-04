@@ -1,6 +1,9 @@
 ﻿using Land_Vision.DTO.CategoryDtos;
+using Land_Vision.DTO.CityDtos;
+using Land_Vision.DTO.DistrictDtos;
 using Land_Vision.DTO.PositionDtos;
 using Land_Vision.DTO.StreetDtos;
+using Land_Vision.Models;
 using System.ComponentModel.DataAnnotations;
 
 namespace Land_Vision.DTO.PropertyDtos
@@ -24,5 +27,7 @@ namespace Land_Vision.DTO.PropertyDtos
         public List<PositionDto> positions {get; set;}
         public CategoryDto Category { get; set; }
         public StreetDto Street { get; set; }
+        public DistrictDto District { get; set; }
+        public CityDto City { get; set; }
     }
 }
