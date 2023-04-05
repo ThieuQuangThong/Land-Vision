@@ -114,14 +114,14 @@ namespace Land_Vision.Controllers
                 return BadRequest(ModelState);
             }
 
-            positionDto.Id = positionId;
-            var positionUpdate = _mapper.Map<Position>(positionDto);
-            if (!await _positionRepository.UpdatePositionAsync(positionUpdate))
+            position.Latitude = positionDto.Latitude;
+            position.Longtitude = positionDto.Longtitude;
+            if (!await _positionRepository.UpdatePositionAsync(position))
             {
                 ModelState.AddModelError("", "Something went wrong while saving");
                 return StatusCode(500, ModelState);
             }
-            return Ok(positionUpdate);
+            return Ok(position);
         }
 
         /// <summary>
@@ -148,11 +148,12 @@ namespace Land_Vision.Controllers
             }
 
             var positions = _mapper.Map<List<Position>>(positionDtos);
-            if(!await _positionService.DeleteAndUpdatePositionAsync(propertyId, positions)){
+            if (!await _positionService.DeleteAndUpdatePositionAsync(propertyId, positions))
+            {
                 ModelState.AddModelError("", "Some thing went wrong when update positions");
-                return StatusCode(500, ModelState);   
+                return StatusCode(500, ModelState);
             }
-            
+
             return Ok();
         }
 

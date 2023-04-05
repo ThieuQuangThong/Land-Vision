@@ -115,13 +115,13 @@ namespace Land_Vision.Controllers
             }
 
 
-            var categoryUpdate = _mapper.Map<Category>(categoryDto);
-            if (!await _categoryRepository.UpdateCategoryAsync(categoryUpdate))
+            category.Name = categoryDto.Name;
+            if (!await _categoryRepository.UpdateCategoryAsync(category))
             {
                 ModelState.AddModelError("", "Something went wrong while saving");
                 return StatusCode(500, ModelState);
             }
-            return Ok(categoryUpdate);
+            return Ok(category);
         }
 
         // Delete Category
