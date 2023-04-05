@@ -132,14 +132,13 @@ namespace Land_Vision.Controllers
                 return BadRequest(ModelState);
             }
 
-            cityDto.Id = cityId;
-            var cityUpdate = _mapper.Map<City>(cityDto);
-            if (!await _cityRepository.UpdateCityAsync(cityUpdate))
+            city.Name = cityDto.Name;
+            if (!await _cityRepository.UpdateCityAsync(city))
             {
                 ModelState.AddModelError("", "Something went wrong while saving");
                 return StatusCode(500, ModelState);
             }
-            return Ok(cityUpdate);
+            return Ok(city);
         }
 
         // Delete City
