@@ -7,6 +7,7 @@ namespace Land_Vision.DTO.PostDtos
     {
         public string Title { get; set; }
         public string Description { get; set; }
+        public int transactionType {get; set;}
         [Required]
         public List<ImageDto> images { get; set; }
     }
