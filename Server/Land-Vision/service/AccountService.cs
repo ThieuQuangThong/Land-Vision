@@ -242,5 +242,16 @@ namespace Land_Vision.service
 
             return await _userRepository.UpdateUserAsync(user);
         }
+
+        public async Task<string> UpdateValidateForgotPasswordTokenAsync(string email)
+        {
+            var user = await _userRepository.GetUserByEmailAsync(email);
+            if(user == null){
+                throw new Exception("Some thing went wrong");
+            }
+
+            user.ValidateResetToken = GenerateRefreshToken();
+            return user.ValidateResetToken;
+        }
     }
 }

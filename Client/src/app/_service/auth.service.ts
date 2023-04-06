@@ -27,7 +27,7 @@ export class AuthService {
       email: email,
       password: password,
     };
-    return this.http.post('https://localhost:7165/api/Account/login', body, { responseType: 'text',withCredentials: true }
+    return this.http.post('https://localhost:7165/api/Account/login', body, { responseType: 'text', withCredentials: true }
     )
       .pipe(
         tap((response) => {
@@ -120,7 +120,7 @@ export class AuthService {
 
   forgotPassword(email: string): Observable<any> {
     const url = `https://localhost:7165/api/Account/forgotPassword/${email}`;
-    return this.http.post<any>(url, email);
+    return this.http.post<any>(url, email,{withCredentials: true });
   }
 
 

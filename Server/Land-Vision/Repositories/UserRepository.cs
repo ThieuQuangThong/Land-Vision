@@ -85,5 +85,10 @@ namespace Land_Vision.Repositories
         {
             return await _dbContext.Users.Where(x => x.RefreshToken == freshToken).FirstOrDefaultAsync();
         }
+
+        public async Task<bool> CheckIsExistValidatePasswordToken(string email, string token)
+        {
+            return await _dbContext.Users.AnyAsync(x => x.ValidateResetToken == token && x.Email == email);
+        }
     }
 }   

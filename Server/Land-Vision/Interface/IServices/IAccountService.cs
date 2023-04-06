@@ -9,6 +9,7 @@ namespace Land_Vision.Interface.IServices
 {
     public interface IAccountService
     {
+        Task<string> UpdateValidateForgotPasswordTokenAsync(string email);
         Task<TokenDto> RefreshTokenAsync(string freshToken);
         string GenerateRefreshToken();
         Task<bool> ResetPassword(ResetPasswordDto validateCodeDto);
