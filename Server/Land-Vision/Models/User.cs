@@ -38,6 +38,10 @@ namespace Land_Vision.Models
         public DateTime CodeExpires { get; set; }
 
         public bool EmailConfirmed { get; set; } = false;
+        
+        public string? RefreshToken { get; set; }
+
+        public DateTime RefreshTokenExpireTime { get; set; }
 
         public DateTime EmailExpiresTime { get; set; }
 

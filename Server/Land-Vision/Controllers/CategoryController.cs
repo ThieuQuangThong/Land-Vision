@@ -148,8 +148,7 @@ namespace Land_Vision.Controllers
             {
                 return BadRequest(ModelState);
             }
-
-
+            
             var categoryDelete = _mapper.Map<Category>(category);
             try
             {

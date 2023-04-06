@@ -27,7 +27,7 @@ export class AuthService {
       email: email,
       password: password,
     };
-    return this.http.post('https://localhost:7165/api/Account/login', body, { responseType: 'text' }
+    return this.http.post('https://localhost:7165/api/Account/login', body, { responseType: 'text',withCredentials: true }
     )
       .pipe(
         tap((response) => {

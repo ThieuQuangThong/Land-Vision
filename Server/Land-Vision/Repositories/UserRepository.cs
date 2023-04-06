@@ -75,5 +75,15 @@ namespace Land_Vision.Repositories
         {
             return await _dbContext.Users.AnyAsync(x => x.IdentityNumber == idCard);
         }
+        
+        public async Task<bool> CheckFreshTokenIsValidAsync(string freshToken)
+        {
+            return await _dbContext.Users.AnyAsync(x => x.RefreshToken == freshToken && x.RefreshTokenExpireTime > DateTime.Now);
+        }
+
+        public async Task<User> GetUserByFreshTokenAsync(string freshToken)
+        {
+            return await _dbContext.Users.Where(x => x.RefreshToken == freshToken).FirstOrDefaultAsync();
+        }
     }
 }   

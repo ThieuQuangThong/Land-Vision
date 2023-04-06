@@ -87,7 +87,7 @@ namespace Land_Vision.Repositories
         public async Task<bool> VerifyPostAsync(int postId)
         {
             var post = await GetPostAsync(postId);
-            post.isVerified = true;
+            post.IsVerified = true;
             await UpdatePostAsync(post);
             return await SaveChangeAsync();
         }
