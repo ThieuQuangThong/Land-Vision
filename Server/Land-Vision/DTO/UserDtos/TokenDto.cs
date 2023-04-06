@@ -7,6 +7,7 @@ namespace Land_Vision.DTO.UserDtos
 {
     public class TokenDto
     {
-        public string accessToken {get;set;}
+        public string AccessToken {get;set;}
+        public string FreshToken {get;set;}
     }
 }

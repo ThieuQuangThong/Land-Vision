@@ -65,6 +65,12 @@ namespace Land_Vision.service
             return await _userRepository.UpdateUserAsync(user);
         }
 
+        public string GenerateRefreshToken()
+        {
+            Guid guidToken = Guid.NewGuid();
+            return guidToken.ToString();
+        }
+
         public string GenerateToken(User user)
         {
             var issuer = _config["Jwt:Issuer"];
@@ -132,7 +138,7 @@ namespace Land_Vision.service
             return passwordObject;
         }
 
-        public async Task<string> LoginAsync(LoginDto loginDto)
+        public async Task<TokenDto> LoginAsync(LoginDto loginDto)
         {
             var user = await _userRepository.GetUserByEmailAsync(loginDto.Email);
 
@@ -148,8 +154,40 @@ namespace Land_Vision.service
             if(!CompareHashPassword(user.PasswordHash,hashedInputpassword)){
                 throw new Exception("Wrong password!");
             }
-            
-            return GenerateToken(user); 
+            var freshToken = GenerateRefreshToken();
+            user.RefreshToken = freshToken;
+            user.RefreshTokenExpireTime = DateTime.Now.AddDays(NumberFiled.REFRESH_TOKEN_EXPIRE_TIME);
+
+            if(!await _userRepository.UpdateUserAsync(user)){
+                throw new Exception("Some thing went wrong when update user");                    
+            }
+
+            var tokenDto = new TokenDto {
+                AccessToken = GenerateToken(user),
+                FreshToken = freshToken
+            };
+   
+            return tokenDto; 
+        }
+
+        public async Task<TokenDto> RefreshTokenAsync(string freshToken)
+        {
+            if(!await _userRepository.CheckFreshTokenIsValidAsync(freshToken)){
+                throw new Exception("Please, Login again!");
+            }
+
+            var user = await _userRepository.GetUserByFreshTokenAsync(freshToken);
+            var tokenDto = new TokenDto{
+                AccessToken = GenerateToken(user),
+                FreshToken = GenerateRefreshToken(),
+            };
+
+            user.RefreshToken = tokenDto.FreshToken;
+            user.RefreshTokenExpireTime = DateTime.Now.AddDays(NumberFiled.REFRESH_TOKEN_EXPIRE_TIME);
+            if(!await _userRepository.UpdateUserAsync(user)){
+                throw new Exception("Some thing went wrong when update user");                    
+            }
+            return tokenDto;
         }
 
         public async Task<bool> RegisterAccountAsync(RegisterUserDto registerUserDto)

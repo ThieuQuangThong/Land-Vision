@@ -1,4 +1,5 @@
 using AutoMapper;
+using Land_Vision.Common;
 using Land_Vision.DTO;
 using Land_Vision.DTO.UserDtos;
 using Land_Vision.Interface.IRepositories;
@@ -167,7 +168,7 @@ namespace Land_Vision.Controllers
         /// Login
         /// </summary>
         [HttpPost("login")]
-        [ProducesResponseType(200, Type = typeof(TokenDto))]
+        [ProducesResponseType(200, Type = typeof(string))]
         public async Task<ActionResult<TokenDto>> Login(LoginDto loginDto)
         { 
             if(!await _userRepository.CheckIsExistUserByEmailAsync(loginDto.Email)){
@@ -178,10 +179,54 @@ namespace Land_Vision.Controllers
             {
                 return BadRequest(ModelState);
             }
-     
-            return Ok(new TokenDto {
-                accessToken = await _accountService.LoginAsync(loginDto)
-            });
-        } 
+            var TokenRespone =  await _accountService.LoginAsync(loginDto);
+
+            HttpContext.Response.Cookies.Append("FreshToken",TokenRespone.FreshToken,
+                new CookieOptions
+                {
+                    Expires = DateTime.Now.AddDays(NumberFiled.REFRESH_TOKEN_EXPIRE_TIME),
+                    HttpOnly = true,
+                    Secure = true,
+                    IsEssential = true,
+                    SameSite = SameSiteMode.None
+                }
+            );
+            return Ok(TokenRespone.AccessToken);
+        }
+
+        /// <summary>
+        /// Refresh
+        /// </summary>
+        [HttpPost("refresh")]
+        [ProducesResponseType(200, Type = typeof(string))]
+        public async Task<ActionResult<TokenDto>> Refresh()
+        {
+            var freshTokenObject = Request.Headers["FreshToken"].ToString();
+            string freshToken = freshTokenObject.Split("=")[1].ToString();
+            
+            if(freshToken == null || !await _userRepository.CheckFreshTokenIsValidAsync(freshToken)){
+                ModelState.AddModelError("error", "Please login again");
+                return StatusCode(401, ModelState);
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var TokenRespone =  await _accountService.RefreshTokenAsync(freshToken);
+
+            HttpContext.Response.Cookies.Append("FreshToken",TokenRespone.FreshToken,
+                new CookieOptions
+                {
+                    Expires = DateTime.Now.AddDays(7),
+                    HttpOnly = true,
+                    Secure = true,
+                    IsEssential = true,
+                    SameSite = SameSiteMode.None
+                }
+            );
+            return Ok(TokenRespone.AccessToken);
+        }
     }
 }

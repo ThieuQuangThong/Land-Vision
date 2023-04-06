@@ -9,7 +9,8 @@ namespace Land_Vision.Models
         public string Title { get; set; }
         public string Description { get; set; }
         public int NumberOfView { get; set; }
-        public bool isVerified { get; set; } = false;
+        public bool IsVerified { get; set; } = false;
+        public int transactionType { get; set; }
         public DateTime CreateDate {get; set;}
         [Required]
         public User User { get; set; }

@@ -9,6 +9,8 @@ namespace Land_Vision.Interface.IServices
 {
     public interface IAccountService
     {
+        Task<TokenDto> RefreshTokenAsync(string freshToken);
+        string GenerateRefreshToken();
         Task<bool> ResetPassword(ResetPasswordDto validateCodeDto);
         Task<bool> CheckIsExistVerifyCode(ValidateCodeDto validateCodeDto);
         Task<string> GenerateVerifyCodeAsync();
@@ -17,7 +19,7 @@ namespace Land_Vision.Interface.IServices
         PasswordAndHashDto HashPassword(string password);
         PasswordAndHashDto HashPasswordWithSalt(string password, byte[]  passwordSalt );
         Task<bool> RegisterAccountAsync(RegisterUserDto registerUserDto);
-        Task<string> LoginAsync(LoginDto loginDto);
+        Task<TokenDto> LoginAsync(LoginDto loginDto);
         bool CompareHashPassword(byte[] currentPassword, byte[] password);   
     }
 }

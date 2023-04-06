@@ -14,6 +14,6 @@ export class PostService {
   constructor(private http: HttpClient) {}
 
   getAllPost(pagingModel: PagingModel):Observable<PostResponeModel> {
-    return this.http.get<PostResponeModel>(API_URL.GET_ALL_POST(pagingModel))
+    return this.http.get<PostResponeModel>(API_URL.GET_ALL_POST(pagingModel),{withCredentials: true})
   }
 }
