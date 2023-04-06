@@ -6,6 +6,7 @@ namespace Land_Vision.Interface.IRepositories
 {
     public interface IUserRepository
     {
+        Task<bool> CheckIsExistValidatePasswordToken(string email, string token);
         Task<bool> CheckIsExistIdentificationCardAsync(string idCard);
         Task<User> GetUserByFreshTokenAsync(string freshToken);
         Task<bool> CheckFreshTokenIsValidAsync(string freshToken);

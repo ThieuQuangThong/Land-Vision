@@ -108,9 +108,21 @@ namespace Land_Vision.Controllers
             if(!ModelState.IsValid){
                 return BadRequest(ModelState);
             }
+
             if(!await _accountService.ForgotPasswordAsync(user)){
                 ModelState.AddModelError("", "Something went wrong"); 
             };
+
+            var validatePassToken = await _accountService.UpdateValidateForgotPasswordTokenAsync(email);
+            HttpContext.Response.Cookies.Append(TextField.COOKIE_NAME_OF_VALIDATE_PASS_TOKEN, validatePassToken,
+                new CookieOptions
+                {
+                    Expires = DateTime.Now.AddMinutes(NumberFiled.VALIDATE_PASS_TOKEN_EXPIRE_TIME),
+                    HttpOnly = true,
+                    Secure = true,
+                    IsEssential = true,
+                    SameSite = SameSiteMode.None
+                });
 
             return Ok();
         }
@@ -145,6 +157,13 @@ namespace Land_Vision.Controllers
         [ProducesResponseType(404)]
         public async Task<ActionResult> ResetPassword(ResetPasswordDto resetPasswordDto)
         {
+            var validatePassTokenObject = Request.Headers[TextField.COOKIE_NAME_OF_VALIDATE_PASS_TOKEN].ToString();
+            string validatePassToke = validatePassTokenObject.Split("=")[1].ToString();
+            
+            if(validatePassToke == null || !await _userRepository.CheckIsExistValidatePasswordToken(resetPasswordDto.Email, validatePassToke)){
+                ModelState.AddModelError("error", "Nè nè reset password ở máy mô thì dùng ở máy đó nha, đừng đùa với thầy chùa");
+                return StatusCode(401, ModelState);            
+            }
             if(!await _accountService.CheckIsExistVerifyCode(new ValidateCodeDto{
                 Code = resetPasswordDto.Code,
                 Email = resetPasswordDto.Email
@@ -181,7 +200,7 @@ namespace Land_Vision.Controllers
             }
             var TokenRespone =  await _accountService.LoginAsync(loginDto);
 
-            HttpContext.Response.Cookies.Append("FreshToken",TokenRespone.FreshToken,
+            HttpContext.Response.Cookies.Append(TextField.COOKIE_NAME_OF_REFRESH_TOKEN,TokenRespone.FreshToken,
                 new CookieOptions
                 {
                     Expires = DateTime.Now.AddDays(NumberFiled.REFRESH_TOKEN_EXPIRE_TIME),
@@ -201,7 +220,7 @@ namespace Land_Vision.Controllers
         [ProducesResponseType(200, Type = typeof(string))]
         public async Task<ActionResult<TokenDto>> Refresh()
         {
-            var freshTokenObject = Request.Headers["FreshToken"].ToString();
+            var freshTokenObject = Request.Headers[TextField.COOKIE_NAME_OF_REFRESH_TOKEN].ToString();
             string freshToken = freshTokenObject.Split("=")[1].ToString();
             
             if(freshToken == null || !await _userRepository.CheckFreshTokenIsValidAsync(freshToken)){
@@ -216,7 +235,7 @@ namespace Land_Vision.Controllers
 
             var TokenRespone =  await _accountService.RefreshTokenAsync(freshToken);
 
-            HttpContext.Response.Cookies.Append("FreshToken",TokenRespone.FreshToken,
+            HttpContext.Response.Cookies.Append(TextField.COOKIE_NAME_OF_REFRESH_TOKEN,TokenRespone.FreshToken,
                 new CookieOptions
                 {
                     Expires = DateTime.Now.AddDays(7),

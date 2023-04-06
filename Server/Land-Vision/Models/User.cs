@@ -42,6 +42,7 @@ namespace Land_Vision.Models
         public string? RefreshToken { get; set; }
 
         public DateTime RefreshTokenExpireTime { get; set; }
+        public string? ValidateResetToken { get; set; }
 
         public DateTime EmailExpiresTime { get; set; }
 
