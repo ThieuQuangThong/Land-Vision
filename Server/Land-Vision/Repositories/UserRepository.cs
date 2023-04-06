@@ -70,5 +70,10 @@ namespace Land_Vision.Repositories
         {
             return await _dbContext.Users.AnyAsync(x => x.Email == email);
         }
+
+        public async Task<bool> CheckIsExistIdentificationCardAsync(string idCard)
+        {
+            return await _dbContext.Users.AnyAsync(x => x.IdentityNumber == idCard);
+        }
     }
 }   
