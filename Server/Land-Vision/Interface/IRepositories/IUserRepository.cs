@@ -6,6 +6,7 @@ namespace Land_Vision.Interface.IRepositories
 {
     public interface IUserRepository
     {
+        Task<bool> CheckIsExistIdentificationCardAsync(string idCard);
         Task<bool> CheckIsExistUserByEmailAsync(string email);
         Task<bool> CheckCodeIsExistWithEmail(ValidateCodeDto validateCodeDto);
         Task<bool> CodeIsExistAsync(string code);

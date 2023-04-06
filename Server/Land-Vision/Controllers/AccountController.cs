@@ -72,7 +72,12 @@ namespace Land_Vision.Controllers
         [ProducesResponseType(200)]
         public async Task<IActionResult> RegisterAccount(RegisterUserDto registerUserDto)
         {
-
+            
+            if(!await _userRepository.CheckIsExistIdentificationCardAsync(registerUserDto.IdentityNumber)){
+                ModelState.AddModelError("error", "Id card is already exist!");
+                return StatusCode(400, ModelState);
+            }
+            
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
