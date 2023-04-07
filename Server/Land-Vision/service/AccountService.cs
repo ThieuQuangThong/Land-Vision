@@ -114,7 +114,7 @@ namespace Land_Vision.service
 
         public string? GetValueFromCookieByName(string cookieObject, string name)
         {
-            string[] arrayObject = cookieObject.Split(",");
+            string[] arrayObject = cookieObject.Split(";");
             foreach (var item in arrayObject)
             {
                 if(item.Contains(name)){
