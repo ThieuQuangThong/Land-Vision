@@ -9,6 +9,7 @@ namespace Land_Vision.Interface.IServices
 {
     public interface IAccountService
     {
+        string? GetValueFromCookieByName(string cookieObject, string name);
         Task<string> UpdateValidateForgotPasswordTokenAsync(string email);
         Task<TokenDto> RefreshTokenAsync(string freshToken);
         string GenerateRefreshToken();

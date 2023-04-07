@@ -5,7 +5,6 @@ import { Observable } from 'rxjs';
 import { PostResponeModel } from '../models/post-respone-model';
 import { API_URL } from 'src/assets/API_URL';
 
-
 @Injectable({
   providedIn: 'root'
 })

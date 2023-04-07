@@ -1,8 +1,8 @@
 import { HttpClient, HttpEvent, HttpRequest } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Observable, map } from 'rxjs';
 import { AuthService } from './auth.service';
+import { API_URL } from 'src/assets/API_URL';
 
 @Injectable({
   providedIn: 'root'
@@ -50,9 +50,10 @@ export class FileUploadService {
     this.onUpload2()
     this.onUpload1()
   }
+
   onUpload1(): void {
     if (this.imageFile1) {
-      const url = 'https://localhost:7165/api/Image/convertFileImageToUrl';
+      const url = API_URL.CONVERT_FILE_IMAGE_TO_URL();
       const formFile = new FormData();
       formFile.append('formFile', this.imageFile1);
 
@@ -69,7 +70,7 @@ export class FileUploadService {
   }
   onUpload2(): void {
     if (this.imageFile2) {
-      const url = 'https://localhost:7165/api/Image/convertFileImageToUrl';
+      const url = API_URL.CONVERT_FILE_IMAGE_TO_URL();
       const formFile2 = new FormData();
       formFile2.append('formFile', this.imageFile2);
 
