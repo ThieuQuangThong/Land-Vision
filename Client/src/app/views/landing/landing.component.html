@@ -55,27 +55,91 @@
     <div class="container mx-auto px-4">
 
 
-      <div class="flex flex-wrap">
-        <div class="lg:pt-12 pt-6 w-full md:w-4/12 px-4 text-center">
-          <div
-            class="relative flex flex-col min-w-0 break-words bg-white w-full mb-8 shadow-lg rounded-lg"
-          >
-            <div class="px-4 py-5 flex-auto">
-              <div
-                class="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-lg rounded-full bg-red-400"
-              >
-                <i class="fas fa-award"></i>
+      <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-8 shadow-lg rounded-lg">
+        <div class="flex flex-wrap">
+          <div class="w-full md:w-10/12 shadow p-5 rounded-lg bg-white">
+            <div class="flex mr-1">
+              <div class=" w-1/6 flex items-center ml-2 h-full">
+                <button class=" bg-emerald-500 text-white active:bg-emerald-600 font-bold text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150" type="button">
+                  <i class="fas fa-search"></i> Search
+                </button>
               </div>
-              <h6 class="text-xl font-semibold">Awarded Agency</h6>
-              <p class="mt-2 mb-4 text-blueGray-500">
-                Divide details about your product or agency work into parts. A
-                paragraph describing a feature will be enough.
-              </p>
+              <input type="text" class=" py-3 w-5/6 rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm" placeholder="Search by listing, location, bedroom number...">
             </div>
-          </div>
-        </div>
 
-        <div class="w-full md:w-4/12 px-4 text-center">
+            <!-- <div class="flex items-center justify-between mt-4">
+              <p class="font-medium">
+              Filters
+              </p>
+
+              <button class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 text-sm font-medium rounded-md">
+              Reset Filter
+              </button>
+            </div> -->
+
+            <div>
+              <div class="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-7 gap-4 mt-4">
+                <select class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm">
+                  <option value="">All Type</option>
+                  <option value="for-rent">For Rent</option>
+                  <option value="for-sale">For Sale</option>
+                </select>
+
+                <select class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm">
+                  <option value="">Furnish Type</option>
+                  <option value="fully-furnished">Fully Furnished</option>
+                  <option value="partially-furnished">Partially Furnished</option>
+                  <option value="not-furnished">Not Furnished</option>
+                </select>
+
+                <select class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm">
+                  <option value="">Any Price</option>
+                  <option value="1000">RM 1000</option>
+                  <option value="2000">RM 2000</option>
+                  <option value="3000">RM 3000</option>
+                  <option value="4000">RM 4000</option>
+                </select>
+
+                <select class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm">
+                  <option value="">Floor Area</option>
+                  <option value="200">200 sq.ft</option>
+                  <option value="400">400 sq.ft</option>
+                  <option value="600">600 sq.ft</option>
+                  <option value="800 sq.ft">800</option>
+                  <option value="1000 sq.ft">1000</option>
+                  <option value="1200 sq.ft">1200</option>
+                </select>
+
+                <select class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm">
+                  <option value="">Bedrooms</option>
+                  <option value="1">1 bedroom</option>
+                  <option value="2">2 bedrooms</option>
+                  <option value="3">3 bedrooms</option>
+                  <option value="4">4 bedrooms</option>
+                  <option value="5">5 bedrooms</option>
+                </select>
+
+                <select class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm">
+                  <option value="">Bathrooms</option>
+                  <option value="1">1 bathroom</option>
+                  <option value="2">2 bathrooms</option>
+                  <option value="3">3 bathrooms</option>
+                  <option value="4">4 bathrooms</option>
+                  <option value="5">5 bathrooms</option>
+                </select>
+
+                <select class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm">
+                  <option value="">Bathrooms</option>
+                  <option value="1">1 space</option>
+                  <option value="2">2 space</option>
+                  <option value="3">3 space</option>
+                </select>
+              </div>
+            </div>
+            </div>
+        </div>
+    </div>
+        <!-- <div class="w-full md:w-4/12 px-4 text-center">
           <div
             class="relative flex flex-col min-w-0 break-words bg-white w-full mb-8 shadow-lg rounded-lg"
           >
@@ -111,8 +175,7 @@
               </p>
             </div>
           </div>
-        </div>
-      </div>
+        </div> -->
 
       <div class="flex flex-wrap items-center lg:justify-start justify-center">
         <app-single-product *ngFor="let post of postRespone" [postItem] = "post" ></app-single-product>

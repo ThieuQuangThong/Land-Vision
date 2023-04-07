@@ -56,7 +56,7 @@ export class LoginComponent implements OnInit{
         token.accessToken = response
           localStorage.setItem("token",JSON.stringify(token));
           AlertService.setAlertModel('success',"Login successfully")
-          this.route.navigate(['/landing'])
+          this.route.navigate(['admin/dashboard'])
           // this.toast.success({detail: "Welcome you !", summary:response.message, duration: 5000})
 
         // console.log(this.userProfile)
