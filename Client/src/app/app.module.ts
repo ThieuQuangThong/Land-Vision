@@ -72,6 +72,7 @@ import { NgxLoadingModule } from "ngx-loading";
 
 import { FilestackModule } from '@filestack/angular';
 import { FileUploadComponent } from './file-upload/file-upload.component';
+import { MoneyTranformPipe } from './_pipes/money-tranform.pipe';
 @NgModule({
   declarations: [
     AppComponent,
@@ -119,7 +120,8 @@ import { FileUploadComponent } from './file-upload/file-upload.component';
     ProductListComponent,
     AlertComponent,
     PostingComponent,
-    FileUploadComponent
+    FileUploadComponent,
+    MoneyTranformPipe
     // LoginComponent,
     // RegisterComponent,
   ],
@@ -149,7 +151,10 @@ import { FileUploadComponent } from './file-upload/file-upload.component';
     [AuthGuard],
 
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  exports: [
+    MoneyTranformPipe
+  ]
 })
 export class AppModule { }
 export function jwtOptionsFactor(storage:StorageService){
