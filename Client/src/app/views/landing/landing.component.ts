@@ -6,13 +6,14 @@ import { PostModel } from "src/app/models/post-model";
 @Component({
   selector: "app-landing",
   templateUrl: "./landing.component.html",
+  styleUrls: ['./landing.component.css']
 
 
 })
 export class LandingComponent implements OnInit {
   paging: PagingModel = {
     skipCount : 0,
-    maxResultCount : 1,
+    maxResultCount : 8,
   }
   isFullItem: boolean = false;
   postRespone: PostModel[] = [];
