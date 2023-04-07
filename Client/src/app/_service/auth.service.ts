@@ -8,6 +8,7 @@ import { StorageService } from './storage.service';
 import { User } from './user.model';
 import { Router } from '@angular/router';
 import { AlertService } from './alert.service';
+import { API_URL } from 'src/assets/API_URL';
 
 HttpClient;
 @Injectable({
@@ -61,9 +62,8 @@ export class AuthService {
   }
   refreshToken(login: TokenModel) {
     return this.http.post<TokenModel>(
-      'https://localhost:44380/api/Token/Refresh',
+      API_URL.REFRESH_TOKEN(),
       login,
-
     );
   }
 
@@ -121,7 +121,7 @@ export class AuthService {
   }
 
   forgotPassword(email: string): Observable<any> {
-    const url = `https://localhost:7165/api/Account/forgotPassword/${email}`;
+    const url = API_URL.FORGOT_PASSWORD(email);
     return this.http.post<any>(url, email,{withCredentials: true });
   }
 
@@ -130,7 +130,7 @@ export class AuthService {
       email: email,
       code: code
     };
-    const url = 'https://localhost:7165/api/Account/validateCode';
+    const url = API_URL.VALIDATE_CODE();
     return this.http.post(url, data).subscribe((response: any) => {
       console.log(response);
       alert("ok")
@@ -143,7 +143,7 @@ export class AuthService {
       email: email,
       code: code
     };
-    const url = 'https://localhost:7165/api/Account/validateCode';
+    const url = API_URL.VALIDATE_CODE();
     return this.http.post(url, data).subscribe((response: any) => {
       console.log(response);
       alert("ok")

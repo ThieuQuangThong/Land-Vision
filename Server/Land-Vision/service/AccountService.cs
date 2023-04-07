@@ -112,6 +112,18 @@ namespace Land_Vision.service
             return randomNumber;
         }
 
+        public string? GetValueFromCookieByName(string cookieObject, string name)
+        {
+            string[] arrayObject = cookieObject.Split(",");
+            foreach (var item in arrayObject)
+            {
+                if(item.Contains(name)){
+                    return item.Split("=")[1].ToString();
+                }
+            }
+            return null;
+        }
+
         public PasswordAndHashDto HashPassword(string password)
         {
             var passwordBytes = Encoding.UTF8.GetBytes(password);
@@ -251,6 +263,9 @@ namespace Land_Vision.service
             }
 
             user.ValidateResetToken = GenerateRefreshToken();
+            if(!await _userRepository.UpdateUserAsync(user)){
+                throw new Exception("Some thing went wrong");        
+            }
             return user.ValidateResetToken;
         }
     }

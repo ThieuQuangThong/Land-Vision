@@ -158,13 +158,14 @@ namespace Land_Vision.Controllers
         [ProducesResponseType(404)]
         public async Task<ActionResult> ResetPassword(ResetPasswordDto resetPasswordDto)
         {
-            var validatePassTokenObject = Request.Headers[TextField.COOKIE_NAME_OF_VALIDATE_PASS_TOKEN].ToString();
-            string validatePassToke = validatePassTokenObject.Split("=")[1].ToString();
+            var validatePassTokenObject = Request.Headers[TextField.COOKIE_NAME].ToString();
+            string? validatePassToken = _accountService.GetValueFromCookieByName(validatePassTokenObject,TextField.COOKIE_NAME_OF_VALIDATE_PASS_TOKEN);
             
-            if(validatePassToke == null || !await _userRepository.CheckIsExistValidatePasswordToken(resetPasswordDto.Email, validatePassToke)){
+            if(validatePassToken == null || !await _userRepository.CheckIsExistValidatePasswordToken(resetPasswordDto.Email, validatePassToken)){
                 ModelState.AddModelError("error", "Nè nè reset password ở máy mô thì dùng ở máy đó nha, đừng đùa với thầy chùa");
                 return StatusCode(401, ModelState);            
             }
+
             if(!await _accountService.CheckIsExistVerifyCode(new ValidateCodeDto{
                 Code = resetPasswordDto.Code,
                 Email = resetPasswordDto.Email
@@ -236,8 +237,8 @@ namespace Land_Vision.Controllers
         [ProducesResponseType(200, Type = typeof(string))]
         public async Task<ActionResult<TokenDto>> Refresh()
         {
-            var freshTokenObject = Request.Headers[TextField.COOKIE_NAME_OF_REFRESH_TOKEN].ToString();
-            string freshToken = freshTokenObject.Split("=")[1].ToString();
+            var cookieTokenObject = Request.Headers[TextField.COOKIE_NAME].ToString();
+            string? freshToken = _accountService.GetValueFromCookieByName(cookieTokenObject, TextField.COOKIE_NAME_OF_REFRESH_TOKEN);
             
             if(freshToken == null || !await _userRepository.CheckFreshTokenIsValidAsync(freshToken)){
                 ModelState.AddModelError("error", "Please login again");
