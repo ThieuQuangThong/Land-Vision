@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../_service/auth.service';
+import { API_URL } from 'src/assets/API_URL';
 
 @Component({
   selector: 'app-new-password',
@@ -33,7 +34,7 @@ export class NewPasswordComponent implements OnInit {
       password: password
 
     };
-    const url = 'https://localhost:7165/api/Account/resetPassword';
+    const url = API_URL.RESET_PASSWORD();
     return this.http.post(url, data,{withCredentials:  true}).subscribe((response: any) => {
       console.log(response);
       alert("ok")
