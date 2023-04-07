@@ -70,7 +70,8 @@ import {NgbModule, NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 import { PostingComponent } from './views/posting/posting.component';
 import { NgxLoadingModule } from "ngx-loading";
 
-
+import { FilestackModule } from '@filestack/angular';
+import { FileUploadComponent } from './file-upload/file-upload.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -117,7 +118,8 @@ import { NgxLoadingModule } from "ngx-loading";
     NewPasswordComponent,
     ProductListComponent,
     AlertComponent,
-    PostingComponent
+    PostingComponent,
+    FileUploadComponent
     // LoginComponent,
     // RegisterComponent,
   ],
@@ -137,7 +139,7 @@ import { NgxLoadingModule } from "ngx-loading";
         useFactory: jwtOptionsFactor,
         deps:[StorageService]
       }
-    })
+    }),
   ],
   providers: [
     // { provide: HTTP_INTERCEPTORS,

@@ -4083,5 +4083,6 @@ select {
 @media (min-width: 1536px) {
 }
 .invalid-feedback{
-  color: rgb(197, 74, 74);
+  color: rgb(233, 91, 91);
+  transition: .1s;
 }
