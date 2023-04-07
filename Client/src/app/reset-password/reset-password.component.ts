@@ -36,14 +36,14 @@ export class ResetPasswordComponent implements OnInit {
 
   }
 
-  Routerloader(){
-    this.router.navigate(['code-verify'])
+  Routerloader(email:string){
+    this.router.navigate(['code-verify/'+ email])
   }
   forgotPassword(email: string) {
     this.auth.forgotPassword(email).subscribe(res => {
       alert("ok, Check your email to get code")
       setTimeout(() => {
-        this.Routerloader()
+        this.Routerloader(email)
       }, 2000);
 
     },

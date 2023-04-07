@@ -64,7 +64,8 @@ import { ProductDetailComponent } from './components/product-detail/product-deta
 import { SingleProductComponent } from './components/single-product/single-product.component';
 import { ProductListComponent } from './components/product-list/product-list.component';
 
-
+import { FilestackModule } from '@filestack/angular';
+import { FileUploadComponent } from './file-upload/file-upload.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -109,7 +110,8 @@ import { ProductListComponent } from './components/product-list/product-list.com
     ResetPasswordComponent,
     CodeVerifyComponent,
     NewPasswordComponent,
-    ProductListComponent
+    ProductListComponent,
+    FileUploadComponent
     // LoginComponent,
     // RegisterComponent,
   ],
@@ -118,13 +120,15 @@ import { ProductListComponent } from './components/product-list/product-list.com
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
+
+    FilestackModule.forRoot({ apikey: "AUNjX3EmOTKWQkWk202qfz" }),
     JwtModule.forRoot({
       jwtOptionsProvider:{
         provide:JWT_OPTIONS,
         useFactory: jwtOptionsFactor,
         deps:[StorageService]
       }
-    })
+    }),
   ],
   providers: [
     // { provide: HTTP_INTERCEPTORS,

@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../_service/auth.service';
 import { TokenModel } from '../_service/token.model';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-login',

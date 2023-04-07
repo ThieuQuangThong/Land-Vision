@@ -61,7 +61,8 @@ export class AuthService {
   refreshToken(login: TokenModel) {
     return this.http.post<TokenModel>(
       'https://localhost:44380/api/Token/Refresh',
-      login
+      login,
+      
     );
   }
 
@@ -83,6 +84,7 @@ export class AuthService {
       var tokenModel = JSON.parse(token) as TokenModel;
       var userInfo = this.jwtService.decodeToken(
         tokenModel.accessToken
+
       )
     }
     return null;
@@ -122,9 +124,31 @@ export class AuthService {
     return this.http.post<any>(url, email);
   }
 
+  getData(email: any, code: any) {
+    const data = {
+      email: email,
+      code: code
+    };
+    const url = 'https://localhost:7165/api/Account/validateCode';
+    return this.http.post(url, data).subscribe((response: any) => {
+      console.log(response);
+      alert("ok")
+      this.router.navigate(['new-password/'+this.code])
 
-  
+    });
+  }
+  getDataCode(email: any, code: any) {
+    const data = {
+      email: email,
+      code: code
+    };
+    const url = 'https://localhost:7165/api/Account/validateCode';
+    return this.http.post(url, data).subscribe((response: any) => {
+      console.log(response);
+      alert("ok")
+      this.router.navigate(['new-password/'+this.code])
 
-
+    });
+  }
 }
 

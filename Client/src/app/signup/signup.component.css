@@ -23,3 +23,6 @@ width: 15rem;
 .md:px-6{
   margin: 1rem 6rem 1rem 6rem;
 }
+.invalid-feedback{
+  transition: .2s;
+}
