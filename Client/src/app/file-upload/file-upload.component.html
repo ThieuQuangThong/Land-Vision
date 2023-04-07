@@ -1,0 +1,71 @@
+<!-- <form class="mb-1 gap-1 flex" [formGroup]="upload" action=""  >
+  <div class="col-span-2">
+    <label for="cover-photo" class="block text-xs font-medium leading-6">Front card</label>
+    <div class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
+      <div class="text-center">
+        <svg class="mx-auto h-12 w-12 text-gray-300" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path fill-rule="evenodd" d="M1.5 6a2.25 2.25 0 012.25-2.25h16.5A2.25 2.25 0 0122.5 6v12a2.25 2.25 0 01-2.25 2.25H3.75A2.25 2.25 0 011.5 18V6zM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0021 18v-1.94l-2.69-2.689a1.5 1.5 0 00-2.12 0l-.88.879.97.97a.75.75 0 11-1.06 1.06l-5.16-5.159a1.5 1.5 0 00-2.12 0L3 16.061zm10.125-7.81a1.125 1.125 0 112.25 0 1.125 1.125 0 01-2.25 0z" clip-rule="evenodd" />
+        </svg>
+        <div class="mt-4 flex text-sm leading-6 text-gray-600">
+          <label for="fileupload" class="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
+            <span>Upload a file</span>
+            <input type="file" accept="image/*" (change)="onImageSelected($event)" form class="sr-only">
+          </label>
+          <p class="pl-1">or drag and drop</p>
+        </div>
+        <p class="text-xs leading-5 text-gray-600">PNG, JPG, GIF up to 10MB</p>
+      </div>
+    </div>
+  </div>
+  <div class="col-span-2">
+    <label for="cover-photo" class="block text-xs font-medium leading-6">Rear card</label>
+    <div class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
+      <div class="text-center">
+        <svg class="mx-auto h-12 w-12 text-gray-300" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+          <path fill-rule="evenodd" d="M1.5 6a2.25 2.25 0 012.25-2.25h16.5A2.25 2.25 0 0122.5 6v12a2.25 2.25 0 01-2.25 2.25H3.75A2.25 2.25 0 011.5 18V6zM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0021 18v-1.94l-2.69-2.689a1.5 1.5 0 00-2.12 0l-.88.879.97.97a.75.75 0 11-1.06 1.06l-5.16-5.159a1.5 1.5 0 00-2.12 0L3 16.061zm10.125-7.81a1.125 1.125 0 112.25 0 1.125 1.125 0 01-2.25 0z" clip-rule="evenodd" />
+        </svg>
+        <div class="mt-4 flex text-sm leading-6 text-gray-600">
+          <label for="fileupload" class="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
+            <span>Upload a file</span>
+            <input type="file" accept="image/*" (change)="onImageSelected($event)" formclass="sr-only">
+          </label>
+          <p class="pl-1">or drag and drop</p>
+        </div>
+        <p class="text-xs leading-5 text-gray-600">PNG, JPG, GIF up to 10MB</p>
+      </div>
+    </div>
+  </div>
+
+<button type="submit" (click)="onUpload()">upload</button>
+
+
+</form> -->
+
+<div class="mb-1 gap-1 flex" >
+
+    <label class=" bg-grey-lighter w-64 flex flex-col items-center px-4 py-6 bg-white text-blue rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-white">
+        <svg class="w-8 h-8" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+            <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
+        </svg>
+        <span class="mt-2 text-base leading-normal">Select a file</span>
+        <input type='file' class="hidden"type="file" accept="image/*" (change)="onImageSelected1($event)" />
+        <div *ngIf="imageUrl1">
+          <img [src]="imageUrl1" alt="Uploaded image">
+        </div>
+    </label>
+    <label class=" bg-grey-lighter w-64 flex flex-col items-center px-4 py-6 bg-white text-blue rounded-lg shadow-lg tracking-wide uppercase border border-blue cursor-pointer hover:bg-blue hover:text-white">
+        <svg class="w-8 h-8" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+            <path d="M16.88 9.1A4 4 0 0 1 16 17H5a5 5 0 0 1-1-9.9V7a3 3 0 0 1 4.52-2.59A4.98 4.98 0 0 1 17 8c0 .38-.04.74-.12 1.1zM11 11h3l-4-4-4 4h3v3h2v-3z" />
+        </svg>
+        <span class="mt-2 text-base leading-normal">Select a file</span>
+        <input type='file' class="hidden"type="file" accept="image/*" (change)="onImageSelected2($event)" />
+        <div *ngIf="imageUrl1">
+          <img [src]="imageUrl1" alt="Uploaded image">
+        </div>
+    </label>
+</div>
+<div class="mb-1 gap-2 ">
+
+  <button type="button" class=" mt-4  flex flex-col items-center px-4 py-6 button-33" (click)="onUpload2() " (click)="onUpload1()">Upload</button>
+</div>
+

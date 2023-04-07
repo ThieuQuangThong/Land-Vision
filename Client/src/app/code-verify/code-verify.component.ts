@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, first, tap } from 'rxjs';
 import { AuthService } from '../_service/auth.service';
 
@@ -10,7 +10,9 @@ import { AuthService } from '../_service/auth.service';
   templateUrl: './code-verify.component.html',
   styleUrls: ['./code-verify.component.css']
 })
+
 export class CodeVerifyComponent implements OnInit {
+  @Output() verifySubmitted = new EventEmitter<{ email: string, code: string }>();
 
   verifyForm!: FormGroup;
   // get f() {
@@ -18,42 +20,38 @@ export class CodeVerifyComponent implements OnInit {
   // }
 
   code: any;
-  constructor(private http: HttpClient, private fb: FormBuilder, private router: Router, private auth: AuthService) { }
-
+  constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private router: Router, private auth: AuthService) { }
+  email:string ="";
   ngOnInit(): void {
+    this.email = this.route.snapshot.paramMap.get('email')!;
     this.verifyForm = this.fb.group({
       code: ['', Validators.required],
     });
   }
-  route() {
-    this.router.navigate(['reset-password'])
+  onVerifySubmit() {
+    if (this.verifyForm.valid) {
+      const email = this.auth.email;
+      const code = this.verifyForm.value.code;
+      this.verifySubmitted.emit({ email, code });
+    }
   }
-
-  compareCode(data: any) {
-
-    return this.http.post('https://localhost:7165/api/Account/validateCode', data, { responseType: 'text' })
-  }
-   mycode!: string;
   getData(email: any, code: any) {
     const data = {
       email: email,
       code: code
     };
-
-
     const url = 'https://localhost:7165/api/Account/validateCode';
     return this.http.post(url, data).subscribe((response: any) => {
-      console.log(response);
-      alert("ok")
-      this.router.navigate(['new-password/' + this.code])
+      this.router.navigate(['new-password/'+code+"/"+ this.email])
 
     });
   }
   OnSubmit() {
     console.log(this.auth.email)
-    this.getData(this.auth.email, this.code=this.verifyForm?.get('code')?.value)
-
-    // this.auth.verifyEmail(this.first)
+    const code = this.verifyForm?.get('code')?.value;
+    this.getData(this.email, code);
+    console.log(code)
   }
+
 
 }
