@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
@@ -70,7 +70,6 @@ import {NgbModule, NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 import { PostingComponent } from './views/posting/posting.component';
 import { NgxLoadingModule } from "ngx-loading";
 
-import { FilestackModule } from '@filestack/angular';
 import { FileUploadComponent } from './file-upload/file-upload.component';
 @NgModule({
   declarations: [
@@ -149,7 +148,8 @@ import { FileUploadComponent } from './file-upload/file-upload.component';
     [AuthGuard],
 
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas :[CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }
 export function jwtOptionsFactor(storage:StorageService){
