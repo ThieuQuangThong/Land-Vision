@@ -31,8 +31,6 @@
     "@popperjs/core": "^2.11.7",
     "@tailwindcss/forms": "^0.5.3",
     "@types/arcgis-js-api": "^4.26.0",
-    "angularfire": "^1.2.0",
-    "angularfire2": "^5.4.2",
     "angularfirestore-deep": "^1.0.9",
     "chart.js": "^4.2.1",
     "file-drop-element": "^1.0.1",

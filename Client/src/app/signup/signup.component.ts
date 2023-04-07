@@ -3,15 +3,7 @@ import { HttpClient, HttpEventType, HttpRequest, HttpResponse } from '@angular/c
 import { ChangeDetectorRef, Component, ElementRef, Inject, Input, OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormBuilder, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../_service/auth.service';
-import { TokenModel } from '../_service/token.model';
-import { AngularFireStorage } from 'angularfire2/storage';
-import { Observable } from 'rxjs';
 import { FileUploadService } from '../_service/file-upload.service';
-import { TransformOptions } from 'filestack-js';
-import { FilestackService } from '@filestack/angular';
-import { FilestackResponse } from '../models/filestack.interface'
-import { FileUploadComponent } from '../file-upload/file-upload.component';
 
 @Component({
   selector: 'app-signup',
