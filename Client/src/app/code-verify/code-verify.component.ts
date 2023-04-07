@@ -4,6 +4,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, first, tap } from 'rxjs';
 import { AuthService } from '../_service/auth.service';
+import { AlertService } from '../_service/alert.service';
 
 @Component({
   selector: 'app-code-verify',
@@ -42,8 +43,11 @@ export class CodeVerifyComponent implements OnInit {
     };
     const url = 'https://localhost:7165/api/Account/validateCode';
     return this.http.post(url, data).subscribe((response: any) => {
+      AlertService.setAlertModel("success", "Please enter your new password!")
       this.router.navigate(['new-password/'+code+"/"+ this.email])
-
+    },
+    (error) =>{
+      AlertService.setAlertModel("danger", "Some thing went wrong!")
     });
   }
   OnSubmit() {

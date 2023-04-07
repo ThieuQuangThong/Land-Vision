@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from '../_service/auth.service';
+import { AlertService } from '../_service/alert.service';
 
 @Component({
   selector: 'app-reset-password',
@@ -36,19 +37,15 @@ export class ResetPasswordComponent implements OnInit {
 
   }
 
-  Routerloader(email:string){
-    this.router.navigate(['code-verify/'+ email])
-  }
+
   forgotPassword(email: string) {
     this.auth.forgotPassword(email).subscribe(res => {
-      alert("ok, Check your email to get code")
-      setTimeout(() => {
-        this.Routerloader(email)
-      }, 2000);
+      AlertService.setAlertModel("success", "Please Check your mail!")
+      this.router.navigate(['code-verify/'+ email])
 
     },
       (err) => {
-        alert("The account was not registed!")
+        AlertService.setAlertModel("danger", "Some thing went wrong!")
         console.log(err);
       })
     }

@@ -28,7 +28,7 @@ export class AuthService {
       email: email,
       password: password,
     };
-    return this.http.post('https://localhost:7165/api/Account/login', body, { responseType: 'text', withCredentials: true }
+    return this.http.post(API_URL.LOGIN(), body, { responseType: 'text', withCredentials: true }
     )
       .pipe(
         tap((response) => {
@@ -41,8 +41,10 @@ export class AuthService {
           return true;
         }),
         catchError((error) => {
+          console.log(error);
+
           const errorObject = JSON.parse(error.error);
-          const errorMessage = errorObject.error.errors[0].errorMessage;
+          const errorMessage = errorObject.detail;
           AlertService.setAlertModel('danger',errorMessage)
           error.
           this.toast.error({ detail: "Error Message", summary: " Please check your email or password again!", duration: 5000 })
@@ -122,7 +124,7 @@ export class AuthService {
 
   forgotPassword(email: string): Observable<any> {
     const url = API_URL.FORGOT_PASSWORD(email);
-    return this.http.post<any>(url, email,{withCredentials: true });
+    return this.http.post(url,{}, {withCredentials: true });
   }
 
   getData(email: any, code: any) {

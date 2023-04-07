@@ -10,7 +10,7 @@ export class AlertService {
   private static alertModel: BehaviorSubject<AlertModel> = new BehaviorSubject({});
   constructor() { }
   isTimeOutRunning : boolean = false;
-  static  setAlertModel(type:string = "success", text:string =""){
+  static setAlertModel(type:string = "success", text:string =""){
     const alert : AlertModel = {
       isAlert : true,
       type : type,

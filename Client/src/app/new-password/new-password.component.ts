@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../_service/auth.service';
 import { API_URL } from 'src/assets/API_URL';
+import { AlertService } from '../_service/alert.service';
 
 @Component({
   selector: 'app-new-password',
@@ -35,11 +36,14 @@ export class NewPasswordComponent implements OnInit {
 
     };
     const url = API_URL.RESET_PASSWORD();
-    return this.http.post(url, data,{withCredentials:  true}).subscribe((response: any) => {
+    return this.http.post(url, data,{withCredentials:true}).subscribe((response: any) => {
       console.log(response);
-      alert("ok")
+      AlertService.setAlertModel("success","Change password successfully");
       this.router.navigate(['/login'])
 
+    },
+    error => {
+      AlertService.setAlertModel("danger","Some thing went wrong");
     });
   }
 
