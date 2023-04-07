@@ -9,5 +9,6 @@ export const API_URL = {
   REFRESH_TOKEN: () => `${DOMAIN}/api/Token/Refresh`,
   VALIDATE_CODE:() => `${DOMAIN}/api/Account/validateCode`,
   CONVERT_FILE_IMAGE_TO_URL:() =>`${DOMAIN}/api/Image/convertFileImageToUrl`,
-  RESET_PASSWORD:() =>`${DOMAIN}/api/Account/resetPassword`
+  RESET_PASSWORD:() =>`${DOMAIN}/api/Account/resetPassword`,
+  LOGIN:() => `${DOMAIN}/api/Account/login`,
 };

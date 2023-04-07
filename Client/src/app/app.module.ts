@@ -69,8 +69,6 @@ import { AlertComponent } from './components/alert/alert.component';
 import {NgbModule, NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 import { PostingComponent } from './views/posting/posting.component';
 import { NgxLoadingModule } from "ngx-loading";
-
-import { FilestackModule } from '@filestack/angular';
 import { FileUploadComponent } from './file-upload/file-upload.component';
 import { MoneyTranformPipe } from './_pipes/money-tranform.pipe';
 @NgModule({

@@ -124,7 +124,6 @@ namespace Land_Vision.Controllers
                     IsEssential = true,
                     SameSite = SameSiteMode.None
                 });
-
             return Ok();
         }
 
