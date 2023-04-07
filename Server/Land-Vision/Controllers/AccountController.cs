@@ -1,3 +1,4 @@
+using System.Net;
 using AutoMapper;
 using Land_Vision.Common;
 using Land_Vision.DTO;
@@ -189,28 +190,43 @@ namespace Land_Vision.Controllers
         [HttpPost("login")]
         [ProducesResponseType(200, Type = typeof(string))]
         public async Task<ActionResult<TokenDto>> Login(LoginDto loginDto)
-        { 
-            if(!await _userRepository.CheckIsExistUserByEmailAsync(loginDto.Email)){
-                ModelState.AddModelError("error", "Email is not exist");
-                return StatusCode(404, ModelState);
-            }    
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            var TokenRespone =  await _accountService.LoginAsync(loginDto);
-
-            HttpContext.Response.Cookies.Append(TextField.COOKIE_NAME_OF_REFRESH_TOKEN,TokenRespone.FreshToken,
-                new CookieOptions
+        {
+            try{
+                if(!await _userRepository.CheckIsExistUserByEmailAsync(loginDto.Email)){
+                    ModelState.AddModelError("error", "Email is not exist");
+                    return StatusCode(404, ModelState);
+                }    
+                if (!ModelState.IsValid)
                 {
-                    Expires = DateTime.Now.AddDays(NumberFiled.REFRESH_TOKEN_EXPIRE_TIME),
-                    HttpOnly = true,
-                    Secure = true,
-                    IsEssential = true,
-                    SameSite = SameSiteMode.None
+                    return BadRequest(ModelState);
                 }
-            );
-            return Ok(TokenRespone.AccessToken);
+                var TokenRespone =  await _accountService.LoginAsync(loginDto);
+
+                HttpContext.Response.Cookies.Append(TextField.COOKIE_NAME_OF_REFRESH_TOKEN,TokenRespone.FreshToken,
+                    new CookieOptions
+                    {
+                        Expires = DateTime.Now.AddDays(NumberFiled.REFRESH_TOKEN_EXPIRE_TIME),
+                        HttpOnly = true,
+                        Secure = true,
+                        IsEssential = true,
+                        SameSite = SameSiteMode.None
+                    }
+                );
+                return Ok(TokenRespone.AccessToken);
+            }
+            catch(CustomException ex){
+
+                var problemDetails = new ProblemDetails
+                {
+                    Status = ex.StatusCode,
+                    Detail = ex.Message
+                };
+
+                return new ObjectResult(problemDetails)
+                {
+                    StatusCode = problemDetails.Status
+                };
+            }
         }
 
         /// <summary>

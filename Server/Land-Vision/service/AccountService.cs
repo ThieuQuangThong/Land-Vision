@@ -143,23 +143,23 @@ namespace Land_Vision.service
             var user = await _userRepository.GetUserByEmailAsync(loginDto.Email);
 
             if(user == null){
-                throw new Exception("Not found!");
+                throw new CustomException("Wrong password!", 404);
             }
             
             if(!user.EmailConfirmed){
-                 throw new Exception("Please, confirm your email!");               
+                throw new CustomException("Please, confirm your email!", 401);
             }
             
             var  hashedInputpassword = HashPasswordWithSalt(loginDto.Password, user.PasswordSalt).hashedPassword;
             if(!CompareHashPassword(user.PasswordHash,hashedInputpassword)){
-                throw new Exception("Wrong password!");
+                throw new CustomException("Wrong password!", 406);
             }
             var freshToken = GenerateRefreshToken();
             user.RefreshToken = freshToken;
             user.RefreshTokenExpireTime = DateTime.Now.AddDays(NumberFiled.REFRESH_TOKEN_EXPIRE_TIME);
 
             if(!await _userRepository.UpdateUserAsync(user)){
-                throw new Exception("Some thing went wrong when update user");                    
+                throw new CustomException("Some thing went worng!", 500);                  
             }
 
             var tokenDto = new TokenDto {
