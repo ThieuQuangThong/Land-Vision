@@ -36,6 +36,7 @@ const routes: Routes = [
   {path: "new-password/:code/:email", component: NewPasswordComponent},
   {path: "code-verify/:email", component: CodeVerifyComponent},
   { path: "dashboard", component: DashboardComponent },
+  { path: "productdetails", component: SettingsComponent },
 
 
   // admin views
@@ -44,7 +45,7 @@ const routes: Routes = [
     component: AdminComponent,
     children: [
       { path: "dashboard", component: DashboardComponent },
-      { path: "settings", component: SettingsComponent },
+      // { path: "settings", component: SettingsComponent },
       { path: "tables", component: TablesComponent },
       { path: "maps", component: MapsComponent },
       { path: "", redirectTo: "dashboard", pathMatch: "full" },
