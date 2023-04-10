@@ -1,6 +1,5 @@
 import { PagingModel } from "src/app/models/paging-model";
 
-
 export const DOMAIN = "https://localhost:7165";
 
 export const API_URL = {
@@ -11,4 +10,5 @@ export const API_URL = {
   CONVERT_FILE_IMAGE_TO_URL:() =>`${DOMAIN}/api/Image/convertFileImageToUrl`,
   RESET_PASSWORD:() =>`${DOMAIN}/api/Account/resetPassword`,
   LOGIN:() => `${DOMAIN}/api/Account/login`,
+  REGISTER_ACCOUNT:() => `${DOMAIN}/api/Account/RegisterAccount`,
 };

@@ -20,6 +20,13 @@ namespace Land_Vision.Repositories
             return await SaveChangeAsync();
         }
 
+        public async Task<bool> AddStreetListAsync(District district, List<Street> streets)
+        {
+            streets.ForEach(x => x.District = district);
+            await _dbContext.Streets.AddRangeAsync(streets);
+            return await SaveChangeAsync();
+        }
+
         public async Task<bool> DeleteStreetAsync(Street street)
         {
             _dbContext.Streets.Remove(street);

@@ -20,7 +20,7 @@ namespace Land_Vision.Controllers
         /// </summary>
         [HttpPost("convertFileImageToUrl")]
         [ProducesResponseType(200, Type = typeof(string))]
-        public async Task<IActionResult> ConvertFileToUrl([FromBody]IFormFile formFile)
+        public async Task<IActionResult> ConvertFileToUrl(IFormFile formFile)
         {
             if (!ModelState.IsValid)
             {

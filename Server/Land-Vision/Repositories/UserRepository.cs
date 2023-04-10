@@ -90,5 +90,17 @@ namespace Land_Vision.Repositories
         {
             return await _dbContext.Users.AnyAsync(x => x.ValidateResetToken == token && x.Email == email);
         }
+
+        public async Task<bool> CheckIsExistByIdAsync(int id)
+        {
+            return await _dbContext.Users.AnyAsync(x => x.Id == id);
+        }
+
+        public async Task<bool> DeleteUserByIdAsync(int userId)
+        {
+            var user = await _dbContext.Users.Where(x => x.Id == userId).FirstOrDefaultAsync();
+            _dbContext.Users.Remove(user);
+            return await SaveChangesAsync();
+        }
     }
 }   

@@ -7,7 +7,8 @@ namespace Land_Vision.Interface.IRepositories
         Task<List<Street>> GetStreetsAsync();
         Task<Street> GetStreetByIdAsync(int streetId);
         Task<Street> GetStreetByNameAsync(string streetName);
-        Task<bool> AddStreetAsync(int districtId, Street street);
+        Task<bool> AddStreetAsync(int districtId, Street streets);
+        Task<bool> AddStreetListAsync(District district, List<Street> street);
         Task<bool> UpdateStreetAsync(Street street);
         Task<bool> DeleteStreetAsync(Street street);
         Task<bool> SaveChangeAsync();

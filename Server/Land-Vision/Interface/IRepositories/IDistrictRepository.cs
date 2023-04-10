@@ -4,6 +4,7 @@ namespace Land_Vision.Interface.IRepositories
 {
     public interface IDistrictRepository
     {
+        Task<bool> AddDistrictListAsync(City city, List<District> districts);
         Task<List<District>> GetDistrictsAsync();
         Task<District> GetDistrictAsync(int districtId);
         Task<District> GetDistrictByNameAsync(string districtName);

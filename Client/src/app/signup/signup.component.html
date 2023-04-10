@@ -25,13 +25,13 @@
         </div>
         <div class="mb-1">
           <label for="phone" class="block mb-1 text-xs font-medium text-[#002D74]">Your phone number</label>
-          <input type="text" formControlName="phoneNumber" placeholder="Phone number" id="phone" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:[#002D74]e-500
-           focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400" [ngClass]="{ 'is-invalid': submitted && f['phoneNumber'].errors }" >
-           <div *ngIf="submitted && f['phoneNumber'].errors" class="invalid-feedback">
-            <div *ngIf="f['phoneNumber'].errors['required']">
+          <input type="text" formControlName="phone" placeholder="Phone number" id="phone" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:[#002D74]e-500
+           focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400" [ngClass]="{ 'is-invalid': submitted && f['phone'].errors }" >
+           <div *ngIf="submitted && f['phone'].errors" class="invalid-feedback">
+            <div *ngIf="f['phone'].errors['required']">
               Phone Number is required.
             </div>
-            <div *ngIf="f['phoneNumber'].errors['pattern']">
+            <div *ngIf="f['phone'].errors['pattern']">
               Please Follow your pattern: Enter 10 digit phone Number.
             </div>
           </div>
