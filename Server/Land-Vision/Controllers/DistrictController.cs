@@ -1,4 +1,6 @@
 ﻿using AutoMapper;
+using Land_Vision.Data;
+using Land_Vision.DTO;
 using Land_Vision.DTO.DistrictDtos;
 using Land_Vision.DTO.StreetDtos;
 using Land_Vision.Interface.IRepositories;
@@ -14,8 +16,10 @@ namespace Land_Vision.Controllers
         private readonly IDistrictRepository _districtRepository;
         private readonly ICityRepository _cityRepository;
         private readonly IMapper _mapper;
-        public DistrictController(IDistrictRepository districtRepository, ICityRepository cityRepository, IMapper mapper)
+        private readonly DataContext _dbContext;
+        public DistrictController(DataContext dbContext, IDistrictRepository districtRepository, ICityRepository cityRepository, IMapper mapper)
         {
+            _dbContext = dbContext;
             _districtRepository = districtRepository;
             _cityRepository = cityRepository;
             _mapper = mapper;
@@ -104,6 +108,49 @@ namespace Land_Vision.Controllers
             return Ok(districtCreate);
         }
 
+        // POST District
+        /// <summary>
+        /// Add district list
+        /// </summary>
+        [HttpPost("addDistrictList/{cityId}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> AddDistrictList(int cityId, [FromBody] List<DistrictDto> districtDtos)
+        {
+            using var transaction = await _dbContext.Database.BeginTransactionAsync();
+            try
+            {
+                if (districtDtos == null)
+                    return BadRequest(ModelState);
+
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+                
+                var city = await _cityRepository.GetCityAsync(cityId);
+                if(city == null){
+                    ModelState.AddModelError("", "City not found");
+                    return StatusCode(500, ModelState);
+                }
+
+                var newDistricts = _mapper.Map<List<District>>(districtDtos);
+
+                if (!await _districtRepository.AddDistrictListAsync(city, newDistricts))
+                {
+                    ModelState.AddModelError("", "Something went wrong while saving");
+                    return StatusCode(500, ModelState);
+                }
+
+                await transaction.CommitAsync();
+                return Ok(newDistricts);
+            }
+            catch(CustomException ex){
+                await transaction.RollbackAsync();
+                return StatusCode(500, ex.Message);
+            }
+        }
+
         // UPDATE district
         /// <summary>
         /// Update district
@@ -130,13 +177,13 @@ namespace Land_Vision.Controllers
                 return BadRequest(ModelState);
             }
 
-            var districtUpdate = _mapper.Map<District>(districtDto);
-            if (!await _districtRepository.UpdateDistrictAsync(districtUpdate))
+            district.Name = districtDto.Name;
+            if (!await _districtRepository.UpdateDistrictAsync(district))
             {
                 ModelState.AddModelError("", "Something went wrong while saving");
                 return StatusCode(500, ModelState);
             }
-            return Ok(districtUpdate);
+            return Ok(district);
         }
 
 

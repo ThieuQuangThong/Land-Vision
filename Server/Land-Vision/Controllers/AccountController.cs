@@ -75,7 +75,7 @@ namespace Land_Vision.Controllers
         public async Task<IActionResult> RegisterAccount(RegisterUserDto registerUserDto)
         {
             
-            if(!await _userRepository.CheckIsExistIdentificationCardAsync(registerUserDto.IdentityNumber)){
+            if(await _userRepository.CheckIsExistIdentificationCardAsync(registerUserDto.IdentityNumber)){
                 ModelState.AddModelError("error", "Id card is already exist!");
                 return StatusCode(400, ModelState);
             }
@@ -262,6 +262,46 @@ namespace Land_Vision.Controllers
                 }
             );
             return Ok(TokenRespone.AccessToken);
+        }
+
+        /// <summary>
+        /// Delete account
+        /// </summary>
+        [HttpDelete("{accountId}")]
+        [ProducesResponseType(200, Type = typeof(string))]
+        public async Task<ActionResult<TokenDto>> DeleteAccount(int accountId)
+        {
+            try{
+
+                if(!await _userRepository.CheckIsExistByIdAsync(accountId)){
+                    ModelState.AddModelError("error", "User is not exist");
+                    return StatusCode(404, ModelState);
+                }
+
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                if(!await _userRepository.DeleteUserByIdAsync(accountId)){
+                    ModelState.AddModelError("error", "Some thing went wrong when delete account");
+                    return StatusCode(500, ModelState);
+                }
+                return Ok();
+            }
+            catch(CustomException ex){
+
+                var problemDetails = new ProblemDetails
+                {
+                    Status = ex.StatusCode,
+                    Detail = ex.Message
+                };
+
+                return new ObjectResult(problemDetails)
+                {
+                    StatusCode = problemDetails.Status
+                };
+            }
         }
     }
 }

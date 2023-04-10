@@ -1,6 +1,9 @@
 ﻿using AutoMapper;
+using Land_Vision.Data;
+using Land_Vision.DTO;
 using Land_Vision.DTO.StreetDtos;
 using Land_Vision.Interface.IRepositories;
+using Land_Vision.Interface.IServices;
 using Land_Vision.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,13 +14,17 @@ namespace Land_Vision.Controllers
     public class StreetController : ControllerBase
     {
         private readonly IStreetRepository _streetRepository;
+        private readonly IStreetService _streetService;
         private readonly IDistrictRepository _districtRepository;
         private readonly IMapper _mapper;
-        public StreetController(IStreetRepository streetRepository, IDistrictRepository districtRepository, IMapper mapper)
+        private readonly DataContext _dbContext;
+        public StreetController(IStreetService streetService, DataContext dbContext, IStreetRepository streetRepository, IDistrictRepository districtRepository, IMapper mapper)
         {
             _streetRepository = streetRepository;
             _districtRepository = districtRepository;
             _mapper = mapper;
+            _dbContext = dbContext;
+            _streetService = streetService;
         }
 
         // GET Streets
@@ -86,6 +93,41 @@ namespace Land_Vision.Controllers
                 return StatusCode(500, ModelState);
             }
             return Ok(streetCreate);
+        }
+
+        // POST Street
+        /// <summary>
+        /// Add street list
+        /// </summary>
+        [HttpPost("addStreetList")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> AddStreetList([FromBody] List<StreetDto> streetDtos)
+        {
+            using var transaction = await _dbContext.Database.BeginTransactionAsync();
+            try{
+
+                if (streetDtos == null)
+                    return BadRequest(ModelState);
+
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                if (!await _streetService.AddStreetListAsync(streetDtos))
+                {
+                    ModelState.AddModelError("", "Something went wrong while saving");
+                    return StatusCode(500, ModelState);
+                }
+
+                await transaction.CommitAsync();
+                return Ok();
+            }
+            catch(CustomException ex){
+                await transaction.RollbackAsync();
+                return StatusCode(500, ex.Message);
+            }
         }
 
         // UPDATE street

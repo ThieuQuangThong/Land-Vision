@@ -34,12 +34,12 @@ namespace Land_Vision.Repositories
 
         public async Task<District> GetDistrictAsync(int districtId)
         {
-            return await _dbContext.Districts.AsNoTracking().Where(c => c.Id == districtId).FirstOrDefaultAsync();
+            return await _dbContext.Districts.Where(c => c.Id == districtId).FirstOrDefaultAsync();
         }
 
         public async Task<District> GetDistrictByNameAsync(string districtName)
         {
-            return await _dbContext.Districts.AsNoTracking().Where(c => c.Name == districtName).FirstOrDefaultAsync();
+            return await _dbContext.Districts.Where(c => c.Name == districtName).FirstOrDefaultAsync();
         }
 
         public async Task<bool> SaveChangeAsync()
@@ -57,6 +57,15 @@ namespace Land_Vision.Repositories
         public async Task<List<Street>> GetStreetOfDistrictAsync(int districtId)
         {
             return await _dbContext.Streets.AsNoTracking().Where(s => s.District.Id == districtId).ToListAsync();
+        }
+
+        public async Task<bool> AddDistrictListAsync(City city, List<District> districts)
+        {
+            districts.ForEach(x => x.City = city);
+
+           await _dbContext.Districts.AddRangeAsync(districts);
+            
+            return await SaveChangeAsync();
         }
     }
 }

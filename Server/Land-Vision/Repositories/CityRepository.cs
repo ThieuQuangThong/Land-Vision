@@ -19,6 +19,11 @@ namespace Land_Vision.Repositories
             return await SaveChangeAsync();
         }
 
+        public async Task<bool> CheckIsExistCity(int cityId)
+        {
+            return await _dbContext.Citys.AnyAsync(x => x.Id == cityId);
+        }
+
         public async Task<bool> DeleteCityAsync(City city)
         {
             _dbContext.Citys.Remove(city);
@@ -32,17 +37,17 @@ namespace Land_Vision.Repositories
 
         public async Task<City> GetCityAsync(int cityId)
         {
-            return await _dbContext.Citys.AsNoTracking().Where(c => c.Id == cityId).FirstOrDefaultAsync();
+            return await _dbContext.Citys.Where(c => c.Id == cityId).FirstOrDefaultAsync();
         }
 
         public async Task<City> GetCityByNameAsync(string cityName)
         {
-            return await _dbContext.Citys.AsNoTracking().Where(c => c.Name == cityName).FirstOrDefaultAsync();
+            return await _dbContext.Citys.Where(c => c.Name == cityName).FirstOrDefaultAsync();
         }
 
         public async Task<List<District>> GetDistrictOfCityAsync(int cityId)
         {
-            return await _dbContext.Districts.AsNoTracking().Where(d => d.City.Id == cityId).ToListAsync();
+            return await _dbContext.Districts.Where(d => d.City.Id == cityId).ToListAsync();
         }
 
         public async Task<bool> SaveChangeAsync()

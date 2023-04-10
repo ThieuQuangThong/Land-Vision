@@ -59,13 +59,11 @@
         </svg>
         <span class="mt-2 text-base leading-normal">Select a file</span>
         <input type='file' class="hidden"type="file" accept="image/*" (change)="onImageSelected2($event)" />
-        <div *ngIf="imageUrl1">
-          <img [src]="imageUrl1" alt="Uploaded image">
+        <div *ngIf="imageUrl2">
+          <img [src]="imageUrl2" alt="Uploaded image">
         </div>
     </label>
 </div>
 <div class="mb-1 gap-2 ">
-
-  <button type="button" class=" mt-4  flex flex-col items-center px-4 py-6 button-33" (click)="onUpload2() " (click)="onUpload1()">Upload</button>
 </div>
 

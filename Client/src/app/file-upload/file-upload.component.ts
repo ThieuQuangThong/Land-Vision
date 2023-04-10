@@ -39,12 +39,14 @@ export class FileUploadComponent implements OnInit {
     const fileInput = event.target as HTMLInputElement;
     if (fileInput.files && fileInput.files.length) {
       this.imageFile1 = fileInput.files[0];
+      this.onUpload1();
     }
   }
   onImageSelected2(event: Event): void {
     const fileInput = event.target as HTMLInputElement;
     if (fileInput.files && fileInput.files.length) {
       this.imageFile2 = fileInput.files[0];
+      this.onUpload2()
     }
   }
   onSubmit() {

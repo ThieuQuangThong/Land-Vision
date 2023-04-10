@@ -1,6 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace Land_Vision.Models
+﻿namespace Land_Vision.Models
 {
     public class District
     {
