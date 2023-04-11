@@ -16,6 +16,7 @@ namespace Land_Vision.Data
         public DbSet<Property> Properties { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<Image> Images { get; set; }
+        public DbSet<Vip> Vips { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Property>()
