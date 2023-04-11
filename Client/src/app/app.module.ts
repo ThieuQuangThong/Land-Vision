@@ -5,10 +5,10 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 //Angular material
-import {MatDatepickerModule} from '@angular/material/datepicker';
-import { MatInputModule } from '@angular/material/input';
+// import {MatDatepickerModule} from '@angular/material/datepicker';
+// import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MatNativeDateModule } from '@angular/material/core';
+// import { MatNativeDateModule } from '@angular/material/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -77,6 +77,7 @@ import { PostingComponent } from './views/posting/posting.component';
 import { NgxLoadingModule } from "ngx-loading";
 import { FileUploadComponent } from './file-upload/file-upload.component';
 import { MoneyTranformPipe } from './_pipes/money-tranform.pipe';
+import { DatePickerComponent } from './components/date-picker/date-picker.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -125,15 +126,16 @@ import { MoneyTranformPipe } from './_pipes/money-tranform.pipe';
     AlertComponent,
     PostingComponent,
     FileUploadComponent,
-    MoneyTranformPipe
+    MoneyTranformPipe,
+    DatePickerComponent
     // LoginComponent,
     // RegisterComponent,
   ],
   imports: [
-    MatDatepickerModule,
-    MatInputModule,
+    // MatDatepickerModule,
+    // MatInputModule,
     BrowserAnimationsModule,
-    MatNativeDateModule,
+    // MatNativeDateModule,
     CommonModule,
     FormsModule,
     NgbAlertModule,
