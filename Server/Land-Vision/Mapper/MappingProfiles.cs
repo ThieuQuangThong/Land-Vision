@@ -9,6 +9,7 @@ using Land_Vision.DTO.PropertyDtos;
 using Land_Vision.DTO.RoleDtos;
 using Land_Vision.DTO.StreetDtos;
 using Land_Vision.DTO.UserDtos;
+using Land_Vision.DTO.vipDtos;
 using Land_Vision.Models;
 
 namespace Land_Vision.Mapper
@@ -63,6 +64,10 @@ namespace Land_Vision.Mapper
             //Image
             CreateMap<Image, ImageDto>();
             CreateMap<ImageDto, Image>();
+
+            //Vip
+            CreateMap<Vip, VipDto>();
+            CreateMap<VipDto, Vip>();
         }
     }
 }

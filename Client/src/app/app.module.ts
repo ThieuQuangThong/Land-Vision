@@ -77,7 +77,6 @@ import { PostingComponent } from './views/posting/posting.component';
 import { NgxLoadingModule } from "ngx-loading";
 import { FileUploadComponent } from './file-upload/file-upload.component';
 import { MoneyTranformPipe } from './_pipes/money-tranform.pipe';
-import { DatePickerComponent } from './components/date-picker/date-picker.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -126,8 +125,7 @@ import { DatePickerComponent } from './components/date-picker/date-picker.compon
     AlertComponent,
     PostingComponent,
     FileUploadComponent,
-    MoneyTranformPipe,
-    DatePickerComponent
+    MoneyTranformPipe
     // LoginComponent,
     // RegisterComponent,
   ],

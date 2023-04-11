@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 
 // import arcgis lib
 // import Map from "@arcgis/core/Map";
