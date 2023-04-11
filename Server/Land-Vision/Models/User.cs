@@ -48,6 +48,7 @@ namespace Land_Vision.Models
 
         [Required]
         public Role Role { get; set; }
+        public Vip? Vip {get; set;}
 
         public List<Post> Posts { get; set; }
     }
