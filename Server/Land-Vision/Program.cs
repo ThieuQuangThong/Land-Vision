@@ -127,6 +127,7 @@ builder.Services.AddScoped<IPostRepository, PostRepository>();
 builder.Services.AddScoped<IPropertyRepository, PropertyRepository>();
 builder.Services.AddScoped<IPositionRepository, PositionRepository>();
 builder.Services.AddScoped<IImageRepository, ImageRepository>();
+builder.Services.AddScoped<IVipRepository, VipRepository>();
 
 //Service Scope
 builder.Services.AddScoped<IEmailService, EmailService>();
