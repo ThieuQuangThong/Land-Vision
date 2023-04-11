@@ -1,5 +1,4 @@
 import { Component, OnInit, Input } from "@angular/core";
-import { post } from "dojo/request";
 import { PostService } from "src/app/_service/post.service";
 import { PagingModel } from "src/app/models/paging-model";
 import { PostModel } from "src/app/models/post-model";
@@ -7,6 +6,7 @@ import { PostModel } from "src/app/models/post-model";
 @Component({
   selector: "app-card-table",
   templateUrl: "./card-table.component.html",
+  styleUrls: ['./card-table.component.css']
 })
 export class CardTableComponent implements OnInit {
   paging: PagingModel = {
@@ -52,11 +52,6 @@ export class CardTableComponent implements OnInit {
 
   constructor(private postService : PostService) {}
 
-  ngOnInit(): void {
-    this.initDate();
-    this.getNoOfDays();
-    this.getPost(this.paging);
-  }
 
   getPost(paging: PagingModel){
     this.postService.getAllPost(paging)
@@ -125,6 +120,10 @@ export class CardTableComponent implements OnInit {
     this.blankdays = blankdaysArray;
     this.no_of_days = daysArray;
   }
-
+  ngOnInit(): void {
+    this.initDate();
+    this.getNoOfDays();
+    this.getPost(this.paging);
+  }
   trackByIdentity = (index: number, item: any) => item;
 }

@@ -5,10 +5,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 //Angular material
-// import {MatDatepickerModule} from '@angular/material/datepicker';
-// import { MatInputModule } from '@angular/material/input';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-// import { MatNativeDateModule } from '@angular/material/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -130,10 +126,6 @@ import { MoneyTranformPipe } from './_pipes/money-tranform.pipe';
     // RegisterComponent,
   ],
   imports: [
-    // MatDatepickerModule,
-    // MatInputModule,
-    BrowserAnimationsModule,
-    // MatNativeDateModule,
     CommonModule,
     FormsModule,
     NgbAlertModule,

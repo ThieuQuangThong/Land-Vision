@@ -1,0 +1,18 @@
+#one-line {
+    white-space: nowrap;
+    /* -webkit-line-clamp:2; */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* -webkit-line-clamp: 1; */
+    /* -webkit-box-orient: vertical; */
+    display: -webkit-box;
+    /* width: 74%; */
+}
+
+#four-line {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+}

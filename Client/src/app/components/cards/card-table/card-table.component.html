@@ -13,12 +13,11 @@
         <!-- Projects table -->
         <div class="grid grid-cols-6 gap-4">
             <div class="col-start-1 col-end-2 ">
-                <!-- DatePicker start date -->
                 <div class="antialiased sans-serif">
                     <div>
                         <div class="container mx-auto px-4 py-2 ">
-                            <div class="mb-5 w-64">
-                                <label for="startdatepicker" class="font-bold mb-1 text-gray-700 block">Start Date</label>
+                            <div class="mb-5">
+                                <label for="datepicker" class="font-bold mb-1 text-gray-700 block">Select Date</label>
                                 <div class="relative">
                                     <input type="hidden" name="date" x-ref="date" />
                                     <input type="text" readonly [(ngModel)]="startdatepickerValue" (click)="showStartDatepicker = !showStartDatepicker" (keydown.escape)="showStartDatepicker = false" class="
@@ -134,44 +133,44 @@
                     </div>
                 </div>
             </div>
-            <div class="col-start-2 col-span-1 ">
-                <!-- DatePicker end date -->
 
+            <!-- EndDate -->
+            <div class="col-start-2 col-span-1 ">
                 <div class="antialiased sans-serif">
                     <div>
-                        <div class="container mx-auto px-4 py-2 ">
-                            <div class="mb-5 w-64">
-                                <label for="enddatepicker" class="font-bold mb-1 text-gray-700 block">End Date</label>
+                        <div class=" container mx-auto px-4 py-2 ">
+                            <div class="mb-5">
+                                <label for="datepicker" class="font-bold mb-1 text-gray-700 block">End Date</label>
                                 <div class="relative">
                                     <input type="hidden" name="date" x-ref="date" />
                                     <input type="text" readonly [(ngModel)]="enddatepickerValue" (click)="showEndDatepicker = !showEndDatepicker" (keydown.escape)="showEndDatepicker = false" class="
-                        w-full
-                        pl-4
-                        pr-10
-                        py-3
-                        leading-none
-                        rounded-lg
-                        shadow-sm
-                        focus:outline-none focus:shadow-outline
-                        text-gray-600
-                        font-medium
-                      " placeholder="Select date" />
+                    w-full
+                    pl-4
+                    pr-10
+                    py-3
+                    leading-none
+                    rounded-lg
+                    shadow-sm
+                    focus:outline-none focus:shadow-outline
+                    text-gray-600
+                    font-medium
+                  " placeholder="Select date" />
 
                                     <div class="absolute top-0 right-0 px-3 py-2">
                                         <svg class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
-                          d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
-                        />
-                      </svg>
+                    <path
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
+                      d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
+                    />
+                  </svg>
                                     </div>
 
                                     <!-- <div {{no_of_days.length"></div>
-                                    <div {{32 - new Date(year, month, 32).getDate()"></div>
-                                    <div {{new Date(year, month).getDay()"></div> -->
-                                    <div class="bg-white mt-12 rounded-lg shadow p-4 absolute top-0 left-0" style="width: 17rem" [hidden]="!showEndDatepicker" (keydown.away)="showEndDatepicker = false">
+                                <div {{32 - new Date(year, month, 32).getDate()"></div>
+                                <div {{new Date(year, month).getDay()"></div> -->
+                                    <div class=" bg-white mt-12 rounded-lg shadow p-4 absolute top-0 left-0" style="width: 17rem" [hidden]="!showEndDatepicker" (keydown.away)="showEndDatepicker = false">
                                         <div class="flex justify-between items-center mb-2">
                                             <div>
                                                 <span class="text-lg font-bold text-gray-800">{{ MONTH_NAMES[month] }}</span>
@@ -179,43 +178,43 @@
                                             </div>
                                             <div>
                                                 <button type="button" class="
-                              transition
-                              ease-in-out
-                              duration-100
-                              inline-flex
-                              cursor-pointer
-                              hover:bg-gray-200
-                              p-1
-                              rounded-full
-                            " [ngClass]="{ 'cursor-not-allowed opacity-25': month === 0 }" [disabled]="month === 0 ? true : false" (click)="month = month - 1" (click)="getNoOfDays()">
-                            <svg
-                              class="h-6 w-6 text-gray-500 inline-flex"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                            >
-                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
-                            </svg>
-                          </button>
+                          transition
+                          ease-in-out
+                          duration-100
+                          inline-flex
+                          cursor-pointer
+                          hover:bg-gray-200
+                          p-1
+                          rounded-full
+                        " [ngClass]="{ 'cursor-not-allowed opacity-25': month === 0 }" [disabled]="month === 0 ? true : false" (click)="month = month - 1" (click)="getNoOfDays()">
+                        <svg
+                          class="h-6 w-6 text-gray-500 inline-flex"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                        </svg>
+                      </button>
                                                 <button type="button" class="
-                              transition
-                              ease-in-out
-                              duration-100
-                              inline-flex
-                              cursor-pointer
-                              hover:bg-gray-200
-                              p-1
-                              rounded-full
-                            " [ngClass]="{ 'cursor-not-allowed opacity-25': month === 11 }" [disabled]="month === 11 ? true : false" (click)="month = month + 1" (click)="getNoOfDays()">
-                            <svg
-                              class="h-6 w-6 text-gray-500 inline-flex"
-                              fill="none"
-                              viewBox="0 0 24 24"
-                              stroke="currentColor"
-                            >
-                              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
-                            </svg>
-                          </button>
+                          transition
+                          ease-in-out
+                          duration-100
+                          inline-flex
+                          cursor-pointer
+                          hover:bg-gray-200
+                          p-1
+                          rounded-full
+                        " [ngClass]="{ 'cursor-not-allowed opacity-25': month === 11 }" [disabled]="month === 11 ? true : false" (click)="month = month + 1" (click)="getNoOfDays()">
+                        <svg
+                          class="h-6 w-6 text-gray-500 inline-flex"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                        </svg>
+                      </button>
                                             </div>
                                         </div>
 
@@ -227,24 +226,24 @@
                                             </ng-container>
                                         </div>
 
-                                        <div class="flex flex-wrap -mx-1 z-50">
+                                        <div class="flex flex-wrap -mx-1">
                                             <ng-container *ngFor="let blankday of blankdays">
                                                 <div style="width: 14.28%" class="text-center border-none p-1 border-transparent text-sm"></div>
                                             </ng-container>
                                             <ng-container *ngFor="let date of no_of_days; let dateIndex = index; trackBy: trackByIdentity">
                                                 <div style="width: 14.28%" class="px-1 mb-1">
                                                     <div (click)="getEndDateValue(date)" class="
-                                cursor-pointer
-                                text-center text-sm
-                                rounded-full
-                                leading-loose
-                                transition
-                                ease-in-out
-                                duration-100
-                              " [ngClass]="{
-                                'bg-blue-500 text-white': isToday(date) === true,
-                                'text-gray-700 hover:bg-blue-200': isToday(date) === false
-                              }">
+                            cursor-pointer
+                            text-center text-sm
+                            rounded-full
+                            leading-loose
+                            transition
+                            ease-in-out
+                            duration-100
+                          " [ngClass]="{
+                            'bg-blue-500 text-white': isToday(date) === true,
+                            'text-gray-700 hover:bg-blue-200': isToday(date) === false
+                          }">
                                                         {{ date }}
                                                     </div>
                                                 </div>
@@ -258,13 +257,13 @@
                 </div>
             </div>
 
-            <div class="col-end-7 col-span-1 ">
-                <select class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm">
+            <div class="col-end-7 col-span-1 px-4">
+                <select class=" py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm">
                 <option value="">Danang</option>
               </select>
             </div>
         </div>
-        <table class="items-center w-full  bg-transparent border-collapse overflow-x-auto">
+        <table class="items-center w-full bg-transparent border-collapse overflow-x-auto">
             <thead>
                 <tr>
                     <th class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left" [ngClass]="
@@ -279,7 +278,7 @@
                 ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
                 : 'bg-red-800 text-red-300 border-red-700'
             ">
-                        Type
+                        Number of view
                     </th>
                     <th class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left" [ngClass]="
               color === 'light'
@@ -303,29 +302,28 @@
                 </tr>
             </thead>
             <tbody>
-                <tr class="odd:bg-slate-50 hover:bg-[#ffffff]" *ngFor="let post of postRespone">
-                    <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
+                <tr *ngFor="let post of postRespone">
+                    <td class=" border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center ">
 
-                        <span class="ml-3 font-bold" [ngClass]="color === 'light' ? 'text-blueGray-600' : 'text-white'">
-              {{post.title}}
-            </span>
-                    </th>
-                    <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                        VipDiamond
+                        <span id="one-line" class="max-w-[600px] ml-3 font-bold text-base  h-full text-ellipsis " [ngClass]="color === 'light' ? 'text-blueGray-600' : 'text-white' ">
+                          {{post.title}}
+                        </span>
                     </td>
                     <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                        {{post.createDate}}
+                        {{post.numberOfView}}
                     </td>
                     <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                        {{post.user}}
+                        {{post.createDate | date}}
+                    </td>
+                    <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                        {{post.user.name}}
                     </td>
                     <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
-                        <i class="fa-solid fa-angle-right"></i>
+                        <i class="fa-solid fa-chevron-right"></i>
                     </td>
                 </tr>
+
             </tbody>
         </table>
     </div>
-
-
 </div>
