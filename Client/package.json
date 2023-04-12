@@ -38,6 +38,7 @@
         "file-drop-element": "^1.0.1",
         "filestack-js": "^3.26.0",
         "firebase": "^9.19.1",
+        "flowbite": "^1.6.5",
         "ng-environment": "^0.0.4",
         "ng2-file-upload": "^3.0.0",
         "ngx-cookie-service": "^15.0.0",

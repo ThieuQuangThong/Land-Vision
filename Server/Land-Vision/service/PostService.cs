@@ -24,10 +24,10 @@ namespace Land_Vision.service
          IImageService imageService,
          IPositionService positionService,
          IMapper mapper,
-         IPostRepository postRepository, 
-         IPropertyRepository propertyRepository, 
-         ICategoryRepository categoryRepository, 
-         IStreetRepository streetRepository, 
+         IPostRepository postRepository,
+         IPropertyRepository propertyRepository,
+         ICategoryRepository categoryRepository,
+         IStreetRepository streetRepository,
          IPositionRepository positionRepository)
         {
             _imageService = imageService;
@@ -68,13 +68,31 @@ namespace Land_Vision.service
             post.Property = property;
             post.CreateDate = DateTime.Now;
             await _postRepository.AddPostAsync(userId, post);
-            
+
             return true;
         }
 
         public async Task<PaginationRespone<PostDto>> GetPostsAsync(Pagination pagination)
         {
             var posts = await _postRepository.GetPostsAsync(pagination);
+            var postTotal = await _postRepository.GetPostCountAsync();
+            var postDtos = _mapper.Map<List<PostDto>>(posts);
+
+            var paginResult = new PaginationRespone<PostDto>(postDtos)
+            {
+                pagination = new Pagination
+                {
+                    SkipCount = pagination.SkipCount,
+                    MaxResultCount = pagination.MaxResultCount,
+                },
+                TotalCount = postTotal,
+            };
+            return paginResult;
+        }
+
+        public async Task<PaginationRespone<PostDto>> GetPostsByTimeAsync(Pagination pagination, DateTime startDate, DateTime endDate)
+        {
+            var posts = await _postRepository.GetPostsByTimeAsync(pagination, startDate, endDate);
             var postTotal = await _postRepository.GetPostCountAsync();
             var postDtos = _mapper.Map<List<PostDto>>(posts);
 
@@ -117,7 +135,7 @@ namespace Land_Vision.service
 
             var street = await _streetRepository.GetStreetByIdAsync(createPostPropertyDto.property.StreetId);
             var category = await _categoryRepository.GetCategoryAsync(createPostPropertyDto.property.CategoryId);
-            
+
             if (street == null)
             {
                 throw new Exception("Street is not found");
@@ -142,18 +160,20 @@ namespace Land_Vision.service
             {
                 throw new Exception("Some thing went wrong when update property");
             }
-            
+
             var positions = _mapper.Map<List<Position>>(createPostPropertyDto.property.Positions);
             await _positionService.DeleteAndUpdatePositionAsync(propertyId, positions);
 
             var post = await _postRepository.GetPostAsync(postId);
-            if(post == null){
-                throw new Exception("Post is not found");               
+            if (post == null)
+            {
+                throw new Exception("Post is not found");
             }
 
             UpdateEntityFromDto(post, createPostPropertyDto.post);
 
-            if(!await _postRepository.UpdatePostAsync(post)){
+            if (!await _postRepository.UpdatePostAsync(post))
+            {
                 throw new Exception("Some thing went wrong when update post");
             }
 

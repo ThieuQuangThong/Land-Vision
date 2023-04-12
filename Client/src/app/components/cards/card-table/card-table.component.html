@@ -20,7 +20,7 @@
                                 <label for="datepicker" class="font-bold mb-1 text-gray-700 block">Select Date</label>
                                 <div class="relative">
                                     <input type="hidden" name="date" x-ref="date" />
-                                    <input type="text" readonly [(ngModel)]="startdatepickerValue" (click)="showStartDatepicker = !showStartDatepicker" (keydown.escape)="showStartDatepicker = false" class="
+                                    <input type="text" readonly [(ngModel)]="startdatepickerValue" (ngModelChange)="onStartDateChange($event)" (click)="showStartDatepicker = !showStartDatepicker" (keydown.escape)="showStartDatepicker = false" class="
                         w-full
                         pl-4
                         pr-10
@@ -143,7 +143,7 @@
                                 <label for="datepicker" class="font-bold mb-1 text-gray-700 block">End Date</label>
                                 <div class="relative">
                                     <input type="hidden" name="date" x-ref="date" />
-                                    <input type="text" readonly [(ngModel)]="enddatepickerValue" (click)="showEndDatepicker = !showEndDatepicker" (keydown.escape)="showEndDatepicker = false" class="
+                                    <input type="text" readonly [(ngModel)]="enddatepickerValue" (ngModelChange)="onEndDateChange($event)" (click)="showEndDatepicker = !showEndDatepicker" (keydown.escape)="showEndDatepicker = false" class="
                     w-full
                     pl-4
                     pr-10
@@ -186,7 +186,7 @@
                           hover:bg-gray-200
                           p-1
                           rounded-full
-                        " [ngClass]="{ 'cursor-not-allowed opacity-25': month === 0 }" [disabled]="month === 0 ? true : false" (click)="month = month - 1" (click)="getNoOfDays()">
+                        " [ngClass]="{ 'cursor-not-allowed opacity-25': monthEndDate === 0 }" (click)="monthEndDate == monthEndDate - 1" (click)="getNoOfDays()">
                         <svg
                           class="h-6 w-6 text-gray-500 inline-flex"
                           fill="none"
@@ -205,7 +205,7 @@
                           hover:bg-gray-200
                           p-1
                           rounded-full
-                        " [ngClass]="{ 'cursor-not-allowed opacity-25': month === 11 }" [disabled]="month === 11 ? true : false" (click)="month = month + 1" (click)="getNoOfDays()">
+                        " [ngClass]="{ 'cursor-not-allowed opacity-25': month === 11 }" (click)="month = month + 1;" (click)="getNoOfDays()">
                         <svg
                           class="h-6 w-6 text-gray-500 inline-flex"
                           fill="none"
@@ -255,6 +255,11 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="col-start-3 col-span-1">
+                <button class="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
+                  <i class="fas fa-search"></i>
+                </button>
             </div>
 
             <div class="col-end-7 col-span-1 px-4">

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from "@angular/core";
+import { Component, OnInit, Input,DoCheck } from "@angular/core";
 import { PostService } from "src/app/_service/post.service";
 import { PagingModel } from "src/app/models/paging-model";
 import { PostModel } from "src/app/models/post-model";
@@ -45,18 +45,44 @@ export class CardTableComponent implements OnInit {
   startdatepickerValue!: string;
   enddatepickerValue!: string;
 
+  monthStartDate!: number; // !: mean promis it will not be null, and it will definitely be assigned
+  yearStartDate!: number;
+  monthEndDate!: number; // !: mean promis it will not be null, and it will definitely be assigned
+  yearEndDate!: number;
   month!: number; // !: mean promis it will not be null, and it will definitely be assigned
   year!: number;
   no_of_days = [] as number[];
   blankdays = [] as number[];
 
   constructor(private postService : PostService) {}
+  onStartDateChange(newStartDate: string){
+    console.log(newStartDate);
 
+  }
+  onEndDateChange(newEndDate: string){
+    console.log(newEndDate);
+  }
 
-  getPost(paging: PagingModel){
-    this.postService.getAllPost(paging)
+  // getPost(paging: PagingModel){
+  //   this.postService.getAllPost(paging)
+  //   .subscribe(
+  //     respone =>{
+  //       var {skipCount, maxResultCount} = respone.pagination;
+
+  //       this.postRespone = [...this.postRespone, ...respone.listItem];
+  //       paging.skipCount = skipCount + maxResultCount;
+
+  //       if(paging.skipCount >= respone.totalCount){
+  //         this.isFullItem = true;
+  //       }
+  //     }
+  //   )
+  // }
+
+  getPostByTime(paging : PagingModel, startdatepickerValue: string,enddatepickerValue: string ){
+    this.postService.getAllPostByTime(paging, startdatepickerValue,enddatepickerValue)
     .subscribe(
-      respone =>{
+respone =>{
         var {skipCount, maxResultCount} = respone.pagination;
 
         this.postRespone = [...this.postRespone, ...respone.listItem];
@@ -70,33 +96,33 @@ export class CardTableComponent implements OnInit {
   }
 
   loadMore(){
-    this.getPost(this.paging);
+    this.getPostByTime(this.paging,this.startdatepickerValue,this.enddatepickerValue);
   }
 
   initDate() {
     let today = new Date();
     this.month = today.getMonth();
     this.year = today.getFullYear();
-    this.startdatepickerValue = new Date(this.year, this.month, today.getDate()).toDateString();
+    this.startdatepickerValue = new Date(this.year, this.month -1, today.getDate()).toDateString();
     this.enddatepickerValue = new Date(this.year, this.month, today.getDate()).toDateString();
 
   }
 
-  isToday(date: any) {
+  isToday(date: number) {
     const today = new Date();
     const d = new Date(this.year, this.month, date);
     return today.toDateString() === d.toDateString() ? true : false;
   }
 
-  getStartDateValue(date: any) {
-    let selectedDate = new Date(this.year, this.month, date);
-    this.startdatepickerValue = selectedDate.toDateString();
+  getStartDateValue(date: number) {
+    let selectedStartDate = new Date(this.year, this.monthStartDate, date);
+    this.startdatepickerValue = selectedStartDate.toDateString();
     this.showStartDatepicker = false;
   }
 
-  getEndDateValue(date: any) {
-    let selectedDate = new Date(this.year, this.month, date);
-    this.enddatepickerValue = selectedDate.toDateString();
+  getEndDateValue(date: number) {
+    let selectedEndDate = new Date(this.year, this.monthEndDate, date);
+    this.enddatepickerValue = selectedEndDate.toDateString();
     this.showEndDatepicker = false;
   }
 
@@ -123,7 +149,9 @@ export class CardTableComponent implements OnInit {
   ngOnInit(): void {
     this.initDate();
     this.getNoOfDays();
-    this.getPost(this.paging);
+    this.getPostByTime(this.paging,this.startdatepickerValue,this.enddatepickerValue);
   }
+
+
   trackByIdentity = (index: number, item: any) => item;
 }
