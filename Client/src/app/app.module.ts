@@ -8,6 +8,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatNativeDateModule } from '@angular/material/core';
+import {MatIconModule} from '@angular/material/icon';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -76,6 +77,8 @@ import { NgxLoadingModule } from "ngx-loading";
 import { FileUploadComponent } from './file-upload/file-upload.component';
 import { MoneyTranformPipe } from './_pipes/money-tranform.pipe';
 import { LoadingComponent } from './components/loading/loading/loading.component';
+import { DateFormatPipe } from './_pipes/date-format.pipe';
+import { PricingCardComponent } from './components/pricing-card/pricing-card.component';
 
 @NgModule({
   declarations: [
@@ -126,11 +129,14 @@ import { LoadingComponent } from './components/loading/loading/loading.component
     PostingComponent,
     FileUploadComponent,
     MoneyTranformPipe,
-    LoadingComponent
+    LoadingComponent,
+    DateFormatPipe,
+    PricingCardComponent
     // LoginComponent,
     // RegisterComponent,
   ],
   imports: [
+    MatIconModule,
     MatDatepickerModule,
     MatInputModule,
     BrowserAnimationsModule,
