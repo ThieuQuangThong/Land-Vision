@@ -4,6 +4,7 @@ namespace Land_Vision.Interface.IRepositories
 {
     public interface IStreetRepository
     {
+        Task<List<Street>> GetStreetsByDistrictIdAsync(int districtId);
         Task<List<Street>> GetStreetsAsync();
         Task<Street> GetStreetByIdAsync(int streetId);
         Task<Street> GetStreetByNameAsync(string streetName);

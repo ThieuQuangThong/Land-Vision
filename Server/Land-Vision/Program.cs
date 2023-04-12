@@ -128,6 +128,7 @@ builder.Services.AddScoped<IPropertyRepository, PropertyRepository>();
 builder.Services.AddScoped<IPositionRepository, PositionRepository>();
 builder.Services.AddScoped<IImageRepository, ImageRepository>();
 builder.Services.AddScoped<IVipRepository, VipRepository>();
+builder.Services.AddScoped<IWardRepository, WardRepository>();
 
 //Service Scope
 builder.Services.AddScoped<IEmailService, EmailService>();
@@ -137,8 +138,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IPostService, PostService>();
 builder.Services.AddScoped<IStreetService, StreetService>();
 builder.Services.AddScoped<IPositionService, PositionService>();
-
-
+builder.Services.AddScoped<IWardService, WardService>();
 
 builder.Services.AddCors(opt =>
 {

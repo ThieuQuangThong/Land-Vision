@@ -29,7 +29,7 @@ namespace Land_Vision.Repositories
 
         public async Task<List<District>> GetDistrictsAsync()
         {
-            return await _dbContext.Districts.AsNoTracking().OrderBy(d => d.Id).ToListAsync();
+            return await _dbContext.Districts.OrderBy(d => d.Id).ToListAsync();
         }
 
         public async Task<District> GetDistrictAsync(int districtId)
@@ -66,6 +66,11 @@ namespace Land_Vision.Repositories
            await _dbContext.Districts.AddRangeAsync(districts);
             
             return await SaveChangeAsync();
+        }
+
+        public async Task<bool> CheckIsDistrictExistByIdAsync(int districtId)
+        {
+            return await _dbContext.Districts.AnyAsync(x => x.Id == districtId);
         }
     }
 }

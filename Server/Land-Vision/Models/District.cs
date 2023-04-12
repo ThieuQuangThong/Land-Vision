@@ -6,5 +6,6 @@
         public string Name { get; set; }
         public City City { get; set; }
         public List<Street> Streets { get; set; }
+        public List<Ward> Wards { get; set; }
     }
 }
