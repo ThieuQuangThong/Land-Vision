@@ -61,7 +61,7 @@
             <div class="flex mr-1">
               <div class=" w-1/6 flex items-center ml-2 h-full">
                 <button class=" bg-emerald-500 text-white active:bg-emerald-600 font-bold text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150" type="button">
-                  <i class="fas fa-search"></i> Search
+                  <i class="fas fa-search"></i> {{'Search' | translate}}
                 </button>
               </div>
               <input type="text" class=" py-3 w-5/6 rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm" placeholder="Search by listing, location, bedroom number...">
@@ -182,7 +182,7 @@
       </div>
       <div class="w-full mt-7 flex flex-wrap items-center lg: justify-center">
         <button *ngIf="!isFullItem" (click) ="loadMore()" class="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded-md shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150" type="button">
-          Load More
+          {{'LoadMore' | translate}}
         </button>
       </div>
 

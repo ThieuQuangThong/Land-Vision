@@ -1,4 +1,5 @@
 import { Component, OnInit, SimpleChanges } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
 import { BehaviorSubject } from 'rxjs';
 import { CityInformationService } from 'src/app/_service/city-information.service';
 import { DistrictModel } from 'src/app/models/district-model';
@@ -18,6 +19,7 @@ export class inforStreet {
 
 export class PostingComponent implements OnInit {
   openTab = 1;
+  directions: string[] = [];
   districts: DistrictModel[] = [];
   wards: WardModel[] = [];
   streets: StreetModel[] = [];
@@ -25,12 +27,12 @@ export class PostingComponent implements OnInit {
   isWardLoading: boolean = false;
   isStreetLoading: boolean = false;
 
-  constructor(private cityService: CityInformationService) {}
+  constructor(private cityService: CityInformationService) {
+  }
 
   toggleTabs($tabNumber: number){
     this.openTab = $tabNumber;
   }
-
   currentSeletedInforTracking = new BehaviorSubject<inforStreet>(new inforStreet());
   currentSeletedInfor= new inforStreet();
   selectedDistrictId: number = 1;
@@ -68,6 +70,7 @@ export class PostingComponent implements OnInit {
     this.getAndSetDistrict();
     this.getAndSetWardByDistrictId(this.selectedDistrictId);
     this.getAndSetStreetByDistrictId(this.selectedDistrictId);
+    this.getAndSetDirection();
     this.currentSeletedInforTracking.subscribe(
       respone => {
         const {districtName, wardName, streetName} = respone;
@@ -80,6 +83,15 @@ export class PostingComponent implements OnInit {
       }
     )
   }
+
+  getAndSetDirection(){
+    this.cityService.getDirections()
+    .subscribe(
+      respone =>{
+        this.directions = respone;
+      })
+    }
+
 
   getAndSetDistrict(){
     this.isDistrictLoading = true;
