@@ -27,6 +27,8 @@ import { MapExampleComponent } from './components/maps/map-example/map-example.c
 import { NewPasswordComponent } from './new-password/new-password.component';
 import { CodeVerifyComponent } from './code-verify/code-verify.component';
 import { PostingComponent } from './views/posting/posting.component';
+import { EmailConfirmSucceededComponent } from './views/email-confirm-succeeded/email-confirm-succeeded.component';
+import { PageNotFoundComponent } from './views/page-not-found/page-not-found.component';
 const routes: Routes = [
   {path: '', redirectTo: 'login', pathMatch: 'full'},
   {path: "login", component: LoginComponent},
@@ -37,6 +39,8 @@ const routes: Routes = [
   {path: "code-verify/:email", component: CodeVerifyComponent},
   { path: "dashboard", component: DashboardComponent },
   { path: "productdetails", component: SettingsComponent },
+  { path: "emailcomfirmed", component: EmailConfirmSucceededComponent },
+  { path: "404error", component: PageNotFoundComponent },
 
 
   // admin views

@@ -86,6 +86,8 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 export function httpTranslateLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }
+import { EmailConfirmSucceededComponent } from './views/email-confirm-succeeded/email-confirm-succeeded.component';
+import { PageNotFoundComponent } from './views/page-not-found/page-not-found.component';
 
 @NgModule({
   declarations: [
@@ -138,7 +140,9 @@ export function httpTranslateLoaderFactory(http: HttpClient) {
     MoneyTranformPipe,
     LoadingComponent,
     DateFormatPipe,
-    PricingCardComponent
+    PricingCardComponent,
+    EmailConfirmSucceededComponent,
+    PageNotFoundComponent
     // LoginComponent,
     // RegisterComponent,
   ],
