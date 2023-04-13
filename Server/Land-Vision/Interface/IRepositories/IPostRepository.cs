@@ -11,6 +11,7 @@ namespace Land_Vision.Interface.IRepositories
         Task<List<Post>> GetPostsAsync(Pagination pagination);
         Task<Post> GetPostAsync(int postId);
         Task<Post> GetPostByTitleAsync(string postName);
+        Task<List<Post>> GetPostsByTimeAsync(Pagination pagination, DateTime startDate, DateTime endDate);
         Task<int> GetPostCountAsync();
         Task<bool> AddPostAsync(int userId, Post post);
         Task<bool> UpdatePostAsync(Post post);
