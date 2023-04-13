@@ -7,6 +7,8 @@ export class PostModel {
   title: string = "";
   description: string = "";
   numberOfView: number = 0;
+  transactionType : number =0;
+  createDate! : Date;
   isVerified:boolean = false;
   property: PropertyModel = new PropertyModel();
   user: UserModel = new UserModel();

@@ -7,7 +7,7 @@ namespace Land_Vision.Interface.IServices
     public interface IPostService
     {
         Task<PaginationRespone<PostDto>> GetPostsAsync(Pagination pagination);
-
+        Task<PaginationRespone<PostDto>> GetPostsByTimeAsync(Pagination pagination, DateTime startDate, DateTime endDate);
         Task<bool> AddPostPropertyAsync(int userId, CreatePostPropertyDto createPostPropertyDto);
         Task<bool> UpdatePostPropertyAsync(int postId, CreatePostPropertyDto createPostPropertyDto);
     }
