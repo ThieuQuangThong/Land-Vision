@@ -1,0 +1,18 @@
+{
+  "Rent": "Thuê",
+  "Sale": "Bán",
+  "North": "Bắc",
+  "South": "Nam",
+  "East": "Đông",
+  "West": "Tây",
+  "Northeast": "Đông Bắc",
+  "Northwest": "Tây Bắc",
+  "Southeast": "Đông Nam ",
+  "Southwest": "Tây Nam",
+  "LoadMore": "Tải thêm",
+  "Search": "Tìm kiếm",
+  "Interior":{
+    "true": "Đầy đủ nội thất",
+    "false": "Không có nội thất"
+  }
+}

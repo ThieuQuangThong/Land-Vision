@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../_service/auth.service';
 import { TokenModel } from '../_service/token.model';
 import { AlertService } from '../_service/alert.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-login',

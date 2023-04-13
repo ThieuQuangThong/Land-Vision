@@ -61,7 +61,7 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { StorageService } from '../app/_service/storage.service';
 import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { AuthGuard } from './_helper/http.guard';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 
 // import { AuthTokenInterceptor } from './_helper/http.interceptor';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -79,6 +79,13 @@ import { MoneyTranformPipe } from './_pipes/money-tranform.pipe';
 import { LoadingComponent } from './components/loading/loading/loading.component';
 import { DateFormatPipe } from './_pipes/date-format.pipe';
 import { PricingCardComponent } from './components/pricing-card/pricing-card.component';
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+
+
+export function httpTranslateLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
 
 @NgModule({
   declarations: [
@@ -148,6 +155,13 @@ import { PricingCardComponent } from './components/pricing-card/pricing-card.com
     AppRoutingModule,
     ReactiveFormsModule,
     HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: httpTranslateLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
     NgbModule,
     NgxLoadingModule.forRoot({}),
     JwtModule.forRoot({
@@ -174,9 +188,9 @@ import { PricingCardComponent } from './components/pricing-card/pricing-card.com
 export class AppModule { }
 export function jwtOptionsFactor(storage:StorageService){
   return {
-    // tokenGetter:() => {
-    //   return storage.getAccessToken();
-    // },
+     tokenGetter:() => {
+       return storage.getAccessToken();
+     },
     // allowedDomains:["https://localhost:7165"],
     // disallowedRoutes:[
     //   "https://localhost:7165/api/Authorization/Login",

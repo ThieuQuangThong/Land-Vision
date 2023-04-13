@@ -1,3 +1,4 @@
+using Land_Vision.Common;
 using Land_Vision.Interface.IRepositories;
 using Microsoft.AspNetCore.Mvc;
 
@@ -41,6 +42,26 @@ namespace Land_Vision.Controllers
                 return StatusCode(500, ModelState);
             }
             return Ok();
+        }
+
+        // Get Directions
+        /// <summary>
+        /// Get Directions
+        /// </summary>
+        [HttpGet("getDirections")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(200)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<List<string>>> GetDirections()
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            List<string> directions = Enum.GetNames(typeof(Directions)).ToList();
+            return Ok(directions);
         }
     }
 }
