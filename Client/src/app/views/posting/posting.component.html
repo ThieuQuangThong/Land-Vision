@@ -269,9 +269,6 @@
         </div>
 
 
-
-
-
               <div class="relative w-full mb-3 flex flex-wrap justify-center text-left">
                 <div class="w-full lg:w-6/12 pr-1">
                   <div class="col-span-2">
@@ -295,7 +292,7 @@
                 </div>
                 <div class="w-full lg:w-6/12 pl-1">
                   <label for="wardsDropdown" class="block uppercase text-blueGray-600 text-xs font-bold mb-2">Direction</label>
-                  <select id="wardsDropdown"  class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
+                  <select id="wardsDropdown"  class="border-0 px-3 py-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
                     <option selected value="Đông">Đông</option>
                     <option value="Tây">Tây</option>
                     <option value="Nam">Nam</option>
@@ -306,13 +303,13 @@
                     <option value="Tây Bắc">Tây Bắc</option>
                   </select>
 
-                  <label for="wardsDropdown" class="block uppercase text-blueGray-600 text-xs font-bold mb-2">Interior</label>
-                  <select id="wardsDropdown"  class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
+                  <label for="wardsDropdown" class="block uppercase text-blueGray-600 mt-2 text-xs font-bold mb-2">Interior</label>
+                  <select id="wardsDropdown"  class="border-0 px-3 py-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
                     <option selected value="Yes">Đầy đủ nội thất</option>
                     <option value="No">Không có nội thất</option>
                   </select>
 
-                  <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="title">
+                  <label class="block uppercase text-blueGray-600 mt-2 text-xs font-bold mb-2" htmlFor="title">
                     Frontage Area
                   </label>
                   <input type="text"
@@ -342,12 +339,16 @@
               </div>
           </div>
 
-          <div class="text-center mt-6">
-            <button
+          <div class="w-full flex justify-center text-center mt-6">
+            <!-- <button
               class="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
               type="button">
               Submit
-            </button>
+            </button> -->
+            <div class="button-borders">
+              <button class="primary-button uppercase" type="button"> Submit
+              </button>
+            </div>
           </div>
         </div>
       </div>
