@@ -51,6 +51,9 @@
             statIconName="fas fa-percent"
             statIconColor="bg-emerald-500"
           ></app-card-stats>
+          Change Language : <select #selLang (change)="translateLanguageTo(selLang.value)">
+            <option *ngFor="let language of translate.getLangs()" [value]="language">{{ language }}</option>
+          </select>
         </div>
       </div>
     </div>

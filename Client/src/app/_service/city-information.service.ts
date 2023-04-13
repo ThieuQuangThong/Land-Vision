@@ -30,5 +30,8 @@ export class CityInformationService {
     return this.http.get<WardModel[]>(API_URL.GET_WARD_BY_DISTRICT(districtId));
   }
 
+  getDirections():Observable<string[]>{
+    return this.http.get<string[]>(API_URL.GET_DIRECTIONS());
+  }
 
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
+import { TranslateService } from "@ngx-translate/core";
 
 @Component({
   selector: "app-auth-navbar",
@@ -8,11 +9,13 @@ import { Router } from "@angular/router";
 export class AuthNavbarComponent implements OnInit {
   navbarOpen = false;
 
-  constructor(public router: Router) {
+  constructor(public translate: TranslateService,public router: Router) {}
 
-  }
+    ngOnInit(): void {}
+    translateLanguageTo(lang: string) {
 
-  ngOnInit(): void {}
+      this.translate.use(lang);
+    }
 
   setNavbarOpen() {
     this.navbarOpen = !this.navbarOpen;

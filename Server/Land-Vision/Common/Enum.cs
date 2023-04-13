@@ -1,12 +1,12 @@
 namespace Land_Vision.Common
 {
-    public enum TransactionType
+    public enum TransactionTypes
     {
         Rent,
-        Sent
+        Sale
     }
 
-    public enum Direction
+    public enum Directions
     {
         North,
         South,

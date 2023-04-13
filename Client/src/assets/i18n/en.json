@@ -1,0 +1,18 @@
+{
+  "Rent": "Rent",
+  "Sale": "Sale",
+  "North": "North",
+  "South": "South",
+  "East": "East",
+  "West": "West",
+  "Northeast": "North east",
+  "Northwest": "North west",
+  "Southeast": "South east",
+  "Southwest": "South west",
+  "LoadMore": "LOAD MORE",
+  "Search": "Search",
+  "Interior":{
+    "true": "Fully interior",
+    "false": "No interior"
+  }
+}
