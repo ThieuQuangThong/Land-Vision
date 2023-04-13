@@ -10,6 +10,7 @@ namespace Land_Vision.Data
         public DbSet<Role> Roles { get; set; }
         public DbSet<City> Citys { get; set; }
         public DbSet<District> Districts { get; set; }
+        public DbSet<Ward> Wards { get; set; }
         public DbSet<Street> Streets { get; set; }
         public DbSet<Category> Categories { get; set; }
         public DbSet<Position> Positions { get; set; }

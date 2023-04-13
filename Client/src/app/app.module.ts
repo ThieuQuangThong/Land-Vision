@@ -1,10 +1,14 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { RouterModule, Routes } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 //Angular material
+import {MatDatepickerModule} from '@angular/material/datepicker';
+import { MatInputModule } from '@angular/material/input';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatNativeDateModule } from '@angular/material/core';
+import {MatIconModule} from '@angular/material/icon';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -30,9 +34,7 @@ import { IndexComponent } from "./views/index/index.component";
 import { LandingComponent } from "./views/landing/landing.component";
 import { ProfileComponent } from "./views/profile/profile.component";
 
-
 // components for views and layouts
-
 import { AdminNavbarComponent } from "./components/navbars/admin-navbar/admin-navbar.component";
 import { AuthNavbarComponent } from "./components/navbars/auth-navbar/auth-navbar.component";
 import { CardBarChartComponent } from "./components/cards/card-bar-chart/card-bar-chart.component";
@@ -60,6 +62,7 @@ import { StorageService } from '../app/_service/storage.service';
 import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { AuthGuard } from './_helper/http.guard';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+
 // import { AuthTokenInterceptor } from './_helper/http.interceptor';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CodeVerifyComponent } from './code-verify/code-verify.component';
@@ -73,6 +76,10 @@ import { PostingComponent } from './views/posting/posting.component';
 import { NgxLoadingModule } from "ngx-loading";
 import { FileUploadComponent } from './file-upload/file-upload.component';
 import { MoneyTranformPipe } from './_pipes/money-tranform.pipe';
+import { LoadingComponent } from './components/loading/loading/loading.component';
+import { DateFormatPipe } from './_pipes/date-format.pipe';
+import { PricingCardComponent } from './components/pricing-card/pricing-card.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -118,14 +125,19 @@ import { MoneyTranformPipe } from './_pipes/money-tranform.pipe';
     CodeVerifyComponent,
     NewPasswordComponent,
     ProductListComponent,
-    AlertComponent,
-    PostingComponent,
-    FileUploadComponent,
-    MoneyTranformPipe
+    MoneyTranformPipe,
+    LoadingComponent,
+    DateFormatPipe,
+    PricingCardComponent
     // LoginComponent,
     // RegisterComponent,
   ],
   imports: [
+    MatIconModule,
+    MatDatepickerModule,
+    MatInputModule,
+    BrowserAnimationsModule,
+    MatNativeDateModule,
     CommonModule,
     FormsModule,
     NgbAlertModule,

@@ -59,6 +59,27 @@ namespace Land_Vision.Controllers
             return Ok(street);
         }
 
+        // GET Street by District id
+        /// <summary>
+        /// GET Street by District id
+        /// </summary>
+        [HttpGet("{districtId}/district")]
+        [ProducesResponseType(200)]
+        public async Task<IActionResult> GetStreetByDistrictId(int districtId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if(!await _districtRepository.CheckIsDistrictExistByIdAsync(districtId)){
+                return NotFound();
+            }
+
+            var street = await _streetRepository.GetStreetsByDistrictIdAsync(districtId);
+            return Ok(street);
+        }
+
         // POST Street
         /// <summary>
         /// Add street

@@ -12,4 +12,9 @@ export const API_URL = {
   RESET_PASSWORD:() =>`${DOMAIN}/api/Account/resetPassword`,
   LOGIN:() => `${DOMAIN}/api/Account/login`,
   REGISTER_ACCOUNT:() => `${DOMAIN}/api/Account/RegisterAccount`,
+  GET_DISTRICT:() =>`${DOMAIN}/api/District`,
+  GET_WARD:() => `${DOMAIN}/api/Ward`,
+  GET_STREET:() => `${DOMAIN}api/Street`,
+  GET_STREET_BY_DISTRICT:(districtId: number) => `${DOMAIN}/api/Street/${districtId}/district`,
+  GET_WARD_BY_DISTRICT:(districtId: number) =>`${DOMAIN}/api/Ward/${districtId}/district`
 };

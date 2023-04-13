@@ -45,8 +45,13 @@ namespace Land_Vision.Repositories
 
         public async Task<List<Street>> GetStreetsAsync()
         {
-            return await _dbContext.Streets.OrderBy(s => s.Id).ToListAsync();
+            return await _dbContext.Streets.Include(p =>p.District).OrderBy(s => s.Id).ToListAsync();
 
+        }
+
+        public async Task<List<Street>> GetStreetsByDistrictIdAsync(int districtId)
+        {
+            return await _dbContext.Streets.Where(x => x.District.Id == districtId).ToListAsync();
         }
 
         public async Task<bool> SaveChangeAsync()
