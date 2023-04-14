@@ -45,7 +45,7 @@ export class ResetPasswordComponent implements OnInit {
 
     },
       (err) => {
-        AlertService.setAlertModel("danger", "Some thing went wrong!")
+        AlertService.setAlertModel("danger", "This email is registed yet!")
         console.log(err);
       })
     }

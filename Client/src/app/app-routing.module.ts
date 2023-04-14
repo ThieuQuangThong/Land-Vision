@@ -29,6 +29,7 @@ import { CodeVerifyComponent } from './code-verify/code-verify.component';
 import { PostingComponent } from './views/posting/posting.component';
 import { EmailConfirmSucceededComponent } from './views/email-confirm-succeeded/email-confirm-succeeded.component';
 import { PageNotFoundComponent } from './views/page-not-found/page-not-found.component';
+import { ProductDetailComponent } from './components/product-detail/product-detail.component';
 const routes: Routes = [
   {path: '', redirectTo: 'login', pathMatch: 'full'},
   {path: "login", component: LoginComponent},
@@ -41,6 +42,7 @@ const routes: Routes = [
   { path: "productdetails", component: SettingsComponent },
   { path: "emailcomfirmed", component: EmailConfirmSucceededComponent },
   { path: "404error", component: PageNotFoundComponent },
+  { path: "product", component: SettingsComponent },
 
 
   // admin views

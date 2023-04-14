@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { catchError, first, tap } from 'rxjs';
 import { AuthService } from '../_service/auth.service';
 import { AlertService } from '../_service/alert.service';
-
+import { NgxOtpInputConfig } from "ngx-otp-input";
 @Component({
   selector: 'app-code-verify',
   templateUrl: './code-verify.component.html',
@@ -16,10 +16,21 @@ export class CodeVerifyComponent implements OnInit {
   @Output() verifySubmitted = new EventEmitter<{ email: string, code: string }>();
 
   verifyForm!: FormGroup;
-  // get f() {
-  //   return this.verifyForm.controls;
-  // }
+  otpInputConfig: NgxOtpInputConfig = {
+    otpLength: 6,
+    autofocus: true,
+    classList: {
+      inputBox: 'my-super-box-class',
+      input: 'my-super-class',
+      inputFilled: 'my-super-filled-class',
+      inputDisabled: 'my-super-disable-class',
+      inputSuccess: 'my-super-success-class',
+      inputError: 'my-super-error-class',
+    },
 
+  };
+
+  getcode: any;
   code: any;
   constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private router: Router, private auth: AuthService) { }
   email:string ="";
@@ -28,14 +39,19 @@ export class CodeVerifyComponent implements OnInit {
     this.verifyForm = this.fb.group({
       code: ['', Validators.required],
     });
+    this.handleFillEvent(this.getcode)
   }
-  onVerifySubmit() {
-    if (this.verifyForm.valid) {
-      const email = this.auth.email;
-      const code = this.verifyForm.value.code;
-      this.verifySubmitted.emit({ email, code });
-    }
+  handleFillEvent(hai: string): void {
+    this.getcode = hai;
+    this.verifyForm.patchValue({
+      code: this.getcode,
+    });
   }
+  handeOtpChange(value: string[]): void {
+
+  }
+
+
   getData(email: any, code: any) {
     const data = {
       email: email,
@@ -44,17 +60,29 @@ export class CodeVerifyComponent implements OnInit {
     const url = 'https://localhost:7165/api/Account/validateCode';
     return this.http.post(url, data).subscribe((response: any) => {
       AlertService.setAlertModel("success", "Please enter your new password!")
-      this.router.navigate(['new-password/'+code+"/"+ this.email])
+      this.router.navigate(['new-password/'+code +"/"+ (this.email)])
     },
     (error) =>{
       AlertService.setAlertModel("danger", "Some thing went wrong!")
     });
   }
+
+  resend(email: string) {
+    return this.auth.forgotPassword(email).subscribe((res: any) =>{
+      AlertService.setAlertModel("success", "Check your email!")
+
+    },err=>{
+      AlertService.setAlertModel("danger", "Some thing went wrong!")
+
+    })
+  }
   OnSubmit() {
-    console.log(this.auth.email)
-    const code = this.verifyForm?.get('code')?.value;
+
+    console.log(this.code)
+
+    const code = this.getcode
     this.getData(this.email, code);
-    console.log(code)
+    // console.log(getcode)
   }
 
 

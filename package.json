@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "angular-code-input": "^1.6.0"
+    "angular-code-input": "^1.6.0",
+    "ng-otp-input": "^1.8.1"
   }
 }
