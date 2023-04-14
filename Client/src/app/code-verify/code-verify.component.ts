@@ -60,7 +60,7 @@ export class CodeVerifyComponent implements OnInit {
     const url = 'https://localhost:7165/api/Account/validateCode';
     return this.http.post(url, data).subscribe((response: any) => {
       AlertService.setAlertModel("success", "Please enter your new password!")
-      this.router.navigate(['new-password/'+code +"/"+ (this.email)])
+      this.router.navigate(['new-password/'+this.auth.encode(code) +"/"+ this.auth.encode(this.email) ])
     },
     (error) =>{
       AlertService.setAlertModel("danger", "Some thing went wrong!")
