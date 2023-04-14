@@ -12,6 +12,10 @@ import {MatSort} from "@angular/material/sort";
 })
 
 export class CardTableComponent implements OnInit {
+  displayedPostsColumns: string[] = ['#', 'title', 'transactionType', 'createAt','Poster'];
+  displayedSellersColumns: string[] = ['#', 'name', 'email', 'phone','identityNumber','vipLevels'];
+
+  dataSource!: MatTableDataSource<any>;
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
   stt:number = 0;
@@ -51,29 +55,35 @@ export class CardTableComponent implements OnInit {
     this.getPostByTime(this.paging,this.startDate.toString(),this.endDate.toString())
   }
    onSubmitTime() {
-  //     this.postRespone= [];
-  //     this.startDate = this.stDate.toLocaleDateString(undefined, this.options);
-  //     this.endDate = this.enDate.toLocaleDateString(undefined, this.options);
-  //     this.postService.getAllPostByTime(this.pagingReset, this.startDate.toString(),this.endDate.toString())
-  //   .subscribe(
-  //     respone =>{
-  //       var {skipCount, maxResultCount} = respone.pagination;
+      this.postRespone= [];
+      this.dataSource = new MatTableDataSource(this.postRespone);
 
-  //       this.postRespone = [...this.postRespone, ...respone.listItem];
-  //       if(this.pagingReset.skipCount >= respone.totalCount){
-  //         this.isFullItem = true;
-  //       }
-  //     }
-  //   )
+      this.startDate = this.stDate.toLocaleDateString(undefined, this.options);
+      this.endDate = this.enDate.toLocaleDateString(undefined, this.options);
+      this.postService.getAllPostByTime(this.pagingReset, this.startDate.toString(),this.endDate.toString())
+    .subscribe(
+      respone =>{
+        // var {skipCount, maxResultCount} = respone.pagination;
+        this.dataSource = new MatTableDataSource(this.postRespone);
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+        this.postRespone = [...this.postRespone, ...respone.listItem];
+        if(this.pagingReset.skipCount >= respone.totalCount){
+          this.isFullItem = true;
+        }
+      }
+    )
    }
   getPostByTime(paging: PagingModel, startdatepickerValue: string,enddatepickerValue: string){
     this.postService.getAllPostByTime(paging, startdatepickerValue,enddatepickerValue)
     .subscribe(
       respone =>{
         var {skipCount, maxResultCount} = respone.pagination;
-
         this.postRespone = [...this.postRespone, ...respone.listItem];
-        this.pageSlice = this.postRespone.slice(0, 5)
+        this.dataSource = new MatTableDataSource(this.postRespone);
+        this.dataSource.sort = this.sort;
+          this.dataSource.paginator = this.paginator;
+        // this.pageSlice = this.postRespone.slice(0, 100)
         paging.skipCount = skipCount + maxResultCount;
         if(paging.skipCount >= respone.totalCount){
           this.isFullItem = true;
@@ -89,5 +99,13 @@ export class CardTableComponent implements OnInit {
       endIndex = this.postRespone.length
     }
     this.pageSlice = this.postRespone.slice(startIndex -1, endIndex)
+  }
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
 }

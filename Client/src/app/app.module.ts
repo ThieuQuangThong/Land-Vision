@@ -10,6 +10,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatNativeDateModule } from '@angular/material/core';
 import {MatIconModule} from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
+import {MatTableModule} from '@angular/material/table';
+
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -152,6 +154,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     // RegisterComponent,
   ],
   imports: [
+    MatTableModule,
     MatButtonModule,
     MatPaginatorModule,
     MatTabsModule,
