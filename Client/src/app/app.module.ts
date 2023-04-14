@@ -71,6 +71,8 @@ import { PostingComponent } from './views/posting/posting.component';
 import { NgxLoadingModule } from "ngx-loading";
 import { FileUploadComponent } from './file-upload/file-upload.component';
 import { MoneyTranformPipe } from './_pipes/money-tranform.pipe';
+import { NgxOtpInputModule } from "ngx-otp-input";
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -130,6 +132,7 @@ import { MoneyTranformPipe } from './_pipes/money-tranform.pipe';
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    NgxOtpInputModule,
     HttpClientModule,
     NgbModule,
     NgxLoadingModule.forRoot({}),

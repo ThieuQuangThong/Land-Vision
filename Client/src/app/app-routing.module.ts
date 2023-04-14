@@ -27,6 +27,7 @@ import { MapExampleComponent } from './components/maps/map-example/map-example.c
 import { NewPasswordComponent } from './new-password/new-password.component';
 import { CodeVerifyComponent } from './code-verify/code-verify.component';
 import { PostingComponent } from './views/posting/posting.component';
+import { ProductDetailComponent } from './components/product-detail/product-detail.component';
 const routes: Routes = [
   {path: '', redirectTo: 'login', pathMatch: 'full'},
   {path: "login", component: LoginComponent},
@@ -36,6 +37,7 @@ const routes: Routes = [
   {path: "new-password/:code/:email", component: NewPasswordComponent},
   {path: "code-verify/:email", component: CodeVerifyComponent},
   { path: "dashboard", component: DashboardComponent },
+  { path: "product", component: SettingsComponent },
 
 
   // admin views
