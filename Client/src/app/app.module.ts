@@ -88,6 +88,7 @@ export function httpTranslateLoaderFactory(http: HttpClient) {
 }
 import { EmailConfirmSucceededComponent } from './views/email-confirm-succeeded/email-confirm-succeeded.component';
 import { PageNotFoundComponent } from './views/page-not-found/page-not-found.component';
+import { NgxOtpInputModule } from "ngx-otp-input";
 
 @NgModule({
   declarations: [
@@ -158,6 +159,7 @@ import { PageNotFoundComponent } from './views/page-not-found/page-not-found.com
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    NgxOtpInputModule,
     HttpClientModule,
     TranslateModule.forRoot({
       loader: {

@@ -10,3 +10,10 @@ code-input {
   --item-shadow-focused: none;
   --item-border-radius: 0px;
 }
+.w-16-otp{
+  margin: 0 4px;
+}
+.input{
+  margin-left: 25px;
+  align-items: center;
+}
