@@ -24,7 +24,7 @@ namespace Land_Vision.DTO.PropertyDtos
         public int NumberOfBed { get; set; }
         public int NumberOfBath { get; set; }
         [Required]
-        public List<PositionDto> positions {get; set;}
+        public List<PositionDto> positions { get; set; }
         public CategoryDto Category { get; set; }
         public StreetDto Street { get; set; }
         public WardDto Ward { get; set; }

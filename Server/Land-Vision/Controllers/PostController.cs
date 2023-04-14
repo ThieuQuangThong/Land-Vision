@@ -53,6 +53,29 @@ namespace Land_Vision.Controllers
             return Ok(Paginposts);
         }
 
+        // GET Posts By Time
+        /// <summary>
+        /// Get all posts by time
+        /// </summary>
+        [HttpGet("PostByTime/{skipCount}&{maxResultCount}&{startDate}&{endDate}")]
+        [ProducesResponseType(200, Type = typeof(PaginationRespone<PostDto>))]
+        public async Task<ActionResult<PaginationRespone<PostDto>>> GetPostsByTime(int skipCount, int maxResultCount, string startDate, string endDate)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            DateTime starDateParsed = DateTime.Parse(startDate.Replace('-', ' '));
+            DateTime endDateParsed = DateTime.Parse(endDate.Replace('-', ' '));
+
+            var Paginposts = await _postService.GetPostsByTimeAsync(new Pagination
+            {
+                SkipCount = skipCount,
+                MaxResultCount = maxResultCount,
+            }, starDateParsed, endDateParsed);
+            return Ok(Paginposts);
+        }
+
         // GET Post by Id
         /// <summary>
         /// Get post by Id
@@ -104,7 +127,7 @@ namespace Land_Vision.Controllers
             try
             {
                 if (postPropertyDto == null)
-                return BadRequest(ModelState);
+                    return BadRequest(ModelState);
 
                 if (!ModelState.IsValid)
                 {
@@ -125,7 +148,7 @@ namespace Land_Vision.Controllers
                 await transaction.RollbackAsync();
                 return StatusCode(500, ex.Message);
             }
-            
+
         }
 
         // UPDATE Post
@@ -139,28 +162,29 @@ namespace Land_Vision.Controllers
         {
             using var transaction = await _dbContext.Database.BeginTransactionAsync();
 
-                if (postPropertyDto == null){
-                    return BadRequest(ModelState);
-                }
+            if (postPropertyDto == null)
+            {
+                return BadRequest(ModelState);
+            }
 
-                var post = await _postRepository.GetPostAsync(postId);
-                if (post == null)
-                {
-                    ModelState.AddModelError("", "City not exists");
-                    return StatusCode(404, ModelState);
-                }
-                if (!ModelState.IsValid)
-                {
-                    return BadRequest(ModelState);
-                }
+            var post = await _postRepository.GetPostAsync(postId);
+            if (post == null)
+            {
+                ModelState.AddModelError("", "City not exists");
+                return StatusCode(404, ModelState);
+            }
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
 
-                if (!await _postService.UpdatePostPropertyAsync(postId, postPropertyDto))
-                {
-                    ModelState.AddModelError("", "Something went wrong while saving");
-                    return StatusCode(500, ModelState);
-                }
-                await transaction.CommitAsync();
-                return Ok(postPropertyDto);
+            if (!await _postService.UpdatePostPropertyAsync(postId, postPropertyDto))
+            {
+                ModelState.AddModelError("", "Something went wrong while saving");
+                return StatusCode(500, ModelState);
+            }
+            await transaction.CommitAsync();
+            return Ok(postPropertyDto);
         }
 
         // DELETE street

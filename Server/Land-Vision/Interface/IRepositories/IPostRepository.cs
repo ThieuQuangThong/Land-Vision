@@ -9,6 +9,7 @@ namespace Land_Vision.Interface.IRepositories
         Task<bool> CheckIsPostExistByIdAsync(int postId);
         Task<bool> IncreaseViewByPostIdAsync(int postId);
         Task<List<Post>> GetPostsAsync(Pagination pagination);
+        Task<List<Post>> GetPostsByTimeAsync(Pagination pagination, DateTime startDate, DateTime endDate);
         Task<Post> GetPostAsync(int postId);
         Task<Post> GetPostByTitleAsync(string postName);
         Task<int> GetPostCountAsync();
