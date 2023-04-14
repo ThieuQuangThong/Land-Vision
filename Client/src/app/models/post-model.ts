@@ -8,7 +8,6 @@ export class PostModel {
   description: string = "";
   transactionType: number =0;
   numberOfView: number = 0;
-  transactionType : number =0;
   createDate! : Date;
   isVerified:boolean = false;
   property: PropertyModel = new PropertyModel();
