@@ -35,6 +35,7 @@
     "@types/arcgis-js-api": "^4.26.0",
     "angularfirestore-deep": "^1.0.9",
     "bootstrap": "^5.2.3",
+    "carousel": "^0.0.3",
     "chart.js": "^4.2.1",
     "file-drop-element": "^1.0.1",
     "filestack-js": "^3.26.0",

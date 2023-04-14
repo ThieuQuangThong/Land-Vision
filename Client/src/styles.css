@@ -3513,6 +3513,7 @@ select {
 
 .w-full {
   width: 100%;
+  object-fit: cover;
 }
 
 .z-2 {

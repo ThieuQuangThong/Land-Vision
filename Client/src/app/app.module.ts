@@ -71,7 +71,7 @@ import { ProductDetailComponent } from './components/product-detail/product-deta
 import { SingleProductComponent } from './components/single-product/single-product.component';
 import { ProductListComponent } from './components/product-list/product-list.component';
 import { AlertComponent } from './components/alert/alert.component';
-import {NgbModule, NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
+import {NgbModule, NgbAlertModule, NgbCarouselModule } from '@ng-bootstrap/ng-bootstrap';
 import { PostingComponent } from './views/posting/posting.component';
 import { NgxLoadingModule } from "ngx-loading";
 import { FileUploadComponent } from './file-upload/file-upload.component';
@@ -81,7 +81,6 @@ import { DateFormatPipe } from './_pipes/date-format.pipe';
 import { PricingCardComponent } from './components/pricing-card/pricing-card.component';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-
 
 export function httpTranslateLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
