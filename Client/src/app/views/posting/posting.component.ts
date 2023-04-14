@@ -110,6 +110,9 @@ export class PostingComponent implements OnInit {
     );
   }
 
+  upLoadImage(event:any){
+
+  }
   getAndSetWardByDistrictId(districtId: number){
     this.isWardLoading = true;
     this.cityService.getWardByDistrictId(districtId).subscribe(

@@ -14,5 +14,6 @@
   "Interior":{
     "true": "Fully interior",
     "false": "No interior"
-  }
+  },
+  "Login": "Login"
 }
