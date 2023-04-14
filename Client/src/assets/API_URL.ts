@@ -16,5 +16,7 @@ export const API_URL = {
   GET_STREET:() => `${DOMAIN}api/Street`,
   GET_STREET_BY_DISTRICT:(districtId: number) => `${DOMAIN}/api/Street/${districtId}/district`,
   GET_WARD_BY_DISTRICT:(districtId: number) =>`${DOMAIN}/api/Ward/${districtId}/district`,
-  GET_DIRECTIONS:() => `${DOMAIN}/api/Property/getDirections`
+  GET_DIRECTIONS:() => `${DOMAIN}/api/Property/getDirections`,
+  GET_CATEGORYS:() => `${DOMAIN}/api/Category`,
+  ADD_POST:(userId: number) =>`${DOMAIN}/api/Post/${userId}`
 };
