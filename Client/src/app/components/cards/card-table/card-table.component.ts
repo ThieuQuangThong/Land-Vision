@@ -1,13 +1,20 @@
-import { Component, OnInit, Input, OnChanges,SimpleChanges } from "@angular/core";
+import { Component, OnInit, Input, OnChanges,SimpleChanges, ViewChild } from "@angular/core";
 import { PostService } from "src/app/_service/post.service";
 import { PagingModel } from "src/app/models/paging-model";
 import { PostModel } from "src/app/models/post-model";
+import { MatPaginator, PageEvent } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
+import {MatSort} from "@angular/material/sort";
 
 @Component({
   selector: "app-card-table",
   templateUrl: "./card-table.component.html",
 })
-export class CardTableComponent implements OnInit, OnChanges  {
+
+export class CardTableComponent implements OnInit {
+  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort!: MatSort;
+  stt:number = 0;
   options : object = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
   stDate: Date = new Date() ;
   enDate:Date = new Date();
@@ -16,10 +23,15 @@ export class CardTableComponent implements OnInit, OnChanges  {
 
   paging: PagingModel = {
     skipCount : 0,
-    maxResultCount : 8,
+    maxResultCount : 100,
+  }
+  pagingReset: PagingModel = {
+    skipCount : 0,
+    maxResultCount : 100,
   }
   isFullItem: boolean = false;
   postRespone: PostModel[] = [];
+  public pageSlice : PostModel[] = []
   @Input()
   get color(): string {
     return this._color;
@@ -33,16 +45,27 @@ export class CardTableComponent implements OnInit, OnChanges  {
     const now = new Date();
     this.stDate = new Date(now.getFullYear(), now.getMonth() - 1, 1);
     this.startDate = this.stDate.toLocaleDateString(undefined, this.options);
+
   }
   ngOnInit(): void {
     this.getPostByTime(this.paging,this.startDate.toString(),this.endDate.toString())
   }
-  ngOnChanges(simpleChange : SimpleChanges) {
-      this.startDate = this.stDate.toLocaleDateString(undefined, this.options);
-      this.endDate = this.enDate.toLocaleDateString(undefined, this.options);
-      this.getPostByTime(this.paging,this.startDate.toString(),this.endDate.toString())
-      console.log(this.startDate+","+this.endDate)
-  }
+   onSubmitTime() {
+  //     this.postRespone= [];
+  //     this.startDate = this.stDate.toLocaleDateString(undefined, this.options);
+  //     this.endDate = this.enDate.toLocaleDateString(undefined, this.options);
+  //     this.postService.getAllPostByTime(this.pagingReset, this.startDate.toString(),this.endDate.toString())
+  //   .subscribe(
+  //     respone =>{
+  //       var {skipCount, maxResultCount} = respone.pagination;
+
+  //       this.postRespone = [...this.postRespone, ...respone.listItem];
+  //       if(this.pagingReset.skipCount >= respone.totalCount){
+  //         this.isFullItem = true;
+  //       }
+  //     }
+  //   )
+   }
   getPostByTime(paging: PagingModel, startdatepickerValue: string,enddatepickerValue: string){
     this.postService.getAllPostByTime(paging, startdatepickerValue,enddatepickerValue)
     .subscribe(
@@ -50,12 +73,21 @@ export class CardTableComponent implements OnInit, OnChanges  {
         var {skipCount, maxResultCount} = respone.pagination;
 
         this.postRespone = [...this.postRespone, ...respone.listItem];
+        this.pageSlice = this.postRespone.slice(0, 5)
         paging.skipCount = skipCount + maxResultCount;
-
         if(paging.skipCount >= respone.totalCount){
           this.isFullItem = true;
         }
       }
     )
+  }
+  OnPageChange(event : PageEvent){
+    console.log(event);
+    const startIndex = event.pageIndex + event.pageSize;
+    let endIndex = startIndex + event.pageSize ;
+    if(endIndex > this.postRespone.length){
+      endIndex = this.postRespone.length
+    }
+    this.pageSlice = this.postRespone.slice(startIndex -1, endIndex)
   }
 }

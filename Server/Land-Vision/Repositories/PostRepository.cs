@@ -66,7 +66,7 @@ namespace Land_Vision.Repositories
         public async Task<List<Post>> GetPostsByTimeAsync(Pagination pagination, DateTime startDate, DateTime endDate)
         {
             return await _dbContext.Posts.AsNoTracking()
-            .Where(a => a.CreateDate >= startDate && a.CreateDate <= endDate)
+            .Where(a => a.CreateDate >= startDate && a.CreateDate <= endDate.AddDays(1))
             .OrderByDescending(p => p.CreateDate)
             .Skip(pagination.SkipCount)
             .Take(pagination.MaxResultCount)

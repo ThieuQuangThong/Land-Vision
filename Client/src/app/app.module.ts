@@ -9,6 +9,8 @@ import { MatInputModule } from '@angular/material/input';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatNativeDateModule } from '@angular/material/core';
 import {MatIconModule} from '@angular/material/icon';
+import { MatTabsModule } from '@angular/material/tabs';
+
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -88,6 +90,8 @@ export function httpTranslateLoaderFactory(http: HttpClient) {
 }
 import { EmailConfirmSucceededComponent } from './views/email-confirm-succeeded/email-confirm-succeeded.component';
 import { PageNotFoundComponent } from './views/page-not-found/page-not-found.component';
+import { MatButtonModule } from '@angular/material/button';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -147,6 +151,10 @@ import { PageNotFoundComponent } from './views/page-not-found/page-not-found.com
     // RegisterComponent,
   ],
   imports: [
+
+    MatButtonModule,
+    MatPaginatorModule,
+    MatTabsModule,
     MatIconModule,
     MatDatepickerModule,
     MatInputModule,

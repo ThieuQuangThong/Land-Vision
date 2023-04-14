@@ -9,7 +9,7 @@ export class PropertyModel {
   juridical: number = 0;
   isInterior: boolean = false;
   direction: string ="";
-  addressNumber: number = 0;
+  addressNumber: string = "";
   wayIn: number = 0;
   numberOfFloor:number = 0;
   numberOfBed: number = 0;

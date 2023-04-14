@@ -13,7 +13,7 @@ namespace Land_Vision.Models
         public int Juridical { get; set; }
         public bool IsInterior { get; set; }
         public int Direction { get; set; }
-        public int AddressNumber { get; set; }
+        public string AddressNumber { get; set; }
         public double WayIn { get; set; }
         public int NumberOfFloor { get; set; }
         public int NumberOfBed { get; set; }

@@ -1,18 +1,10 @@
 <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded" [ngClass]="color === 'light' ? 'bg-white' : 'bg-red-900 text-white'">
-    <div class="rounded-t mb-0 px-4 py-3 border-0">
-        <div class="flex flex-wrap items-center">
-            <div class="relative w-full px-4 max-w-full flex-grow flex-1">
-                <h3 class="font-semibold text-lg" [ngClass]="color === 'light' ? 'text-blueGray-700' : 'text-white'">
-                    Posts management
-                </h3>
-            </div>
-        </div>
-    </div>
 
-    <div class="block w-full overflow-x-auto">
+
+    <div class="block w-full ">
         <!-- Projects table -->
         <div class="grid grid-cols-6 gap-4">
-            <div class="col-start-1 col-end-2 ">
+            <div class="col-start-1 col-end-3 flex content-center">
                 <mat-form-field appearance="fill">
                     <mat-label>MM/DD/YYYY – MM/DD/YYYY</mat-label>
                     <mat-date-range-input [rangePicker]="picker">
@@ -22,8 +14,12 @@
                     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-date-range-picker #picker></mat-date-range-picker>
                 </mat-form-field>
+                <button class="bg-gray-100 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded h-14" (click)="onSubmitTime()">
+                  <i class="fas fa-search"></i>
+                </button>
             </div>
-            <div class="col-start-4 col-span-1 ">
+
+            <div class="col-start-3 col-span-1 ">
 
             </div>
 
@@ -33,69 +29,86 @@
               </select>
             </div>
         </div>
-        <table class="items-center w-full bg-transparent border-collapse">
-            <thead>
-                <tr>
-                    <th class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left" [ngClass]="
-              color === 'light'
-                ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
-                : 'bg-red-800 text-red-300 border-red-700'
-            ">
-                        Title
-                    </th>
-                    <th class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left" [ngClass]="
-              color === 'light'
-                ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
-                : 'bg-red-800 text-red-300 border-red-700'
-            ">
-                        Type
-                    </th>
-                    <th class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left" [ngClass]="
-              color === 'light'
-                ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
-                : 'bg-red-800 text-red-300 border-red-700'
-            ">
-                        Create at
-                    </th>
-                    <th class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left" [ngClass]="
-              color === 'light'
-                ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
-                : 'bg-red-800 text-red-300 border-red-700'
-            ">
-                        Poster
-                    </th>
-                    <th class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left" [ngClass]="
-              color === 'light'
-                ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
-                : 'bg-red-800 text-red-300 border-red-700'
-            "></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let post of postRespone">
-                    <th class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
-                        <span class="ml-3 font-bold" [ngClass]="color === 'light' ? 'text-blueGray-600' : 'text-white'">
-              {{post.title}}
-            </span>
-                    </th>
-                    <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                        {{post.transactionType}}
+        <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
+            <mat-tab label="Posts management">
+                <table mat-table matSort class="items-center w-full bg-transparent border-collapse ">
+                    <thead>
+                        <tr>
+                            <th class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left" [ngClass]="
+                  color === 'light'
+                    ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
+                    : 'bg-red-800 text-red-300 border-red-700'
+                ">#</th>
+                            <th class=" px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left" [ngClass]="
+                  color === 'light'
+                    ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
+                    : 'bg-red-800 text-red-300 border-red-700'
+                ">
+                                Title
+                            </th>
+                            <th class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left" [ngClass]="
+                  color === 'light'
+                    ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
+                    : 'bg-red-800 text-red-300 border-red-700'
+                ">
+                                Type
+                            </th>
+                            <th class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left" [ngClass]="
+                  color === 'light'
+                    ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
+                    : 'bg-red-800 text-red-300 border-red-700'
+                ">
+                                Create at
+                            </th>
+                            <th class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left" [ngClass]="
+                  color === 'light'
+                    ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
+                    : 'bg-red-800 text-red-300 border-red-700'
+                ">
+                                Poster
+                            </th>
 
-                    </td>
-                    <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                        {{post.createDate |date}}
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let post of pageSlice, let i = index">
+                            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                {{i +1}}
 
-                    </td>
-                    <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
-                        {{post.user.name}}
-                    </td>
-                    <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
-                        <i class="fa-solid fa-angle-right"></i>
-                    </td>
-                </tr>
+                            </td>
+                            <td class=" truncate border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
+                                <div class="truncate" style="max-width: 600px;">
+                                    <span class="ml-3 font-bold" [ngClass]="color === 'light' ? 'text-blueGray-600' : 'text-white'">
+                                    {{post.title}}
+                                </span>
+                                </div>
+                            </td>
+                            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                <span *ngIf="post.transactionType === 1"> For rent</span>
+                                <span *ngIf="post.transactionType === 0"> For sell</span>
+                            </td>
+                            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                {{post.createDate |date}}
 
-            </tbody>
-        </table>
+                            </td>
+                            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                {{post.user.name}}
+                            </td>
+                            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
+                                <i class="fa-solid fa-angle-right"></i>
+                            </td>
+                        </tr>
+
+                    </tbody>
+                    <tr mat-header-row *matHeaderRowDef="displayedPostsColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedPostsColumns;"></tr>
+                </table>
+                <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+            </mat-tab>
+            <mat-tab label="Seller management"></mat-tab>
+            <mat-tab label="Revenue management"></mat-tab>
+        </mat-tab-group>
+
     </div>
 
 </div>
