@@ -79,7 +79,7 @@ namespace Land_Vision.Controllers
         /// <summary>
         /// Get post by title
         /// </summary>
-        [HttpGet("{postTitle}")]
+        [HttpGet("getByTitle/{postTitle}")]
         [ProducesResponseType(200, Type = typeof(PostDto))]
         public async Task<IActionResult> GetPostByTitleAsync(string postTitle)
         {
@@ -118,7 +118,7 @@ namespace Land_Vision.Controllers
                 }
 
                 await transaction.CommitAsync();
-                return Ok(postPropertyDto);
+                return Ok();
             }
             catch (Exception ex)
             {

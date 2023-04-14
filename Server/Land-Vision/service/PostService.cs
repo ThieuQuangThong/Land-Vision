@@ -15,12 +15,14 @@ namespace Land_Vision.service
         private readonly IPropertyRepository _propertyRepository;
         private readonly IStreetRepository _streetRepository;
         private readonly ICategoryRepository _categoryRepository;
+        private readonly IWardRepository _wardRepository;
         private readonly IPositionRepository _positionRepository;
         private readonly IImageService _imageService;
 
         private readonly IMapper _mapper;
         public PostService
         (
+         IWardRepository wardRepository,
          IImageService imageService,
          IPositionService positionService,
          IMapper mapper,
@@ -39,6 +41,7 @@ namespace Land_Vision.service
             _streetRepository = streetRepository;
             _positionRepository = positionRepository;
             _positionService = positionService;
+            _wardRepository = wardRepository;
         }
 
         public async Task<bool> AddPostPropertyAsync(int userId, CreatePostPropertyDto createPostPropertyDto)
@@ -46,18 +49,26 @@ namespace Land_Vision.service
             var property = _mapper.Map<Property>(createPostPropertyDto.property);
             var street = await _streetRepository.GetStreetByIdAsync(createPostPropertyDto.property.StreetId);
             var category = await _categoryRepository.GetCategoryAsync(createPostPropertyDto.property.CategoryId);
+            var ward = await _wardRepository.GetWardByIdAsync(createPostPropertyDto.property.WardId);
 
             if (street == null)
             {
                 throw new Exception("Street not found");
             }
+
             if (category == null)
+            {
+                throw new Exception("Category not found");
+            }
+
+            if (ward == null)
             {
                 throw new Exception("Category not found");
             }
 
             property.Street = street;
             property.Category = category;
+            property.Ward = ward;
 
             if (!await _propertyRepository.AddPropertyAsync(property))
             {
