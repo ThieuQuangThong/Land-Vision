@@ -6,6 +6,7 @@ export class PostModel {
   id: number = 0;
   title: string = "";
   description: string = "";
+  transactionType: number =0;
   numberOfView: number = 0;
   transactionType : number =0;
   createDate! : Date;

@@ -16,7 +16,7 @@ HttpClient;
 })
 export class AuthService {
   jwtService: JwtHelperService = new JwtHelperService();
-  code: any;
+public  code: any;
   data = {email: '', code: ''};
   headers = new HttpHeaders({ 'Content-Type': 'application/json' });
   public email: any;
@@ -67,6 +67,24 @@ export class AuthService {
       API_URL.REFRESH_TOKEN(),
       login,
     );
+  }
+
+  getTokenInformation() {
+    const token = localStorage.getItem('token');
+
+    if(!token){
+      return "";
+    }
+    const payloadBase64 = JSON.parse(token).accessToken.split('.')[1];
+    const payloadJson = atob(payloadBase64);
+    const payloadObject = JSON.parse(payloadJson);
+
+    return payloadObject
+
+  }
+
+  getUserId():number {
+    return this.getTokenInformation().nameid;
   }
 
   logout(): void {
@@ -127,7 +145,7 @@ export class AuthService {
     return this.http.post(url,{}, {withCredentials: true });
   }
 
-  getData(email: any, code: any) {
+  getData(email: any, code: string) {
     const data = {
       email: email,
       code: code
@@ -140,6 +158,7 @@ export class AuthService {
 
     });
   }
+
   getDataCode(email: any, code: any) {
     const data = {
       email: email,
@@ -150,8 +169,6 @@ export class AuthService {
       console.log(response);
       alert("ok")
       this.router.navigate(['new-password/'+this.code])
-
-
     });
   }
 }

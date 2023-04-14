@@ -3,6 +3,7 @@ using System;
 using Land_Vision.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Land_Vision.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230414063321_remove_waard_relationship")]
+    partial class remove_waard_relationship
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -161,9 +164,8 @@ namespace Land_Vision.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("AddressNumber")
-                        .IsRequired()
-                        .HasColumnType("longtext");
+                    b.Property<int>("AddressNumber")
+                        .HasColumnType("int");
 
                     b.Property<double>("Area")
                         .HasColumnType("double");
@@ -198,9 +200,6 @@ namespace Land_Vision.Migrations
                     b.Property<int>("StreetId")
                         .HasColumnType("int");
 
-                    b.Property<int?>("WardId")
-                        .HasColumnType("int");
-
                     b.Property<double>("WayIn")
                         .HasColumnType("double");
 
@@ -209,8 +208,6 @@ namespace Land_Vision.Migrations
                     b.HasIndex("CategoryId");
 
                     b.HasIndex("StreetId");
-
-                    b.HasIndex("WardId");
 
                     b.ToTable("Properties");
                 });
@@ -444,15 +441,9 @@ namespace Land_Vision.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Land_Vision.Models.Ward", "Ward")
-                        .WithMany("Properties")
-                        .HasForeignKey("WardId");
-
                     b.Navigation("Category");
 
                     b.Navigation("Street");
-
-                    b.Navigation("Ward");
                 });
 
             modelBuilder.Entity("Land_Vision.Models.Street", b =>
@@ -542,11 +533,6 @@ namespace Land_Vision.Migrations
             modelBuilder.Entity("Land_Vision.Models.Vip", b =>
                 {
                     b.Navigation("Users");
-                });
-
-            modelBuilder.Entity("Land_Vision.Models.Ward", b =>
-                {
-                    b.Navigation("Properties");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,16 +1,18 @@
 
 
-<section class="bg-gray-50 min-h-screen flex items-center justify-center">
+<section class=" form-login min-h-screen flex items-center justify-center">
   <!-- login container -->
 
-  <div class="bg-gray-60 flex  rounded-2xl shadow-lg max-w-4xl p-8 items-center">
+
+  <div class="bg-gray-60 flex
+  rounded-2xl shadow-lg max-w-4xl p-8 items-center">
       <!-- image -->
       <div class="md:block hidden w-3/2">
         <img class="rounded-2xl " src="https://img.freepik.com/premium-vector/modern-handcrafted-flat-illustration-food-delivery_203633-8769.jpg?w=740">
       </div>
     <!-- form -->
     <div class="md:w-2/3 px-8 md:px-16">
-      <h2 class="font-bold text-2xl pt-2 text-[#002D74]">{{'TITLE' | translate}}</h2>
+      <h2 class="font-bold text-2xl pt-2 text-[#002D74]">{{'Login' | translate}}</h2>
       <p class="text-sm mt-4 text-[#002D74]">If you are already a member, easily log in.</p>
 
       <form  action="" class="flex flex-col gap-1 mt-2"  [formGroup]="loginForm"  (ngSubmit)="onSubmit()">

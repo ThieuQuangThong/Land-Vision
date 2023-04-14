@@ -8,5 +8,7 @@ namespace Land_Vision.Models
         public string Name { get; set; }
         [Required]
         public District District { get; set; }
+
+        public List<Property>? Properties { get; set; }  
     }
 }

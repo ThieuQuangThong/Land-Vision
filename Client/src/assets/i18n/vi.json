@@ -14,5 +14,6 @@
   "Interior":{
     "true": "Đầy đủ nội thất",
     "false": "Không có nội thất"
-  }
+  },
+  "Login": "Đăng nhập"
 }

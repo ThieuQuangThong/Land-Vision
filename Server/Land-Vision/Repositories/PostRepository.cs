@@ -56,6 +56,7 @@ namespace Land_Vision.Repositories
             .Take(pagination.MaxResultCount)
             .Include(x => x.User)
             .Include(l => l.Images)
+            .Include(k => k.Property.Ward)
             .Include(c => c.Property.Street)
             .Include(j => j.Property.Street.District)
             .Include(i => i.Property.Street.District.City)

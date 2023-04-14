@@ -28,7 +28,7 @@ export class NewPasswordComponent implements OnInit {
       confirmPassword: [''],
     });
   }
-  getData(email: any, code: any, password: any) {
+  getData(email: any, code: string, password: any) {
     const data = {
       email: email,
       code: code,

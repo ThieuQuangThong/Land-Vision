@@ -41,6 +41,7 @@
     "firebase": "^9.19.1",
     "ngx-cookie-service": "^15.0.0",
     "ngx-loading": "^15.0.0",
+    "ngx-otp-input": "^0.11.4",
     "ngx-owl-carousel-o": "^15.0.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",

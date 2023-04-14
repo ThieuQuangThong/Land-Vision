@@ -25,6 +25,8 @@ namespace Land_Vision.Models
         public Category Category { get; set; }
         [Required]
         public Street Street { get; set; }
+
+        public Ward? Ward { get; set; }
         public Post Post { get; set; }
         [Required]
         public List<Position> Positions { get; set; }

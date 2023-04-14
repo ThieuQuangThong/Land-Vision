@@ -90,8 +90,7 @@ export function httpTranslateLoaderFactory(http: HttpClient) {
 }
 import { EmailConfirmSucceededComponent } from './views/email-confirm-succeeded/email-confirm-succeeded.component';
 import { PageNotFoundComponent } from './views/page-not-found/page-not-found.component';
-import { MatButtonModule } from '@angular/material/button';
-import { MatPaginatorModule } from '@angular/material/paginator';
+import { NgxOtpInputModule } from "ngx-otp-input";
 
 @NgModule({
   declarations: [
@@ -151,7 +150,6 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     // RegisterComponent,
   ],
   imports: [
-
     MatButtonModule,
     MatPaginatorModule,
     MatTabsModule,
@@ -166,6 +164,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    NgxOtpInputModule,
     HttpClientModule,
     TranslateModule.forRoot({
       loader: {

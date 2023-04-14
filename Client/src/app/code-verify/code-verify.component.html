@@ -1,5 +1,5 @@
-<div class="h-screen bg-blue-500 py-20 px-3">
-  <div class="container mx-auto">
+<!-- <div class="h-screen bg-blue-500 py-20 px-3">
+  <div class="container mx-auto justify-center mt-64">
     <div class="max-w-sm mx-auto md:max-w-lg">
       <div class="w-full">
         <div class="bg-white h-64 py-3 rounded text-center">
@@ -9,15 +9,9 @@
             <span class="font-bold">Your email</span>
           </div>
 
-          <form  class="flex flex-row justify-center text-center px-2 mt-5" [formGroup]="verifyForm" (click)="OnSubmit()">
+          <form  class="flex flex-row justify-center  text-center px-2 mt-5" [formGroup]="verifyForm" (click)="OnSubmit()">
             <input class="m-2 border h-10 w-72 text-center form-control rounded"  type="text"  formControlName="code"  />
-            <!-- <input class="m-2 border h-10 w-10 text-center form-control rounded" type="text" formControlName="second"
-              maxlength="1" />
-            <input class="m-2 border h-10 w-10 text-center form-control rounded" type="text" formControlName="third" maxlength="1" />
-            <input class="m-2 border h-10 w-10 text-center form-control rounded" type="text" formControlName="fourth"
-              maxlength="1" />
-            <input class="m-2 border h-10 w-10 text-center form-control rounded" type="text" formControlName="fifth" maxlength="1" />
-            <input class="m-2 border h-10 w-10 text-center form-control rounded" type="text" formControlName="sixth" maxlength="1" /> -->
+
               <button type="submit"
                 class="bg-[#38C390] mt-2  w-16 rounded-xl text-gray-50 hover:bg-gradient-to-r hover:from-[#FD5E57] hover:to-[#FC477E]">Submit</button>
           </form>
@@ -26,4 +20,44 @@
     </div>
   </div>
 </div>
+-->
+<div class="relative flex min-h-screen flex-col justify-center overflow-hidden bg-gray-50 py-12">
+  <div class="relative bg-white px-6 pt-10 pb-9 shadow-xl mx-auto w-full max-w-lg rounded-2xl">
+    <div class="mx-auto flex w-full max-w-md flex-col space-y-16">
+      <div class="flex flex-col items-center justify-center text-center space-y-2">
+        <div class="font-semibold text-3xl">
+          <p>Email Verification</p>
+        </div>
+        <div class="flex flex-row text-sm font-medium text-gray-400">
+          <p>We have sent a code to your email ba**@dipainhouse.com</p>
+        </div>
+      </div>
 
+      <div>
+        <div action="" method="post" >
+          <form class="flex flex-col space-y-16" [formGroup]="verifyForm" (click)="OnSubmit()">
+            <div class="flex flex-row items-center justify-between mx-auto w-full max-w-xs" >
+
+                <ngx-otp-input
+                  [config]="otpInputConfig"  (otpChange)="handeOtpChange($event)" (fill)="handleFillEvent($event)" class="input" formControlName="code"  >
+                </ngx-otp-input>
+
+            </div>
+
+            <div class="flex flex-col space-y-3">
+              <div>
+                <button type="submit" class="flex flex-row items-center justify-center text-center w-full border rounded-xl outline-none py-5 bg-[#38C390]  border-none text-white text-sm shadow-sm">
+                  Verify Account
+                </button>
+              </div>
+
+            </div>
+          </form>
+          <div class=" mt-4 flex flex-row items-center justify-center text-center text-sm font-medium space-x-1 text-gray-500">
+            <p>Didn't recieve code?</p> <a class="flex flex-row items-center -[#38C390] " target="_blank" rel="noopener noreferrer" (click)="resend(email)">Resend</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
