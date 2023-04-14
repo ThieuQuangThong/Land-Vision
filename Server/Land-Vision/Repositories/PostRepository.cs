@@ -8,7 +8,7 @@ namespace Land_Vision.Repositories
 {
     public class PostRepository : IPostRepository
     {
-        private readonly IPropertyRepository _propertyRepository;   
+        private readonly IPropertyRepository _propertyRepository;
         private readonly DataContext _dbContext;
         public PostRepository(DataContext dbContext, IPropertyRepository propertyRepository)
         {
@@ -28,8 +28,8 @@ namespace Land_Vision.Repositories
         }
 
         public async Task<bool> DeletePostAsync(Post post)
-        {  
-            _dbContext.Remove(post); 
+        {
+            _dbContext.Remove(post);
             return await SaveChangeAsync();
         }
 
@@ -56,6 +56,7 @@ namespace Land_Vision.Repositories
             .Take(pagination.MaxResultCount)
             .Include(x => x.User)
             .Include(l => l.Images)
+            .Include(k => k.Property.Ward)
             .Include(c => c.Property.Street)
             .Include(j => j.Property.Street.District)
             .Include(i => i.Property.Street.District.City)
@@ -63,7 +64,22 @@ namespace Land_Vision.Repositories
             .Include(n => n.Property.Positions)
             .ToListAsync();
         }
-
+        public async Task<List<Post>> GetPostsByTimeAsync(Pagination pagination, DateTime startDate, DateTime endDate)
+        {
+            return await _dbContext.Posts.AsNoTracking()
+            .Where(a => a.CreateDate >= startDate && a.CreateDate <= endDate.AddDays(1))
+            .OrderByDescending(p => p.CreateDate)
+            .Skip(pagination.SkipCount)
+            .Take(pagination.MaxResultCount)
+            .Include(x => x.User)
+            .Include(l => l.Images)
+            .Include(c => c.Property.Street)
+            .Include(j => j.Property.Street.District)
+            .Include(i => i.Property.Street.District.City)
+            .Include(m => m.Property.Category)
+            .Include(n => n.Property.Positions)
+            .ToListAsync();
+        }
         public async Task<bool> IncreaseViewByPostIdAsync(int postId)
         {
             var post = await GetPostAsync(postId);

@@ -69,6 +69,24 @@ public  code: any;
     );
   }
 
+  getTokenInformation() {
+    const token = localStorage.getItem('token');
+
+    if(!token){
+      return "";
+    }
+    const payloadBase64 = JSON.parse(token).accessToken.split('.')[1];
+    const payloadJson = atob(payloadBase64);
+    const payloadObject = JSON.parse(payloadJson);
+
+    return payloadObject
+
+  }
+
+  getUserId():number {
+    return this.getTokenInformation().nameid;
+  }
+
   logout(): void {
     // Xóa thông tin người dùng khỏi localStorage hoặc sessionStorage khi đăng xuất
     localStorage.removeItem('token');
@@ -151,8 +169,6 @@ public  code: any;
       console.log(response);
       alert("ok")
       this.router.navigate(['new-password/'+this.code])
-
-
     });
   }
 }

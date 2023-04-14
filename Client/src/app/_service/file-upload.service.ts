@@ -3,6 +3,7 @@ import { Injectable, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AuthService } from './auth.service';
 import { API_URL } from 'src/assets/API_URL';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -49,6 +50,18 @@ export class FileUploadService {
 
     this.onUpload2()
     this.onUpload1()
+  }
+
+  convertFileToUrl(file: File): Observable<string>{
+    const formData = new FormData();
+    formData.append('formFile', file, file.name);
+    return this.http.post<string>(API_URL.CONVERT_FILE_IMAGE_TO_URL(), formData)
+  }
+
+  convertEventTofile(event: Event): File {
+    const target = event.target as HTMLInputElement;
+    const files = target.files as FileList;
+    return files[0];
   }
 
   onUpload1(): void {

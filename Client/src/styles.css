@@ -4087,3 +4087,6 @@ select {
   color: rgb(233, 91, 91);
   transition: .1s;
 }
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

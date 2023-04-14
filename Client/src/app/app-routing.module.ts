@@ -38,11 +38,11 @@ const routes: Routes = [
   {path: "reset-password", component: ResetPasswordComponent},
   {path: "new-password/:code/:email", component: NewPasswordComponent},
   {path: "code-verify/:email", component: CodeVerifyComponent},
-  { path: "dashboard", component: DashboardComponent },
-  { path: "productdetails", component: SettingsComponent },
-  { path: "emailcomfirmed", component: EmailConfirmSucceededComponent },
-  { path: "404error", component: PageNotFoundComponent },
-  { path: "product", component: SettingsComponent },
+  {path: "dashboard", component: DashboardComponent },
+  {path: "productdetails", component: SettingsComponent },
+  {path: "emailcomfirmed", component: EmailConfirmSucceededComponent },
+  {path: "404error", component: PageNotFoundComponent },
+  {path: "product", component: SettingsComponent },
 
 
   // admin views
@@ -60,16 +60,6 @@ const routes: Routes = [
   {
     path:"posting",
     component: PostingComponent
-  },
-  // auth views
-  {
-    path: "auth",
-    component: AuthComponent,
-    children: [
-      // { path: "login", component: LoginComponentDarius },
-      // { path: "register", component: RegisterComponent },
-      { path: "", redirectTo: "login", pathMatch: "full" },
-    ],
   },
   // no layout views
   { path: "profile", component: ProfileComponent },
