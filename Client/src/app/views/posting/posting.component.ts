@@ -1,5 +1,4 @@
-import { Component, OnInit, SimpleChanges } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { AlertService } from 'src/app/_service/alert.service';
 import { AuthService } from 'src/app/_service/auth.service';
@@ -14,6 +13,7 @@ import { PostRequest } from 'src/app/models/post-request';
 import { PropertyModel } from 'src/app/models/property-model';
 import { StreetModel } from 'src/app/models/street-model';
 import { WardModel } from 'src/app/models/ward-model';
+import { PROPERTY_INFOR } from 'src/assets/common/propertyInfor';
 
 export class inforStreet {
   districtName: string ="";
@@ -29,6 +29,7 @@ export class inforStreet {
 export class PostingComponent implements OnInit {
   openTab = 1;
   directions: string[] = [];
+  juridicals: string[] = PROPERTY_INFOR.juridicals;
   districts: DistrictModel[] = [];
   categorys: CategoryModel[] =[];
   wards: WardModel[] = [];
@@ -62,6 +63,7 @@ export class PostingComponent implements OnInit {
   selectedWardId: number = 1;
   selectedStreetId: number = 1;
   selectedAddress: string ='';
+  selectedJuridical: number = 0;
 
   onDropdownDistrictChange(event: any) {
     console.log(this.selectedDistrictId);
@@ -215,6 +217,7 @@ export class PostingComponent implements OnInit {
     property.numberOfBed = this.numberOfBed;
     property.districtId = this.selectedDirectionId;
     property.isInterior = this.selectedInterior;
+    property.juridical = this.selectedJuridical;
 
     postModel.title = this.title;
     postModel.description = this.description;

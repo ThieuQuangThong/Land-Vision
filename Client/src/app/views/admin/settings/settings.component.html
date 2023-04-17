@@ -190,8 +190,8 @@
               </div>
 
                 <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
-                  <h2 class="text-sm title-font text-gray-500 tracking-widest">Address</h2>
-                  <h1 class="text-gray-900 text-3xl title-font font-medium mb-1">The Title</h1>
+                  <h2 class="text-sm title-font text-gray-500 tracking-widest">{{postItem.property.addressNumber}}</h2>
+                  <h1 class="text-gray-900 text-3xl title-font font-medium mb-1">{{postItem.title}}</h1>
                   <!-- <div class="flex mb-4">
                     <span class="flex items-center">
                       <svg fill="currentColor" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-4 h-4 text-red-500" viewBox="0 0 24 24">
@@ -229,22 +229,7 @@
                       </a>
                     </span>
                   </div> -->
-                  <p class="leading-relaxed">Description-Tiểu villa Bình Thạnh 6x23m (2 tầng) hẻm nhựa 12m thông bàn cờ, kiếm không ra căn thứ 2 - khu dân trí cao - nội thất nhập khẩu - giá 15,5 tỷ nay giảm 14,7 tỷ.
-                    - Đường Bình Lợi, Bình Thạnh.<br>
-                    - Diện tích: 135m² (6x23m) thông số quá đẹp, công nhận đủ không lộ giới.<br>
-                    - Giá bán: 14,7 tỷ thương lượng.<br>
-                    + Hẻm nhựa 12m 1 trục, khu văn minh dân trí cực kỳ cao.<br>
-                    + Cách mặt tiền đường chỉ có 200m.<br>
-                    + Câu trúc: Trệt 2 tầng.<br>
-                    + Gồm 4 phòng ngủ master, 5 WC, bếp, phòng khách, lô gia, giếng trời,...<br>
-                    + Nhà có gara oto, sân để xe rộng vô tư, sân thượng,...<br>
-                    + Nội thất ngoại nhập, toàn hàng xịn sò rất giá trị.<br>
-                    + Ngoài ra, có hệ thống năng lượng mặt trời, tặng luôn.<br>
-                    + Khu nhà ở dân cư cực kỳ văn minh, yên tĩnh, dân trí cao.<br>
-                    + Khu vực đi lại thuận tiện: Gần ngã 4 Nguyễn Xí mới mở đường rộng thênh thang, gần Phạm Văn Đồng,... Giá trị nhà sẽ còn tăng rất nhanh.<br>
-                    + Xem nhà 247 LH: Anh Minh.<br>
-                    + Khách hàng thiện chí hãy liên hệ ngay.<br>
-                    Xin cảm ơn!</p>
+                  <p class="leading-relaxed">{{postItem.description}}</p>
                   <!-- <div class="flex mt-6 items-center pb-5 border-b-2 border-gray-200 mb-5">
                     <div class="flex">
                       <span class="mr-3">Color</span>
@@ -270,7 +255,7 @@
                     </div>
                   </div> -->
                   <div class="flex">
-                    <span class="title-font font-medium text-2xl text-gray-900">$58.00</span>
+                    <span class="title-font font-medium text-2xl text-gray-900">{{postItem.property.price | moneyTransform}}</span>
                     <button class="flex ml-auto text-white bg-red-500 border-0 py-2 px-6 focus:outline-none hover:bg-red-600 rounded">Button</button>
                     <button class="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
                       <svg fill="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="w-5 h-5" viewBox="0 0 24 24">
@@ -284,7 +269,7 @@
                     <div class="bg-blueGray-200 rounded-xl">
                       <div class="p-3 lg:p-5 ">
                         <div class="p-2 rounded-xl lg:p-3  bg-gray-50">
-                          <div class="w-full flex flex-wrap gap-x-1">
+                          <div class="w-full flex flex-wrap justify-between gap-x-1">
                             <div class="w-1/5 ml-4 mb-4 md:w-2/5 flex items-center">
                                 <span >
                                   <i class="fa fa-sack-dollar"></i>
@@ -294,7 +279,7 @@
                                     Area:
                                   </span>
                                   <span >
-                                    12 tỷ
+                                    {{postItem.property.area}}
                                   </span>
                                 </div>
                             </div>
@@ -307,7 +292,7 @@
                                     Frontage:
                                   </span>
                                   <span >
-                                    12 tỷ
+                                    {{postItem.property.frontangeArea}}
                                   </span>
                                 </div>
                             </div>
@@ -320,7 +305,7 @@
                                     Price:
                                   </span>
                                   <span >
-                                    12 tỷ
+                                    {{postItem.property.price | moneyTransform}}
                                   </span>
                                 </div>
                             </div>
@@ -334,7 +319,7 @@
                                     Juridical:
                                   </span>
                                   <span >
-                                    12 tỷ
+                                    {{postItem.property.juridical | juridicalTransform | translate}}
                                   </span>
                                 </div>
                             </div>
@@ -345,10 +330,10 @@
                                 </span>
                                 <div class="text-base pl-3 font-medium">
                                   <span >
-                                    Interior:
+                                    Is interior:
                                   </span>
                                   <span >
-                                    12 tỷ
+                                    {{postItem.property.isInterior.toString() | translate}}
                                   </span>
                                 </div>
                             </div>
@@ -362,7 +347,7 @@
                                     Direction:
                                   </span>
                                   <span >
-                                    12 tỷ
+                                    {{postItem.property.direction | directionTransform | translate}}
                                   </span>
                                 </div>
                             </div>
@@ -376,7 +361,7 @@
                                     Way In:
                                   </span>
                                   <span >
-                                    12 tỷ
+                                    {{postItem.property.wayIn}}
                                   </span>
                                 </div>
                             </div>
@@ -390,7 +375,7 @@
                                     Floor:
                                   </span>
                                   <span >
-                                    12 tỷ
+                                    {{postItem.property.numberOfFloor}}
                                   </span>
                                 </div>
                             </div>
@@ -404,7 +389,7 @@
                                     Bed:
                                   </span>
                                   <span >
-                                    12 tỷ
+                                    {{postItem.property.numberOfBed}}
                                   </span>
                                 </div>
                             </div>
@@ -418,12 +403,38 @@
                                     Bath:
                                   </span>
                                   <span >
-                                    12 tỷ
+                                    {{postItem.property.numberOfBath}}
                                   </span>
                                 </div>
                             </div>
 
+                            <div class="w-1/5 ml-4 mb-4 md:w-2/5 flex items-center">
+                              <span >
+                                <i class="fa fa-sack-dollar"></i>
+                              </span>
+                              <div class="text-base pl-3 font-medium">
+                                <span >
+                                  District:
+                                </span>
+                                <span >
+                                  {{postItem.property.district.name}}
+                                </span>
+                              </div>
+                          </div>
 
+                          <div class="w-1/5 mb-4 md:w-2/5 flex items-center">
+                              <span >
+                                <i class="fa fa-sack-dollar"></i>
+                              </span>
+                              <div class="text-base pl-3 font-medium">
+                                <span >
+                                  Ward:
+                                </span>
+                                <span >
+                                  {{postItem.property.ward.name}}
+                                </span>
+                              </div>
+                          </div>
 
                           </div>
                         </div>
