@@ -1,7 +1,10 @@
 import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
+import { AlertService } from "src/app/_service/alert.service";
 import { PostService } from "src/app/_service/post.service";
 import { PagingModel } from "src/app/models/paging-model";
 import { PostModel } from "src/app/models/post-model";
+import { PostResponeModel } from "src/app/models/post-respone-model";
 
 @Component({
   selector: "app-settings",
@@ -12,16 +15,35 @@ export class SettingsComponent implements OnInit {
   toggleTabs($tabNumber: number){
     this.openTab = $tabNumber;
   }
+  postItem: PostModel = new PostModel()
+  postId: number = 0;
+
   selectedDistrict: string ='';
   selectedWards: string ='';
   selectedStreet: string ='';
   selectedAddress: string ='';
+
+  constructor(private route: ActivatedRoute, private postService:PostService) {
+
+  }
 
   onDropdownChange() {
 
     this.selectedAddress = `${this.selectedDistrict}, ${this.selectedWards}, ${this.selectedStreet}`;
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.postId = this.route.snapshot.params['postId'];
+    this.postService.getPostById(this.postId)
+    .subscribe(
+      respone => {
+        this.postItem = respone;
+      },
+      error =>{
+        AlertService.setAlertModel('danger','Some thing went wrong')
+      }
+    )
+
+  }
 
 }

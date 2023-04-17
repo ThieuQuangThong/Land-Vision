@@ -11,9 +11,11 @@
   "Southwest": "Tây Nam",
   "LoadMore": "Tải thêm",
   "Search": "Tìm kiếm",
-  "Interior":{
-    "true": "Đầy đủ nội thất",
-    "false": "Không có nội thất"
-  },
+  "true": "Có",
+  "false": "Không",
+  "White": "Sổ trắng",
+  "Blue": "Sổ xanh",
+  "Red": "Sổ đỏ",
+  "Pink": "Sổ Hồng",
   "Login": "Đăng nhập"
 }

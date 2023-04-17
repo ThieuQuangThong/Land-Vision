@@ -95,6 +95,8 @@ import { PageNotFoundComponent } from './views/page-not-found/page-not-found.com
 import { NgxOtpInputModule } from "ngx-otp-input";
 import { MatButtonModule } from '@angular/material/button';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { DirectionTransformPipe } from './_pipes/direction-transform.pipe';
+import { JuridicalTransformPipe } from './_pipes/juridical-transform.pipe';
 
 @NgModule({
   declarations: [
@@ -149,7 +151,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
     DateFormatPipe,
     PricingCardComponent,
     EmailConfirmSucceededComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    DirectionTransformPipe,
+    JuridicalTransformPipe
     // LoginComponent,
     // RegisterComponent,
   ],
@@ -198,7 +202,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
   ],
   bootstrap: [AppComponent],
   exports: [
-    MoneyTranformPipe
+    MoneyTranformPipe,
+    DirectionTransformPipe,
+    JuridicalTransformPipe
   ]
 })
 export class AppModule { }

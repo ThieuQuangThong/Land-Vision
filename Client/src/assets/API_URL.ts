@@ -1,6 +1,6 @@
 import { PagingModel } from "src/app/models/paging-model";
 
-export const DOMAIN = "https://localhost:44310";
+export const DOMAIN = "https://localhost:7165";
 
 export const API_URL = {
   GET_ALL_POST: (pagingModel: PagingModel) =>`${DOMAIN}/api/Post/${pagingModel.skipCount}&${pagingModel.maxResultCount}`,
@@ -20,5 +20,6 @@ export const API_URL = {
   GET_WARD_BY_DISTRICT:(districtId: number) =>`${DOMAIN}/api/Ward/${districtId}/district`,
   GET_DIRECTIONS:() => `${DOMAIN}/api/Property/getDirections`,
   GET_CATEGORYS:() => `${DOMAIN}/api/Category`,
-  ADD_POST:(userId: number) =>`${DOMAIN}/api/Post/${userId}`
+  ADD_POST:(userId: number) =>`${DOMAIN}/api/Post/${userId}`,
+  GET_POST_BY_ID:(postId: number) => `${DOMAIN}/api/Post/${postId}`
 };

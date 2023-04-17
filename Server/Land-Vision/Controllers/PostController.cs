@@ -89,13 +89,14 @@ namespace Land_Vision.Controllers
                 return BadRequest(ModelState);
             }
 
-            var post = await _postRepository.GetPostAsync(postId);
+            var post =  await _postRepository.GetPostAsync(postId);
             if (post == null)
             {
                 ModelState.AddModelError("", "Post not exist");
                 return BadRequest(ModelState);
             }
-            return Ok(post);
+            
+            return Ok(_mapper.Map<PostDto>(post));
         }
 
         // GET Post by title

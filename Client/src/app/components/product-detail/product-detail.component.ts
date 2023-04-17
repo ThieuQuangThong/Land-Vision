@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
     selector: "app-product-detail",
@@ -6,7 +7,8 @@ import { Component, OnInit } from "@angular/core";
 })
 export class ProductDetailComponent implements OnInit {
     isToggle: any;
-    constructor() {}
+    constructor(private route: ActivatedRoute) {}
 
-    ngOnInit(): void {}
+    ngOnInit(): void {
+    }
 }
