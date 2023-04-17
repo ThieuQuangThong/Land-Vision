@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { PostResponeModel } from '../models/post-respone-model';
 import { API_URL } from 'src/assets/API_URL';
 import { PostRequest } from '../models/post-request';
+import { PostModel } from '../models/post-model';
 
 @Injectable({
   providedIn: 'root'
@@ -21,5 +22,9 @@ export class PostService {
   }
   addPost(postRequest: PostRequest, userId: number):Observable<any>{
     return this.http.post<any>(API_URL.ADD_POST(userId),postRequest);
+  }
+
+  getPostById(id: number):Observable<PostModel>{
+    return this.http.get<PostModel>(API_URL.GET_POST_BY_ID(id));
   }
 }

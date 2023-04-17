@@ -1,18 +1,16 @@
 <div class="mx-2 w-72 lg:mb-0 mb-8  pt-6 ">
   <div>
+  <div>
       <img src={{postItem.images[0].linkImage}} class="w-full h-44 shadow-lg rounded-t-lg object-cover" />
   </div>
   <div class="bg-white rounded-b-lg shadow-lg">
       <div class="flex items-center justify-between px-4 pt-4">
           <div>
-            <span *ngIf = "!postItem.isVerified" class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-red-600 bg-red-200 last:mr-0 mr-1">
-              No Verified
-            </span>
-            <span *ngIf = "postItem.isVerified" class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-emerald-600 bg-emerald-200 last:mr-0 mr-1">
-              Verified
+            <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-red-600 bg-red-200 last:mr-0 mr-1">
+              {{postItem.numberOfView}} View
             </span>
           </div>
-          <div class="bg-yellow-200 py-1.5 px-6 rounded-full">
+          <div class="bg-yellow-200 py-1.5 px-6 rounded-full" (click)="goToDetail()">
               <p class="text-xs text-yellow-500">Information</p>
           </div>
       </div>
@@ -40,4 +38,5 @@
           </div>
       </div>
   </div>
+</div>
 </div>

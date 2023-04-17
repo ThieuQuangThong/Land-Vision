@@ -11,9 +11,11 @@
   "Southwest": "South west",
   "LoadMore": "LOAD MORE",
   "Search": "Search",
-  "Interior":{
-    "true": "Fully interior",
-    "false": "No interior"
-  },
+  "true": "True",
+  "false": "False",
+  "White": "White",
+  "Blue": "Blue",
+  "Red": "Red",
+  "Pink": "Pink",
   "Login": "Login"
 }

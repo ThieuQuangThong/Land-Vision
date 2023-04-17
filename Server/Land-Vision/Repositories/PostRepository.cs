@@ -35,7 +35,16 @@ namespace Land_Vision.Repositories
 
         public async Task<Post> GetPostAsync(int postId)
         {
-            return await _dbContext.Posts.Where(p => p.Id == postId).FirstOrDefaultAsync();
+            return await _dbContext.Posts.Where(p => p.Id == postId)
+            .Include(x => x.User)
+            .Include(l => l.Images)
+            .Include(k => k.Property.Ward)
+            .Include(c => c.Property.Street)
+            .Include(j => j.Property.Street.District)
+            .Include(i => i.Property.Street.District.City)
+            .Include(m => m.Property.Category)
+            .Include(n => n.Property.Positions)
+            .FirstOrDefaultAsync();
         }
 
         public async Task<Post> GetPostByTitleAsync(string postTitle)
