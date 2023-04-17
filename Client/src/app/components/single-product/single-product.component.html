@@ -1,43 +1,43 @@
 <div class="mx-2 w-72 lg:mb-0 mb-8  pt-6 ">
-  <div>
-      <img src={{postItem.images[0].linkImage}} class="w-full h-44 shadow-lg rounded-t-lg object-cover" />
-  </div>
-  <div class="bg-white rounded-b-lg shadow-lg">
-      <div class="flex items-center justify-between px-4 pt-4">
-          <div>
-            <span *ngIf = "!postItem.isVerified" class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-red-600 bg-red-200 last:mr-0 mr-1">
+    <div>
+        <img src={{postItem.images[0].linkImage}} class="w-full h-44 shadow-lg rounded-t-lg object-cover" />
+    </div>
+    <div class="bg-white rounded-b-lg shadow-lg">
+        <div class="flex items-center justify-between px-4 pt-4">
+            <div>
+                <span *ngIf="!postItem.isVerified" class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-red-600 bg-red-200 last:mr-0 mr-1">
               No Verified
             </span>
-            <span *ngIf = "postItem.isVerified" class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-emerald-600 bg-emerald-200 last:mr-0 mr-1">
+                <span *ngIf="postItem.isVerified" class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-emerald-600 bg-emerald-200 last:mr-0 mr-1">
               Verified
             </span>
-          </div>
-          <div class="bg-yellow-200 py-1.5 px-6 rounded-full">
-              <p class="text-xs text-yellow-500">Information</p>
-          </div>
-      </div>
-      <div class="p-4">
-          <div id="postTitle" class="flex items-center justify-between pr-0 mr-0 h-12 ">
-              <h2  id="two-line" class="text-base  font-semibold  h-full text-ellipsis ">{{postItem.title}}</h2>
-              <p class="text-xs text-gray-600 pr-0 ml-1 text-right">4 days ago</p>
-
-          </div>
-          <p id="four-line" class="text-xs text-gray-600 mt-2 h-16 overflow-hidden">{{postItem.description}}</p>
-          <div class="flex mt-4">
-              <div>
-                  <p class="text-xs text-gray-600 px-2 bg-gray-200 py-1">{{postItem.property.numberOfBath}} phòng tắm</p>
-              </div>
-              <div class="pl-2">
-                  <p class="text-xs text-gray-600 px-2 bg-gray-200 py-1">{{postItem.property.numberOfBed}} phòng ngủ</p>
-              </div>
-              <div class="pl-2">
-                <p class="text-xs text-gray-600 px-2 bg-gray-200 py-1">{{postItem.property.numberOfFloor}} tầng</p>
             </div>
-          </div>
-          <div class="flex items-center justify-between py-4">
-              <h2 class="text-indigo-700 text-sm font-semibold">{{postItem.property.street.name}}</h2>
-              <h3 class="text-indigo-700 text-lg font-semibold">{{postItem.property.price | moneyTransform}}</h3>
-          </div>
-      </div>
-  </div>
+            <div class="bg-yellow-200 py-1.5 px-6 rounded-full">
+                <p class="text-xs text-yellow-500">Information</p>
+            </div>
+        </div>
+        <div class="p-4">
+            <div id="postTitle" class="flex items-center justify-between pr-0 mr-0 h-12 ">
+                <p id="two-line" class="text-base  font-semibold  h-full text-ellipsis ">{{postItem.title}}</p>
+                <p class="text-xs text-gray-600 pr-0 ml-1 text-right">4 days ago</p>
+
+            </div>
+            <p id="four-line" class="text-xs text-gray-600 mt-2 h-16 overflow-hidden">{{postItem.description}}</p>
+            <div class="flex mt-4">
+                <div>
+                    <p class="text-xs text-gray-600 px-2 bg-gray-200 py-1">{{postItem.property.numberOfBath}} phòng tắm</p>
+                </div>
+                <div class="pl-2">
+                    <p class="text-xs text-gray-600 px-2 bg-gray-200 py-1">{{postItem.property.numberOfBed}} phòng ngủ</p>
+                </div>
+                <div class="pl-2">
+                    <p class="text-xs text-gray-600 px-2 bg-gray-200 py-1">{{postItem.property.numberOfFloor}} tầng</p>
+                </div>
+            </div>
+            <div class="flex items-center justify-between py-4">
+                <h2 class="text-indigo-700 text-sm font-semibold">{{postItem.property.street.name}}</h2>
+                <p class="text-indigo-700 text-lg font-semibold">{{postItem.property.price | moneyTransform}}</p>
+            </div>
+        </div>
+    </div>
 </div>

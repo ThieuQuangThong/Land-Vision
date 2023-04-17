@@ -5,6 +5,9 @@ import { PostModel } from "src/app/models/post-model";
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
 import {MatSort} from "@angular/material/sort";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { UserService } from "src/app/_service/user.service";
+import { UserModel } from "src/app/models/user-model";
 
 @Component({
   selector: "app-card-table",
@@ -12,29 +15,30 @@ import {MatSort} from "@angular/material/sort";
 })
 
 export class CardTableComponent implements OnInit {
-  displayedPostsColumns: string[] = ['#', 'title', 'transactionType', 'createAt','Poster'];
-  displayedSellersColumns: string[] = ['#', 'name', 'email', 'phone','identityNumber','vipLevels'];
+  displayedPostsColumns: string[] = ['#', 'title', 'transactionType', 'createAt','poster'];
+  displayedSellersColumns: string[] = ['#', 'name', 'email', 'phone'];
 
-  dataSource!: MatTableDataSource<any>;
-  @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
+  dataSourcePost = new MatTableDataSource<any>();
+  dataSourceSeller = new MatTableDataSource<any>();
+
+  @ViewChild('postPaginator', { static: true }) postPaginator!: MatPaginator;
+@ViewChild('sellerPaginator', { static: true }) sellerPaginator!: MatPaginator;
+
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
-  stt:number = 0;
   options : object = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-  stDate: Date = new Date() ;
-  enDate:Date = new Date();
-  startDate :string ="";
-  endDate : string = this.enDate.toLocaleDateString(undefined, this.options);
 
+  // form = new FormGroup({
+  //   fromDate: new FormControl(),
+  //   toDate: new FormControl()
+  // });
+  fromDate: Date | undefined ;
+  toDate: Date = new Date();
   paging: PagingModel = {
     skipCount : 0,
     maxResultCount : 100,
   }
-  pagingReset: PagingModel = {
-    skipCount : 0,
-    maxResultCount : 100,
-  }
-  isFullItem: boolean = false;
   postRespone: PostModel[] = [];
+  userRespone: UserModel[] = [];
   public pageSlice : PostModel[] = []
   @Input()
   get color(): string {
@@ -45,67 +49,75 @@ export class CardTableComponent implements OnInit {
   }
   private _color = "light";
 
-  constructor(private postService:PostService) {
+  constructor(private postService:PostService, private userService : UserService) {
     const now = new Date();
-    this.stDate = new Date(now.getFullYear(), now.getMonth() - 1, 1);
-    this.startDate = this.stDate.toLocaleDateString(undefined, this.options);
-
   }
   ngOnInit(): void {
-    this.getPostByTime(this.paging,this.startDate.toString(),this.endDate.toString())
+    this.getAll(this.paging);
   }
-   onSubmitTime() {
-      this.postRespone= [];
-      this.dataSource = new MatTableDataSource(this.postRespone);
 
-      this.startDate = this.stDate.toLocaleDateString(undefined, this.options);
-      this.endDate = this.enDate.toLocaleDateString(undefined, this.options);
-      this.postService.getAllPostByTime(this.pagingReset, this.startDate.toString(),this.endDate.toString())
+  formatDateToDate(date: Date): Date {
+    const day = date.getDate(); // Lấy ngày trong tháng (1-31)
+    const year = date.getFullYear(); // Lấy năm (4 chữ số)
+    const month = date.getMonth() + 1; // Lấy tháng (0-11) và cộng thêm 1 để đưa về dạng 1-12
+
+    // Tạo một đối tượng Date mới với ngày, tháng và năm tương ứng
+    const formattedDate = new Date(year, month - 1, day);
+
+    return formattedDate;
+  }
+  onSubmitTime()  {
+    // console.log(this.dataSourcePost.data)
+      this.dataSourcePost = new MatTableDataSource(this.dataSourcePost.data.filter(e=> {
+      const day = new Date(e.createDate).getDate(); // Lấy ngày trong tháng (1-31)
+      const year = new Date(e.createDate).getFullYear(); // Lấy năm (4 chữ số)
+      const month = new Date(e.createDate).getMonth() + 1; // Lấy tháng (0-11) và cộng thêm 1 để đưa về dạng 1-12
+        const createDate = new Date(year, month - 1, day);
+        const fromDate = this.fromDate;
+        const toDate = this.toDate;
+        console.log(createDate+","+fromDate+','+toDate);
+        return createDate >= this.fromDate! && createDate
+        <= this.toDate!;
+      })
+      );
+
+  };
+
+
+  getAll(paging: PagingModel) :void{
+    this.postService.getAllPost(paging)
     .subscribe(
       respone =>{
         // var {skipCount, maxResultCount} = respone.pagination;
-        this.dataSource = new MatTableDataSource(this.postRespone);
-        this.dataSource.sort = this.sort;
-        this.dataSource.paginator = this.paginator;
-        this.postRespone = [...this.postRespone, ...respone.listItem];
-        if(this.pagingReset.skipCount >= respone.totalCount){
-          this.isFullItem = true;
-        }
+        this.postRespone = respone.listItem;
+        this.dataSourcePost = new MatTableDataSource(this.postRespone);
+
+        this.dataSourcePost.sort = this.sort;
+        this.dataSourcePost.paginator = this.postPaginator;
       }
     )
-   }
-  getPostByTime(paging: PagingModel, startdatepickerValue: string,enddatepickerValue: string){
-    this.postService.getAllPostByTime(paging, startdatepickerValue,enddatepickerValue)
+    this.userService.getAllUser(paging)
     .subscribe(
       respone =>{
-        var {skipCount, maxResultCount} = respone.pagination;
-        this.postRespone = [...this.postRespone, ...respone.listItem];
-        this.dataSource = new MatTableDataSource(this.postRespone);
-        this.dataSource.sort = this.sort;
-          this.dataSource.paginator = this.paginator;
-        // this.pageSlice = this.postRespone.slice(0, 100)
-        paging.skipCount = skipCount + maxResultCount;
-        if(paging.skipCount >= respone.totalCount){
-          this.isFullItem = true;
-        }
+        // var {skipCount, maxResultCount} = respone.pagination;
+        this.userRespone = respone.listItem;
+        this.dataSourceSeller = new MatTableDataSource(this.userRespone);
+        this.dataSourceSeller.sort = this.sort;
+        this.dataSourceSeller.paginator = this.sellerPaginator;
       }
     )
   }
-  OnPageChange(event : PageEvent){
-    console.log(event);
-    const startIndex = event.pageIndex + event.pageSize;
-    let endIndex = startIndex + event.pageSize ;
-    if(endIndex > this.postRespone.length){
-      endIndex = this.postRespone.length
-    }
-    this.pageSlice = this.postRespone.slice(startIndex -1, endIndex)
-  }
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.dataSourcePost.filter = filterValue.trim().toLowerCase();
+    this.dataSourceSeller.filter = filterValue.trim().toLowerCase();
 
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
+    if (this.dataSourcePost.paginator) {
+      this.dataSourcePost.paginator.firstPage();
+    }
+    if (this.dataSourceSeller.paginator) {
+      this.dataSourceSeller.paginator.firstPage();
     }
   }
 }

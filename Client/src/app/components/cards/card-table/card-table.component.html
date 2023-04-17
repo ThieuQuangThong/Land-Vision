@@ -8,22 +8,20 @@
                 <mat-form-field appearance="fill">
                     <mat-label>MM/DD/YYYY – MM/DD/YYYY</mat-label>
                     <mat-date-range-input [rangePicker]="picker">
-                        <input matStartDate placeholder="Start date" [(ngModel)]="stDate">
-                        <input matEndDate placeholder="End date" [(ngModel)]="enDate">
+                        <input matStartDate placeholder="Start date" [(ngModel)]="fromDate">
+                        <input matEndDate placeholder="End date" [(ngModel)]="toDate">
                     </mat-date-range-input>
                     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                     <mat-date-range-picker #picker></mat-date-range-picker>
                 </mat-form-field>
                 <button class="bg-gray-100 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded h-14" (click)="onSubmitTime()">
-                  <i class="fas fa-search"></i>
-                </button>
+                <i class="fas fa-search"></i>
+              </button>
+
             </div>
 
             <div class="col-start-3 col-span-1 ">
-                <mat-form-field>
-                    <mat-label>Filter</mat-label>
-                    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. Mia" #input>
-                </mat-form-field>
+
             </div>
 
             <div class="col-end-7 col-span-1 ">
@@ -33,52 +31,83 @@
             </div>
         </div>
         <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start">
-            <mat-tab label="Posts">
-                <table mat-table matSort class="items-center w-full bg-transparent border-collapse " [dataSource]="dataSource">
+            <mat-tab label="Posts management">
+                <table mat-table matSort class="items-center w-full bg-transparent border-collapse ">
+                    <thead>
+                        <tr>
+                            <th class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left" [ngClass]="
+                  color === 'light'
+                    ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
+                    : 'bg-red-800 text-red-300 border-red-700'
+                ">#</th>
+                            <th class=" px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left" [ngClass]="
+                  color === 'light'
+                    ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
+                    : 'bg-red-800 text-red-300 border-red-700'
+                ">
+                                Title
+                            </th>
+                            <th class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left" [ngClass]="
+                  color === 'light'
+                    ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
+                    : 'bg-red-800 text-red-300 border-red-700'
+                ">
+                                Type
+                            </th>
+                            <th class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left" [ngClass]="
+                  color === 'light'
+                    ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
+                    : 'bg-red-800 text-red-300 border-red-700'
+                ">
+                                Create at
+                            </th>
+                            <th class="px-6 align-middle border border-solid py-3 text-xs uppercase border-l-0 border-r-0 whitespace-nowrap font-semibold text-left" [ngClass]="
+                  color === 'light'
+                    ? 'bg-blueGray-50 text-blueGray-500 border-blueGray-100'
+                    : 'bg-red-800 text-red-300 border-red-700'
+                ">
+                                Poster
+                            </th>
 
-                    <ng-container matColumnDef="#">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> # </th>
-                        <td mat-cell *matCellDef="let i = index"> {{i+1}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="title">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Title </th>
-                        <td mat-cell *matCellDef="let row">
-                            <div class="truncate" style="max-width: 600px;">
-                                <span class="ml-3 font-bold" [ngClass]="color === 'light' ? 'text-blueGray-600' : 'text-white'">
-                          {{row.title}}
-                      </span>
-                            </div>
-                        </td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let post of pageSlice, let i = index">
+                            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                {{i +1}}
 
-                    </ng-container>
-                    <ng-container matColumnDef="transactionType">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Trasnsaction type </th>
-                        <td mat-cell *matCellDef="let row">
-                            <span *ngIf="row.transactionType === 1"> For rent</span>
-                            <span *ngIf="row.transactionType === 0"> For sell</span>
-                        </td>
-                    </ng-container>
-                    <ng-container matColumnDef="createAt">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Create At </th>
-                        <td mat-cell *matCellDef="let row"> {{row.createDate | date}} </td>
-                    </ng-container>
-                    <ng-container matColumnDef="Poster">
-                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Poster </th>
-                        <td mat-cell *matCellDef="let row"> {{row.user.name}} </td>
-                    </ng-container>
-                    <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
-                        <i class="fa-solid fa-angle-right"></i>
-                    </td>
+                            </td>
+                            <td class=" truncate border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-left flex items-center">
+                                <div class="truncate" style="max-width: 600px;">
+                                    <span class="ml-3 font-bold" [ngClass]="color === 'light' ? 'text-blueGray-600' : 'text-white'">
+                                    {{post.title}}
+                                </span>
+                                </div>
+                            </td>
+                            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                <span *ngIf="post.transactionType === 1"> For rent</span>
+                                <span *ngIf="post.transactionType === 0"> For sell</span>
+                            </td>
+                            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                {{post.createDate |date}}
+
+                            </td>
+                            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4">
+                                {{post.user.name}}
+                            </td>
+                            <td class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-xs whitespace-nowrap p-4 text-right">
+                                <i class="fa-solid fa-angle-right"></i>
+                            </td>
+                        </tr>
+
+                    </tbody>
                     <tr mat-header-row *matHeaderRowDef="displayedPostsColumns"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedPostsColumns;"></tr>
                 </table>
                 <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
             </mat-tab>
-            <mat-tab label="Seller">
-
-
-            </mat-tab>
-            <mat-tab label="Revenue"></mat-tab>
+            <mat-tab label="Seller management"></mat-tab>
+            <mat-tab label="Revenue management"></mat-tab>
         </mat-tab-group>
 
     </div>

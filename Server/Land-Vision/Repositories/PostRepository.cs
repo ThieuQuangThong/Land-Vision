@@ -51,7 +51,7 @@ namespace Land_Vision.Repositories
         public async Task<List<Post>> GetPostsAsync(Pagination pagination)
         {
             return await _dbContext.Posts.AsNoTracking()
-            .OrderBy(p => p.Id)
+            .OrderByDescending(p => p.CreateDate)
             .Skip(pagination.SkipCount)
             .Take(pagination.MaxResultCount)
             .Include(x => x.User)
