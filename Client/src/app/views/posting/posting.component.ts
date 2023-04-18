@@ -28,6 +28,7 @@ export class inforStreet {
 
 export class PostingComponent implements OnInit {
   openTab = 1;
+  interiors: string[] = PROPERTY_INFOR.Interior;
   directions: string[] = [];
   juridicals: string[] = PROPERTY_INFOR.juridicals;
   districts: DistrictModel[] = [];
@@ -216,7 +217,7 @@ export class PostingComponent implements OnInit {
     property.numberOfFloor = this.numberOfFloor;
     property.numberOfBed = this.numberOfBed;
     property.districtId = this.selectedDirectionId;
-    property.isInterior = this.selectedInterior;
+    property.Interior = this.selectedInterior;
     property.juridical = this.selectedJuridical;
 
     postModel.title = this.title;

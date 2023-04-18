@@ -53,6 +53,27 @@ namespace Land_Vision.Controllers
             return Ok(Paginposts);
         }
 
+        /// <summary>
+        /// Get all posts by search
+        /// </summary>
+        [HttpPost("getSearchedPost/{skipCount}&{maxResultCount}")]
+        [ProducesResponseType(200, Type = typeof(PaginationRespone<PostDto>))]
+        public async Task<ActionResult<PaginationRespone<PostDto>>> GetPosts(int skipCount, int maxResultCount,[FromBody] PostSearchDto postSearchDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var Paginposts = await _postService.GetSearchedPostsAsync(new Pagination
+            {
+                SkipCount = skipCount,
+                MaxResultCount = maxResultCount
+            },
+            postSearchDto);
+            return Ok(Paginposts);
+        }
+
         // GET Posts By Time
         /// <summary>
         /// Get all posts by time

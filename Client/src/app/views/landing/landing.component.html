@@ -60,7 +60,7 @@
           <div class="w-full md:w-full pt-3 shadow p-1 rounded-lg bg-white">
             <div class="flex mr-1">
               <div class=" w-1/6 flex items-center ml-2 h-full">
-                <button class=" bg-emerald-500 text-white active:bg-emerald-600 font-bold text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150" type="button">
+                <button (click)="search()" class=" bg-emerald-500 text-white active:bg-emerald-600 font-bold text-sm px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150" type="button">
                   <i class="fas fa-search"></i> {{'Search' | translate}}
                 </button>
               </div>
@@ -79,61 +79,36 @@
 
             <div>
               <div class="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-7 gap-4 mt-1">
-                <select class="w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
-                  <option value="">All Type</option>
-                  <option value="for-rent">For Rent</option>
-                  <option value="for-sale">For Sale</option>
+                <select  [(ngModel)]="selectedTransactionTypes" class="w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
+                  <option *ngFor="let transactionType of transactionTypes; let i = index" value="{{i}}">{{transactionType | translate}} </option>
                 </select>
 
-                <select class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
-                  <option value="">Furnish Type</option>
-                  <option value="fully-furnished">Fully Furnished</option>
-                  <option value="partially-furnished">Partially Furnished</option>
-                  <option value="not-furnished">Not Furnished</option>
+                <select  [(ngModel)]="selectedInterior" class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
+                  <option *ngFor="let interior of interiors; let i = index" value="{{i}}">{{interior | translate}} </option>
                 </select>
 
-                <select class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
-                  <option value="">Any Price</option>
-                  <option value="1000">RM 1000</option>
-                  <option value="2000">RM 2000</option>
-                  <option value="3000">RM 3000</option>
-                  <option value="4000">RM 4000</option>
+                <select  [(ngModel)]="selectedPrice" class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
+                  <option *ngFor="let price of prices; let i = index" value="{{i}}">{{price | translate}} </option>
+
                 </select>
 
-                <select class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
-                  <option value="">Floor Area</option>
-                  <option value="200">200 sq.ft</option>
-                  <option value="400">400 sq.ft</option>
-                  <option value="600">600 sq.ft</option>
-                  <option value="800 sq.ft">800</option>
-                  <option value="1000 sq.ft">1000</option>
-                  <option value="1200 sq.ft">1200</option>
+                <select  [(ngModel)]="selectedFloor" class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
+                  <option *ngFor="let floor of floors; let i = index" value="{{i}}">{{floor | translate}} </option>
+
                 </select>
 
-                <select class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
-                  <option value="">Bedrooms</option>
-                  <option value="1">1 bedroom</option>
-                  <option value="2">2 bedrooms</option>
-                  <option value="3">3 bedrooms</option>
-                  <option value="4">4 bedrooms</option>
-                  <option value="5">5 bedrooms</option>
+                <select  [(ngModel)]="selectedBedroom" class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
+                  <option *ngFor="let bedRoom of bedRooms; let i = index" value="{{i}}">{{bedRoom | translate}} </option>
                 </select>
 
-                <select class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
-                  <option value="">Bathrooms</option>
-                  <option value="1">1 bathroom</option>
-                  <option value="2">2 bathrooms</option>
-                  <option value="3">3 bathrooms</option>
-                  <option value="4">4 bathrooms</option>
-                  <option value="5">5 bathrooms</option>
+                <select  [(ngModel)]="selectedBathroom" class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
+                  <option *ngFor="let bathRoom of bathRooms; let i = index" value="{{i}}">{{bathRoom | translate}} </option>
                 </select>
 
-                <select class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
-                  <option value="">Bathrooms</option>
-                  <option value="1">1 space</option>
-                  <option value="2">2 space</option>
-                  <option value="3">3 space</option>
+                <select  [(ngModel)]="selectedDirection" class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
+                  <option *ngFor="let direction of directions; let i = index" value="{{i}}">{{direction | translate}} </option>
                 </select>
+
               </div>
             </div>
             </div>
