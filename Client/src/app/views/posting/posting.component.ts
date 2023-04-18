@@ -48,7 +48,7 @@ export class PostingComponent implements OnInit {
   numberOfBed: number = 0;
   numberOfBath: number = 0;
   selectedDirectionId: number = 0;
-  selectedInterior: boolean = false;
+  selectedInterior: number = 0;
 
   constructor(private postService: PostService, private auth:AuthService, private categgoryService: CategoryService ,private uploadService:FileUploadService , private cityService: CityInformationService) {
   }

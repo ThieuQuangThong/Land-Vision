@@ -27,12 +27,14 @@ export class CardTableComponent implements OnInit {
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
   options : object = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
 
-  // form = new FormGroup({
-  //   fromDate: new FormControl(),
-  //   toDate: new FormControl()
-  // });
-  fromDate: Date | undefined ;
-  toDate: Date = new Date();
+  form = new FormGroup({
+    fromDate: new FormControl(),
+    toDate: new FormControl()
+  });
+  get fromDate() { return this.form.get('fromDate')!.value; }
+  get toDate() { return this.form.get('toDate')!.value; }
+  // fromDate: Date | undefined ;
+  // toDate: Date = new Date();
   paging: PagingModel = {
     skipCount : 0,
     maxResultCount : 100,
@@ -51,6 +53,20 @@ export class CardTableComponent implements OnInit {
 
   constructor(private postService:PostService, private userService : UserService) {
     const now = new Date();
+
+    this.dataSourcePost.filterPredicate = (data, filter) =>{
+      const day = new Date(data.createDate).getDate(); // Lấy ngày trong tháng (1-31)
+      const year = new Date(data.createDate).getFullYear(); // Lấy năm (4 chữ số)
+      const month = new Date(data.createDate).getMonth() + 1; // Lấy tháng (0-11) và cộng thêm 1 để đưa về dạng 1-12
+        const createDate = new Date(year, month - 1, day);
+        console.log(createDate+","+this.fromDate+','+this.toDate);
+        // return createDate >= this.fromDate! && createDate
+        // <= this.toDate!;
+      if (this.fromDate && this.toDate) {
+        return createDate >= this.fromDate && createDate <= this.toDate;
+      }
+      return true;
+    }
   }
   ngOnInit(): void {
     this.getAll(this.paging);
@@ -68,19 +84,19 @@ export class CardTableComponent implements OnInit {
   }
   onSubmitTime()  {
     // console.log(this.dataSourcePost.data)
-      this.dataSourcePost = new MatTableDataSource(this.dataSourcePost.data.filter(e=> {
-      const day = new Date(e.createDate).getDate(); // Lấy ngày trong tháng (1-31)
-      const year = new Date(e.createDate).getFullYear(); // Lấy năm (4 chữ số)
-      const month = new Date(e.createDate).getMonth() + 1; // Lấy tháng (0-11) và cộng thêm 1 để đưa về dạng 1-12
-        const createDate = new Date(year, month - 1, day);
-        const fromDate = this.fromDate;
-        const toDate = this.toDate;
-        console.log(createDate+","+fromDate+','+toDate);
-        return createDate >= this.fromDate! && createDate
-        <= this.toDate!;
-      })
-      );
-
+      // this.dataSourcePost = new MatTableDataSource(this.dataSourcePost.data.filter(e=> {
+      // const day = new Date(e.createDate).getDate(); // Lấy ngày trong tháng (1-31)
+      // const year = new Date(e.createDate).getFullYear(); // Lấy năm (4 chữ số)
+      // const month = new Date(e.createDate).getMonth() + 1; // Lấy tháng (0-11) và cộng thêm 1 để đưa về dạng 1-12
+      //   const createDate = new Date(year, month - 1, day);
+      //   const fromDate = this.form.fromDate;
+      //   const toDate = this.toDate;
+      //   console.log(createDate+","+fromDate+','+toDate);
+      //   return createDate >= this.fromDate! && createDate
+      //   <= this.toDate!;
+      // })
+      // );
+    this.dataSourcePost.filter = ''+Math.random();
   };
 
 
