@@ -54,19 +54,7 @@ export class CardTableComponent implements OnInit {
   constructor(private postService:PostService, private userService : UserService) {
     const now = new Date();
 
-    this.dataSourcePost.filterPredicate = (data, filter) =>{
-      const day = new Date(data.createDate).getDate(); // Lấy ngày trong tháng (1-31)
-      const year = new Date(data.createDate).getFullYear(); // Lấy năm (4 chữ số)
-      const month = new Date(data.createDate).getMonth() + 1; // Lấy tháng (0-11) và cộng thêm 1 để đưa về dạng 1-12
-        const createDate = new Date(year, month - 1, day);
-        console.log(createDate+","+this.fromDate+','+this.toDate);
-        // return createDate >= this.fromDate! && createDate
-        // <= this.toDate!;
-      if (this.fromDate && this.toDate) {
-        return createDate >= this.fromDate && createDate <= this.toDate;
-      }
-      return true;
-    }
+
   }
   ngOnInit(): void {
     this.getAll(this.paging);
@@ -82,7 +70,7 @@ export class CardTableComponent implements OnInit {
 
     return formattedDate;
   }
-  onSubmitTime()  {
+  applyDateFilter()  {
     // console.log(this.dataSourcePost.data)
       // this.dataSourcePost = new MatTableDataSource(this.dataSourcePost.data.filter(e=> {
       // const day = new Date(e.createDate).getDate(); // Lấy ngày trong tháng (1-31)
@@ -96,6 +84,19 @@ export class CardTableComponent implements OnInit {
       //   <= this.toDate!;
       // })
       // );
+      this.dataSourcePost.filterPredicate = (data, filter) =>{
+        const day = new Date(data.createDate).getDate(); // Lấy ngày trong tháng (1-31)
+        const year = new Date(data.createDate).getFullYear(); // Lấy năm (4 chữ số)
+        const month = new Date(data.createDate).getMonth() + 1; // Lấy tháng (0-11) và cộng thêm 1 để đưa về dạng 1-12
+          const createDate = new Date(year, month - 1, day);
+          console.log(createDate+","+this.fromDate+','+this.toDate);
+          // return createDate >= this.fromDate! && createDate
+          // <= this.toDate!;
+        if (this.fromDate && this.toDate) {
+          return createDate >= this.fromDate && createDate <= this.toDate;
+        }
+        return true;
+      }
     this.dataSourcePost.filter = ''+Math.random();
   };
 
