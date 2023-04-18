@@ -36,6 +36,7 @@
     "angularfirestore-deep": "^1.0.9",
     "bootstrap": "^5.2.3",
     "chart.js": "^4.2.1",
+    "f": "^1.4.0",
     "file-drop-element": "^1.0.1",
     "filestack-js": "^3.26.0",
     "firebase": "^9.19.1",
