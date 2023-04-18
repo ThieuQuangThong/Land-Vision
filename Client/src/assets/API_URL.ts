@@ -20,5 +20,6 @@ export const API_URL = {
   GET_DIRECTIONS:() => `${DOMAIN}/api/Property/getDirections`,
   GET_CATEGORYS:() => `${DOMAIN}/api/Category`,
   ADD_POST:(userId: number) =>`${DOMAIN}/api/Post/${userId}`,
-  GET_POST_BY_ID:(postId: number) => `${DOMAIN}/api/Post/${postId}`
+  GET_POST_BY_ID:(postId: number) => `${DOMAIN}/api/Post/${postId}`,
+  GET_SEARCHED_POSTS:(pagingModel: PagingModel) => `${DOMAIN}/api/Post/getSearchedPost/${pagingModel.skipCount}&${pagingModel.maxResultCount}`
 };

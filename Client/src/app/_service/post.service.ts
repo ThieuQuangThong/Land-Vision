@@ -6,6 +6,7 @@ import { PostResponeModel } from '../models/post-respone-model';
 import { API_URL } from 'src/assets/API_URL';
 import { PostRequest } from '../models/post-request';
 import { PostModel } from '../models/post-model';
+import { SearchModel } from '../models/search-model';
 
 @Injectable({
   providedIn: 'root'
@@ -26,5 +27,9 @@ export class PostService {
 
   getPostById(id: number):Observable<PostModel>{
     return this.http.get<PostModel>(API_URL.GET_POST_BY_ID(id));
+  }
+
+  getSearchedPost(pagingModel: PagingModel, searchModel: SearchModel):Observable<PostResponeModel>{
+    return this.http.post<PostResponeModel>(API_URL.GET_SEARCHED_POSTS(pagingModel),searchModel);
   }
 }

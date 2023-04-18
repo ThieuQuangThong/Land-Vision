@@ -1,4 +1,5 @@
 ﻿using Land_Vision.DTO;
+using Land_Vision.DTO.PostDtos;
 using Land_Vision.Models;
 
 namespace Land_Vision.Interface.IRepositories
@@ -16,6 +17,8 @@ namespace Land_Vision.Interface.IRepositories
         Task<bool> AddPostAsync(int userId, Post post);
         Task<bool> UpdatePostAsync(Post post);
         Task<bool> DeletePostAsync(Post post);
+        Task<List<Post>> GetSearchedPosts(Pagination pagination, PostSearchDto postSearchDto);
+        Task<int> GetTotalCountSearchedPostAsync(PostSearchDto postSearchDto);
         Task<bool> SaveChangeAsync();
     }
 }

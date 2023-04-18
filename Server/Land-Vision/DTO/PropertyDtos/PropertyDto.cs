@@ -16,7 +16,7 @@ namespace Land_Vision.DTO.PropertyDtos
         [Required]
         public double Price { get; set; }
         public int Juridical { get; set; }
-        public bool IsInterior { get; set; }
+        public int Interior { get; set; }
         public int Direction { get; set; }
         public string AddressNumber { get; set; }
         public double WayIn { get; set; }
