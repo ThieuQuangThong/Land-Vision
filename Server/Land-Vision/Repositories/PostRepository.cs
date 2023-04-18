@@ -1,5 +1,7 @@
-﻿using Land_Vision.Data;
+﻿using Land_Vision.Common;
+using Land_Vision.Data;
 using Land_Vision.DTO;
+using Land_Vision.DTO.PostDtos;
 using Land_Vision.Interface.IRepositories;
 using Land_Vision.Models;
 using Microsoft.EntityFrameworkCore;
@@ -89,6 +91,41 @@ namespace Land_Vision.Repositories
             .Include(n => n.Property.Positions)
             .ToListAsync();
         }
+
+        public async Task<List<Post>> GetSearchedPosts(Pagination pagination, PostSearchDto postSearchDto)
+        {
+            return await _dbContext.Posts
+            .Where(x => (postSearchDto.TransactionType == NumberFiled.ALL || x.transactionType == postSearchDto.TransactionType)
+            && ( postSearchDto.InteriorStatus == NumberFiled.ALL ||x.Property.Interior == postSearchDto.InteriorStatus)
+            && ( postSearchDto.Price == NumberFiled.ALL ||x.Property.Price <= postSearchDto.Price)
+            && ( postSearchDto.NumberOfFloor == NumberFiled.ALL ||x.Property.NumberOfFloor == postSearchDto.NumberOfFloor)
+            && ( postSearchDto.NumberOfBed == NumberFiled.ALL ||x.Property.NumberOfBed == postSearchDto.NumberOfBed)
+            && ( postSearchDto.NumberOfBath == NumberFiled.ALL ||x.Property.NumberOfBath == postSearchDto.NumberOfBath)
+            && ( postSearchDto.Direction == NumberFiled.ALL ||x.Property.Direction == postSearchDto.Direction))
+            .Skip(pagination.SkipCount)
+            .Take(pagination.MaxResultCount)
+            .Include(x => x.User)
+            .Include(l => l.Images)
+            .Include(c => c.Property.Street)
+            .Include(j => j.Property.Street.District)
+            .Include(i => i.Property.Street.District.City)
+            .Include(m => m.Property.Category)
+            .Include(n => n.Property.Positions)
+            .ToListAsync();
+        }
+
+        public Task<int> GetTotalCountSearchedPostAsync(PostSearchDto postSearchDto)
+        {
+            return _dbContext.Posts.Where(x => (postSearchDto.TransactionType == NumberFiled.ALL || x.transactionType == postSearchDto.TransactionType)
+            && ( postSearchDto.InteriorStatus == NumberFiled.ALL ||x.Property.Interior == postSearchDto.InteriorStatus)
+            && ( postSearchDto.Price == NumberFiled.ALL ||x.Property.Price <= postSearchDto.Price)
+            && ( postSearchDto.NumberOfFloor == NumberFiled.ALL ||x.Property.NumberOfFloor == postSearchDto.NumberOfFloor)
+            && ( postSearchDto.NumberOfBed == NumberFiled.ALL ||x.Property.NumberOfBed == postSearchDto.NumberOfBed)
+            && ( postSearchDto.NumberOfBath == NumberFiled.ALL ||x.Property.NumberOfBath == postSearchDto.NumberOfBath)
+            && ( postSearchDto.Direction == NumberFiled.ALL ||x.Property.Direction == postSearchDto.Direction))
+            .CountAsync();
+        }
+
         public async Task<bool> IncreaseViewByPostIdAsync(int postId)
         {
             var post = await GetPostAsync(postId);

@@ -1,4 +1,7 @@
-﻿using AutoMapper;
+﻿
+
+using AutoMapper;
+using Land_Vision.Common;
 using Land_Vision.Dto.PostDtos;
 using Land_Vision.DTO;
 using Land_Vision.DTO.PostDtos;
@@ -86,6 +89,7 @@ namespace Land_Vision.service
         public async Task<PaginationRespone<PostDto>> GetPostsAsync(Pagination pagination)
         {
             var posts = await _postRepository.GetPostsAsync(pagination);
+
             var postTotal = await _postRepository.GetPostCountAsync();
             var postDtos = _mapper.Map<List<PostDto>>(posts);
 
@@ -187,6 +191,25 @@ namespace Land_Vision.service
             }
 
             return true;
+        }
+
+        public async Task<PaginationRespone<PostDto>> GetSearchedPostsAsync(Pagination pagination, PostSearchDto postSearchDto)
+        {
+            var posts = await _postRepository.GetSearchedPosts(pagination, postSearchDto);
+
+            var postTotal = await _postRepository.GetTotalCountSearchedPostAsync(postSearchDto);
+            var postDtos = _mapper.Map<List<PostDto>>(posts);
+
+            var paginResult = new PaginationRespone<PostDto>(postDtos)
+            {
+                pagination = new Pagination
+                {
+                    SkipCount = pagination.SkipCount,
+                    MaxResultCount = pagination.MaxResultCount,
+                },
+                TotalCount = postTotal,
+            };
+            return paginResult;
         }
     }
 }

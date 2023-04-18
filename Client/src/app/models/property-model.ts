@@ -9,7 +9,7 @@ export class PropertyModel {
   frontangeArea: number = 0;
   price: number = 0;
   juridical: number = 0;
-  isInterior: boolean = false;
+  Interior: number = 0;
   direction: number = 0;
   addressNumber: string = "";
   wayIn: number = 0;
