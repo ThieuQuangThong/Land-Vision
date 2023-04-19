@@ -5,6 +5,7 @@ using Land_Vision.DTO;
 using Land_Vision.DTO.UserDtos;
 using Land_Vision.Interface.IRepositories;
 using Land_Vision.Interface.IServices;
+using Land_Vision.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Land_Vision.Controllers
@@ -279,6 +280,23 @@ namespace Land_Vision.Controllers
                 }
             );
             return Ok(TokenRespone.AccessToken);
+        }
+
+        // GET users count
+        /// <summary>
+        /// Get users count
+        /// </summary>
+        [HttpGet("getUserCount")]
+        [ProducesResponseType(200, Type = typeof(int))]
+        public async Task<ActionResult<int>> GetUsers()
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var UsersCount = await _userRepository.GetUserTotalAsync(); ;
+            return Ok(UsersCount);
         }
 
         /// <summary>

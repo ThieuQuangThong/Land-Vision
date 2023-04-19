@@ -11,7 +11,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import {MatIconModule} from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 import {MatTableModule} from '@angular/material/table';
-
+import {MatSortModule} from '@angular/material/sort';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -158,6 +158,7 @@ import { JuridicalTransformPipe } from './_pipes/juridical-transform.pipe';
     // RegisterComponent,
   ],
   imports: [
+    MatSortModule,
     MatTableModule,
     MatButtonModule,
     MatPaginatorModule,
