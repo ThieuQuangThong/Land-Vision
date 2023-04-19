@@ -1,31 +1,7 @@
+@import url('https://js.arcgis.com/4.14/esri/css/main.css');
 
-html, body, #mapDiv {
+.esri-view {
+  height: 1000%;
   padding:0;
   margin:0;
-  height:100%;
-}
-#mapZone{
-  position: relative;
-}
-#info {
-  position: absolute;
-  right: 5px;
-  top: 2px;
-  color: #444;
-  height: auto;
-  font-family: arial;
-  margin: 5px;
-  padding: 10px;
-  width: 115px;
-  /* z-index: 40; */
-  border: solid 2px #666;
-  border-radius: 4px;
-  background-color: #fff;
-}
-button {
-  display: block;
-  border: solid 1px #666;
-  margin: 5px;
-  border-radius: 3px;
-  width: 90%;
 }

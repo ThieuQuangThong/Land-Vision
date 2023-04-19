@@ -13,96 +13,11 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" integrity="sha512-SzlrxWUlpfuzQ+pcUCosxcglQRNAq/DZjVsC0lE40xsADsfeQoEypE+enwcOiGjk/bSuGGKHEyjSoQ1zVisanQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDiH0qv9OlWeaLMjPWUyGhmxsY_I2vO7nI"></script>
-  <link rel="stylesheet" href="https://js.arcgis.com/3.43/esri/css/esri.css">
-  <script src="https://js.arcgis.com/3.43/"></script>
+  <!-- <link rel="stylesheet" href="https://js.arcgis.com/3.43/esri/css/esri.css"> -->
+  <!-- <script src="https://js.arcgis.com/3.43/"></script> -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.6/dist/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.2.1/dist/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
-  <script>
-    var map, tb;
-
-    require([
-      "esri/map", "esri/toolbars/draw",
-      "esri/symbols/SimpleMarkerSymbol", "esri/symbols/SimpleLineSymbol",
-      "esri/symbols/SimpleFillSymbol", "esri/symbols/CartographicLineSymbol",
-      "esri/graphic",
-      "esri/Color", "dojo/dom", "dojo/on", "dojo/domReady!"
-    ], function(
-      Map, Draw,
-      SimpleMarkerSymbol, SimpleLineSymbol,
-      SimpleFillSymbol, CartographicLineSymbol,
-      Graphic,
-      Color, dom, on
-    ) {
-      map = new Map("mapDiv", {
-        basemap: "osm",
-        center: [108.22397570156461, 16.061099090499123],
-        zoom: 30
-      });
-      map.on("load", initToolbar);
-
-      // markerSymbol is used for point and multipoint, see http://raphaeljs.com/icons/#talkq for more examples
-      var markerSymbol = new SimpleMarkerSymbol();
-      markerSymbol.setPath("M16,4.938c-7.732,0-14,4.701-14,10.5c0,1.981,0.741,3.833,2.016,5.414L2,25.272l5.613-1.44c2.339,1.316,5.237,2.106,8.387,2.106c7.732,0,14-4.701,14-10.5S23.732,4.938,16,4.938zM16.868,21.375h-1.969v-1.889h1.969V21.375zM16.772,18.094h-1.777l-0.176-8.083h2.113L16.772,18.094z");
-      markerSymbol.setColor(new Color("#00FFFF"));
-
-      // lineSymbol used for freehand polyline, polyline and line.
-      var lineSymbol = new CartographicLineSymbol(
-        CartographicLineSymbol.STYLE_SOLID,
-        new Color([255,0,0]), 10,
-        CartographicLineSymbol.CAP_ROUND,
-        CartographicLineSymbol.JOIN_MITER, 5
-      );
-
-      // fill symbol used for extent, polygon and freehand polygon, use a picture fill symbol
-      // the images folder contains additional fill images, other options: sand.png, swamp.png or stiple.png
-
-      var fillSymbol = new SimpleFillSymbol(
-          SimpleFillSymbol.STYLE_SOLID,
-          new SimpleLineSymbol(
-            SimpleLineSymbol.STYLE_SOLID,
-            new Color('#000'),
-            1
-          ),
-          new Color([0, 255, 0, 0.2])
-        );
-
-      function initToolbar() {
-        tb = new Draw(map);
-        tb.on("draw-end", addGraphic);
-
-        // event delegation so a click handler is not
-        // needed for each individual button
-        on(dom.byId("info"), "click", function(evt) {
-          if ( evt.target.id === "info" ) {
-            return;
-          }
-          var tool = evt.target.id.toLowerCase();
-          map.disableMapNavigation();
-          tb.activate(tool);
-        });
-      }
-
-      function addGraphic(evt) {
-        //deactivate the toolbar and clear existing graphics
-        tb.deactivate();
-        map.enableMapNavigation();
-
-        // figure out which symbol to use
-        var symbol;
-        if ( evt.geometry.type === "point" || evt.geometry.type === "multipoint") {
-          symbol = markerSymbol;
-        } else if ( evt.geometry.type === "line" || evt.geometry.type === "polyline") {
-          symbol = lineSymbol;
-        }
-        else {
-          symbol = fillSymbol;
-        }
-
-        map.graphics.add(new Graphic(evt.geometry, symbol));
-      }
-    });
-  </script>
  <script src="//static.filestackapi.com/filestack-js/3.x.x/filestack.min.js"></script>
 
   <link rel="preconnect" href="https://fonts.gstatic.com">
