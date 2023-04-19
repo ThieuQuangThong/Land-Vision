@@ -51,7 +51,17 @@ export class PostingComponent implements OnInit {
   selectedDirectionId: number = 0;
   selectedInterior: number = 0;
 
+  // mapCenter : Array<number> = [0, 0];
+  // basemapType :string = '';
+  // mapZoomLevel :number = 0;
+
+  // mapLoadedEvent(status: boolean) {
+  //   console.log('The map has loaded: ' + status);
+  // }
   constructor(private postService: PostService, private auth:AuthService, private categgoryService: CategoryService ,private uploadService:FileUploadService , private cityService: CityInformationService) {
+    // this.mapCenter = [108.21147547864406, 16.06505300439531];
+    // this.basemapType = 'osm';
+    // this.mapZoomLevel = 18;
   }
 
   toggleTabs($tabNumber: number){
@@ -65,6 +75,9 @@ export class PostingComponent implements OnInit {
   selectedStreetId: number = 1;
   selectedAddress: string ='';
   selectedJuridical: number = 0;
+
+
+
 
   onDropdownDistrictChange(event: any) {
     console.log(this.selectedDistrictId);
