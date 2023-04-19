@@ -1,14 +1,18 @@
 import { Injectable } from '@angular/core';
 import { PositionModel } from '../models/position-model';
+import { PlaceModel } from '../models/place-model';
+import { SubPlaceModel } from '../models/subPlace-model';
 
 @Injectable({
   providedIn: 'root'
 })
+
+
+
 export class NearByServiceService {
 
   constructor() { }
-  onCloseLocation(positionModel : PositionModel, limitDistance: number, query: string) : google.maps.places.PlaceResult[]{
-    console.log(positionModel);
+  onCloseLocation(positionModel : PositionModel, limitDistance: number, query: string) : PlaceModel[]{
 
     var map: google.maps.Map | HTMLDivElement;
     var infowindow;
@@ -26,28 +30,35 @@ export class NearByServiceService {
     };
 
     var service = new google.maps.places.PlacesService(map);
-    let finalResults: google.maps.places.PlaceResult[] = [] ;
+    let finalResults: PlaceModel[] = [] ;
     service.textSearch(request, (results,status) => {
-      finalResults = JSON.parse(JSON.stringify(results));
       if (status == google.maps.places.PlacesServiceStatus.OK) {
-        finalResults = results.filter(item => this.calculate({
-          latitude: item.geometry?.location.lat().toString()!,
-          longtitude: item.geometry?.location.lng().toString()!,
-        },
-        positionModel,
-        limitDistance))
+        results.forEach(
+          x => {
+            const result = this.calculate({
+              latitude: x.geometry?.location.lat().toString()!,
+              longtitude: x.geometry?.location.lng().toString()!,
+            },
+            positionModel,)
+            const placeModel: PlaceModel = {
+              place: x,
+              distance: Number(result.distance.toFixed(0)),
+              goTime: Number(result.goTime.toFixed(0)),
+            }
+            finalResults.push(placeModel)
+          }
+        )
+        finalResults = finalResults.filter(item => item.distance <= limitDistance)
       }
     });
     return finalResults;
   };
 
-  calculate(positionModel1 : PositionModel,positionModel2 : PositionModel, limitDistance: number): boolean{
+  calculate(positionModel1 : PositionModel,positionModel2 : PositionModel): SubPlaceModel{
     const lat1 = Number(positionModel1.latitude) * Math.PI / 180;
     const long1 = Number(positionModel1.longtitude) * Math.PI / 180;
     const lat2 = Number(positionModel2.latitude) * Math.PI / 180;
     const long2 = Number(positionModel2.longtitude) * Math.PI / 180;
-    console.log(232);
-    console.log(positionModel1);
     const R = 6371000; // bán kính trung bình của trái đất (đơn vị: m)
 
     const delta_long = long2 - long1;
@@ -57,6 +68,9 @@ export class NearByServiceService {
     const c = Math.atan2(Math.sqrt(a), b);
     const d = R * c;
 
-    return d < limitDistance;
+    return {
+      distance:d/1000,
+      goTime:((d/1000)/35)*60
+    };
   }
 }

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NearByServiceService } from 'src/app/_service/near-by-service.service';
+import { PlaceModel } from 'src/app/models/place-model';
 
 @Component({
   selector: 'app-relative-building-tab',
@@ -10,8 +11,8 @@ export class RelativeBuildingTabComponent {
   openTab = 1;
   icons: string[] =['fas fa-space-shuttle text-base mr-1','fas fa-cog text-base mr-1','fas fa-briefcase text-base mr-1','fas fa-briefcase text-base mr-1','fas fa-briefcase text-base mr-1','fas fa-briefcase text-base mr-1'];
   texts: string[] = ['Schools','Markets','Parks','Hopitals', 'restaurants','My Position'];
-  buildingSearch: string[] = ['School', 'Market', 'Park', 'Hopital', 'Restaurant']
-  currentBuildingSearchs:google.maps.places.PlaceResult[] =[]
+  buildingSearch: string[] = ['trường', 'siêu thị', 'Công viên', 'Bệnh', 'Nhà hàng']
+  currentBuildingSearchs: PlaceModel[] =[]
   constructor(private nearByServiceService :NearByServiceService) {
      }
 
@@ -19,7 +20,7 @@ export class RelativeBuildingTabComponent {
     this.openTab = $tabNumber;
     const lat = 16.008983808041833;
     const lng = 108.20735225558515;
-   this.currentBuildingSearchs = this.nearByServiceService.onCloseLocation({latitude:lat.toString(), longtitude: lng.toString()},2000, this.buildingSearch[$tabNumber])
+    this.currentBuildingSearchs = this.nearByServiceService.onCloseLocation({latitude:lat.toString(), longtitude: lng.toString()},2, this.buildingSearch[$tabNumber])
 
   }
 }

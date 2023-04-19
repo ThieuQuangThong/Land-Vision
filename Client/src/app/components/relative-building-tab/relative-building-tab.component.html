@@ -14,12 +14,14 @@
       <div class="px-3 py-3 flex-auto">
         <p class="color-subtitle">Có {{currentBuildingSearchs.length}} {{buildingSearch[openTab-1] | translate}} trong vòng 2km</p>
         <div class="tab-content tab-space">
-          <div class="grid grid-rows-2 grid-flow-col gap-1" style="margin-bottom: 15px;">
-            <div class="row-span-1 col-span-1 font-size-title" style="font-weight: 500;">dwad</div>
-            <div class="row-span-1 col-span-1 color-subtitle font-size-sub-title">dwadw</div>
-            <div class="row-span-1 col-span-1 font-size-title" style="font-weight: 500;">1.1km</div>
+          <div *ngFor="let currentBuildingSearch of currentBuildingSearchs" class="grid grid-rows-2 grid-flow-col gap-1" style="margin-bottom: 15px;">
+          <div class="row-span-1 col-span-1 font-size-title" style="font-weight: 500;">{{currentBuildingSearch.place?.name}}</div>
+            <div class="row-span-1 col-span-1 color-subtitle font-size-sub-title">{{currentBuildingSearch.place?.formatted_address}}</div>
+            <div class="row-span-1 col-span-1 font-size-title" style="font-weight: 500;">{{currentBuildingSearch.distance}} km</div>
             <div class="row-span-1 col-span-1 color-subtitle" >
-             <i class="fa-solid fa-car font-size-sub-title" style="margin-right: 10px;"></i><span class="font-size-sub-title">5 phút</span></div>
+            <div class="row-span-1 col-span-1 font-size-title" style="font-weight: 500;">
+             <i class="fa-solid fa-car font-size-sub-title" style="margin-right: 10px;"></i>
+             <span class="font-size-sub-title">{{currentBuildingSearch.goTime}} phút</span></div>
           </div>
         </div>
       </div>
