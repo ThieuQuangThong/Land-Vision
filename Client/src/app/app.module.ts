@@ -10,6 +10,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatNativeDateModule } from '@angular/material/core';
 import {MatIconModule} from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
+import {MatTableModule} from '@angular/material/table';
+
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -156,6 +158,7 @@ import { JuridicalTransformPipe } from './_pipes/juridical-transform.pipe';
     // RegisterComponent,
   ],
   imports: [
+    MatTableModule,
     MatButtonModule,
     MatPaginatorModule,
     MatTabsModule,

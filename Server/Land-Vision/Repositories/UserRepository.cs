@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Land_Vision.Repositories
 {
-    public class UserRepository: IUserRepository
+    public class UserRepository : IUserRepository
     {
         private readonly DataContext _dbContext;
         public UserRepository(DataContext dbContext)
@@ -23,13 +23,13 @@ namespace Land_Vision.Repositories
 
         public async Task<User> GetUserByEmailAsync(string email)
         {
-           return await _dbContext.Users.Where(x => x.Email == email).Include(p => p.Role).FirstOrDefaultAsync();
+            return await _dbContext.Users.Where(x => x.Email == email).Include(p => p.Role).FirstOrDefaultAsync();
         }
 
         public async Task<bool> UpdateUserAsync(User user)
         {
             _dbContext.Users.Update(user);
-            return await SaveChangesAsync();  
+            return await SaveChangesAsync();
         }
 
         public async Task<bool> SaveChangesAsync()
@@ -45,6 +45,7 @@ namespace Land_Vision.Repositories
             .ToListAsync();
         }
 
+
         public async Task<bool> CodeIsExistAsync(string code)
         {
             return await _dbContext.Users.AnyAsync(p => p.Code == code);
@@ -52,7 +53,7 @@ namespace Land_Vision.Repositories
 
         public async Task<bool> CheckCodeIsExistWithEmail(ValidateCodeDto validateCodeDto)
         {
-            return await _dbContext.Users.AnyAsync(x => 
+            return await _dbContext.Users.AnyAsync(x =>
                         x.Code == validateCodeDto.Code && x.Email == validateCodeDto.Email);
         }
 
@@ -75,7 +76,7 @@ namespace Land_Vision.Repositories
         {
             return await _dbContext.Users.AnyAsync(x => x.IdentityNumber == idCard);
         }
-        
+
         public async Task<bool> CheckFreshTokenIsValidAsync(string freshToken)
         {
             return await _dbContext.Users.AnyAsync(x => x.RefreshToken == freshToken && x.RefreshTokenExpireTime > DateTime.Now);
@@ -103,4 +104,4 @@ namespace Land_Vision.Repositories
             return await SaveChangesAsync();
         }
     }
-}   
+}

@@ -17,8 +17,8 @@ namespace Land_Vision.Controllers
         private readonly IAccountService _accountService;
         private readonly IUserService _userSevice;
         private readonly IUserRepository _userRepository;
-        private readonly IMapper _mapper; 
-        public AccountController(IUserService userSevice, IMapper mapper, IUserRepository userRepository, IEmailService emailService,IAccountService accountService)
+        private readonly IMapper _mapper;
+        public AccountController(IUserService userSevice, IMapper mapper, IUserRepository userRepository, IEmailService emailService, IAccountService accountService)
         {
             _userSevice = userSevice;
             _mapper = mapper;
@@ -32,9 +32,10 @@ namespace Land_Vision.Controllers
         /// </summary>
         [HttpGet("{skipCount}&{maxResultCount}")]
         [ProducesResponseType(200, Type = typeof(PaginationRespone<UserDto>))]
-        public async Task<ActionResult<PaginationRespone<UserDto>>> GetUsers(int skipCount = 0, int maxResultCount =0)
+        public async Task<ActionResult<PaginationRespone<UserDto>>> GetUsers(int skipCount = 0, int maxResultCount = 0)
         {
-            if(skipCount < 0 || maxResultCount < 0){
+            if (skipCount < 0 || maxResultCount < 0)
+            {
                 return BadRequest();
             }
 
@@ -42,12 +43,13 @@ namespace Land_Vision.Controllers
             {
                 return BadRequest(ModelState);
             }
-            
+
             return Ok(await _userSevice.GetUsersAsync(
-                new Pagination{
+                new Pagination
+                {
                     SkipCount = skipCount,
                     MaxResultCount = maxResultCount
-                    }));
+                }));
         }
 
         /// <summary>
@@ -56,14 +58,14 @@ namespace Land_Vision.Controllers
         [HttpGet("confirmEmail/{emailToken}")]
         [ProducesResponseType(200, Type = typeof(IEnumerable<string>))]
         public async Task<IActionResult> ConfirmEmail(string emailToken)
-        {        
+        {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
             await _emailService.ConfirmEmailAsync(emailToken);
-            
+
             return Ok();
         }
 
@@ -74,18 +76,20 @@ namespace Land_Vision.Controllers
         [ProducesResponseType(200)]
         public async Task<IActionResult> RegisterAccount(RegisterUserDto registerUserDto)
         {
-            
-            if(await _userRepository.CheckIsExistIdentificationCardAsync(registerUserDto.IdentityNumber)){
+
+            if (await _userRepository.CheckIsExistIdentificationCardAsync(registerUserDto.IdentityNumber))
+            {
                 ModelState.AddModelError("error", "Id card is already exist!");
                 return StatusCode(400, ModelState);
             }
-            
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if(!await _accountService.RegisterAccountAsync(registerUserDto)){
+            if (!await _accountService.RegisterAccountAsync(registerUserDto))
+            {
                 throw new Exception("Some thing went wrong when add user!");
             }
             return Ok();
@@ -101,17 +105,20 @@ namespace Land_Vision.Controllers
         public async Task<ActionResult> ForgotPassword(string email)
         {
             var user = await _userRepository.GetUserByEmailAsync(email);
-            
-            if(user == null){
+
+            if (user == null)
+            {
                 return NotFound();
             }
 
-            if(!ModelState.IsValid){
+            if (!ModelState.IsValid)
+            {
                 return BadRequest(ModelState);
             }
 
-            if(!await _accountService.ForgotPasswordAsync(user)){
-                ModelState.AddModelError("", "Something went wrong"); 
+            if (!await _accountService.ForgotPasswordAsync(user))
+            {
+                ModelState.AddModelError("", "Something went wrong");
             };
 
             var validatePassToken = await _accountService.UpdateValidateForgotPasswordTokenAsync(email);
@@ -137,11 +144,13 @@ namespace Land_Vision.Controllers
         [ProducesResponseType(200)]
         public async Task<ActionResult> ValidateCode(ValidateCodeDto valadateCodeDto)
         {
-            if(!ModelState.IsValid){
+            if (!ModelState.IsValid)
+            {
                 return BadRequest(ModelState);
             }
 
-            if(!await _accountService.CheckIsExistVerifyCode(valadateCodeDto)){
+            if (!await _accountService.CheckIsExistVerifyCode(valadateCodeDto))
+            {
                 return NotFound();
             }
 
@@ -158,14 +167,16 @@ namespace Land_Vision.Controllers
         public async Task<ActionResult> ResetPassword(ResetPasswordDto resetPasswordDto)
         {
             var validatePassTokenObject = Request.Headers[TextField.COOKIE_NAME].ToString();
-            string? validatePassToken = _accountService.GetValueFromCookieByName(validatePassTokenObject,TextField.COOKIE_NAME_OF_VALIDATE_PASS_TOKEN);
-            
-            if(validatePassToken == null || !await _userRepository.CheckIsExistValidatePasswordToken(resetPasswordDto.Email, validatePassToken)){
+            string? validatePassToken = _accountService.GetValueFromCookieByName(validatePassTokenObject, TextField.COOKIE_NAME_OF_VALIDATE_PASS_TOKEN);
+
+            if (validatePassToken == null || !await _userRepository.CheckIsExistValidatePasswordToken(resetPasswordDto.Email, validatePassToken))
+            {
                 ModelState.AddModelError("error", "Nè nè reset password ở máy mô thì dùng ở máy đó nha, đừng đùa với thầy chùa");
-                return StatusCode(401, ModelState);            
+                return StatusCode(401, ModelState);
             }
 
-            if(!await _accountService.CheckIsExistVerifyCode(new ValidateCodeDto{
+            if (!await _accountService.CheckIsExistVerifyCode(new ValidateCodeDto
+            {
                 Code = resetPasswordDto.Code,
                 Email = resetPasswordDto.Email
             }))
@@ -173,16 +184,18 @@ namespace Land_Vision.Controllers
                 return NotFound();
             }
 
-            if(!ModelState.IsValid){
+            if (!ModelState.IsValid)
+            {
                 return BadRequest(ModelState);
             }
 
-            if(!await _accountService.ResetPassword(resetPasswordDto)){
-                ModelState.AddModelError("", "Something went wrong"); 
+            if (!await _accountService.ResetPassword(resetPasswordDto))
+            {
+                ModelState.AddModelError("", "Something went wrong");
             };
-            
+
             return Ok();
-        } 
+        }
 
         /// <summary>
         /// Login
@@ -191,18 +204,20 @@ namespace Land_Vision.Controllers
         [ProducesResponseType(200, Type = typeof(string))]
         public async Task<ActionResult<TokenDto>> Login(LoginDto loginDto)
         {
-            try{
-                if(!await _userRepository.CheckIsExistUserByEmailAsync(loginDto.Email)){
+            try
+            {
+                if (!await _userRepository.CheckIsExistUserByEmailAsync(loginDto.Email))
+                {
                     ModelState.AddModelError("error", "Email is not exist");
                     return StatusCode(404, ModelState);
-                }    
+                }
                 if (!ModelState.IsValid)
                 {
                     return BadRequest(ModelState);
                 }
-                var TokenRespone =  await _accountService.LoginAsync(loginDto);
+                var TokenRespone = await _accountService.LoginAsync(loginDto);
 
-                HttpContext.Response.Cookies.Append(TextField.COOKIE_NAME_OF_REFRESH_TOKEN,TokenRespone.FreshToken,
+                HttpContext.Response.Cookies.Append(TextField.COOKIE_NAME_OF_REFRESH_TOKEN, TokenRespone.FreshToken,
                     new CookieOptions
                     {
                         Expires = DateTime.Now.AddDays(NumberFiled.REFRESH_TOKEN_EXPIRE_TIME),
@@ -214,7 +229,8 @@ namespace Land_Vision.Controllers
                 );
                 return Ok(TokenRespone.AccessToken);
             }
-            catch(CustomException ex){
+            catch (CustomException ex)
+            {
 
                 var problemDetails = new ProblemDetails
                 {
@@ -238,8 +254,9 @@ namespace Land_Vision.Controllers
         {
             var cookieTokenObject = Request.Headers[TextField.COOKIE_NAME].ToString();
             string? freshToken = _accountService.GetValueFromCookieByName(cookieTokenObject, TextField.COOKIE_NAME_OF_REFRESH_TOKEN);
-            
-            if(freshToken == null || !await _userRepository.CheckFreshTokenIsValidAsync(freshToken)){
+
+            if (freshToken == null || !await _userRepository.CheckFreshTokenIsValidAsync(freshToken))
+            {
                 ModelState.AddModelError("error", "Please login again");
                 return StatusCode(401, ModelState);
             }
@@ -249,9 +266,9 @@ namespace Land_Vision.Controllers
                 return BadRequest(ModelState);
             }
 
-            var TokenRespone =  await _accountService.RefreshTokenAsync(freshToken);
+            var TokenRespone = await _accountService.RefreshTokenAsync(freshToken);
 
-            HttpContext.Response.Cookies.Append(TextField.COOKIE_NAME_OF_REFRESH_TOKEN,TokenRespone.FreshToken,
+            HttpContext.Response.Cookies.Append(TextField.COOKIE_NAME_OF_REFRESH_TOKEN, TokenRespone.FreshToken,
                 new CookieOptions
                 {
                     Expires = DateTime.Now.AddDays(7),
@@ -271,9 +288,11 @@ namespace Land_Vision.Controllers
         [ProducesResponseType(200, Type = typeof(string))]
         public async Task<ActionResult<TokenDto>> DeleteAccount(int accountId)
         {
-            try{
+            try
+            {
 
-                if(!await _userRepository.CheckIsExistByIdAsync(accountId)){
+                if (!await _userRepository.CheckIsExistByIdAsync(accountId))
+                {
                     ModelState.AddModelError("error", "User is not exist");
                     return StatusCode(404, ModelState);
                 }
@@ -283,13 +302,15 @@ namespace Land_Vision.Controllers
                     return BadRequest(ModelState);
                 }
 
-                if(!await _userRepository.DeleteUserByIdAsync(accountId)){
+                if (!await _userRepository.DeleteUserByIdAsync(accountId))
+                {
                     ModelState.AddModelError("error", "Some thing went wrong when delete account");
                     return StatusCode(500, ModelState);
                 }
                 return Ok();
             }
-            catch(CustomException ex){
+            catch (CustomException ex)
+            {
 
                 var problemDetails = new ProblemDetails
                 {

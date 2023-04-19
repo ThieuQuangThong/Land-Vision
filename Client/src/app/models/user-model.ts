@@ -1,3 +1,6 @@
+import { PostModel } from "./post-model";
+import { VipModel } from "./vip-model";
+
 export class UserModel {
   id: number = 0;
   name: string ="";
