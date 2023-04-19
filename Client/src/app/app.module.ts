@@ -85,7 +85,7 @@ import { DateFormatPipe } from './_pipes/date-format.pipe';
 import { PricingCardComponent } from './components/pricing-card/pricing-card.component';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-
+import { AgmCoreModule } from '@agm/core';
 
 export function httpTranslateLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -97,6 +97,9 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { DirectionTransformPipe } from './_pipes/direction-transform.pipe';
 import { JuridicalTransformPipe } from './_pipes/juridical-transform.pipe';
+import { InteriorTransformPipe } from './_pipes/interior-transform.pipe';
+import { RelativeBuildingTabComponent } from './components/relative-building-tab/relative-building-tab.component';
+
 
 @NgModule({
   declarations: [
@@ -153,7 +156,9 @@ import { JuridicalTransformPipe } from './_pipes/juridical-transform.pipe';
     EmailConfirmSucceededComponent,
     PageNotFoundComponent,
     DirectionTransformPipe,
-    JuridicalTransformPipe
+    JuridicalTransformPipe,
+    InteriorTransformPipe,
+    RelativeBuildingTabComponent,
     // LoginComponent,
     // RegisterComponent,
   ],
@@ -176,6 +181,9 @@ import { JuridicalTransformPipe } from './_pipes/juridical-transform.pipe';
     ReactiveFormsModule,
     NgxOtpInputModule,
     HttpClientModule,
+    AgmCoreModule.forRoot({
+      apiKey : 'AIzaSyAxofJGDu4RCNoGXCcdmXj8o4WL7j5vZj0'
+    }),
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -205,7 +213,8 @@ import { JuridicalTransformPipe } from './_pipes/juridical-transform.pipe';
   exports: [
     MoneyTranformPipe,
     DirectionTransformPipe,
-    JuridicalTransformPipe
+    JuridicalTransformPipe,
+    InteriorTransformPipe,
   ]
 })
 export class AppModule { }

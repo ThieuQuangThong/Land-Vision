@@ -11,10 +11,7 @@ import { PostResponeModel } from "src/app/models/post-respone-model";
   templateUrl: "./settings.component.html",
 })
 export class SettingsComponent implements OnInit {
-  openTab = 1;
-  toggleTabs($tabNumber: number){
-    this.openTab = $tabNumber;
-  }
+
   postItem: PostModel = new PostModel()
   postId: number = 0;
 
@@ -23,9 +20,8 @@ export class SettingsComponent implements OnInit {
   selectedStreet: string ='';
   selectedAddress: string ='';
 
-  constructor(private route: ActivatedRoute, private postService:PostService) {
+  constructor(private route: ActivatedRoute, private postService:PostService) {}
 
-  }
 
   onDropdownChange() {
 
@@ -37,7 +33,9 @@ export class SettingsComponent implements OnInit {
     this.postService.getPostById(this.postId)
     .subscribe(
       respone => {
+
         this.postItem = respone;
+        console.log(this.postItem);
       },
       error =>{
         AlertService.setAlertModel('danger','Some thing went wrong')

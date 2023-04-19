@@ -230,7 +230,7 @@ export class PostingComponent implements OnInit {
     property.numberOfFloor = this.numberOfFloor;
     property.numberOfBed = this.numberOfBed;
     property.districtId = this.selectedDirectionId;
-    property.Interior = this.selectedInterior;
+    property.interior = this.selectedInterior;
     property.juridical = this.selectedJuridical;
 
     postModel.title = this.title;
