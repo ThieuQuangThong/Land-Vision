@@ -15,6 +15,7 @@ import { PROPERTY_INFOR } from "src/assets/common/propertyInfor";
 export class LandingComponent implements OnInit {
 
   mainSearch: SearchModel = new SearchModel();
+  text: string = "";
 
   transactionTypes: string[] = [ ...PROPERTY_INFOR.all, ...PROPERTY_INFOR.TransactionTypes];
   selectedTransactionTypes: number = 0;
@@ -72,6 +73,7 @@ export class LandingComponent implements OnInit {
 
   search(){
     const searchObject: SearchModel = {
+      text: this.text,
       transactionType: this.selectedTransactionTypes,
       interiorStatus: this.selectedInterior,
       price: this.selectedPrice,

@@ -1,4 +1,5 @@
 export class SearchModel {
+  text: string = "";
   transactionType: number = 0;
   interiorStatus: number = 0;
   price: number = 0;
