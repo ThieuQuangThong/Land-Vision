@@ -10,8 +10,8 @@
               {{postItem.numberOfView}} View
             </span>
                 </div>
-                <div class="bg-yellow-200 py-1.5 px-6 rounded-full" (click)="goToDetail()">
-                    <p class="text-xs text-yellow-500">Information</p>
+                <div class="bg-yellow-200  px-6 rounded-full" (click)="goToDetail()">
+                    <p class="text-xs font-extrabold text-yellow-500 mt-2">Information</p>
                 </div>
             </div>
             <div class="p-4">
@@ -32,9 +32,9 @@
                         <p class="text-xs text-gray-600 px-2 bg-gray-200 py-1">{{postItem.property.numberOfFloor}} tầng</p>
                     </div>
                 </div>
-                <div class="flex items-center justify-between py-4">
-                    <h2 class="text-indigo-700 text-sm font-semibold">{{postItem.property.street.name}}</h2>
-                    <p class="text-indigo-700 text-lg font-semibold">{{postItem.property.price | moneyTransform}}</p>
+                <div class="flex items-center justify-between py-2">
+                    <h2 class="text-indigo-700 text-xs font-semibold">{{postItem.property.street.name}}</h2>
+                    <p class="text-indigo-700 text-sm font-semibold">{{postItem.property.price | moneyTransform}}</p>
                 </div>
             </div>
         </div>
