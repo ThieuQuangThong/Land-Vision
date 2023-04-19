@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, ElementRef, EventEmitter, HostListener, OnInit, Output, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
 import { TranslateService } from "@ngx-translate/core";
 
@@ -8,10 +8,22 @@ import { TranslateService } from "@ngx-translate/core";
 })
 export class AuthNavbarComponent implements OnInit {
   navbarOpen = false;
+  @Output() messageEvent = new EventEmitter<any>();
+  @ViewChild('auth-nav') nav!: ElementRef;
+  constructor(private elementRef: ElementRef, public translate: TranslateService,public router: Router) {}
 
-  constructor(public translate: TranslateService,public router: Router) {}
+  @HostListener('window:resize')
+  onResize() {
 
-    ngOnInit(): void {}
+    this.messageEvent.emit(this.elementRef.nativeElement.querySelector('#auth-nav').offsetHeight);
+  }
+
+  ngAfterViewInit() {
+    this.messageEvent.emit(this.elementRef.nativeElement.querySelector('#auth-nav').offsetHeight);
+  }
+
+    ngOnInit(): void {
+    }
     translateLanguageTo(lang: string) {
 
       this.translate.use(lang);
