@@ -1,114 +1,265 @@
-import { Component, OnInit } from "@angular/core";
-
-// import arcgis lib
-// import Map from "@arcgis/core/Map";
-// import SimpleMarkerSymbol from "@arcgis/core/symbols/SimpleMarkerSymbol";
-// import SimpleLineSymbol from "@arcgis/core/symbols/SimpleLineSymbol";
-// import PictureFillSymbol from "@arcgis/core/symbols/PictureFillSymbol";
-// import CartographicLineSymbol from "@arcgis/core/symbols";
-// import Graphic from "@arcgis/core/Graphic";
-// import Color from "@arcgis/core/Color";
-// import {exp} from "dojo/dom";
-// import {once} from "dojo/on";
-// import ready from "dojo/domReady!";
-
-// declare const google: any;
+import { Component, OnInit, ViewChild, ElementRef, Input, Output, EventEmitter } from "@angular/core";
+import { loadModules } from 'esri-loader';
+import { setDefaultOptions } from 'esri-loader';
+import esri = __esri;
+import { log } from "esri/config";
 
 @Component({
   selector: "app-map-example",
   templateUrl: "./map-example.component.html",
   styleUrls: ["./map-example.component.css"],
 })
-export class MapExampleComponent  {
+export class MapExampleComponent implements OnInit  {
+
+  @Output() mapLoaded = new EventEmitter<boolean>();
+  @ViewChild('mapViewNode', { static: true })
+  private mapViewEl!: ElementRef;
+
+  /**
+   * @private _zoom sets map zoom
+   * @private _center sets map center
+   * @private _basemap sets type of map
+   */
+  private _zoom: number = 18;
+  private _center: Array<number> = [108.21147547864406, 16.06505300439531];
+  private _basemap: string = 'osm';
+
+  @Input()
+  set zoom(zoom: number) {
+    this._zoom = zoom;
+  }
+
+  get zoom(): number {
+    return this._zoom;
+  }
+
+  @Input()
+  set center(center: Array<number>) {
+    this._center = center;
+  }
+
+  get center(): Array<number> {
+    return this._center;
+  }
+
+  @Input()
+  set basemap(basemap: string) {
+    this._basemap = basemap;
+  }
+
+  get basemap(): string {
+    return this._basemap;
+  }
+
   constructor() {}
 
-  // ngOnInit(): void {
-  // }
+  // async initializeMap() {
+  //   try {
+  //     const [
+  //       EsriMap,
+  //       EsriMapView,
+  //       Graphic,
+  //       GraphicsLayer,
+  //       SimpleMarkerSymbol,
+  //       SimpleLineSymbol,
+  //       SimpleFillSymbol,
+  //       Color,
+  //       Polygon
+  //     ] = await loadModules([
+  //       'esri/Map',
+  //       'esri/views/MapView',
+  //       'esri/Graphic',
+  //       'esri/layers/GraphicsLayer',
+  //       'esri/symbols/SimpleMarkerSymbol',
+  //       'esri/symbols/SimpleLineSymbol',
+  //       'esri/symbols/SimpleFillSymbol',
+  //       'esri/Color',
+  //       'esri/geometry/Polygon'
+  //     ]);
 
-  //  map:any, tb:any;
+  //     const mapProperties: esri.MapProperties = {
+  //       basemap: this._basemap
+  //     };
+  //     const map: esri.Map = new EsriMap(mapProperties);
 
-  //   require([
-  //     "esri/map", "esri/toolbars/draw",
-  //     "esri/symbols/SimpleMarkerSymbol", "esri/symbols/SimpleLineSymbol",
-  //     "esri/symbols/PictureFillSymbol", "esri/symbols/CartographicLineSymbol",
-  //     "esri/graphic",
-  //     "esri/Color", "dojo/dom", "dojo/on", "dojo/domReady!"
-  //   ], function(
-  //     Map, Draw,
-  //     SimpleMarkerSymbol, SimpleLineSymbol,
-  //     PictureFillSymbol, CartographicLineSymbol,
-  //     Graphic,
-  //     Color, dom, on
-  //   ) {
-  //     map = new Map("mapDiv", {
-  //       basemap: "osm",
-  //       center: [108.22397570156461, 16.061099090499123],
-  //       zoom: 30
+  //     const graphicsLayer = new GraphicsLayer();
+  //     map.add(graphicsLayer);
+
+  //     const polygonSymbol = new SimpleFillSymbol({
+  //       color: [0, 0, 255, 0.5],
+  //       outline: {
+  //         color: [0, 0, 255],
+  //         width: 1
+  //       }
   //     });
 
+  //     const polygonGraphic = new Graphic({
+  //       symbol: polygonSymbol
+  //     });
 
-  //     map.on("load", initToolbar);
+  //     graphicsLayer.add(polygonGraphic);
 
-  //     // markerSymbol is used for point and multipoint, see http://raphaeljs.com/icons/#talkq for more examples
-  //     var markerSymbol = new SimpleMarkerSymbol();
-  //     markerSymbol.setPath("M16,4.938c-7.732,0-14,4.701-14,10.5c0,1.981,0.741,3.833,2.016,5.414L2,25.272l5.613-1.44c2.339,1.316,5.237,2.106,8.387,2.106c7.732,0,14-4.701,14-10.5S23.732,4.938,16,4.938zM16.868,21.375h-1.969v-1.889h1.969V21.375zM16.772,18.094h-1.777l-0.176-8.083h2.113L16.772,18.094z");
-  //     markerSymbol.setColor(new Color("#00FFFF"));
+  //     const mapViewProperties: esri.MapViewProperties = {
+  //       container: this.mapViewEl.nativeElement,
+  //       center: this._center,
+  //       zoom: this._zoom,
+  //       map: map
+  //     };
+  //     const mapView: esri.MapView = new EsriMapView(mapViewProperties);
 
-  //     // lineSymbol used for freehand polyline, polyline and line.
-  //     var lineSymbol = new CartographicLineSymbol(
-  //       CartographicLineSymbol.STYLE_SOLID,
-  //       new Color([255,0,0]), 1,
-  //       CartographicLineSymbol.CAP_ROUND,
-  //       CartographicLineSymbol.JOIN_MITER, 5
-  //     );
+  //     let vertices: number[][] = [];
+  //     console.log("loaded");
 
-  //     // fill symbol used for extent, polygon and freehand polygon, use a picture fill symbol
-  //     // the images folder contains additional fill images, other options: sand.png, swamp.png or stiple.png
-  //     var fillSymbol = new PictureFillSymbol(
-  //       "https://www.iconpacks.net/icons/2/free-tree-icon-1578-thumb.png",
-  //       new SimpleLineSymbol(
-  //         SimpleLineSymbol.STYLE_SOLID,
-  //         new Color('#000'),
-  //         1
-  //       ),
-  //       42,
-  //       42
-  //     );
+  //     mapView.on("click", (event: esri.ViewClickEvent) => {
+  //       const point = event.mapPoint.clone();
+  //       vertices.push([point.longitude, point.latitude]);
+  //       console.log("sau khi push vo verices:"+vertices);
 
-  //     function initToolbar() {
-  //       tb = new Draw(map);
-  //       tb.on("draw-end", addGraphic);
-
-  //       // event delegation so a click handler is not
-  //       // needed for each individual button
-  //       on(dom.byId("info"), "click", function(evt) {
-  //         if ( evt.target.id === "info" ) {
-  //           return;
+  //       const polygon = new Polygon({
+  //         rings: [vertices],
+  //         spatialReference: {
+  //           wkid: 4326
   //         }
-  //         var tool = evt.target.id.toLowerCase();
-  //         map.disableMapNavigation();
-  //         tb.activate(tool);
   //       });
-  //     }
 
-  //     function addGraphic(evt) {
-  //       //deactivate the toolbar and clear existing graphics
-  //       tb.deactivate();
-  //       map.enableMapNavigation();
+  //       polygonGraphic.geometry = polygon;
+  //     });
 
-  //       // figure out which symbol to use
-  //       var symbol;
-  //       if ( evt.geometry.type === "point" || evt.geometry.type === "multipoint") {
-  //         symbol = markerSymbol;
-  //       } else if ( evt.geometry.type === "line" || evt.geometry.type === "polyline") {
-  //         symbol = lineSymbol;
+  //     mapView.on("double-click", (event: esri.ViewDoubleClickEvent) => {
+  //       if (vertices.length >= 3) {
+  //             console.log("polygon:"+vertices);
+  //             // Create a new polygon graphic and add it to the graphics layer
+  //             const polygon = new Polygon({
+  //               rings: [vertices],
+  //               spatialReference: {
+  //                 wkid: 4326
+  //               }
+  //             });
+
+  //         const graphic = new Graphic({
+  //           geometry: polygon,
+  //           symbol: polygonSymbol
+  //         });
+
+  //         graphicsLayer.add(graphic);
+
+  //         // Clear the vertices array for the next polygon
+  //         vertices = [];
   //       }
-  //       else {
-  //         symbol = fillSymbol;
-  //       }
-
-  //       map.graphics.add(new Graphic(evt.geometry, symbol));
   //     }
-  //   });
+  //     // }
+  //     );
+
+  //     mapView.when(() => {
+  //       this.mapLoaded.emit(true);
+  //     });
+  //   } catch (error) {
+  //     alert('We have an error: ' + error);
+  //   }
+  // }
+
+  async initializeMap() {
+    try {
+      const [
+        EsriMap,
+        EsriMapView,
+        Graphic,
+        GraphicsLayer,
+        SimpleMarkerSymbol,
+        SimpleLineSymbol,
+        SimpleFillSymbol,
+        Color,
+        Polygon
+      ] = await loadModules([
+        'esri/Map',
+        'esri/views/MapView',
+        'esri/Graphic',
+        'esri/layers/GraphicsLayer',
+        'esri/symbols/SimpleMarkerSymbol',
+        'esri/symbols/SimpleLineSymbol',
+        'esri/symbols/SimpleFillSymbol',
+        'esri/Color',
+        'esri/geometry/Polygon'
+      ]);
+
+      const mapProperties: esri.MapProperties = {
+        basemap: this._basemap
+      };
+      const map: esri.Map = new EsriMap(mapProperties);
+
+      const graphicsLayer = new GraphicsLayer();
+      map.add(graphicsLayer);
+
+      const polygonSymbol = new SimpleFillSymbol({
+        color: [0, 0, 255, 0.5],
+        outline: {
+          color: [0, 0, 255],
+          width: 1
+        }
+      });
+
+      const polygonGraphic = new Graphic({
+        symbol: polygonSymbol
+      });
+
+      graphicsLayer.add(polygonGraphic);
+
+      const mapViewProperties: esri.MapViewProperties = {
+        container: this.mapViewEl.nativeElement,
+        center: this._center,
+        zoom: this._zoom,
+        map: map
+      };
+      const mapView: esri.MapView = new EsriMapView(mapViewProperties);
+
+      let vertices: number[][] = [];
+
+      // const clearButton = document.getElementById('Polygon');
+      // clearButton!.addEventListener('click', () => {
+      //   vertices = [];
+      //   polygonGraphic.geometry = null;
+      //   graphicsLayer.removeMany(graphicsLayer.graphics.toArray());
+      // });
+
+      mapView.on('click', (event: esri.ViewClickEvent) => {
+        const point = event.mapPoint.clone();
+        vertices.push([point.longitude, point.latitude]);
+        console.log('sau khi push vo verices:', vertices);
+
+        const polygon = new Polygon({
+          rings: [vertices],
+          spatialReference: {
+            wkid: 4326
+          }
+        });
+
+        polygonGraphic.geometry = polygon;
+      });
+
+      mapView.on("double-click", (event: esri.ViewDoubleClickEvent) => {
+        if (vertices.length > 0) {
+          vertices.pop();
+
+          const polygon = new Polygon({
+            rings: [vertices],
+            spatialReference: {
+              wkid: 4326
+            }
+          });
+          polygonGraphic.geometry = polygon;
+        }
+      });
+
+      mapView.when(() => {
+        this.mapLoaded.emit(true);
+      });
+    } catch (error) {
+      alert('We have an error: ' + error);
+    }
+  }
+
+  ngOnInit() {
+    this.initializeMap();
+  }
 
 }
