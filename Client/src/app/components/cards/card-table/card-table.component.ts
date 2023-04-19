@@ -4,10 +4,11 @@ import { PagingModel } from "src/app/models/paging-model";
 import { PostModel } from "src/app/models/post-model";
 import { MatPaginator, PageEvent } from '@angular/material/paginator';
 import { MatTableDataSource } from '@angular/material/table';
-import {MatSort} from "@angular/material/sort";
 import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { UserService } from "src/app/_service/user.service";
 import { UserModel } from "src/app/models/user-model";
+import {MatSort, Sort} from '@angular/material/sort';
+
 
 @Component({
   selector: "app-card-table",
@@ -23,6 +24,7 @@ export class CardTableComponent implements OnInit {
 
   @ViewChild('postPaginator', { static: true }) postPaginator!: MatPaginator;
 @ViewChild('sellerPaginator', { static: true }) sellerPaginator!: MatPaginator;
+@ViewChild('empTbSort') empTbSort = new MatSort();
 
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
   options : object = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
@@ -57,7 +59,11 @@ export class CardTableComponent implements OnInit {
   ngOnInit(): void {
     this.getAll(this.paging);
   }
+  ngAfterViewInit() {
+    this.dataSourcePost.sort = this.empTbSort;
+    this.dataSourceSeller.sort = this.empTbSort;
 
+}
   applyDateFilter()  {
       this.dataSourcePost.filterPredicate = (data, filter) =>{
         const day = new Date(data.createDate).getDate(); // Lấy ngày trong tháng (1-31)

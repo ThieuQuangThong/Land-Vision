@@ -53,12 +53,30 @@ namespace Land_Vision.Controllers
             return Ok(Paginposts);
         }
 
+        // GET posts count
+        /// <summary>
+        /// Get posts count
+        /// </summary>
+        [HttpGet("getPostCount")]
+        [ProducesResponseType(200, Type = typeof(int))]
+        public async Task<ActionResult<int>> GetPosts()
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var PostsCount = await _postRepository.GetPostCountAsync();
+            return Ok(PostsCount);
+        }
+
+        // GET all posts by search
         /// <summary>
         /// Get all posts by search
         /// </summary>
         [HttpPost("getSearchedPost/{skipCount}&{maxResultCount}")]
         [ProducesResponseType(200, Type = typeof(PaginationRespone<PostDto>))]
-        public async Task<ActionResult<PaginationRespone<PostDto>>> GetPosts(int skipCount, int maxResultCount,[FromBody] PostSearchDto postSearchDto)
+        public async Task<ActionResult<PaginationRespone<PostDto>>> GetPosts(int skipCount, int maxResultCount, [FromBody] PostSearchDto postSearchDto)
         {
             if (!ModelState.IsValid)
             {
@@ -110,13 +128,13 @@ namespace Land_Vision.Controllers
                 return BadRequest(ModelState);
             }
 
-            var post =  await _postRepository.GetPostAsync(postId);
+            var post = await _postRepository.GetPostAsync(postId);
             if (post == null)
             {
                 ModelState.AddModelError("", "Post not exist");
                 return BadRequest(ModelState);
             }
-            
+
             return Ok(_mapper.Map<PostDto>(post));
         }
 

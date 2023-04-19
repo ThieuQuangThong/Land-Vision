@@ -15,6 +15,10 @@ export class PostService {
 
   constructor(private http: HttpClient) {}
 
+  getPostCount():Observable<number> {
+    return this.http.get<number>(API_URL.GET_POST_COUNT(),{withCredentials: true})
+  }
+
   getAllPost(pagingModel: PagingModel):Observable<PostResponeModel> {
     return this.http.get<PostResponeModel>(API_URL.GET_ALL_POST(pagingModel),{withCredentials: true})
   }

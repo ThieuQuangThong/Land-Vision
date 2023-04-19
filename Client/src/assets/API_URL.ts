@@ -4,8 +4,10 @@ export const DOMAIN = "https://localhost:44310";
 
 export const API_URL = {
   GET_ALL_POST: (pagingModel: PagingModel) =>`${DOMAIN}/api/Post/${pagingModel.skipCount}&${pagingModel.maxResultCount}`,
+  GET_POST_COUNT : () => `${DOMAIN}/api/Post/getPostCount`,
   GET_ALL_POST_BY_TIME: (pagingModel: PagingModel,startDate : string,endDate : string) =>`${DOMAIN}/api/Post/PostByTime/${pagingModel.skipCount}&${pagingModel.maxResultCount}&${startDate}&${endDate}`,
   GET_ALL_USER: (pagingModel : PagingModel) => `${DOMAIN}/api/Account/${pagingModel.skipCount}&${pagingModel.maxResultCount}`,
+  GET_USER_COUNT : () => `${DOMAIN}/api/Account/getUserCount`,
   FORGOT_PASSWORD: (email: string) => `${DOMAIN}/api/Account/forgotPassword/${email}`,
   REFRESH_TOKEN: () => `${DOMAIN}/api/Token/Refresh`,
   VALIDATE_CODE:() => `${DOMAIN}/api/Account/validateCode`,

@@ -12,6 +12,10 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
+  getUserCount():Observable<number> {
+    return this.http.get<number>(API_URL.GET_USER_COUNT(),{withCredentials: true})
+  }
+
   getAllUser(pagingModel: PagingModel):Observable<UserResponeModel> {
     return this.http.get<UserResponeModel>(API_URL.GET_ALL_USER(pagingModel),{withCredentials: true})
   }
