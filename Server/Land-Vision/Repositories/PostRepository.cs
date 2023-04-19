@@ -94,14 +94,20 @@ namespace Land_Vision.Repositories
 
         public async Task<List<Post>> GetSearchedPosts(Pagination pagination, PostSearchDto postSearchDto)
         {
+            var text = postSearchDto.Text;
+            if(!String.IsNullOrEmpty(text)){
+                text = text.Trim();
+            }
+
             return await _dbContext.Posts
             .Where(x => (postSearchDto.TransactionType == NumberFiled.ALL || x.transactionType == postSearchDto.TransactionType)
-            && ( postSearchDto.InteriorStatus == NumberFiled.ALL ||x.Property.Interior == postSearchDto.InteriorStatus)
-            && ( postSearchDto.Price == NumberFiled.ALL ||x.Property.Price <= postSearchDto.Price)
-            && ( postSearchDto.NumberOfFloor == NumberFiled.ALL ||x.Property.NumberOfFloor == postSearchDto.NumberOfFloor)
-            && ( postSearchDto.NumberOfBed == NumberFiled.ALL ||x.Property.NumberOfBed == postSearchDto.NumberOfBed)
-            && ( postSearchDto.NumberOfBath == NumberFiled.ALL ||x.Property.NumberOfBath == postSearchDto.NumberOfBath)
-            && ( postSearchDto.Direction == NumberFiled.ALL ||x.Property.Direction == postSearchDto.Direction))
+            && (postSearchDto.InteriorStatus == NumberFiled.ALL ||x.Property.Interior == postSearchDto.InteriorStatus)
+            && (postSearchDto.Price == NumberFiled.ALL ||x.Property.Price <= postSearchDto.Price)
+            && (postSearchDto.NumberOfFloor == NumberFiled.ALL ||x.Property.NumberOfFloor == postSearchDto.NumberOfFloor)
+            && (postSearchDto.NumberOfBed == NumberFiled.ALL ||x.Property.NumberOfBed == postSearchDto.NumberOfBed)
+            && (postSearchDto.NumberOfBath == NumberFiled.ALL ||x.Property.NumberOfBath == postSearchDto.NumberOfBath)
+            && (postSearchDto.Direction == NumberFiled.ALL ||x.Property.Direction == postSearchDto.Direction)
+            && (String.IsNullOrEmpty(text) || x.Title.Contains(text) || x.Description.Contains(text)))
             .Skip(pagination.SkipCount)
             .Take(pagination.MaxResultCount)
             .Include(x => x.User)
@@ -116,13 +122,19 @@ namespace Land_Vision.Repositories
 
         public Task<int> GetTotalCountSearchedPostAsync(PostSearchDto postSearchDto)
         {
+            var text = postSearchDto.Text;
+            if(!String.IsNullOrEmpty(text)){
+                text = text.Trim();
+            }
+
             return _dbContext.Posts.Where(x => (postSearchDto.TransactionType == NumberFiled.ALL || x.transactionType == postSearchDto.TransactionType)
             && ( postSearchDto.InteriorStatus == NumberFiled.ALL ||x.Property.Interior == postSearchDto.InteriorStatus)
             && ( postSearchDto.Price == NumberFiled.ALL ||x.Property.Price <= postSearchDto.Price)
             && ( postSearchDto.NumberOfFloor == NumberFiled.ALL ||x.Property.NumberOfFloor == postSearchDto.NumberOfFloor)
             && ( postSearchDto.NumberOfBed == NumberFiled.ALL ||x.Property.NumberOfBed == postSearchDto.NumberOfBed)
             && ( postSearchDto.NumberOfBath == NumberFiled.ALL ||x.Property.NumberOfBath == postSearchDto.NumberOfBath)
-            && ( postSearchDto.Direction == NumberFiled.ALL ||x.Property.Direction == postSearchDto.Direction))
+            && ( postSearchDto.Direction == NumberFiled.ALL ||x.Property.Direction == postSearchDto.Direction)
+            && (String.IsNullOrEmpty(text) || x.Title.Contains(text) || x.Description.Contains(text)))
             .CountAsync();
         }
 

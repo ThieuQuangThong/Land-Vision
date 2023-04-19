@@ -4,6 +4,7 @@ namespace Land_Vision.DTO.PostDtos
 {
     public class PostSearchDto
     {
+        public string? Text { get; set; }
         [Required]
         public int TransactionType { get; set; }
         [Required]
