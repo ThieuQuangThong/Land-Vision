@@ -1,0 +1,28 @@
+<div class="flex flex-wrap">
+  <div id="map"></div>
+  <div class="w-full">
+    <ul class="flex mb-0 list-none flex-wrap pt-3 pb-4 flex-row">
+      <li *ngFor="let text of texts; let i = index" class="-mb-px mr-1 last:mr-0 flex-auto text-center">
+        <a class="text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal" (click)="toggleTabs(i+1)" [ngClass]="{'text-violet-600 bg-white': openTab !== i+1, 'text-white bg-violet-600': openTab === i+1}">
+    <i class="{{icons[i]}}"></i> {{text}}
+        </a>
+      </li>
+
+    </ul>
+    <div style="height:50vh;
+    overflow: scroll;" class="relative flex flex-col min-w-0 break-words bg-white w-full mb-3 shadow-lg rounded">
+      <div class="px-3 py-3 flex-auto">
+        <p class="color-subtitle">Có {{currentBuildingSearchs.length}} {{buildingSearch[openTab-1] | translate}} trong vòng 2km</p>
+        <div class="tab-content tab-space">
+          <div class="grid grid-rows-2 grid-flow-col gap-1" style="margin-bottom: 15px;">
+            <div class="row-span-1 col-span-1 font-size-title" style="font-weight: 500;">dwad</div>
+            <div class="row-span-1 col-span-1 color-subtitle font-size-sub-title">dwadw</div>
+            <div class="row-span-1 col-span-1 font-size-title" style="font-weight: 500;">1.1km</div>
+            <div class="row-span-1 col-span-1 color-subtitle" >
+             <i class="fa-solid fa-car font-size-sub-title" style="margin-right: 10px;"></i><span class="font-size-sub-title">5 phút</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

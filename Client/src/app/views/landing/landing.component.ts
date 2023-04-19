@@ -14,6 +14,8 @@ import { PROPERTY_INFOR } from "src/assets/common/propertyInfor";
 })
 export class LandingComponent implements OnInit {
 
+  isLoading: boolean = false;
+
   mainSearch: SearchModel = new SearchModel();
   text: string = "";
 
@@ -55,10 +57,11 @@ export class LandingComponent implements OnInit {
   }
 
   getPost(paging: PagingModel){
-
+    this.isLoading = true;
     this.postService.getSearchedPost(paging,this.mainSearch)
     .subscribe(
       respone =>{
+        this.isLoading = false
         var {skipCount, maxResultCount} = respone.pagination;
 
         this.postRespone = [...this.postRespone, ...respone.listItem];
