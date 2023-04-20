@@ -3,6 +3,9 @@ import { AuthService } from '../_service/auth.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { FileUploadService } from '../_service/file-upload.service';
+import { API_URL } from 'src/assets/API_URL';
+import { AuthenIdentifyCardService } from '../_service/authen-identify-card.service';
+import { AlertService } from '../_service/alert.service';
 
 @Component({
   selector: 'app-file-upload',
@@ -19,7 +22,7 @@ export class FileUploadComponent implements OnInit {
   public imageUrl1!: string
   imageUrl2!: string
 
-  constructor(private auth: AuthService,private fb: FormBuilder,
+  constructor(private auth: AuthService,private fb: FormBuilder, private authenIdenCard: AuthenIdentifyCardService,
     private http: HttpClient, private fileService: FileUploadService){}
   ngOnInit(): void {
 
@@ -56,25 +59,41 @@ export class FileUploadComponent implements OnInit {
 
   onUpload1(): void {
     if (this.imageFile1) {
-      const url = 'https://localhost:7165/api/Image/convertFileImageToUrl';
+      const url = API_URL.CONVERT_FILE_IMAGE_TO_URL();
       const formFile = new FormData();
       formFile.append('formFile', this.imageFile1);
 
       this.http.post(url, formFile,{responseType: 'text'}).subscribe(
         (response: any) => {
-         this.imageUrl1 =response
+         this.authenIdenCard.checkIdentifyCard(response)
+         .subscribe(
+          inforRes => {
+            this.authenIdenCard.numberOfIdCard =  inforRes.data[0].id;
+            this.imageUrl1 = response;
+            this.fileService.imageFile1 = response;
+
+          },
+          erorr =>{
+              console.log(erorr.error.errorMessage);
+
+            AlertService.setAlertModel("danger",'sfefes')
+          }
+         )
+
          this.fileService.imageFile1 = response
         //  console.log(this.imageUrl1)
         },
         (error: any) => {
+          AlertService.setAlertModel('danger','Some thing went wrong')
           console.error(error);
         }
       );
     }
   }
+
   onUpload2(): void {
     if (this.imageFile2) {
-      const url = 'https://localhost:7165/api/Image/convertFileImageToUrl';
+      const url = API_URL.CONVERT_FILE_IMAGE_TO_URL();
       const formFile2 = new FormData();
       formFile2.append('formFile', this.imageFile2);
 
@@ -85,6 +104,7 @@ export class FileUploadComponent implements OnInit {
 
         },
         (error: any) => {
+          AlertService.setAlertModel('danger','Some thing went wrong')
           console.error(error);
         }
       );
