@@ -49,11 +49,16 @@ export class LandingComponent implements OnInit {
 
   isFullItem: boolean = false;
   postRespone: PostModel[] = [];
+
+  paddingTop: string = '';
   constructor(private postService:PostService) {
   }
 
   ngOnInit(): void {
     this.getPost(this.paging);
+  }
+  receiveHeight($event: any){
+  this.paddingTop = $event.toString()+"px";
   }
 
   getPost(paging: PagingModel){
