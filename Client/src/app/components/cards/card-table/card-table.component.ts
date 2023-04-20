@@ -16,8 +16,8 @@ import {MatSort, Sort} from '@angular/material/sort';
 })
 
 export class CardTableComponent implements OnInit {
-  displayedPostsColumns: string[] = ['#', 'title', 'transactionType', 'createAt','poster'];
-  displayedSellersColumns: string[] = ['#', 'name', 'email', 'phone'];
+  displayedPostsColumns: string[] = ['#', 'title', 'transactionType', 'createAt','poster', 'dropDown'];
+  displayedSellersColumns: string[] = ['#', 'name', 'email', 'phone', 'dropDown'];
 
   dataSourcePost = new MatTableDataSource<any>();
   dataSourceSeller = new MatTableDataSource<any>();

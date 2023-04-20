@@ -12,6 +12,7 @@ import {MatIconModule} from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -163,6 +164,7 @@ import { RelativeBuildingTabComponent } from './components/relative-building-tab
     // RegisterComponent,
   ],
   imports: [
+    MatTooltipModule,
     MatSortModule,
     MatTableModule,
     MatButtonModule,
