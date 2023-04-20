@@ -64,10 +64,8 @@ import { UserDropdownComponent } from "./components/dropdowns/user-dropdown/user
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { StorageService } from '../app/_service/storage.service';
 import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
-import { AuthGuard } from './_helper/http.guard';
-import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 
-// import { AuthTokenInterceptor } from './_helper/http.interceptor';
+import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CodeVerifyComponent } from './code-verify/code-verify.component';
 import { NewPasswordComponent } from './new-password/new-password.component';
@@ -86,10 +84,7 @@ import { PricingCardComponent } from './components/pricing-card/pricing-card.com
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AgmCoreModule } from '@agm/core';
-
-export function httpTranslateLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http);
-}
+import {IvyCarouselModule} from 'carousel-angular';
 import { EmailConfirmSucceededComponent } from './views/email-confirm-succeeded/email-confirm-succeeded.component';
 import { PageNotFoundComponent } from './views/page-not-found/page-not-found.component';
 import { NgxOtpInputModule } from "ngx-otp-input";
@@ -99,6 +94,10 @@ import { DirectionTransformPipe } from './_pipes/direction-transform.pipe';
 import { JuridicalTransformPipe } from './_pipes/juridical-transform.pipe';
 import { InteriorTransformPipe } from './_pipes/interior-transform.pipe';
 import { RelativeBuildingTabComponent } from './components/relative-building-tab/relative-building-tab.component';
+import { CarouselComponent } from './components/carousel/carousel.component';
+import { AuthGuard } from './_helper/http.guard';
+import { AuthTokenInterceptor } from './_helper/http.interceptor';
+// import { AuthGuard } from './_helper/http.guard';
 
 
 @NgModule({
@@ -140,6 +139,7 @@ import { RelativeBuildingTabComponent } from './components/relative-building-tab
     SettingsComponent,
     TablesComponent,
     IndexComponent,
+    CarouselComponent,
     LandingComponent,
     ProfileComponent,
     ResetPasswordComponent,
@@ -159,11 +159,13 @@ import { RelativeBuildingTabComponent } from './components/relative-building-tab
     JuridicalTransformPipe,
     InteriorTransformPipe,
     RelativeBuildingTabComponent,
+    CarouselComponent,
     // LoginComponent,
     // RegisterComponent,
   ],
   imports: [
     MatSortModule,
+    IvyCarouselModule,
     MatTableModule,
     MatButtonModule,
     MatPaginatorModule,
@@ -201,13 +203,14 @@ import { RelativeBuildingTabComponent } from './components/relative-building-tab
       }
     }),
   ],
-  providers: [
-    // { provide: HTTP_INTERCEPTORS,
-    //   // useClass: AuthTokenInterceptor,
-    //   multi: true
-    // },
+  providers:
+  [
+    { provide: HTTP_INTERCEPTORS,
+      useClass: AuthTokenInterceptor,
+      multi: true
+    },
     [AuthGuard],
-
+   
   ],
   bootstrap: [AppComponent],
   exports: [
@@ -216,18 +219,23 @@ import { RelativeBuildingTabComponent } from './components/relative-building-tab
     JuridicalTransformPipe,
     InteriorTransformPipe,
   ]
+
 })
+
 export class AppModule { }
 export function jwtOptionsFactor(storage:StorageService){
   return {
      tokenGetter:() => {
        return storage.getAccessToken();
      },
-    // allowedDomains:["https://localhost:7165"],
-    // disallowedRoutes:[
-    //   "https://localhost:7165/api/Authorization/Login",
-    //   "https://localhost:7165/api/Token/Refresh"
-    // ],
-    // skipWhenExpired: false,
+    allowedDomains:["https://localhost:7165"],
+    disallowedRoutes:[
+      "https://localhost:7165/api/Authorization/Login",
+      "https://localhost:7165/api/Token/Refresh"
+    ],
+    skipWhenExpired: false,
   }
+}
+export function httpTranslateLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
 }

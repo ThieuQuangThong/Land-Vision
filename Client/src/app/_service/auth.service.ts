@@ -91,7 +91,9 @@ public  code: any;
     // Xóa thông tin người dùng khỏi localStorage hoặc sessionStorage khi đăng xuất
     localStorage.removeItem('token');
   }
-
+  IsLoggedIn(){
+    return localStorage.getItem('token')!=null;
+  }
   isLoggedIn(): boolean {
     // Kiểm tra xem có thông tin người dùng nào được lưu trữ trong localStorage hoặc sessionStorage hay không
     if (this.getLoggedInUser() == null) return false;

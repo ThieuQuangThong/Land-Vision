@@ -30,20 +30,28 @@ import { PostingComponent } from './views/posting/posting.component';
 import { EmailConfirmSucceededComponent } from './views/email-confirm-succeeded/email-confirm-succeeded.component';
 import { PageNotFoundComponent } from './views/page-not-found/page-not-found.component';
 import { ProductDetailComponent } from './components/product-detail/product-detail.component';
-
+import { AuthGuard } from './_helper/http.guard';
 const routes: Routes = [
-  {path: '', redirectTo: 'login', pathMatch: 'full'},
-  {path: "login", component: LoginComponent},
-  {path: "signup", component: SignupComponent},
-  {path: "mapstest", component: MapExampleComponent},
-  {path: "reset-password", component: ResetPasswordComponent},
-  {path: "new-password/:code/:email", component: NewPasswordComponent},
-  {path: "code-verify/:email", component: CodeVerifyComponent},
-  {path: "dashboard", component: DashboardComponent },
-  {path: "productdetails/:postId", component: SettingsComponent },
-  {path: "emailcomfirmed", component: EmailConfirmSucceededComponent },
-  {path: "404error", component: PageNotFoundComponent },
-  {path: "product", component: SettingsComponent },
+  { path: '', redirectTo: 'login', pathMatch: 'full' ,},
+  {
+    path: "login", component: LoginComponent,
+
+    data: {
+      requiredAuth: false
+    },
+    canActivate: [AuthGuard]
+
+  },
+  { path: "signup", component: SignupComponent },
+  { path: "mapstest", component: MapExampleComponent },
+  { path: "reset-password", component: ResetPasswordComponent },
+  { path: "new-password/:code/:email", component: NewPasswordComponent },
+  { path: "code-verify/:email", component: CodeVerifyComponent },
+  { path: "dashboard", component: DashboardComponent },
+  { path: "productdetails/:postId", component: SettingsComponent },
+  { path: "emailcomfirmed", component: EmailConfirmSucceededComponent },
+  { path: "404error", component: PageNotFoundComponent },
+  { path: "product", component: SettingsComponent },
 
 
   // admin views
@@ -59,8 +67,13 @@ const routes: Routes = [
     ]
   },
   {
-    path:"posting",
-    component: PostingComponent
+    path: "posting", component: PostingComponent,
+
+    data: {
+      requiredAuth: true
+    },
+    canActivate: [AuthGuard]
+
   },
   // no layout views
   { path: "profile", component: ProfileComponent },
