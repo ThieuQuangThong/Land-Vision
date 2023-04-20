@@ -1,7 +1,9 @@
 import { Component, OnInit, ViewChild, ElementRef, Input, Output, EventEmitter } from "@angular/core";
-import { loadModules } from 'esri-loader';
 import { setDefaultOptions } from 'esri-loader';
+import { loadModules } from 'esri-loader';
 import esri = __esri;
+// import Zoom from "@arcgis/core/widgets/Zoom.js";
+
 import { log } from "esri/config";
 
 @Component({
@@ -169,7 +171,13 @@ export class MapExampleComponent implements OnInit  {
         SimpleLineSymbol,
         SimpleFillSymbol,
         Color,
-        Polygon
+        Polygon,
+        Compass,
+        Locate,
+        BasemapGallery,
+        Fullscreen,
+        // CoordinateConversion,
+        Search,
       ] = await loadModules([
         'esri/Map',
         'esri/views/MapView',
@@ -179,7 +187,13 @@ export class MapExampleComponent implements OnInit  {
         'esri/symbols/SimpleLineSymbol',
         'esri/symbols/SimpleFillSymbol',
         'esri/Color',
-        'esri/geometry/Polygon'
+        'esri/geometry/Polygon',
+        'esri/widgets/Compass',
+        'esri/widgets/Locate',
+        'esri/widgets/BasemapGallery',
+        "esri/widgets/Fullscreen",
+        // 'esri/widgets/CoordinateConversion',
+        'esri/widgets/Search',
       ]);
 
       const mapProperties: esri.MapProperties = {
@@ -220,6 +234,49 @@ export class MapExampleComponent implements OnInit  {
       //   polygonGraphic.geometry = null;
       //   graphicsLayer.removeMany(graphicsLayer.graphics.toArray());
       // });
+
+
+      const compass = new Compass({
+        view: mapView
+      });
+
+      mapView.ui.add(compass, 'top-left');
+
+      const locate = new Locate({
+        view: mapView
+      });
+
+      mapView.ui.add(locate, "top-left");
+
+      const fullscreen  = new Fullscreen ({
+        view: mapView
+      });
+
+      mapView.ui.add(fullscreen, "top-right");
+
+
+      const basemapGallery = new BasemapGallery({
+        view: mapView
+      });
+
+      mapView.ui.add(basemapGallery, "top-right");
+
+      // const coordinateConversion = new CoordinateConversion({
+      //   view: mapView
+      // });
+
+      // mapView.ui.add(coordinateConversion, "top-right");
+
+
+      const search = new Search({
+        view: mapView
+      });
+
+      mapView.ui.add(search, "top-right");
+
+
+
+
 
       mapView.on('click', (event: esri.ViewClickEvent) => {
         const point = event.mapPoint.clone();

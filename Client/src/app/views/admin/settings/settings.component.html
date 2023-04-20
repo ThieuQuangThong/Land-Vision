@@ -333,7 +333,7 @@
                                     Is interior:
                                   </span>
                                   <span >
-                                    {{postItem.property.Interior.toString() | translate}}
+                                    {{postItem.property.interior | interiorTransform | translate}}
                                   </span>
                                 </div>
                             </div>
@@ -446,9 +446,8 @@
               </div>
             </div>
           </section>
-          <app-map-example ></app-map-example>
-          <h4 class=" mt-5 text-2xl font-semibold">Saler</h4>
-            <app-card-profile ></app-card-profile>
+            <app-map-example></app-map-example>
+            <app-relative-building-tab></app-relative-building-tab>
         </div>
       </div>
 

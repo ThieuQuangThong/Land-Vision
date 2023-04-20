@@ -1,130 +1,46 @@
 <app-auth-navbar></app-auth-navbar>
+<nav class=" flex flex-wrap justify-between items-center mx-auto max-w-screen-xl bg-grey-light w-full rounded-md">
+  <ol class="list-reset flex">
+    <li>
+      <a href="#"
+        class="text-primary transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 active:text-primary-700 dark:text-primary-400 dark:hover:text-primary-500 dark:focus:text-primary-500 dark:active:text-primary-600">Home</a>
+    </li>
+    <li>
+      <span class="mx-2 text-neutral-500 dark:text-neutral-400">></span>
+    </li>
+    <li>
+      <a href="#"
+        class="text-primary transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 active:text-primary-700 dark:text-primary-400 dark:hover:text-primary-500 dark:focus:text-primary-500 dark:active:text-primary-600">Library</a>
+    </li>
+    <li>
+      <span class="mx-2 text-neutral-500 dark:text-neutral-400">></span>
+    </li>
+    <li class="text-neutral-500 dark:text-neutral-400">Data</li>
+  </ol>
+</nav>
 <main>
 
-  <div
-    class="relative pt-16 pb-32 flex content-center items-center justify-center min-h-screen-75"
-  >
-    <div
-      class="absolute top-0 w-full h-full bg-center bg-cover"
-      style="
-        background-image: url('https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1267&q=80');
-      "
-    >
-      <span
-        id="blackOverlay"
-        class="w-full h-full absolute opacity-75 bg-black"
-      ></span>
-    </div>
-    <div class="container relative mx-auto">
-      <div class="items-center flex flex-wrap">
-        <div class="w-full lg:w-6/12 px-4 ml-auto mr-auto text-center">
-          <div class="pr-12">
-            <h1 class="text-white font-semibold text-5xl">
-              Your story starts with us.
-            </h1>
-            <p class="mt-4 text-lg text-blueGray-200">
-              This is a simple example of a Landing Page you can build using
-              Notus Angular. It features multiple CSS components based on the
-              Tailwind CSS design system.
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div
-      class="top-auto bottom-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden h-70-px"
-      style="transform: translateZ(0)"
-    >
-      <svg
-        class="absolute bottom-0 overflow-hidden"
-        xmlns="http://www.w3.org/2000/svg"
-        preserveAspectRatio="none"
-        version="1.1"
-        viewBox="0 0 2560 100"
-        x="0"
-        y="0"
-      >
-        <polygon
-          class="text-blueGray-800 fill-current"
-          points="2560 0 2560 100 0 100"
-        ></polygon>
+  <div class="relative pt-16 pb-10 flex content-center items-center justify-center min-h-screen-5">
+
+    <div class="top-auto bottom-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden h-70-px"
+      style="transform: translateZ(0)">
+      <svg class="absolute bottom-0 overflow-hidden" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"
+        version="1.1" viewBox="0 0 2560 100" x="0" y="0">
+        <polygon class="text-blueGray-800 fill-current" points="2560 0 2560 100 0 100"></polygon>
       </svg>
     </div>
   </div>
 
-  <section class="pb-20 bg-blueGray-800 -mt-24">
+  <section class="pb-20 bg-blueGray-800 -mt-24" >
     <div class="container mx-auto px-4">
 
 
+      <div class="pb-20">
+
+      </div>
       <div class="flex flex-wrap">
-        <div class="lg:pt-12 pt-6 w-full md:w-4/12 px-4 text-center">
-          <div
-            class="relative flex flex-col min-w-0 break-words bg-white w-full mb-8 shadow-lg rounded-lg"
-          >
-            <div class="px-4 py-5 flex-auto">
-              <div
-                class="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-lg rounded-full bg-red-400"
-              >
-                <i class="fas fa-award"></i>
-              </div>
-              <h6 class="text-xl font-semibold">Awarded Agency</h6>
-              <p class="mt-2 mb-4 text-blueGray-500">
-                Divide details about your product or agency work into parts. A
-                paragraph describing a feature will be enough.
-              </p>
-            </div>
-          </div>
-        </div>
 
-        <div class="w-full md:w-4/12 px-4 text-center">
-          <div
-            class="relative flex flex-col min-w-0 break-words bg-white w-full mb-8 shadow-lg rounded-lg"
-          >
-            <div class="px-4 py-5 flex-auto">
-              <div
-                class="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-lg rounded-full bg-lightBlue-400"
-              >
-                <i class="fas fa-retweet"></i>
-              </div>
-              <h6 class="text-xl font-semibold">Free Revisions</h6>
-              <p class="mt-2 mb-4 text-blueGray-500">
-                Keep you user engaged by providing meaningful information.
-                Remember that by this time, the user is curious.
-              </p>
-            </div>
-          </div>
-        </div>
 
-        <div class="pt-6 w-full md:w-4/12 px-4 text-center">
-          <div
-            class="relative flex flex-col min-w-0 break-words bg-white w-full mb-8 shadow-lg rounded-lg"
-          >
-            <div class="px-4 py-5 flex-auto">
-              <div
-                class="text-white p-3 text-center inline-flex items-center justify-center w-12 h-12 mb-5 shadow-lg rounded-full bg-emerald-400"
-              >
-                <i class="fas fa-fingerprint"></i>
-              </div>
-              <h6 class="text-xl font-semibold">Verified Company</h6>
-              <p class="mt-2 mb-4 text-blueGray-500">
-                Write a few lines about each one. A paragraph describing a
-                feature will be enough. Keep you user engaged!
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="flex flex-wrap justify-center text-center mb-12">
-        <div class="w-full lg:w-6/12 px-4">
-          <h2 class="text-4xl font-semibold text-white">Here are our heroes</h2>
-          <p class="text-lg leading-relaxed m-4 text-blueGray-500">
-            According to the National Oceanic and Atmospheric Administration,
-            Ted, Scambos, NSIDClead scentist, puts the potentially record
-            maximum.
-          </p>
-        </div>
-      </div>
       <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-200">
         <div class="flex-auto p-5 lg:p-10">
           <h4 class="text-2xl font-semibold">Product Information</h4>
@@ -132,24 +48,26 @@
             Complete this form and we will get back to you in 24 hours.
           </p>
 
-            <div class="flex flex-wrap">
-              <div class="w-full">
-                <ul class="flex mb-0 list-none flex-wrap pt-3 pb-4 flex-row">
-                  <li class="-mb-px mr-2 last:mr-0 flex-auto text-center">
-                    <a class="text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal" (click)="toggleTabs(1)"
-                      [ngClass]="{'text-blueGray-600 bg-white': openTab !== 1, 'text-white bg-blueGray-600': openTab === 1}">
-                      Sale
-                    </a>
-                  </li>
-                  <li class="-mb-px mr-2 last:mr-0 flex-auto text-center">
-                    <a class="text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal" (click)="toggleTabs(2)"
-                      [ngClass]="{'text-blueGray-600 bg-white': openTab !== 2, 'text-white bg-blueGray-600': openTab === 2}">
-                      Rent
-                    </a>
-                  </li>
-                </ul>
-                <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
-                  <!-- <div class="px-4 py-5 flex-auto">
+          <div class="flex flex-wrap">
+            <div class="w-full">
+              <ul class="flex mb-0 list-none flex-wrap pt-3 pb-4 flex-row">
+                <li class="-mb-px mr-2 last:mr-0 flex-auto text-center">
+                  <a class="text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal"
+                    (click)="toggleTabs(1)"
+                    [ngClass]="{'text-blueGray-600 bg-white': openTab !== 1, 'text-white bg-blueGray-600': openTab === 1}">
+                    Sale
+                  </a>
+                </li>
+                <li class="-mb-px mr-2 last:mr-0 flex-auto text-center">
+                  <a class="text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal"
+                    (click)="toggleTabs(2)"
+                    [ngClass]="{'text-blueGray-600 bg-white': openTab !== 2, 'text-white bg-blueGray-600': openTab === 2}">
+                    Rent
+                  </a>
+                </li>
+              </ul>
+              <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
+                <!-- <div class="px-4 py-5 flex-auto">
                     <div class="tab-content tab-space">
                       <div [ngClass]="{'hidden': openTab !== 1, 'block': openTab === 1}">
                         <p>
@@ -167,66 +85,78 @@
                       </div>
                     </div>
                   </div> -->
-                </div>
               </div>
             </div>
+          </div>
 
-            <div class="relative w-full mb-3 mt-1">
-              <label for="wardsDropdown" class="block uppercase text-blueGray-600 text-xs font-bold mb-2">Category</label>
-              <select id="wardsDropdown" [(ngModel)]="selectedCategoryId" (change)="onDropdownCategoryChange($event)" placeholder="xinchao" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
-                <option *ngFor="let category of categorys" [value]="category.id">{{category.name}}</option>
+          <div class="relative w-full mb-3 mt-1">
+            <label for="wardsDropdown" class="block uppercase text-blueGray-600 text-xs font-bold mb-2">Category</label>
+            <select id="wardsDropdown" [(ngModel)]="selectedCategoryId" (change)="onDropdownCategoryChange($event)"
+              placeholder="xinchao"
+              class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
+              <option *ngFor="let category of categorys" [value]="category.id">{{category.name}}</option>
 
+            </select>
+          </div>
+
+          <div class="relative w-full mb-3 flex flex-wrap justify-center text-left">
+            <div class="w-full lg:w-6/12 pr-1">
+              <label for="districtDropdown"
+                class="block uppercase text-blueGray-600 text-xs font-bold mb-2">District</label>
+              <select *ngIf="!isDistrictLoading" id="districtDropdown" [(ngModel)]="selectedDistrictId"
+                (change)="onDropdownDistrictChange($event)"
+                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
+                <option *ngFor="let district of districts" [value]="district.id">{{district.name}}</option>
               </select>
+              <div *ngIf="isDistrictLoading" id="districtDropdown"
+                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
+                <app-loading [isLoading]="isDistrictLoading"></app-loading>
+              </div>
             </div>
-
-            <div class="relative w-full mb-3 flex flex-wrap justify-center text-left">
-              <div class="w-full lg:w-6/12 pr-1">
-                <label for="districtDropdown" class="block uppercase text-blueGray-600 text-xs font-bold mb-2">District</label>
-                <select *ngIf="!isDistrictLoading" id="districtDropdown" [(ngModel)]="selectedDistrictId" (change)="onDropdownDistrictChange($event)" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
-                  <option *ngFor = "let district of districts"  [value]="district.id" >{{district.name}}</option>
-                </select>
-                <div *ngIf="isDistrictLoading" id="districtDropdown" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
-                  <app-loading [isLoading]="isDistrictLoading"></app-loading>
-                </div>
+            <div class="w-full lg:w-6/12 pl-1">
+              <label for="wardsDropdown" class="block uppercase text-blueGray-600 text-xs font-bold mb-2">Wards</label>
+              <select *ngIf="!isWardLoading" id="wardsDropdown" [(ngModel)]="selectedWardId"
+                (change)="onDropdownWardChange($event)"
+                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
+                <option *ngFor="let ward of wards" [value]="ward.id">{{ward.name}}</option>
+              </select>
+              <div *ngIf="isWardLoading" id="districtDropdown"
+                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
+                <app-loading [isLoading]="isWardLoading"></app-loading>
               </div>
-              <div class="w-full lg:w-6/12 pl-1">
-                <label for="wardsDropdown" class="block uppercase text-blueGray-600 text-xs font-bold mb-2">Wards</label>
-                <select *ngIf="!isWardLoading" id="wardsDropdown" [(ngModel)]="selectedWardId" (change)="onDropdownWardChange($event)" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
-                  <option *ngFor = "let ward of wards"  [value]="ward.id" >{{ward.name}}</option>
-                </select>
-                <div *ngIf="isWardLoading" id="districtDropdown" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
-                  <app-loading [isLoading]="isWardLoading"></app-loading>
-                </div>
-              </div>
+            </div>
           </div>
 
 
-            <div class="relative w-full mb-3 flex flex-wrap justify-center text-left">
-              <div class="w-full lg:w-6/12 pr-1">
-                <label for="countries" class="block uppercase text-blueGray-600 text-xs font-bold mb-2">Street</label>
-                <select *ngIf="!isStreetLoading" id="streetDropdown" [(ngModel)]="selectedStreetId" (change)="onDropdownStreetChange($event)" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
-                  <option *ngFor = "let street of streets" [value]="street.id" >{{street.name}}</option>
-                </select>
-                <div *ngIf="isStreetLoading" id="districtDropdown" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
-                  <app-loading [isLoading]="isStreetLoading"></app-loading>
-                </div>
+          <div class="relative w-full mb-3 flex flex-wrap justify-center text-left">
+            <div class="w-full lg:w-6/12 pr-1">
+              <label for="countries" class="block uppercase text-blueGray-600 text-xs font-bold mb-2">Street</label>
+              <select *ngIf="!isStreetLoading" id="streetDropdown" [(ngModel)]="selectedStreetId"
+                (change)="onDropdownStreetChange($event)"
+                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
+                <option *ngFor="let street of streets" [value]="street.id">{{street.name}}</option>
+              </select>
+              <div *ngIf="isStreetLoading" id="districtDropdown"
+                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
+                <app-loading [isLoading]="isStreetLoading"></app-loading>
               </div>
-              <div class="w-full lg:w-6/12 pl-1">
-                <label for="countries" class="block uppercase text-blueGray-600 text-xs font-bold mb-2">Address</label>
-                <input type="text" [(ngModel)]="selectedAddress" placeholder="Regular Input" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full "/>
-              </div>
+            </div>
+            <div class="w-full lg:w-6/12 pl-1">
+              <label for="countries" class="block uppercase text-blueGray-600 text-xs font-bold mb-2">Address</label>
+              <input type="text" [(ngModel)]="selectedAddress" placeholder="Regular Input"
+                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full " />
+            </div>
           </div>
           <label for="districtDropdown" class="block uppercase text-blueGray-600 text-xs font-bold mb-2">Map</label>
           <div class="w-full h-12 inline-block">
-            <app-map-example ></app-map-example>
+            <app-map-example></app-map-example>
           </div>
 
           <div class="relative w-full mb-3 mt-8">
             <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="title">
               Title
             </label>
-            <input type="text"
-            [(ngModel)]="title"
+            <input type="text" [(ngModel)]="title"
               class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
               placeholder="Title" />
           </div>
@@ -260,7 +190,7 @@
                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                 placeholder="Title" />
             </div>
-            <div class="w-full lg:w-6/12 pl-1" >
+            <div class="w-full lg:w-6/12 pl-1">
               <div class="tab-content tab-space">
                 <div [ngClass]="{'hidden': openTab !== 1, 'block': openTab === 1}">
                   <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="title">
@@ -278,12 +208,12 @@
                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                 placeholder="Title" />
             </div>
-        </div>
+          </div>
 
 
-              <div class="relative w-full mb-3 flex flex-wrap justify-center text-left">
-                <div class="w-full lg:w-6/12 pr-1">
-                  <!-- <div class="col-span-2">
+          <div class="relative w-full mb-3 flex flex-wrap justify-center text-left">
+            <div class="w-full lg:w-6/12 pr-1">
+              <!-- <div class="col-span-2">
                     <label for="cover-photo" class="block text-xs font-medium leading-6">Images</label>
                     <div class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
                       <div class="text-center">
@@ -301,64 +231,93 @@
                       </div>
                     </div>
                   </div> -->
-                  <div class="flex items-center justify-center w-full">
-                    <label for="dropzone-file" class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                        <div class="flex flex-col items-center justify-center pt-5 pb-6">
-                            <svg aria-hidden="true" class="w-10 h-10 mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
-                            <p class="mb-2 text-sm text-gray-500 dark:text-gray-400"><span class="font-semibold">Click to upload</span> or drag and drop</p>
-                            <p class="text-xs text-gray-500 dark:text-gray-400">SVG, PNG, JPG or GIF (MAX. 800x400px)</p>
-                        </div>
-                        <input id="dropzone-file" type="file" class="hidden" />
-                    </label>
-                </div>
-                </div>
-                <div class="w-full lg:w-6/12 pl-1">
-                  <label for="wardsDropdown" class="block uppercase text-blueGray-600 text-xs font-bold mb-2">Direction</label>
-                  <select [(ngModel)]="selectedDirectionId" id="wardsDropdown"  class="border-0 px-3 py-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
-                    <option *ngFor="let direction of directions; let i = index" selected value={{i}}>{{direction| translate}}</option>
-
-                  </select>
-
-                  <label for="wardsDropdown" class="block uppercase text-blueGray-600 mt-2 text-xs font-bold mb-2">Interior</label>
-                  <select [(ngModel)]="selectedInterior"  id="wardsDropdown"  class="border-0 px-3 py-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
-                    <option selected value="true">{{'true'| translate}}</option>
-                    <option value="false">{{'false'| translate}}</option>
-                    <option *ngFor="let interior of interiors; let i = index" selected value={{i}}>{{interior| translate}}</option>
-                  </select>
-
-                  <label for="wardsDropdown" class="block uppercase text-blueGray-600 mt-2 text-xs font-bold mb-2">Juridical</label>
-                  <select [(ngModel)]="selectedJuridical"  id="wardsDropdown"  class="border-0 px-3 py-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
-                    <option *ngFor="let juridical of juridicals; let i = index" selected value={{i}}>{{juridical| translate}}</option>
-                  </select>
-
-                  <label class="block uppercase text-blueGray-600 mt-2 text-xs font-bold mb-2" htmlFor="title">
-                    Frontage Area
-                  </label>
-                  <input type="text"
-                    class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                    placeholder="Title" />
-                </div>
+              <div class="flex items-center justify-center w-full">
+                <label for="dropzone-file"
+                  class="flex flex-col items-center justify-center w-full h-64 border-2 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
+                  <div class="flex flex-col items-center justify-center ">
+                    <div class="mt-10 mb-10 text-center">
+                      <h2 class="text-2xl font-semibold mb-1">Upload your files</h2>
+                      <p class="text-xs text-gray-500">File should be of format .mp4, .avi, .mov or .mkv</p>
+                    </div>
+                    <form action="#" class="relative w-4/5  max-w-xs mb-10 rounded-lg shadow-inner">
+                      <input type="file" id="file-upload" class="hidden">
+                      <label for="file-upload"
+                        class="z-20 flex flex-col-reverse items-center justify-center w-full h-full cursor-pointer">
+                        <p class="z-10 text-xs font-light text-center text-gray-500">Drag & Drop your files here</p>
+                        <svg class="z-10 w-8 h-8 text-indigo-400" fill="currentColor" viewBox="0 0 20 20"
+                          xmlns="http://www.w3.org/2000/svg">
+                          <path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"></path>
+                        </svg>
+                      </label>
+                    </form>
+                  </div>
+                  <input id="dropzone-file" type="file" class="hidden" multiple="true" />
+                </label>
+              </div>
             </div>
+            <div class="w-full lg:w-6/12 pl-1">
+              <label for="wardsDropdown"
+                class="block uppercase text-blueGray-600 text-xs font-bold mb-2">Direction</label>
+              <select [(ngModel)]="selectedDirectionId" id="wardsDropdown"
+                class="border-0 px-3 py-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
+                <option *ngFor="let direction of directions; let i = index" selected value={{i}}>{{direction|
+                  translate}}</option>
 
-            <div class="relative w-full mb-3 flex flex-wrap justify-center text-left">
-              <div class="w-full lg:w-6/12 pr-1">
-                <label for="countries" class="block uppercase text-blueGray-600 text-xs font-bold mb-2">Way in(m²)</label>
-                <input type="text" placeholder="Regular Input" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full "/>
-              </div>
-              <div class="w-full lg:w-6/12 pl-1">
-                <label for="countries" class="block uppercase text-blueGray-600 text-xs font-bold mb-2">Number of floor</label>
-                <input type="text" placeholder="Regular Input" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full "/>
-              </div>
+              </select>
+
+              <label for="wardsDropdown"
+                class="block uppercase text-blueGray-600 mt-2 text-xs font-bold mb-2">Interior</label>
+              <select [(ngModel)]="selectedInterior" id="wardsDropdown"
+                class="border-0 px-3 py-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
+                <option selected value="true">{{'true'| translate}}</option>
+                <option value="false">{{'false'| translate}}</option>
+                <option *ngFor="let interior of interiors; let i = index" selected value={{i}}>{{interior| translate}}
+                </option>
+              </select>
+
+              <label for="wardsDropdown"
+                class="block uppercase text-blueGray-600 mt-2 text-xs font-bold mb-2">Juridical</label>
+              <select [(ngModel)]="selectedJuridical" id="wardsDropdown"
+                class="border-0 px-3 py-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
+                <option *ngFor="let juridical of juridicals; let i = index" selected value={{i}}>{{juridical|
+                  translate}}</option>
+              </select>
+
+              <label class="block uppercase text-blueGray-600 mt-2 text-xs font-bold mb-2" htmlFor="title">
+                Frontage Area
+              </label>
+              <input type="text"
+                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+                placeholder="Title" />
+            </div>
           </div>
-            <div class="relative w-full mb-3 flex flex-wrap justify-center text-left">
-              <div class="w-full lg:w-6/12 pr-1">
-                <label for="countries" class="block uppercase text-blueGray-600 text-xs font-bold mb-2">Number of Bed</label>
-                <input type="text" placeholder="Regular Input" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full "/>
-              </div>
-              <div class="w-full lg:w-6/12 pl-1">
-                <label for="countries" class="block uppercase text-blueGray-600 text-xs font-bold mb-2">Number of Bath</label>
-                <input type="text" placeholder="Regular Input" class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full "/>
-              </div>
+
+          <div class="relative w-full mb-3 flex flex-wrap justify-center text-left">
+            <div class="w-full lg:w-6/12 pr-1">
+              <label for="countries" class="block uppercase text-blueGray-600 text-xs font-bold mb-2">Way in(m²)</label>
+              <input type="text" placeholder="Regular Input"
+                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full " />
+            </div>
+            <div class="w-full lg:w-6/12 pl-1">
+              <label for="countries" class="block uppercase text-blueGray-600 text-xs font-bold mb-2">Number of
+                floor</label>
+              <input type="text" placeholder="Regular Input"
+                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full " />
+            </div>
+          </div>
+          <div class="relative w-full mb-3 flex flex-wrap justify-center text-left">
+            <div class="w-full lg:w-6/12 pr-1">
+              <label for="countries" class="block uppercase text-blueGray-600 text-xs font-bold mb-2">Number of
+                Bed</label>
+              <input type="text" placeholder="Regular Input"
+                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full " />
+            </div>
+            <div class="w-full lg:w-6/12 pl-1">
+              <label for="countries" class="block uppercase text-blueGray-600 text-xs font-bold mb-2">Number of
+                Bath</label>
+              <input type="text" placeholder="Regular Input"
+                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full " />
+            </div>
           </div>
 
           <div class="w-full flex justify-center text-center mt-6">
@@ -374,7 +333,7 @@
           </div>
         </div>
       </div>
-
+      </div>
     </div>
   </section>
 

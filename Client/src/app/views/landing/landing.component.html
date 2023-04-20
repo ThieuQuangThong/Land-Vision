@@ -1,4 +1,8 @@
-<app-auth-navbar></app-auth-navbar>
+<div class="navbar no-underline">
+    <app-auth-navbar></app-auth-navbar>
+
+</div>
+
 <main>
     <div class="relative pt-16 pb-32 flex content-center items-center justify-center min-h-screen-75">
         <div class="absolute top-0 w-full h-full bg-center bg-cover" style="
@@ -51,10 +55,6 @@
               Filters
               </p>
 
-              <button class="px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-800 text-sm font-medium rounded-md">
-              Reset Filter
-              </button>
-            </div> -->
 
                         <div>
                             <div class="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-7 gap-4 mt-1">
@@ -130,61 +130,61 @@
             </div>
           </div>
         </div> -->
-            <div class="mt-6 w-full">
-                <span class="font-medium">BROWSE HOT OFFERS</span>
-                <p class="font-bold text-3xl">Lastest Properties</p>
-                <div class="flex flex-wrap items-center justify-center">
+                        <div class="mt-6 w-full">
+                            <span class="font-medium">BROWSE HOT OFFERS</span>
+                            <p class="font-bold text-3xl">Lastest Properties</p>
+                            <div class="flex flex-wrap items-center justify-center">
 
-                    <app-single-product *ngFor="let post of postRespone" [postItem]="post"></app-single-product>
-                </div>
-                <div class="w-full mt-7 flex flex-wrap items-center lg: justify-center">
-                    <button *ngIf="!isFullItem" (click)="loadMore()" class="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded-md shadow-md hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
-                        type="button">
+                                <app-single-product *ngFor="let post of postRespone" [postItem]="post"></app-single-product>
+                            </div>
+                            <div class="w-full mt-7 flex flex-wrap items-center lg: justify-center">
+                                <button *ngIf="!isFullItem" (click)="loadMore()" class="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded-md shadow-md hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                    type="button">
                         {{'LoadMore' | translate}}
                     </button>
-                </div>
-            </div>
+                            </div>
+                        </div>
 
 
 
-            <div class="flex flex-wrap items-center mt-32">
-                <div class="w-full md:w-5/12 px-4 mr-auto ml-auto">
-                    <div class="text-blueGray-500 p-3 text-center inline-flex items-center justify-center w-16 h-16 mb-6 shadow-lg rounded-full bg-white">
-                        <i class="fas fa-user-friends text-xl"></i>
-                    </div>
-                    <h3 class="text-3xl mb-2 font-semibold leading-normal">
-                        Working with us is a pleasure
-                    </h3>
-                    <p class="text-lg font-light leading-relaxed mt-4 mb-4 text-blueGray-600">
-                        Don't let your uses guess by attaching tooltips and popoves to any element. Just make sure you enable them first via JavaScript.
-                    </p>
-                    <p class="text-lg font-light leading-relaxed mt-0 mb-4 text-blueGray-600">
-                        The kit comes with three pre-built pages to help you get started faster. You can change the text and images and you're good to go. Just make sure you enable them first via JavaScript.
-                    </p>
-                    <a [routerLink]="['/']" class="font-bold text-blueGray-700 mt-8">
+                        <div class="flex flex-wrap items-center mt-32">
+                            <div class="w-full md:w-5/12 px-4 mr-auto ml-auto">
+                                <div class="text-blueGray-500 p-3 text-center inline-flex items-center justify-center w-16 h-16 mb-6 shadow-lg rounded-full bg-white">
+                                    <i class="fas fa-user-friends text-xl"></i>
+                                </div>
+                                <h3 class="text-3xl mb-2 font-semibold leading-normal">
+                                    Working with us is a pleasure
+                                </h3>
+                                <p class="text-lg font-light leading-relaxed mt-4 mb-4 text-blueGray-600">
+                                    Don't let your uses guess by attaching tooltips and popoves to any element. Just make sure you enable them first via JavaScript.
+                                </p>
+                                <p class="text-lg font-light leading-relaxed mt-0 mb-4 text-blueGray-600">
+                                    The kit comes with three pre-built pages to help you get started faster. You can change the text and images and you're good to go. Just make sure you enable them first via JavaScript.
+                                </p>
+                                <a [routerLink]="['/']" class="font-bold text-blueGray-700 mt-8">
             Check Notus Angular!
           </a>
-                </div>
+                            </div>
 
-                <div class="w-full md:w-4/12 px-4 mr-auto ml-auto">
-                    <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-red-600">
-                        <img alt="..." src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1051&q=80" class="w-full align-middle rounded-t-lg" />
-                        <blockquote class="relative p-8 mb-4">
-                            <svg preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 583 95" class="absolute left-0 w-full block h-95-px -top-94-px">
+                            <div class="w-full md:w-4/12 px-4 mr-auto ml-auto">
+                                <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-red-600">
+                                    <img alt="..." src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1051&q=80" class="w-full align-middle rounded-t-lg" />
+                                    <blockquote class="relative p-8 mb-4">
+                                        <svg preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 583 95" class="absolute left-0 w-full block h-95-px -top-94-px">
                 <polygon
                   points="-30,95 583,95 583,65"
                   class="text-red-600 fill-current"
                 ></polygon>
               </svg>
-                            <h4 class="text-xl font-bold text-white">Top Notch Services</h4>
-                            <p class="text-md font-light mt-2 text-white">
-                                The Arctic Ocean freezes every winter and much of the sea-ice then thaws every summer, and that process will continue whatever happens.
-                            </p>
-                        </blockquote>
+                                        <h4 class="text-xl font-bold text-white">Top Notch Services</h4>
+                                        <p class="text-md font-light mt-2 text-white">
+                                            The Arctic Ocean freezes every winter and much of the sea-ice then thaws every summer, and that process will continue whatever happens.
+                                        </p>
+                                    </blockquote>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </div>
     </section>
 
     <section class="relative py-20">

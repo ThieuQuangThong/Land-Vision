@@ -76,7 +76,7 @@ namespace Land_Vision.Controllers
         /// </summary>
         [HttpPost("getSearchedPost/{skipCount}&{maxResultCount}")]
         [ProducesResponseType(200, Type = typeof(PaginationRespone<PostDto>))]
-        public async Task<ActionResult<PaginationRespone<PostDto>>> GetPosts(int skipCount, int maxResultCount, [FromBody] PostSearchDto postSearchDto)
+        public async Task<ActionResult<PaginationRespone<PostDto>>> GetPostsBySearchCondition(int skipCount, int maxResultCount,[FromBody] PostSearchDto postSearchDto)
         {
             if (!ModelState.IsValid)
             {
