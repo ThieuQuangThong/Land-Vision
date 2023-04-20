@@ -77,16 +77,6 @@
             </div>
           </div>
         </div>
-
-        <div class="mb-1">
-          <label for="email" class="block mb-1 text-xs font-medium text-[#002D74]">Your Identity Number</label>
-          <input type="text" id="name" formControlName="identityNumber" placeholder="Your identity number" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:[#002D74]e-500
-           focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400" [ngClass]="{ 'is-invalid': submitted && f['identityNumber'].errors }">
-
-           <div *ngIf="submitted && f['identityNumber'].errors" class="invalid-feedback">
-            <div *ngIf="f['identityNumber'].errors['required']">Identity number is required</div>
-          </div>
-        </div>
         <label  class="block text-sm font-medium text-[#002D74]">Your CCCD ID card</label>
 
         <div class="mb-1 gap-1 flex">
