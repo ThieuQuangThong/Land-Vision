@@ -42,15 +42,16 @@ export class NearByServiceService {
             const result = this.calculate(currentPos, positionModel)
             const placeModel: PlaceModel = {
               place: x,
-              distance: Number(result.distance.toFixed(0)),
+              distance: Number(result.distance.toFixed(2)),
               goTime: Number(result.goTime.toFixed(0)),
               position: currentPos,
 
             }
-            finalResults.push(placeModel)
+            if(placeModel.distance <= limitDistance){
+              finalResults.push(placeModel)
+            }
           }
         )
-        finalResults = finalResults.filter(item => item.distance <= limitDistance)
       }
     });
     return finalResults;

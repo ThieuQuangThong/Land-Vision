@@ -9,7 +9,6 @@ import { TranslateService } from "@ngx-translate/core";
 export class AuthNavbarComponent implements OnInit {
   navbarOpen = false;
   @Output() messageEvent = new EventEmitter<any>();
-  @ViewChild('auth-nav') nav!: ElementRef;
   constructor(private elementRef: ElementRef, public translate: TranslateService,public router: Router) {}
 
   @HostListener('window:resize')
