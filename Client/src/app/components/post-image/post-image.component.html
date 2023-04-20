@@ -1,0 +1,33 @@
+<div style="display: flex; flex-direction: column; height: 100%;" >
+  <div style=" flex: 5" >
+    <div style="padding: 0 15px ;display: flex; justify-content:space-between; align-items: center;height: 100%;width: 100%;"
+    [ngStyle]="{'background-image': 'url('+ images[currentImagePos] +' )'}">
+      <div style="border-radius: 5px; background-color: aliceblue; height: 35px; width: 35px " (click)="previousImage()">
+        <svg class="h-8 w-8 text-black"
+         width="24" height="24"
+         viewBox="0 0 24 24"
+          stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+          <path stroke="none" d="M0 0h24v24H0z"/>  <line x1="5" y1="12" x2="19" y2="12" />  <line x1="5" y1="12" x2="11" y2="18" />  <line x1="5" y1="12" x2="11" y2="6" /></svg>
+      </div>
+      <div style="border-radius: 5px; background-color: aliceblue; height: 35px; width: 35px" (click)="afterImage()">
+        <svg class="h-8 w-8 text-black"  width="24" height="24" viewBox="0 0 24 24"
+        stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round"
+        stroke-linejoin="round">  <path stroke="none" d="M0 0h24v24H0z"/>
+        <line x1="5" y1="12" x2="19" y2="12" />  <line x1="13" y1="18" x2="19" y2="12" />
+          <line x1="13" y1="6" x2="19" y2="12" /></svg>
+      </div>
+    </div>
+  </div>
+  <div id="imageThumnailContain" style="position: relative;flex: 1; align-items: center; justify-content: center; overflow: hidden;">
+    <div id="imageThumnails" style="position: absolute;height: 100%; display: flex; align-items: center; padding: 0 5px;"
+    [style.left]="distanceString" (dragstart)="getFirstPos($event)" (drag)="moveImages($event)" (dragend)= "endDrag($event)">
+      <div *ngFor="let image of images;let i = index "
+      [style.border]="i === currentImagePos ? '3px solid' : ''"
+      style="display: inline ;float: left ;height: 80%; width: 100px; background-color: red;
+       border-radius: 10px; background-image: url('{{image}}');
+       background-size: cover; margin: 0px 5px;"
+       (click) ="chooseImage(i)"></div>
+    </div>
+
+  </div>
+</div>
