@@ -68,7 +68,7 @@ export class FileUploadComponent implements OnInit {
          this.authenIdenCard.checkIdentifyCard(response)
          .subscribe(
           inforRes => {
-            this.authenIdenCard.numberOfIdCard =  inforRes.data[0].id;
+            this.authenIdenCard.numberOfIdCard = inforRes.data[0].id;
             this.imageUrl1 = response;
             this.fileService.imageFile1 = response;
 
@@ -76,7 +76,7 @@ export class FileUploadComponent implements OnInit {
           erorr =>{
               console.log(erorr.error.errorMessage);
 
-            AlertService.setAlertModel("danger",'sfefes')
+            AlertService.setAlertModel("danger",erorr.error.errorMessage)
           }
          )
 
