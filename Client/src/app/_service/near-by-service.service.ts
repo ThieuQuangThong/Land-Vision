@@ -35,15 +35,17 @@ export class NearByServiceService {
       if (status == google.maps.places.PlacesServiceStatus.OK) {
         results.forEach(
           x => {
-            const result = this.calculate({
+            const currentPos: PositionModel = {
               latitude: x.geometry?.location.lat().toString()!,
               longtitude: x.geometry?.location.lng().toString()!,
-            },
-            positionModel,)
+            }
+            const result = this.calculate(currentPos, positionModel)
             const placeModel: PlaceModel = {
               place: x,
               distance: Number(result.distance.toFixed(0)),
               goTime: Number(result.goTime.toFixed(0)),
+              position: currentPos,
+
             }
             finalResults.push(placeModel)
           }
