@@ -20,7 +20,6 @@ export class RelativeBuildingTabComponent {
     this.openTab = $tabNumber;
     const lat = 16.008983808041833;
     const lng = 108.20735225558515;
-    this.currentBuildingSearchs = this.nearByServiceService.onCloseLocation({latitude:lat.toString(), longtitude: lng.toString()},2, this.buildingSearch[$tabNumber])
-
+    this.currentBuildingSearchs = this.nearByServiceService.onCloseLocation({latitude:lat.toString(), longtitude: lng.toString()},2, this.buildingSearch[$tabNumber-1])
   }
 }
