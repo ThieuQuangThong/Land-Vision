@@ -55,111 +55,6 @@ export class MapExampleComponent implements OnInit  {
 
   constructor() {}
 
-  // async initializeMap() {
-  //   try {
-  //     const [
-  //       EsriMap,
-  //       EsriMapView,
-  //       Graphic,
-  //       GraphicsLayer,
-  //       SimpleMarkerSymbol,
-  //       SimpleLineSymbol,
-  //       SimpleFillSymbol,
-  //       Color,
-  //       Polygon
-  //     ] = await loadModules([
-  //       'esri/Map',
-  //       'esri/views/MapView',
-  //       'esri/Graphic',
-  //       'esri/layers/GraphicsLayer',
-  //       'esri/symbols/SimpleMarkerSymbol',
-  //       'esri/symbols/SimpleLineSymbol',
-  //       'esri/symbols/SimpleFillSymbol',
-  //       'esri/Color',
-  //       'esri/geometry/Polygon'
-  //     ]);
-
-  //     const mapProperties: esri.MapProperties = {
-  //       basemap: this._basemap
-  //     };
-  //     const map: esri.Map = new EsriMap(mapProperties);
-
-  //     const graphicsLayer = new GraphicsLayer();
-  //     map.add(graphicsLayer);
-
-  //     const polygonSymbol = new SimpleFillSymbol({
-  //       color: [0, 0, 255, 0.5],
-  //       outline: {
-  //         color: [0, 0, 255],
-  //         width: 1
-  //       }
-  //     });
-
-  //     const polygonGraphic = new Graphic({
-  //       symbol: polygonSymbol
-  //     });
-
-  //     graphicsLayer.add(polygonGraphic);
-
-  //     const mapViewProperties: esri.MapViewProperties = {
-  //       container: this.mapViewEl.nativeElement,
-  //       center: this._center,
-  //       zoom: this._zoom,
-  //       map: map
-  //     };
-  //     const mapView: esri.MapView = new EsriMapView(mapViewProperties);
-
-  //     let vertices: number[][] = [];
-  //     console.log("loaded");
-
-  //     mapView.on("click", (event: esri.ViewClickEvent) => {
-  //       const point = event.mapPoint.clone();
-  //       vertices.push([point.longitude, point.latitude]);
-  //       console.log("sau khi push vo verices:"+vertices);
-
-  //       const polygon = new Polygon({
-  //         rings: [vertices],
-  //         spatialReference: {
-  //           wkid: 4326
-  //         }
-  //       });
-
-  //       polygonGraphic.geometry = polygon;
-  //     });
-
-  //     mapView.on("double-click", (event: esri.ViewDoubleClickEvent) => {
-  //       if (vertices.length >= 3) {
-  //             console.log("polygon:"+vertices);
-  //             // Create a new polygon graphic and add it to the graphics layer
-  //             const polygon = new Polygon({
-  //               rings: [vertices],
-  //               spatialReference: {
-  //                 wkid: 4326
-  //               }
-  //             });
-
-  //         const graphic = new Graphic({
-  //           geometry: polygon,
-  //           symbol: polygonSymbol
-  //         });
-
-  //         graphicsLayer.add(graphic);
-
-  //         // Clear the vertices array for the next polygon
-  //         vertices = [];
-  //       }
-  //     }
-  //     // }
-  //     );
-
-  //     mapView.when(() => {
-  //       this.mapLoaded.emit(true);
-  //     });
-  //   } catch (error) {
-  //     alert('We have an error: ' + error);
-  //   }
-  // }
-
   async initializeMap() {
     try {
       const [
@@ -167,33 +62,25 @@ export class MapExampleComponent implements OnInit  {
         EsriMapView,
         Graphic,
         GraphicsLayer,
-        SimpleMarkerSymbol,
-        SimpleLineSymbol,
         SimpleFillSymbol,
-        Color,
-        Polygon,
-        Compass,
+        Sketch,
         Locate,
         BasemapGallery,
         Fullscreen,
-        // CoordinateConversion,
         Search,
+        webMercatorUtils
       ] = await loadModules([
         'esri/Map',
         'esri/views/MapView',
         'esri/Graphic',
         'esri/layers/GraphicsLayer',
-        'esri/symbols/SimpleMarkerSymbol',
-        'esri/symbols/SimpleLineSymbol',
         'esri/symbols/SimpleFillSymbol',
-        'esri/Color',
-        'esri/geometry/Polygon',
-        'esri/widgets/Compass',
+        'esri/widgets/Sketch',
         'esri/widgets/Locate',
         'esri/widgets/BasemapGallery',
         "esri/widgets/Fullscreen",
-        // 'esri/widgets/CoordinateConversion',
         'esri/widgets/Search',
+        'esri/geometry/support/webMercatorUtils'
       ]);
 
       const mapProperties: esri.MapProperties = {
@@ -226,22 +113,6 @@ export class MapExampleComponent implements OnInit  {
       };
       const mapView: esri.MapView = new EsriMapView(mapViewProperties);
 
-      let vertices: number[][] = [];
-
-      // const clearButton = document.getElementById('Polygon');
-      // clearButton!.addEventListener('click', () => {
-      //   vertices = [];
-      //   polygonGraphic.geometry = null;
-      //   graphicsLayer.removeMany(graphicsLayer.graphics.toArray());
-      // });
-
-
-      const compass = new Compass({
-        view: mapView
-      });
-
-      mapView.ui.add(compass, 'top-left');
-
       const locate = new Locate({
         view: mapView
       });
@@ -252,62 +123,63 @@ export class MapExampleComponent implements OnInit  {
         view: mapView
       });
 
-      mapView.ui.add(fullscreen, "top-right");
+      mapView.ui.add(fullscreen, "bottom-right");
 
 
       const basemapGallery = new BasemapGallery({
         view: mapView
       });
 
-      mapView.ui.add(basemapGallery, "top-right");
+      mapView.ui.add(basemapGallery, "bottom-left");
 
-      // const coordinateConversion = new CoordinateConversion({
-      //   view: mapView
-      // });
-
-      // mapView.ui.add(coordinateConversion, "top-right");
-
-
-      const search = new Search({
-        view: mapView
-      });
-
-      mapView.ui.add(search, "top-right");
-
-
-
-
-
-      mapView.on('click', (event: esri.ViewClickEvent) => {
-        const point = event.mapPoint.clone();
-        vertices.push([point.longitude, point.latitude]);
-        console.log('sau khi push vo verices:', vertices);
-
-        const polygon = new Polygon({
-          rings: [vertices],
-          spatialReference: {
-            wkid: 4326
-          }
+      mapView.when(() => {
+        const sketch = new Sketch({
+          layer: graphicsLayer,
+          view: mapView,
+          // graphic will be selected as soon as it is created
+          creationMode: "update"
         });
 
-        polygonGraphic.geometry = polygon;
-      });
+        mapView.ui.add(sketch, "top-right");
 
-      mapView.on("double-click", (event: esri.ViewDoubleClickEvent) => {
-        if (vertices.length > 0) {
-          vertices.pop();
+        const search = new Search({
+          view: mapView
+        });
 
-          const polygon = new Polygon({
-            rings: [vertices],
-            spatialReference: {
-              wkid: 4326
+        mapView.ui.add(search, "top-right");
+
+        sketch.on("create", (event: any) => {
+
+        if (event.state === "complete") {
+          const graphic: __esri.Graphic = event.graphic;
+          if (graphic.geometry.type === "polygon") {
+            const polygon: __esri.Polygon = graphic.geometry as __esri.Polygon;
+            const rings = polygon.rings;
+
+            // Chuyển đổi tọa độ từ EPSG: 3857 sang EPSG: 4326
+            const geographicRings = [];
+            for (let i = 0; i < rings.length; i++) {
+              const ring = rings[i];
+              const geographicRing = [];
+              for (let j = 0; j < ring.length; j++) {
+                const webMercatorPoint = {
+                  x: ring[j][0],
+                  y: ring[j][1]
+                };
+                const geographicPoint = webMercatorUtils.webMercatorToGeographic(webMercatorPoint);
+                geographicRing.push([geographicPoint.x, geographicPoint.y]);
+              }
+              geographicRings.push(geographicRing);
             }
-          });
-          polygonGraphic.geometry = polygon;
+
+            // In kết quả ra console
+            console.log(geographicRings);
+          }
         }
       });
 
-      mapView.when(() => {
+
+
         this.mapLoaded.emit(true);
       });
     } catch (error) {
