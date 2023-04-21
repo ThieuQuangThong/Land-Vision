@@ -60,6 +60,7 @@ export class MapExampleComponent implements OnInit  {
       const [
         EsriMap,
         EsriMapView,
+        Extent,
         Graphic,
         GraphicsLayer,
         SimpleFillSymbol,
@@ -72,6 +73,7 @@ export class MapExampleComponent implements OnInit  {
       ] = await loadModules([
         'esri/Map',
         'esri/views/MapView',
+        'esri/geometry/Extent',
         'esri/Graphic',
         'esri/layers/GraphicsLayer',
         'esri/symbols/SimpleFillSymbol',
@@ -99,6 +101,16 @@ export class MapExampleComponent implements OnInit  {
         }
       });
 
+      const extent = new Extent({
+        xmin: 108.07368447123736,
+        ymin: 15.976433319718469,
+        xmax: 108.32431008158854,
+        ymax: 16.131502117889013,
+        spatialReference: {
+          wkid: 4326
+        }
+      });
+
       const polygonGraphic = new Graphic({
         symbol: polygonSymbol
       });
@@ -109,7 +121,12 @@ export class MapExampleComponent implements OnInit  {
         container: this.mapViewEl.nativeElement,
         center: this._center,
         zoom: this._zoom,
-        map: map
+        map: map,
+        constraints: {
+          geometry: extent,
+          minScale: 500000,
+          maxScale: 2000
+        }
       };
       const mapView: esri.MapView = new EsriMapView(mapViewProperties);
 
