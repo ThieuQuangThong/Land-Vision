@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-post-image',
@@ -7,6 +7,7 @@ import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angula
 })
 export class PostImageComponent implements  OnInit {
 
+  @Input() isPost: boolean = false;
   currentImagePos: number = 0;
   currentDragImage: number = 0;
   startDragPos: number = 0;
@@ -61,8 +62,12 @@ export class PostImageComponent implements  OnInit {
 
   }
 
-  afterImage(){
+  deleteImage(i: number){
+    this.currentImagePos = 0;
+    this.images.splice(i,1);
+  }
 
+  afterImage(){
     if(this.currentImagePos+1 > this.images.length-1){
       this.currentImagePos = 0;
       this.distanNumber = 0
@@ -109,6 +114,7 @@ export class PostImageComponent implements  OnInit {
 
 }
   chooseImage(pos: number){
+
     this.currentImagePos = pos;
 
   }

@@ -101,6 +101,7 @@ import { InteriorTransformPipe } from './_pipes/interior-transform.pipe';
 import { RelativeBuildingTabComponent } from './components/relative-building-tab/relative-building-tab.component';
 import { DistanceTransferPipe } from './_pipes/distance-transfer.pipe';
 import { PostImageComponent } from './components/post-image/post-image.component';
+import { StopPropagationDirectiveService } from './_service/stopPropagationDirectiveService';
 
 
 @NgModule({
@@ -163,6 +164,7 @@ import { PostImageComponent } from './components/post-image/post-image.component
     RelativeBuildingTabComponent,
     DistanceTransferPipe,
     PostImageComponent,
+    StopPropagationDirectiveService
     // LoginComponent,
     // RegisterComponent,
   ],
