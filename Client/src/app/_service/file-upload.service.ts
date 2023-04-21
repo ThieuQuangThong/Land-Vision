@@ -52,10 +52,10 @@ export class FileUploadService {
     this.onUpload1()
   }
 
-  convertFileToUrl(file: File): Observable<string>{
+  convertFileToUrl(file: File): Observable<any>{
     const formData = new FormData();
     formData.append('formFile', file, file.name);
-    return this.http.post<string>(API_URL.CONVERT_FILE_IMAGE_TO_URL(), formData)
+    return this.http.post(API_URL.CONVERT_FILE_IMAGE_TO_URL(), formData,{responseType: 'text'})
   }
 
   convertEventTofile(event: Event): File {

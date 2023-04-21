@@ -1,7 +1,14 @@
-<div style="display: flex; flex-direction: column; height: 100%;" >
+<div style="display: flex; flex-direction: column; height: 100%; width: 100%;" >
   <div style=" flex: 5" >
-    <div style="padding: 0 15px ;display: flex; justify-content:space-between; align-items: center;height: 100%;width: 100%;"
+    <div style="position: relative; ;background-size: cover;padding: 0 15px ;display: flex; justify-content:space-between; align-items: center;height: 100%;width: 100%; background-repeat: no-repeat;"
     [ngStyle]="{'background-image': 'url('+ images[currentImagePos] +' )'}">
+      <div *ngIf="isPost" style="position: absolute; right: 7px; top: 7px;">
+        <label for="file-input">
+          <i *ngIf="!isImageLoading" class="fas fa-edit" style="color: #0c367e;font-size: 30px;"></i>
+          <app-loading [isLoading]="isImageLoading"></app-loading>
+        </label>
+        <input id="file-input" type="file" style="height: 1px; width: 1px; opacity: 0; " (change)="addImage($event)" />
+      </div>
       <div style="border-radius: 5px; background-color: aliceblue; height: 35px; width: 35px " (click)="previousImage()">
         <svg class="h-8 w-8 text-black"
          width="24" height="24"
@@ -23,7 +30,7 @@
     [style.left]="distanceString" (dragstart)="getFirstPos($event)" (drag)="moveImages($event)" (dragend)= "endDrag($event)">
       <div *ngFor="let image of images;let i = index "
       [style.border]="i === currentImagePos ? '3px solid' : ''"
-      style="display: inline ;float: left ;height: 80%; width: 100px; background-color: red;
+      style="background-repeat: no-repeat; object-fit: cover ; display: inline ;float: left ;height: 80%; width: 110px; background-color: red;
        border-radius: 10px; background-image: url('{{image}}');
        background-size: cover; margin: 0px 5px;"
        (click) ="chooseImage(i)">

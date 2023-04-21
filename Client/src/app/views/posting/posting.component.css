@@ -5,6 +5,10 @@
   padding:0;
   margin:0;
 }
+
+.number-input{
+  margin-bottom: 10px;
+}
 .primary-button {
   font-family: 'Ropa Sans', sans-serif;
      /* font-family: 'Valorant', sans-serif; */
