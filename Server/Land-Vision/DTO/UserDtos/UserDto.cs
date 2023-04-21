@@ -13,5 +13,7 @@ namespace Land_Vision.DTO.UserDtos
         public string Phone { get; set; } = string.Empty;
         public string Email { get; set; }
         public string Role { get; set; }
+        public bool isHide { get; set; } = false;
+
     }
 }

@@ -26,6 +26,7 @@ namespace Land_Vision.Models
 
         [Required]
         public string Email { get; set; }
+        public bool isHide { get; set; } = false;
 
         [Required]
         public new byte[] PasswordHash { get; set; }
@@ -38,7 +39,7 @@ namespace Land_Vision.Models
         public DateTime CodeExpires { get; set; }
 
         public bool EmailConfirmed { get; set; } = false;
-        
+
         public string? RefreshToken { get; set; }
 
         public DateTime RefreshTokenExpireTime { get; set; }
@@ -48,7 +49,7 @@ namespace Land_Vision.Models
 
         [Required]
         public Role Role { get; set; }
-        public Vip? Vip {get; set;}
+        public Vip? Vip { get; set; }
 
         public List<Post> Posts { get; set; }
     }

@@ -138,6 +138,21 @@ namespace Land_Vision.Repositories
             .CountAsync();
         }
 
+        public async Task<bool> HidePostAsync(int postId)
+        {
+            var post = await GetPostAsync(postId);
+            if (post.isHide == false)
+            {
+                post.isHide = true;
+            }
+            else
+            {
+                post.isHide = false;
+            }
+            await UpdatePostAsync(post);
+            return await SaveChangeAsync();
+        }
+
         public async Task<bool> IncreaseViewByPostIdAsync(int postId)
         {
             var post = await GetPostAsync(postId);
@@ -165,5 +180,6 @@ namespace Land_Vision.Repositories
             await UpdatePostAsync(post);
             return await SaveChangeAsync();
         }
+
     }
 }

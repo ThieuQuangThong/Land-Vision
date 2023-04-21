@@ -76,7 +76,7 @@ namespace Land_Vision.Controllers
         /// </summary>
         [HttpPost("getSearchedPost/{skipCount}&{maxResultCount}")]
         [ProducesResponseType(200, Type = typeof(PaginationRespone<PostDto>))]
-        public async Task<ActionResult<PaginationRespone<PostDto>>> GetPostsBySearchCondition(int skipCount, int maxResultCount,[FromBody] PostSearchDto postSearchDto)
+        public async Task<ActionResult<PaginationRespone<PostDto>>> GetPostsBySearchCondition(int skipCount, int maxResultCount, [FromBody] PostSearchDto postSearchDto)
         {
             if (!ModelState.IsValid)
             {
@@ -195,10 +195,10 @@ namespace Land_Vision.Controllers
         /// <summary>
         /// Update post
         /// </summary>
-        [HttpPut]
+        [HttpPut("{postId}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> UpdatePost([FromQuery] int postId, [FromBody] CreatePostPropertyDto postPropertyDto)
+        public async Task<IActionResult> UpdatePost(int postId, [FromBody] CreatePostPropertyDto postPropertyDto)
         {
             using var transaction = await _dbContext.Database.BeginTransactionAsync();
 
@@ -310,6 +310,35 @@ namespace Land_Vision.Controllers
             if (!await _postRepository.VerifyPostAsync(postId))
             {
                 ModelState.AddModelError("", "Something went wrong while Verifying");
+                return StatusCode(500, ModelState);
+            }
+            return Ok();
+        }
+
+        // Hide/Unhide Post
+        /// <summary>
+        /// Hide/Unhide post
+        /// </summary>
+        [HttpPut("hideUnhide/{postId}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> HideUnhidePost(int postId)
+        {
+
+            if (!await _postRepository.CheckIsPostExistByIdAsync(postId))
+            {
+                ModelState.AddModelError("", "Post is not exists");
+                return StatusCode(404, ModelState);
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (!await _postRepository.HidePostAsync(postId))
+            {
+                ModelState.AddModelError("", "Something went wrong while Hiding");
                 return StatusCode(500, ModelState);
             }
             return Ok();
