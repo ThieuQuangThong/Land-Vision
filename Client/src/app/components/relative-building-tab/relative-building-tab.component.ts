@@ -10,7 +10,7 @@ import { PlaceModel } from 'src/app/models/place-model';
 export class RelativeBuildingTabComponent {
   openTab = 1;
   icons: string[] =['fas fa-space-shuttle text-base mr-1','fas fa-cog text-base mr-1','fas fa-briefcase text-base mr-1','fas fa-briefcase text-base mr-1','fas fa-briefcase text-base mr-1','fas fa-briefcase text-base mr-1'];
-  texts: string[] = ['Schools','Markets','Parks','Hopitals', 'restaurants','My Position'];
+  texts: string[] = ['Schools','Markets','Parks','Hopitals', 'restaurants','MyPosition'];
   buildingSearch: string[] = ['trường', 'siêu thị', 'Công viên', 'Bệnh', 'Nhà hàng']
   currentBuildingSearchs: PlaceModel[] =[]
   constructor(private nearByServiceService :NearByServiceService) {

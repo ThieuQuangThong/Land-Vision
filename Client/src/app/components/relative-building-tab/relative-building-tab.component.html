@@ -3,8 +3,8 @@
   <div class="w-full">
     <ul class="flex mb-0 list-none flex-wrap pt-3 pb-4 flex-row">
       <li *ngFor="let text of texts; let i = index" class="-mb-px mr-1 last:mr-0 flex-auto text-center">
-        <a class="text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal" (click)="toggleTabs(i+1)" [ngClass]="{'text-violet-600 bg-white': openTab !== i+1, 'text-white bg-violet-600': openTab === i+1}">
-    <i class="{{icons[i]}}"></i> {{text}}
+        <a class="text-xs font-bold uppercase py-3 shadow-lg rounded block leading-normal" (click)="toggleTabs(i+1)" [ngClass]="{'text-violet-600 bg-white': openTab !== i+1, 'text-white bg-violet-600': openTab === i+1}">
+    <i class="{{icons[i]}}"></i> {{text | translate}}
         </a>
       </li>
 
@@ -21,7 +21,7 @@
                 <div class="font-size-title" style="font-weight: 500;">{{currentBuildingSearch.place?.formatted_address}}</div>
               </div>
               <div style="flex: 1; display: inline-grid; justify-content: center;">
-                <div style="margin-bottom: 5px;" >{{currentBuildingSearch.distance}} km</div>
+                <div style="margin-bottom: 5px;" >{{currentBuildingSearch.distance | distanceTransfer}}</div>
                 <div class="font-size-title" style="font-weight: 500;">
                  <i class="fa-solid fa-car font-size-sub-title" style="margin-right: 10px;"></i>
                  <span class="font-size-sub-title">{{currentBuildingSearch.goTime}} phút</span></div>
