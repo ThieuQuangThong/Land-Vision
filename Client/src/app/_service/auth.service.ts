@@ -9,6 +9,7 @@ import { User } from './user.model';
 import { Router } from '@angular/router';
 import { AlertService } from './alert.service';
 import { API_URL } from 'src/assets/API_URL';
+import jwt_decode from "jwt-decode";
 
 HttpClient;
 @Injectable({
@@ -53,6 +54,12 @@ public  code: any;
       );
 
   }
+  tokenExpired(token: string): boolean {
+    const expiry = (JSON.parse(atob(token.split('.')[1]))).exp;
+    return (Math.floor((new Date).getTime() / 1000)) >= expiry;
+  }
+
+
 
   sendEmailForVarification(user: any) {
     console.log(user);
@@ -62,10 +69,11 @@ public  code: any;
       alert('Something went wrong. Not able to send mail to your email.')
     })
   }
-  refreshToken(login: TokenModel) {
-    return this.http.post<TokenModel>(
-      API_URL.REFRESH_TOKEN(),
-      login,
+  public token: TokenModel = new TokenModel()
+  refreshToken(): Observable<any> {
+    const refreshToken = localStorage.getItem(this.token.accessToken);
+    return this.http.post(
+      API_URL.REFRESH_TOKEN(),{ Credential: true}
     );
   }
 
@@ -120,12 +128,12 @@ public  code: any;
       var token = JSON.parse(localStorageTokens) as TokenModel;
       var isTokenExpired = this.jwtHelper.isTokenExpired(token.accessToken);
       if (isTokenExpired) {
-        this.refreshToken(token).subscribe(
-          (tokenNew: TokenModel) => {
-            localStorage.setItem('token', JSON.stringify(tokenNew));
+        this.refreshToken().subscribe(
+          (accessToken) => {
+            localStorage.setItem('token', JSON.stringify(accessToken));
             return Object({
               status: check,
-              token: tokenNew,
+              token: accessToken ,
             });
           },
           err => {

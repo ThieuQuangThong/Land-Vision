@@ -58,6 +58,7 @@ export class AuthTokenInterceptor implements HttpInterceptor {
   private handle401Error(request: HttpRequest<any>, next: HttpHandler) {
     var result = this.authService.checkAccessTokenAndRefresh();
     this.refreshTokenSubject.next(null);
+
     if(result.status){
       this.refreshTokenSubject.next(result.token);
       return this.refreshTokenSubject.pipe(
