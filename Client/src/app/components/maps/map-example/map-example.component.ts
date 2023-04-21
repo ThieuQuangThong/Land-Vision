@@ -148,14 +148,40 @@ export class MapExampleComponent implements OnInit  {
 
         mapView.ui.add(search, "top-right");
 
+        //SKETCH
         sketch.on("create", (event: any) => {
+          if (event.state === "complete") {
+            const graphic: __esri.Graphic = event.graphic;
+            if (graphic.geometry.type === "polygon") {
+              const polygon: __esri.Polygon = graphic.geometry as __esri.Polygon;
+              const rings = polygon.rings;
+              // Chuyển đổi tọa độ từ EPSG: 3857 sang EPSG: 4326
+              const geographicRings = [];
+              for (let i = 0; i < rings.length; i++) {
+                const ring = rings[i];
+                const geographicRing = [];
+                for (let j = 0; j < ring.length; j++) {
+                  const webMercatorPoint = {
+                    x: ring[j][0],
+                    y: ring[j][1]
+                  };
+                  const geographicPoint = webMercatorUtils.webMercatorToGeographic(webMercatorPoint);
+                  geographicRing.push([geographicPoint.x, geographicPoint.y]);
+                }
+                geographicRings.push(geographicRing);
+              }
 
-        if (event.state === "complete") {
-          const graphic: __esri.Graphic = event.graphic;
+              // In kết quả ra console
+              console.log(geographicRings);
+            }
+          }
+        });
+
+        sketch.on("update", (event: any) => {
+          const graphic: __esri.Graphic = event.graphics[0];
           if (graphic.geometry.type === "polygon") {
             const polygon: __esri.Polygon = graphic.geometry as __esri.Polygon;
             const rings = polygon.rings;
-
             // Chuyển đổi tọa độ từ EPSG: 3857 sang EPSG: 4326
             const geographicRings = [];
             for (let i = 0; i < rings.length; i++) {
@@ -171,14 +197,12 @@ export class MapExampleComponent implements OnInit  {
               }
               geographicRings.push(geographicRing);
             }
-
-            // In kết quả ra console
-            console.log(geographicRings);
+            if (event.toolEventInfo && (event.toolEventInfo.type === "move-stop" || event.toolEventInfo.type === "reshape-stop")) {
+              // In kết quả ra console
+              console.log(geographicRings);
+            }
           }
-        }
-      });
-
-
+        });
 
         this.mapLoaded.emit(true);
       });
