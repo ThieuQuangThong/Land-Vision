@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { FileUploadService } from '../_service/file-upload.service';
 import { AlertService } from '../_service/alert.service';
 import { API_URL } from 'src/assets/API_URL';
+import { AuthenIdentifyCardService } from '../_service/authen-identify-card.service';
 
 @Component({
   selector: 'app-signup',
@@ -27,7 +28,7 @@ export class SignupComponent implements OnInit {
     return this.registrationForm.controls
   }
 
-  constructor(private http: HttpClient,
+  constructor(private http: HttpClient,private authenIdentifyCardService: AuthenIdentifyCardService,
     private route: Router, private fb: FormBuilder,
     @Inject(DOCUMENT) private document: Document,
     private fileService: FileUploadService,
@@ -68,6 +69,7 @@ export class SignupComponent implements OnInit {
 
     this.registrationForm.value['frontOfIdentityCard']= this.fileService.imageFile1
     this.registrationForm.value['backOfIdentityCard']= this.fileService.imageFile2
+    this.registrationForm.value['identityNumber'] = this.authenIdentifyCardService.numberOfIdCard;
     this.signupdata(this.registrationForm)
   }
 

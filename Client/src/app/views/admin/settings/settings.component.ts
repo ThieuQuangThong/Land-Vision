@@ -41,7 +41,5 @@ export class SettingsComponent implements OnInit {
         AlertService.setAlertModel('danger','Some thing went wrong')
       }
     )
-
   }
-
 }

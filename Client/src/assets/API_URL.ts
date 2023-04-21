@@ -1,6 +1,6 @@
 import { PagingModel } from "src/app/models/paging-model";
 
-export const DOMAIN = "https://localhost:44310";
+export const DOMAIN ='https://localhost:7165';
 
 export const API_URL = {
   GET_ALL_POST: (pagingModel: PagingModel) =>`${DOMAIN}/api/Post/${pagingModel.skipCount}&${pagingModel.maxResultCount}`,
@@ -24,5 +24,6 @@ export const API_URL = {
   GET_CATEGORYS:() => `${DOMAIN}/api/Category`,
   ADD_POST:(userId: number) =>`${DOMAIN}/api/Post/${userId}`,
   GET_POST_BY_ID:(postId: number) => `${DOMAIN}/api/Post/${postId}`,
-  GET_SEARCHED_POSTS:(pagingModel: PagingModel) => `${DOMAIN}/api/Post/getSearchedPost/${pagingModel.skipCount}&${pagingModel.maxResultCount}`
+  GET_SEARCHED_POSTS:(pagingModel: PagingModel) => `${DOMAIN}/api/Post/getSearchedPost/${pagingModel.skipCount}&${pagingModel.maxResultCount}`,
+  CHECK_IDENTIFY_CARD:() => `https://api.fpt.ai/vision/idr/vnm`,
 };
