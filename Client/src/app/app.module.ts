@@ -100,6 +100,9 @@ import { DirectionTransformPipe } from './_pipes/direction-transform.pipe';
 import { JuridicalTransformPipe } from './_pipes/juridical-transform.pipe';
 import { InteriorTransformPipe } from './_pipes/interior-transform.pipe';
 import { RelativeBuildingTabComponent } from './components/relative-building-tab/relative-building-tab.component';
+import { DistanceTransferPipe } from './_pipes/distance-transfer.pipe';
+import { PostImageComponent } from './components/post-image/post-image.component';
+import { StopPropagationDirectiveService } from './_service/stopPropagationDirectiveService';
 
 
 @NgModule({
@@ -160,6 +163,9 @@ import { RelativeBuildingTabComponent } from './components/relative-building-tab
     JuridicalTransformPipe,
     InteriorTransformPipe,
     RelativeBuildingTabComponent,
+    DistanceTransferPipe,
+    PostImageComponent,
+    StopPropagationDirectiveService
     // LoginComponent,
     // RegisterComponent,
   ],
@@ -217,6 +223,7 @@ import { RelativeBuildingTabComponent } from './components/relative-building-tab
     DirectionTransformPipe,
     JuridicalTransformPipe,
     InteriorTransformPipe,
+    DistanceTransferPipe,
   ]
 })
 export class AppModule { }
