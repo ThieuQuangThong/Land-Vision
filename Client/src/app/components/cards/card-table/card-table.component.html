@@ -36,7 +36,7 @@
                 </mat-form-field>
             </div>
         </div>
-        <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" class="border-2 min-h-[60%] ">
+        <mat-tab-group mat-stretch-tabs="false" mat-align-tabs="start" class="border-2 min-h-[60%] bg-gray-50">
             <mat-tab label="Posts management">
                 <table mat-table matSort #empTbSort="matSort" class=" items-center w-full bg-transparent border-collapse" [dataSource]="dataSourcePost">
                     <div class="col-span-12 ">
@@ -82,11 +82,15 @@
                         </div>
 
                         <div class="col-start-9 col-span-1">
-                            <ng-container matColumnDef="dropDown">
+                            <ng-container matColumnDef="isHide">
                                 <th mat-header-cell *matHeaderCellDef mat-sort-header class="font-semibold"> </th>
                                 <td mat-cell *matCellDef="let row" class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4 text-right">
-                                    <button matTooltip="Hide this post" aria-label="Button that displays a tooltip when focused or hovered over">
-                              <i class="fa-sharp fa-regular fa-eye-slash hover:text-red-600 hover:cursor-pointer"></i>
+                                    <button></button>
+                                    <button *ngIf="row.isHide===false" (click)="hideUnhide(row.id)" class="hover:text-red-600 hover:cursor-pointer" matTooltip="Hide this post" aria-label="Button that displays a tooltip when focused or hovered over">
+                              <i class="fa-sharp fa-regular fa-eye-slash " ></i>
+                            </button>
+                                    <button *ngIf="row.isHide===true" (click)="hideUnhide(row.id)" class=" hover:text-gray-600 text-red-600 hover:cursor-pointer" matTooltip="Unhide this post" aria-label="Button that displays a tooltip when focused or hovered over">
+                              <i class="fa-sharp fa-regular fa-eye " ></i>
                             </button>
                                 </td>
                             </ng-container>
@@ -94,7 +98,7 @@
 
                     </div>
                     <tr mat-header-row *matHeaderRowDef="displayedPostsColumns"></tr>
-                    <tr mat-row *matRowDef="let row; columns: displayedPostsColumns;"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedPostsColumns;" class="mat-row" (click)="goToDetail(row.id)"></tr>
                 </table>
                 <mat-paginator #postPaginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
             </mat-tab>
