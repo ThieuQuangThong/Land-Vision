@@ -1,10 +1,9 @@
+import { ShareDataService } from 'src/app/_service/share-data.service';
+import { PositionModel } from './../../../models/position-model';
 import { Component, OnInit, ViewChild, ElementRef, Input, Output, EventEmitter } from "@angular/core";
-import { setDefaultOptions } from 'esri-loader';
 import { loadModules } from 'esri-loader';
 import esri = __esri;
 // import Zoom from "@arcgis/core/widgets/Zoom.js";
-
-import { log } from "esri/config";
 
 @Component({
   selector: "app-map-example",
@@ -53,7 +52,7 @@ export class MapExampleComponent implements OnInit  {
     return this._basemap;
   }
 
-  constructor() {}
+  constructor(private shareDataService: ShareDataService) {}
 
   async initializeMap() {
     try {
@@ -173,23 +172,27 @@ export class MapExampleComponent implements OnInit  {
               const polygon: __esri.Polygon = graphic.geometry as __esri.Polygon;
               const rings = polygon.rings;
               // Chuyển đổi tọa độ từ EPSG: 3857 sang EPSG: 4326
-              const geographicRings = [];
+              const geographicRings: PositionModel[] = [];
               for (let i = 0; i < rings.length; i++) {
                 const ring = rings[i];
-                const geographicRing = [];
-                for (let j = 0; j < ring.length; j++) {
+              for (let j = 0; j < ring.length; j++) {
+                const geographicRing: PositionModel = new PositionModel();
                   const webMercatorPoint = {
                     x: ring[j][0],
                     y: ring[j][1]
                   };
                   const geographicPoint = webMercatorUtils.webMercatorToGeographic(webMercatorPoint);
-                  geographicRing.push([geographicPoint.x, geographicPoint.y]);
-                }
-                geographicRings.push(geographicRing);
-              }
 
+                  geographicRing.longtitude = geographicPoint.x.toString();
+                  geographicRing.latitude = geographicPoint.y.toString()
+
+                  geographicRings.push(geographicRing);
+                }
+
+              }
               // In kết quả ra console
               console.log(geographicRings);
+              this.shareDataService.positionPost = geographicRings;
             }
           }
         });
@@ -200,23 +203,26 @@ export class MapExampleComponent implements OnInit  {
             const polygon: __esri.Polygon = graphic.geometry as __esri.Polygon;
             const rings = polygon.rings;
             // Chuyển đổi tọa độ từ EPSG: 3857 sang EPSG: 4326
-            const geographicRings = [];
+            const geographicRings: PositionModel[] = [];
             for (let i = 0; i < rings.length; i++) {
               const ring = rings[i];
-              const geographicRing = [];
               for (let j = 0; j < ring.length; j++) {
+                const geographicRing: PositionModel = new PositionModel();
                 const webMercatorPoint = {
                   x: ring[j][0],
                   y: ring[j][1]
                 };
                 const geographicPoint = webMercatorUtils.webMercatorToGeographic(webMercatorPoint);
-                geographicRing.push([geographicPoint.x, geographicPoint.y]);
+                geographicRing.longtitude = geographicPoint.x.toString();
+                geographicRing.latitude = geographicPoint.y.toString();
+                geographicRings.push(geographicRing);
               }
-              geographicRings.push(geographicRing);
             }
+
             if (event.toolEventInfo && (event.toolEventInfo.type === "move-stop" || event.toolEventInfo.type === "reshape-stop")) {
               // In kết quả ra console
               console.log(geographicRings);
+              this.shareDataService.positionPost = geographicRings;
             }
           }
         });

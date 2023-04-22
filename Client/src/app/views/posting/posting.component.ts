@@ -1,16 +1,15 @@
+import { ShareDataService } from './../../_service/share-data.service';
 import { Component, OnInit } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { AlertService } from 'src/app/_service/alert.service';
 import { AuthService } from 'src/app/_service/auth.service';
 import { CategoryService } from 'src/app/_service/category.service';
 import { CityInformationService } from 'src/app/_service/city-information.service';
-import { FileUploadService } from 'src/app/_service/file-upload.service';
 import { PostService } from 'src/app/_service/post.service';
 import { CategoryModel } from 'src/app/models/category-model';
 import { DistrictModel } from 'src/app/models/district-model';
-import { PostModel } from 'src/app/models/post-model';
+import { ImageModel } from 'src/app/models/image-model';
 import { PostRequest } from 'src/app/models/post-request';
-import { PropertyModel } from 'src/app/models/property-model';
 import { StreetModel } from 'src/app/models/street-model';
 import { WardModel } from 'src/app/models/ward-model';
 import { PROPERTY_INFOR } from 'src/assets/common/propertyInfor';
@@ -27,6 +26,10 @@ export class inforStreet {
 })
 
 export class PostingComponent implements OnInit {
+
+  isPosting: boolean = false;
+  postRequest: PostRequest = new PostRequest();
+
   openTab = 1;
   interiors: string[] = PROPERTY_INFOR.Interior;
   directions: string[] = [];
@@ -38,60 +41,33 @@ export class PostingComponent implements OnInit {
   isDistrictLoading: boolean = false;
   isWardLoading: boolean = false;
   isStreetLoading: boolean = false;
-  buildingImage: string ='';
-  title: string = '';
-  description: string = '';
-  area: number = 0;
-  price: number = 0;
-  frontangeArea: number = 0;
-  wayIn: number = 0;
-  numberOfFloor: number = 0;
-  numberOfBed: number = 0;
-  numberOfBath: number = 0;
-  selectedDirectionId: number = 0;
-  selectedInterior: number = 0;
 
-  // mapCenter : Array<number> = [0, 0];
-  // basemapType :string = '';
-  // mapZoomLevel :number = 0;
-
-  // mapLoadedEvent(status: boolean) {
-  //   console.log('The map has loaded: ' + status);
-  // }
-  constructor(private postService: PostService, private auth:AuthService, private categgoryService: CategoryService ,private uploadService:FileUploadService , private cityService: CityInformationService) {
-    // this.mapCenter = [108.21147547864406, 16.06505300439531];
-    // this.basemapType = 'osm';
-    // this.mapZoomLevel = 18;
+  constructor(
+    private shareDataService: ShareDataService,
+    private postService: PostService,
+    private auth:AuthService,
+    private categgoryService: CategoryService,
+    private cityService: CityInformationService) {
   }
 
   toggleTabs($tabNumber: number){
+    this.postRequest.post.transactionType = $tabNumber;
     this.openTab = $tabNumber;
   }
+
   currentSeletedInforTracking = new BehaviorSubject<inforStreet>(new inforStreet());
   currentSeletedInfor= new inforStreet();
-  selectedDistrictId: number = 1;
-  selectedCategoryId: number = 1;
-  selectedWardId: number = 1;
-  selectedStreetId: number = 1;
-  selectedAddress: string ='';
-  selectedJuridical: number = 0;
-
-
-
 
   onDropdownDistrictChange(event: any) {
-    console.log(this.selectedDistrictId);
 
     this.currentSeletedInfor.districtName = this.filterTextContent(event);
     this.currentSeletedInforTracking.next(this.currentSeletedInfor);
 
-    this.getAndSetWardByDistrictId(this.selectedDistrictId);
-    this.getAndSetStreetByDistrictId(this.selectedDistrictId);
+    this.getAndSetWardByDistrictId(this.postRequest.property.districtId);
+    this.getAndSetStreetByDistrictId(this.postRequest.property.districtId);
   }
 
-  onDropdownCategoryChange(event: any) {
-
-  }
+  onDropdownCategoryChange(event: any) {}
 
   onDropdownWardChange(event: any) {
     this.currentSeletedInfor.wardName = this.filterTextContent(event);
@@ -112,8 +88,6 @@ export class PostingComponent implements OnInit {
 
   ngOnInit() {
     this.getAndSetDistrict();
-    this.getAndSetWardByDistrictId(this.selectedDistrictId);
-    this.getAndSetStreetByDistrictId(this.selectedDistrictId);
     this.getAndSetDirection();
     this.getAndSetCategory();
     this.currentSeletedInforTracking.subscribe(
@@ -124,7 +98,7 @@ export class PostingComponent implements OnInit {
           wardName: wardName,
           streetName: streetName,
         }
-        this.selectedAddress = `${districtName}, ${wardName}, ${streetName}`;
+        this.postRequest.property.addressNumber = `${districtName}, ${wardName}, ${streetName}`;
       }
     )
   }
@@ -142,6 +116,7 @@ export class PostingComponent implements OnInit {
     .subscribe(
       respone => {
         this.categorys = respone;
+        this.postRequest.property.categoryId = respone[0].id;
       }
     )
   }
@@ -150,10 +125,12 @@ export class PostingComponent implements OnInit {
     this.isDistrictLoading = true;
     this.cityService.getDistrict().subscribe(
       respone =>{
-        const {name} = respone[0];
+        const {name,id} = respone[0];
         this.currentSeletedInfor.districtName = name;
         this.districts = respone;
-
+        this.postRequest.property.districtId = id
+        this.getAndSetWardByDistrictId(id);
+        this.getAndSetStreetByDistrictId(id);
         this.currentSeletedInforTracking.next(this.currentSeletedInfor);
         this.isDistrictLoading = false;
       },
@@ -163,22 +140,13 @@ export class PostingComponent implements OnInit {
     );
   }
 
-  upLoadImage(event:any){
-    const file = this.uploadService.convertEventTofile(event);
-    this.uploadService.convertFileToUrl(file)
-    .subscribe(
-      respone =>{
-        this.buildingImage = respone;
-      }
-    )
-  }
   getAndSetWardByDistrictId(districtId: number){
     this.isWardLoading = true;
     this.cityService.getWardByDistrictId(districtId).subscribe(
       respone =>{
         const {id, name} = respone[0];
         this.wards = respone;
-        this.selectedWardId = respone[0]?.id;
+        this.postRequest.property.wardId = id;
 
         this.currentSeletedInfor.wardName = name;
         this.currentSeletedInforTracking.next(this.currentSeletedInfor);
@@ -198,7 +166,7 @@ export class PostingComponent implements OnInit {
       respone =>{
         const {id, name} = respone[0];
         this.streets = respone;
-        this.selectedStreetId = id;
+        this.postRequest.property.streetId = id;
 
         this.currentSeletedInfor.streetName = name;
         this.currentSeletedInforTracking.next(this.currentSeletedInfor);
@@ -212,38 +180,29 @@ export class PostingComponent implements OnInit {
   }
 
   submit(){
+    this.isPosting = true;
     const userId = this.auth.getUserId();
-    const postRequest: PostRequest = new PostRequest();
-    const property: PropertyModel = new PropertyModel();
-    const postModel: PostModel = new PostModel();
+    this.postRequest.property.positions = this.shareDataService.positionPost;
+    this.postRequest.post.images = this.shareDataService.getImageSlideValue().map(x => {
+      const imageModel: ImageModel = {
+        linkImage : x
+      }
+      return imageModel;
+    });
 
-    property.categoryId = this.selectedCategoryId;
-    property.districtId = this.selectedDistrictId;
-    property.wardId = this.selectedWardId;
-    property.streetId = this.selectedStreetId;
-    property.addressNumber = this.selectedAddress;
-    property.area = this.area;
-    property.price = this.price;
-    property.frontangeArea = this.frontangeArea;
-    property.wayIn = this.wayIn;
-    property.numberOfBath = this.numberOfBath;
-    property.numberOfFloor = this.numberOfFloor;
-    property.numberOfBed = this.numberOfBed;
-    property.districtId = this.selectedDirectionId;
-    property.interior = this.selectedInterior;
-    property.juridical = this.selectedJuridical;
-
-    postModel.title = this.title;
-    postModel.description = this.description;
-
-    this.postService.addPost(postRequest, userId)
+    this.postService.addPost(this.postRequest, userId)
     .subscribe(
       response =>{
+        this.isPosting = false;
+        this.shareDataService.setImageSlideValue([]);
+        this.postRequest = new PostRequest();
         AlertService.setAlertModel('success','Add post successfully')
       },
       error => {
+        this.isPosting = false;
         AlertService.setAlertModel('danger','Some thing went wrong')
       }
     )
+
   }
 }
