@@ -1,6 +1,7 @@
-import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit } from '@angular/core';
 import { AlertService } from 'src/app/_service/alert.service';
 import { FileUploadService } from 'src/app/_service/file-upload.service';
+import { ShareDataService } from 'src/app/_service/share-data.service';
 
 @Component({
   selector: 'app-post-image',
@@ -10,7 +11,6 @@ import { FileUploadService } from 'src/app/_service/file-upload.service';
 export class PostImageComponent implements  OnInit {
 
   @Input() isPost: boolean = false;
-
   isImageLoading: boolean = false;
   currentImagePos: number = 0;
   currentDragImage: number = 0;
@@ -22,37 +22,42 @@ export class PostImageComponent implements  OnInit {
   widthListImage: number = 0;
   widthContain: number = 0;
 
-  images: string[] =[]
 
-  constructor(private _elementRef : ElementRef, private fileService: FileUploadService) {
+  constructor(public shareInfor: ShareDataService ,private _elementRef : ElementRef, private fileService: FileUploadService) {}
 
-
-  }
   ngOnInit(): void {
-    if(this.isPost === false ){
-      this.images = ['https://file4.batdongsan.com.vn/resize/1275x717/2023/04/18/20230418145607-b8ca_wm.jpg',
-      'https://file4.batdongsan.com.vn/resize/1275x717/2023/04/18/20230418145607-d122_wm.jpg',
-      'https://file4.batdongsan.com.vn/resize/1275x717/2023/04/18/20230418145607-bb04_wm.jpg',
-      'https://file4.batdongsan.com.vn/resize/1275x717/2023/04/18/20230418145607-a97d_wm.jpg',
-      'https://file4.batdongsan.com.vn/resize/1275x717/2023/04/18/20230418145607-b8ca_wm.jpg',
-      'https://file4.batdongsan.com.vn/resize/1275x717/2023/04/18/20230418145607-d122_wm.jpg',
-      'https://file4.batdongsan.com.vn/resize/1275x717/2023/04/18/20230418145607-bb04_wm.jpg',
-      'https://file4.batdongsan.com.vn/resize/1275x717/2023/04/18/20230418145607-a97d_wm.jpg']
-    }
-  }
-  ngAfterViewInit(): void {
-    this.widthListImage =  this._elementRef.nativeElement.querySelector('#imageThumnails').offsetWidth;
-    this.widthContain =  this._elementRef.nativeElement.querySelector('#imageThumnailContain').offsetWidth;
+    this.shareInfor.setImageSlideValue([]);
 
-    this.limitDrag = this.widthListImage - this.widthContain;
   }
+
+  ngAfterViewInit(): void {
+    this.setLimitDrag();
+
+  }
+
+  setLimitDrag(){
+    this.shareInfor.getImageSlideValueAsTracking()
+    .subscribe(
+      respone =>{
+        this.widthContain =  this._elementRef.nativeElement.querySelector('#imageThumnailContain').offsetWidth;
+        this.widthListImage =  respone.length*120 +10;
+        if(this.widthListImage > this.widthContain){
+          this.limitDrag = this.widthListImage - this.widthContain ;
+          return;
+        }
+        this.limitDrag = 0;
+      }
+    )
+  }
+
   addImage(e: any){
   this.isImageLoading = true;
   this.fileService.convertFileToUrl(e.target.files[0])
                 .subscribe(
                   img =>{
                     this.isImageLoading = false;
-                    this.images.unshift(img);
+                    this.setLimitDrag();
+                    this.shareInfor.addImageToSlide(img);
                   },
                   erorr =>{
                     this.isImageLoading = false;
@@ -60,9 +65,11 @@ export class PostImageComponent implements  OnInit {
                   }
                 );
   }
+
   previousImage(){
+    this.setLimitDrag();
     if(this.currentImagePos - 1 < 0){
-      this.currentImagePos = this.images.length - 1;
+      this.currentImagePos = this.shareInfor.getImageSlideValue().length - 1;
       this.distanNumber = -(this.limitDrag+110)
       this.distanceString = (this.distanNumber).toString() + 'px';
     }
@@ -83,14 +90,19 @@ export class PostImageComponent implements  OnInit {
 
   deleteImage(i: number){
     this.currentImagePos = 0;
-    this.images.splice(i,1);
+    this.shareInfor.deleteImageByPos(i);
+    this.distanNumber = 0;
+    this.distanceString = (this.distanNumber).toString() + 'px';
+    this.setLimitDrag();
   }
 
   afterImage(){
-    if(this.currentImagePos+1 > this.images.length-1){
+    this.setLimitDrag();
+    if(this.currentImagePos+1 > this.shareInfor.getImageSlideValue().length-1){
       this.currentImagePos = 0;
       this.distanNumber = 0
       this.distanceString = (this.distanNumber).toString() + 'px';
+      return;
     }
     else {
       this.currentImagePos += 1;
@@ -108,14 +120,10 @@ export class PostImageComponent implements  OnInit {
     }
   }
 
+
   moveImages(e: any){
+    console.log(-this.limitDrag);
 
-    const x = Number(e.clientX);
-
-
-    if(x === 0){
-      return;
-    }
     const movedDistance = this.startDragPos - Number(e.clientX);
     const leftPos =  this.distanNumber - movedDistance;
     if(leftPos <= -this.limitDrag ||  leftPos > 0){

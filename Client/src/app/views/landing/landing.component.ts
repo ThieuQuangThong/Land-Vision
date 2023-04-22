@@ -42,7 +42,7 @@ export class LandingComponent implements OnInit {
 
   defaultPaging: PagingModel = {
     skipCount : 0,
-    maxResultCount : 8,
+    maxResultCount : 4,
   }
 
   paging: PagingModel = JSON.parse(JSON.stringify(this.defaultPaging));
@@ -75,8 +75,12 @@ export class LandingComponent implements OnInit {
         if(paging.skipCount >= respone.totalCount){
           this.isFullItem = true;
         }
+      },
+      error => {
+        this.isLoading = false
       }
     )
+
   }
 
   search(){

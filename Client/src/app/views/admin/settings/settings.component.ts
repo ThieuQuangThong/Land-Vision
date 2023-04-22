@@ -1,10 +1,9 @@
+import { ShareDataService } from 'src/app/_service/share-data.service';
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { AlertService } from "src/app/_service/alert.service";
 import { PostService } from "src/app/_service/post.service";
-import { PagingModel } from "src/app/models/paging-model";
 import { PostModel } from "src/app/models/post-model";
-import { PostResponeModel } from "src/app/models/post-respone-model";
 
 @Component({
   selector: "app-settings",
@@ -20,7 +19,7 @@ export class SettingsComponent implements OnInit {
   selectedStreet: string ='';
   selectedAddress: string ='';
 
-  constructor(private route: ActivatedRoute, private postService:PostService) {}
+  constructor(private shareDataService: ShareDataService ,private route: ActivatedRoute, private postService:PostService) {}
 
 
   onDropdownChange() {
@@ -33,9 +32,8 @@ export class SettingsComponent implements OnInit {
     this.postService.getPostById(this.postId)
     .subscribe(
       respone => {
-
         this.postItem = respone;
-        console.log(this.postItem);
+        this.shareDataService.setImageSlideValue(this.postItem.images.map(x => x.linkImage));
       },
       error =>{
         AlertService.setAlertModel('danger','Some thing went wrong')

@@ -1,5 +1,5 @@
-<div style="display: flex; justify-content: center; align-items: center; width: 100%;">
-  <div *ngIf ="isLoading" [ngStyle]="{'width': width,'height': height}" class="spinner-border text-secondary" role="status">
+<div *ngIf ="isLoading" style="display: flex; justify-content: center; align-items: center; width: 100%;">
+  <div  [ngStyle]="{'width': width,'height': height}" class="spinner-border text-secondary" role="status">
   </div>
 </div>
 <p *ngIf="!isLoading">{{text}}</p>
