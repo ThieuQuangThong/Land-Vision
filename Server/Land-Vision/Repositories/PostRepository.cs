@@ -29,6 +29,11 @@ namespace Land_Vision.Repositories
             return await _dbContext.Posts.AnyAsync(x => x.Id == postId);
         }
 
+        public async Task<int> CountPostByUserIdAsync(int userId)
+        {
+            return await _dbContext.Posts.Where(x => x.User.Id == userId).CountAsync();
+        }
+
         public async Task<bool> DeletePostAsync(Post post)
         {
             _dbContext.Remove(post);

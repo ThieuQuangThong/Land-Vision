@@ -27,5 +27,6 @@ export const API_URL = {
   GET_POST_BY_ID:(postId: number) => `${DOMAIN}/api/Post/${postId}`,
   GET_SEARCHED_POSTS:(pagingModel: PagingModel) => `${DOMAIN}/api/Post/getSearchedPost/${pagingModel.skipCount}&${pagingModel.maxResultCount}`,
   CHECK_IDENTIFY_CARD:() => `https://api.fpt.ai/vision/idr/vnm`,
-
+  CHECK_IS_USER_AVAILABLE_TO_POST:(userId: number) => `${DOMAIN}/api/Post/availablePost/${userId}`,
+  GET_USER_BY_ID:(userId: number) => `${DOMAIN}/api/Account/getUserById/${userId}`
 };

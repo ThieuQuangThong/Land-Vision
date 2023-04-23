@@ -18,10 +18,13 @@ namespace Land_Vision.service
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
         private readonly IEmailService _emailService;
+        private readonly IVipRepository _vipRepository;
         private readonly IRoleRepository _roleRepository;
         private readonly IConfiguration _config;
+
         public AccountService
         (
+        IVipRepository vipRepository,
         IRoleRepository roleRepository,
         IUserRepository userRepository,
         IMapper mapper,
@@ -34,6 +37,7 @@ namespace Land_Vision.service
             _userRepository = userRepository;
             _mapper = mapper;
             _emailService = emailService;
+            _vipRepository = vipRepository;
         }
 
         public async Task<bool> CheckIsExistVerifyCode(ValidateCodeDto validateCodeDto)
@@ -215,12 +219,14 @@ namespace Land_Vision.service
                 throw new Exception("Email is already taken!");
             }
             var role = await _roleRepository.GetRoleByNameAsync(RoleField.USER);
+            var vip = await _vipRepository.GetVipByLevelAsync(NumberFiled.VIP_LEVEL_DEFAULT);
             var user = _mapper.Map<User>(registerUserDto);
             var newPasswordObject = HashPassword(registerUserDto.password);
             user.PasswordHash = newPasswordObject.hashedPassword;
             user.PasswordSalt = newPasswordObject.PasswordSalt;
             user.EmailExpiresTime = DateTime.Now.AddMinutes(5);
             user.Role = role;
+            user.Vip = vip;
 
             if(!await _userRepository.CreateUserAsync(user)){
                 return false; 

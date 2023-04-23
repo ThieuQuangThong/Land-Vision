@@ -5,3 +5,16 @@ export class User {
   role!: string;
   exp!: number;
 }
+
+export class UserInfor {
+  id: number=0;
+  name: string='';
+  avatarLink: string ='';
+  phone: string='';
+  email: string='';
+  posted: number = 0;
+  vipLevel: number = 0;
+  numberOfUserCanPost: number = 0;
+  isHide: boolean = false;
+}
+

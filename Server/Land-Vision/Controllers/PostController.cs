@@ -173,7 +173,11 @@ namespace Land_Vision.Controllers
                 {
                     return BadRequest(ModelState);
                 }
-
+              
+                if (! await _postService.CheckIsUserCanPost(userId)){
+                    ModelState.AddModelError("", "you post as many times as you have");
+                    return StatusCode(402, ModelState);        
+                }
                 if (!await _postService.AddPostPropertyAsync(userId, postPropertyDto))
                 {
                     ModelState.AddModelError("", "Something went wrong while saving");
@@ -342,6 +346,30 @@ namespace Land_Vision.Controllers
                 return StatusCode(500, ModelState);
             }
             return Ok();
+        }
+
+        /// <summary>
+        /// check is available to post 
+        /// </summary>
+        [HttpGet("availablePost/{userId}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(200)]
+        public async Task<ActionResult<bool>> CheckIsAvailablePost(int userId)
+        {
+            if (!await _userRepository.CheckIsExistByIdAsync(userId))
+            {
+                ModelState.AddModelError("", "User is not exists");
+                return StatusCode(404, ModelState);
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            return Ok(await _postService.CheckIsUserCanPost(userId));
         }
 
     }
