@@ -81,7 +81,7 @@ export class MapExampleComponent implements OnInit  {
         'esri/widgets/BasemapGallery',
         "esri/widgets/Fullscreen",
         'esri/widgets/Search',
-        'esri/geometry/support/webMercatorUtils'
+        'esri/geometry/support/webMercatorUtils',
       ]);
 
       const mapProperties: esri.MapProperties = {
@@ -192,10 +192,44 @@ export class MapExampleComponent implements OnInit  {
               }
               // In kết quả ra console
               console.log(geographicRings);
-              this.shareDataService.positionPost = geographicRings;
+              this.shareDataService.setPositionPost(geographicRings);
             }
           }
         });
+
+        this.shareDataService.getPositionPostAsTracking()
+        .subscribe(
+          respone =>{
+            const positionArray: number[][] = [];
+            respone.forEach(
+              x => {
+                const {latitude, longtitude} = x;
+                positionArray.push([Number(longtitude), Number(latitude)]);
+              }
+            )
+            const polygon = {
+              type: "polygon",
+              rings: positionArray
+           };
+
+           const simpleFillSymbol = {
+              type: "simple-fill",
+              color: [227, 139, 79, 0.8],  // Orange, opacity 80%
+              outline: {
+                  color: [255, 255, 255],
+                  width: 1
+              }
+           };
+
+           const polygonGraphic = new Graphic({
+            geometry: polygon,
+            symbol: simpleFillSymbol,
+
+         });
+         graphicsLayer.add(polygonGraphic);
+          }
+        )
+
 
         sketch.on("update", (event: any) => {
           const graphic: __esri.Graphic = event.graphics[0];
@@ -222,7 +256,7 @@ export class MapExampleComponent implements OnInit  {
             if (event.toolEventInfo && (event.toolEventInfo.type === "move-stop" || event.toolEventInfo.type === "reshape-stop")) {
               // In kết quả ra console
               console.log(geographicRings);
-              this.shareDataService.positionPost = geographicRings;
+              this.shareDataService.setPositionPost(geographicRings);
             }
           }
         });

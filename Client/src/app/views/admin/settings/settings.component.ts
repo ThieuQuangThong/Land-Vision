@@ -29,11 +29,14 @@ export class SettingsComponent implements OnInit {
 
   ngOnInit() {
     this.postId = this.route.snapshot.params['postId'];
+    this.shareDataService.setPositionPost([]);
     this.postService.getPostById(this.postId)
     .subscribe(
       respone => {
         this.postItem = respone;
+        this.shareDataService.setPositionPost(respone.property.positions);
         this.shareDataService.setImageSlideValue(this.postItem.images.map(x => x.linkImage));
+
       },
       error =>{
         AlertService.setAlertModel('danger','Some thing went wrong')
