@@ -1,22 +1,37 @@
 # Land-Vision
 Captone Project 
-public WeatherForecastController()
+using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json.Linq;
+using System.Net;
+using System.Security.Cryptography;
+using System.Text;
+
+
+namespace MoMomo.Controllers
+{
+    [ApiController]
+    [Route("[controller]")]
+    public class WeatherForecastController : ControllerBase
+    {
+
+
+        public WeatherForecastController()
         {
         }
 
-        [HttpPost]
-        public IActionResult Post([FromBody] PaymentRequestModel paymentRequest)
+        [HttpPost("{orderInfoo}&{amountt}")]
+        public IActionResult Post(string orderInfoo, string amountt)
         {
             string endpoint =  "https://test-payment.momo.vn/v2/gateway/api/create";
             string partnerCode = "MOMO5RGX20191128";
             string accessKey = "M8brj9K6E22vXoDB";
             string serectkey = "nqQiVSgDMy809JoPF6OzP5OdBUB550Y4";
-            string orderInfo = "test";
+            string orderInfo = orderInfoo;
             string redirectUrl = "https://webhook.site/b3088a6a-2d17-4f8d-a383-71389a6c600b";
             string ipnUrl = "https://webhook.site/b3088a6a-2d17-4f8d-a383-71389a6c600b";
             string requestType = "captureWallet";
 
-            string amount = "55000";
+            string amount = amountt;
             string orderId = Guid.NewGuid().ToString();
             string requestId = Guid.NewGuid().ToString();
             string extraData = "";
@@ -147,3 +162,38 @@ public WeatherForecastController()
         }
 
     }
+}
+
+
+
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Component } from '@angular/core';
+import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+@Component({
+  selector: 'app-mo-qr',
+  templateUrl: './mo-qr.component.html',
+  styleUrls: ['./mo-qr.component.css']
+})
+export class MoQrComponent {
+  headers = new HttpHeaders().set('Content-Type', 'application/json');
+
+  constructor(private http:HttpClient, private router: Router){
+  }
+
+pay(){
+  const headers = new HttpHeaders({
+    'Content-Type': 'application/json',
+    'Access-Control-Allow-Origin': '*'
+  });
+  this.http.post<any>('https://localhost:7246/WeatherForecast/vip2&1000',{}, {headers})
+  .subscribe(response => {
+    const redirectUrl = response['payUrl'];
+      if (redirectUrl) {
+        window.location.href =redirectUrl;
+      }
+  })  
+    
+}
+
+}
