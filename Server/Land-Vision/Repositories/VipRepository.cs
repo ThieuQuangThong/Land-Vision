@@ -12,6 +12,7 @@ namespace Land_Vision.Repositories
         {
             _dbContext = dbContext;
         }
+        
         public async Task<Vip> AddVipAsync(Vip vip)
         {
             await _dbContext.Vips.AddAsync(vip);
@@ -34,6 +35,11 @@ namespace Land_Vision.Repositories
         public async Task<Vip> GetVipByIdAsync(int vipId)
         {
             return await _dbContext.Vips.Where(x => x.Id == vipId).FirstOrDefaultAsync();
+        }
+
+        public async Task<Vip> GetVipByLevelAsync(int level)
+        {
+            return await _dbContext.Vips.Where(x => x.VipLevel == level).FirstOrDefaultAsync();
         }
 
         public async Task<List<Vip>> GetVipsAsync()

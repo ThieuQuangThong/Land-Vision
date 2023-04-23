@@ -1,11 +1,9 @@
-using System.Net;
 using AutoMapper;
 using Land_Vision.Common;
 using Land_Vision.DTO;
 using Land_Vision.DTO.UserDtos;
 using Land_Vision.Interface.IRepositories;
 using Land_Vision.Interface.IServices;
-using Land_Vision.Repositories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Land_Vision.Controllers
@@ -18,14 +16,23 @@ namespace Land_Vision.Controllers
         private readonly IAccountService _accountService;
         private readonly IUserService _userSevice;
         private readonly IUserRepository _userRepository;
+        private readonly IPostRepository _postRepository;
         private readonly IMapper _mapper;
-        public AccountController(IUserService userSevice, IMapper mapper, IUserRepository userRepository, IEmailService emailService, IAccountService accountService)
+
+        public AccountController(
+        IPostRepository postRepository,
+        IUserService userSevice, 
+        IMapper mapper, 
+        IUserRepository userRepository, 
+        IEmailService emailService, 
+        IAccountService accountService)
         {
             _userSevice = userSevice;
             _mapper = mapper;
             _accountService = accountService;
             _emailService = emailService;
             _userRepository = userRepository;
+            _postRepository = postRepository;
         }
 
         /// <summary>
@@ -51,6 +58,28 @@ namespace Land_Vision.Controllers
                     SkipCount = skipCount,
                     MaxResultCount = maxResultCount
                 }));
+        }
+
+        /// <summary>
+        /// Get user by id.
+        /// </summary>
+        [HttpGet("getUserById/{userId}")]
+        [ProducesResponseType(200, Type = typeof(UserDto))]
+        public async Task<ActionResult<UserDto>> GetUserById(int userId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var user = await _userRepository.GetUserByIdAsync(userId);
+            if(user == null){
+                return NotFound("User is not found");
+            }
+            
+            var userDto = _mapper.Map<UserDto>(user);
+            userDto.Posted = await _postRepository.CountPostByUserIdAsync(user.Id) ;
+            return Ok(userDto);
         }
 
         /// <summary>
@@ -249,7 +278,7 @@ namespace Land_Vision.Controllers
         /// <summary>
         /// Refresh
         /// </summary>
-        [HttpPost("refresh")]
+        [HttpGet("refresh")]
         [ProducesResponseType(200, Type = typeof(string))]
         public async Task<ActionResult<TokenDto>> Refresh()
         {
