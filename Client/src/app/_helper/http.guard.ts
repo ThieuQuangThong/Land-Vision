@@ -37,16 +37,17 @@ export class AuthGuard implements CanActivate {
       console.log(check.status);
       var token = this.storage.isLoggedIn();
       if (token) {
-      if (state.url == "login"){
-        this.router.navigate(['/login']);
+        if (state.url == "login"){
+          this.router.navigate(['/']);
           return true;
         }
         return true;
       } else {
-        if (route.data['requiredAuth'] == true) {
-        this.router.navigate(['404error']);
-          return false;
-        }
+        // if (route.data['requiredAuth'] == true) {
+        //   this.router.navigate(['404error']);
+        //   return false;
+        // }
+        this.auth.refreshToken()
         return true;
       }
 

@@ -54,12 +54,6 @@ public  code: any;
       );
 
   }
-  tokenExpired(token: string): boolean {
-    const expiry = (JSON.parse(atob(token.split('.')[1]))).exp;
-    return (Math.floor((new Date).getTime() / 1000)) >= expiry;
-  }
-
-
 
   sendEmailForVarification(user: any) {
     console.log(user);
@@ -69,14 +63,17 @@ public  code: any;
       alert('Something went wrong. Not able to send mail to your email.')
     })
   }
-  public token: TokenModel = new TokenModel()
-  refreshToken(): Observable<any> {
-    const refreshToken = localStorage.getItem(this.token.accessToken);
-    return this.http.post(
-      API_URL.REFRESH_TOKEN(),{ Credential: true}
-    );
-  }
 
+  refreshToken(): Observable<any> {
+    const refreshToken = localStorage.getItem('token') ; // Retrieve refresh token from local storage
+    return this.http.post( 'https://localhost:7165/api/Account/refresh', refreshToken )
+      .pipe(
+        tap(response => {
+          // Update token and refresh token in local storage
+          localStorage.setItem('token','');
+        })
+      );
+  }
   getTokenInformation() {
     const token = localStorage.getItem('token');
 
@@ -103,9 +100,7 @@ public  code: any;
     // Xóa thông tin người dùng khỏi localStorage hoặc sessionStorage khi đăng xuất
     localStorage.removeItem('token');
   }
-  IsLoggedIn(){
-    return localStorage.getItem('token')!=null;
-  }
+
   isLoggedIn(): boolean {
     // Kiểm tra xem có thông tin người dùng nào được lưu trữ trong localStorage hoặc sessionStorage hay không
     if (this.getLoggedInUser() == null) return false;
@@ -133,11 +128,11 @@ public  code: any;
       var isTokenExpired = this.jwtHelper.isTokenExpired(token.accessToken);
       if (isTokenExpired) {
         this.refreshToken().subscribe(
-          (accessToken) => {
-            localStorage.setItem('token', JSON.stringify(accessToken));
+          (tokenNew: TokenModel) => {
+            localStorage.setItem('token', JSON.stringify(tokenNew));
             return Object({
               status: check,
-              token: accessToken ,
+              token: tokenNew,
             });
           },
           err => {
@@ -185,5 +180,6 @@ public  code: any;
       this.router.navigate(['new-password/'+this.code])
     });
   }
+
 }
 

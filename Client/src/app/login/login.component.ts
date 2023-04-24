@@ -7,6 +7,8 @@ import { TokenModel } from '../_service/token.model';
 import { AlertService } from '../_service/alert.service';
 import { TranslateService } from '@ngx-translate/core';
 
+declare const gapi: any;
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -20,7 +22,8 @@ export class LoginComponent implements OnInit{
   loginForm!: FormGroup;
   submitted = false;
   show = false;
-
+  user: any;
+  loggedIn: any;
   loading: boolean = false;
   get f(){
     return this.loginForm.controls;
@@ -36,6 +39,9 @@ export class LoginComponent implements OnInit{
       password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(30)]]
     })
    }
+   
+
+
 
    OnClick(){
      if(this.password === 'password'){

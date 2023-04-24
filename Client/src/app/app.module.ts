@@ -100,7 +100,10 @@ import { PostImageComponent } from './components/post-image/post-image.component
 import { StopPropagationDirectiveService } from './_service/stopPropagationDirectiveService';
 import { AuthTokenInterceptor } from './_helper/http.interceptor';
 import { AuthGuard } from './_helper/http.guard';
-
+import {  SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
+import {
+  GoogleLoginProvider
+} from '@abacritt/angularx-social-login';
 
 @NgModule({
   declarations: [

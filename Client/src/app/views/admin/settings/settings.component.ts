@@ -19,6 +19,7 @@ export class SettingsComponent implements OnInit {
   selectedWards: string ='';
   selectedStreet: string ='';
   selectedAddress: string ='';
+  shareDataService: any;
 
 
 
