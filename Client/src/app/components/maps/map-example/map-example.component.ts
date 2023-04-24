@@ -55,6 +55,7 @@ export class MapExampleComponent implements OnInit  {
   constructor(private shareDataService: ShareDataService) {}
 
   async initializeMap() {
+    console.log(12345555);
     try {
       const [
         EsriMap,

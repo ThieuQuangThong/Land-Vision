@@ -27,7 +27,7 @@ import { AuthComponent } from "./layouts/auth/auth.component";
 // admin views
 import { DashboardComponent } from "./views/admin/dashboard/dashboard.component";
 import { MapsComponent } from "./views/admin/maps/maps.component";
-import { SettingsComponent } from "./views/admin/settings/settings.component";
+import { ProductDetailComponent } from "./views/admin/product-detail/product-detail.component";
 import { TablesComponent } from "./views/admin/tables/tables.component";
 
 // auth views
@@ -70,7 +70,6 @@ import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common
 import { ReactiveFormsModule } from '@angular/forms';
 import { CodeVerifyComponent } from './code-verify/code-verify.component';
 import { NewPasswordComponent } from './new-password/new-password.component';
-import { ProductDetailComponent } from './components/product-detail/product-detail.component';
 import { SingleProductComponent } from './components/single-product/single-product.component';
 import { ProductListComponent } from './components/product-list/product-list.component';
 import { AlertComponent } from './components/alert/alert.component';
@@ -100,10 +99,6 @@ import { PostImageComponent } from './components/post-image/post-image.component
 import { StopPropagationDirectiveService } from './_service/stopPropagationDirectiveService';
 import { AuthTokenInterceptor } from './_helper/http.interceptor';
 import { AuthGuard } from './_helper/http.guard';
-import {  SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
-import {
-  GoogleLoginProvider
-} from '@abacritt/angularx-social-login';
 import { MapListDetailComponent } from './components/maps/map-list-detail/map-list-detail.component';
 
 
@@ -111,7 +106,6 @@ import { MapListDetailComponent } from './components/maps/map-list-detail/map-li
   declarations: [
     AppComponent,
     ProfileComponent,
-    ProductDetailComponent,
     CardSettingsComponent,
     CardBarChartComponent,
     LoginComponent,
@@ -143,7 +137,7 @@ import { MapListDetailComponent } from './components/maps/map-list-detail/map-li
     AdminComponent,
     AuthComponent,
     MapsComponent,
-    SettingsComponent,
+    ProductDetailComponent,
     TablesComponent,
     IndexComponent,
     LandingComponent,
