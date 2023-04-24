@@ -7,6 +7,8 @@ import { TokenModel } from '../_service/token.model';
 import { AlertService } from '../_service/alert.service';
 import { TranslateService } from '@ngx-translate/core';
 
+declare const gapi: any;
+
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -20,7 +22,8 @@ export class LoginComponent implements OnInit{
   loginForm!: FormGroup;
   submitted = false;
   show = false;
-
+  user: any;
+  loggedIn: any;
   loading: boolean = false;
   get f(){
     return this.loginForm.controls;
@@ -37,6 +40,9 @@ export class LoginComponent implements OnInit{
     })
    }
 
+
+
+
    OnClick(){
      if(this.password === 'password'){
        this.password = 'text';
@@ -47,6 +53,7 @@ export class LoginComponent implements OnInit{
      }
    }
 
+
    login() {
     this.loading = true;
     const email = this.loginForm?.get('email')?.value;
@@ -54,7 +61,7 @@ export class LoginComponent implements OnInit{
     this.auth.login(email, password).subscribe((response) => {
       this.loading = false;
         const token:TokenModel = new TokenModel()
-        token.accessToken = response
+        token.accessToken = typeof response === 'string' ? response : '';
           localStorage.setItem("token",JSON.stringify(token));
           AlertService.setAlertModel('success',"Login successfully")
           this.route.navigate(['landing'])

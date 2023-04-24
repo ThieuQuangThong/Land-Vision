@@ -8,7 +8,19 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class ShareDataService {
 
   imageSlides : BehaviorSubject<string[]> = new BehaviorSubject<string[]>([]);
-  positionPost: PositionModel[] = [];
+  positionPosts: BehaviorSubject<PositionModel[]> = new BehaviorSubject<PositionModel[]>([]);
+
+  getPositionPostAsTracking(): Observable<PositionModel[]>{
+      return this.positionPosts.asObservable();
+  }
+
+  setPositionPost(positions :PositionModel[]){
+    this.positionPosts.next(positions);
+  }
+
+  getPositionsValue():PositionModel[]{
+    return this.positionPosts.getValue();
+  }
 
   getImageSlideValue(): string[]{
     return this.imageSlides.getValue();

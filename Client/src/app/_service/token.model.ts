@@ -1,3 +1,3 @@
 export class TokenModel {
-  accessToken: any;
+  accessToken: string = '';
 }

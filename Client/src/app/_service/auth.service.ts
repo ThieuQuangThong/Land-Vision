@@ -9,6 +9,7 @@ import { User, UserInfor } from './user.model';
 import { Router } from '@angular/router';
 import { AlertService } from './alert.service';
 import { API_URL } from 'src/assets/API_URL';
+import jwt_decode from "jwt-decode";
 
 HttpClient;
 @Injectable({
@@ -16,7 +17,8 @@ HttpClient;
 })
 export class AuthService {
   jwtService: JwtHelperService = new JwtHelperService();
-public  code: any;
+  public  code: any;
+  private token!: string;
   data = {email: '', code: ''};
   headers = new HttpHeaders({ 'Content-Type': 'application/json' });
   public email: any;
@@ -53,6 +55,20 @@ public  code: any;
       );
 
   }
+  getToken(): string {
+    return this.token;
+  }
+
+  setToken(token: string): void {
+    this.token = token;
+  }
+
+  refreshToken(): Observable<string> {
+    const refreshToken = localStorage.getItem('token');
+    const url = 'https://localhost:7165/api/Account/refresh';
+    return this.http.post<string>(url, { refreshToken });
+  }
+
 
   sendEmailForVarification(user: any) {
     console.log(user);
@@ -61,12 +77,6 @@ public  code: any;
     }, (err: any) => {
       alert('Something went wrong. Not able to send mail to your email.')
     })
-  }
-  refreshToken(login: TokenModel) {
-    return this.http.post<TokenModel>(
-      API_URL.REFRESH_TOKEN(),
-      login,
-    );
   }
 
   getTokenInformation() {
@@ -115,34 +125,7 @@ public  code: any;
     return null;
   }
 
-  public checkAccessTokenAndRefresh(): { status: "", token: "" } {
-    const localStorageTokens = localStorage.getItem('token');
-    var check = true;
-    if (localStorageTokens) {
-      var token = JSON.parse(localStorageTokens) as TokenModel;
-      var isTokenExpired = this.jwtHelper.isTokenExpired(token.accessToken);
-      if (isTokenExpired) {
-        this.refreshToken(token).subscribe(
-          (tokenNew: TokenModel) => {
-            localStorage.setItem('token', JSON.stringify(tokenNew));
-            return Object({
-              status: check,
-              token: tokenNew,
-            });
-          },
-          err => {
-            this.logout();
-            check = false;
-          }
-        );
-      }
-    } else {
-      check = false;
-    }
-    return Object({
-      status: check,
-    });
-  }
+
 
   forgotPassword(email: string): Observable<any> {
     const url = API_URL.FORGOT_PASSWORD(email);
@@ -175,5 +158,6 @@ public  code: any;
       this.router.navigate(['new-password/'+this.code])
     });
   }
+
 }
 

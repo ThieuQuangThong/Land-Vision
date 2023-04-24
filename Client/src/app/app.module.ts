@@ -65,10 +65,8 @@ import { UserDropdownComponent } from "./components/dropdowns/user-dropdown/user
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { StorageService } from '../app/_service/storage.service';
 import { JwtModule, JWT_OPTIONS } from '@auth0/angular-jwt';
-import { AuthGuard } from './_helper/http.guard';
-import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 
-// import { AuthTokenInterceptor } from './_helper/http.interceptor';
+import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CodeVerifyComponent } from './code-verify/code-verify.component';
 import { NewPasswordComponent } from './new-password/new-password.component';
@@ -87,10 +85,7 @@ import { PricingCardComponent } from './components/pricing-card/pricing-card.com
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AgmCoreModule } from '@agm/core';
-
-export function httpTranslateLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http);
-}
+import {IvyCarouselModule} from 'carousel-angular';
 import { EmailConfirmSucceededComponent } from './views/email-confirm-succeeded/email-confirm-succeeded.component';
 import { PageNotFoundComponent } from './views/page-not-found/page-not-found.component';
 import { NgxOtpInputModule } from "ngx-otp-input";
@@ -103,6 +98,13 @@ import { RelativeBuildingTabComponent } from './components/relative-building-tab
 import { DistanceTransferPipe } from './_pipes/distance-transfer.pipe';
 import { PostImageComponent } from './components/post-image/post-image.component';
 import { StopPropagationDirectiveService } from './_service/stopPropagationDirectiveService';
+import { AuthTokenInterceptor } from './_helper/http.interceptor';
+import { AuthGuard } from './_helper/http.guard';
+import {  SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
+import {
+  GoogleLoginProvider
+} from '@abacritt/angularx-social-login';
+import { MapListDetailComponent } from './components/maps/map-list-detail/map-list-detail.component';
 
 
 @NgModule({
@@ -165,13 +167,15 @@ import { StopPropagationDirectiveService } from './_service/stopPropagationDirec
     RelativeBuildingTabComponent,
     DistanceTransferPipe,
     PostImageComponent,
-    StopPropagationDirectiveService
+    StopPropagationDirectiveService,
+    MapListDetailComponent
     // LoginComponent,
     // RegisterComponent,
   ],
   imports: [
     MatTooltipModule,
     MatSortModule,
+    IvyCarouselModule,
     MatTableModule,
     MatButtonModule,
     MatPaginatorModule,
@@ -209,11 +213,12 @@ import { StopPropagationDirectiveService } from './_service/stopPropagationDirec
       }
     }),
   ],
-  providers: [
-    // { provide: HTTP_INTERCEPTORS,
-    //   // useClass: AuthTokenInterceptor,
-    //   multi: true
-    // },
+  providers:
+  [
+    {  provide: HTTP_INTERCEPTORS,
+      useClass: AuthTokenInterceptor,
+      multi: true
+    },
     [AuthGuard],
 
   ],
@@ -225,18 +230,23 @@ import { StopPropagationDirectiveService } from './_service/stopPropagationDirec
     InteriorTransformPipe,
     DistanceTransferPipe,
   ]
+
 })
+
 export class AppModule { }
 export function jwtOptionsFactor(storage:StorageService){
   return {
      tokenGetter:() => {
        return storage.getAccessToken();
      },
-    // allowedDomains:["https://localhost:7165"],
-    // disallowedRoutes:[
-    //   "https://localhost:7165/api/Authorization/Login",
-    //   "https://localhost:7165/api/Token/Refresh"
-    // ],
-    // skipWhenExpired: false,
+    allowedDomains:["https://localhost:7165"],
+    disallowedRoutes:[
+      "https://localhost:7165/api/Authorization/Login",
+      "https://localhost:7165/api/Token/Refresh"
+    ],
+    skipWhenExpired: false,
   }
+}
+export function httpTranslateLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
 }
