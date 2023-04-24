@@ -29,6 +29,11 @@ namespace Land_Vision.Repositories
             return await _dbContext.Posts.AnyAsync(x => x.Id == postId);
         }
 
+        public async Task<int> CountPostByUserIdAsync(int userId)
+        {
+            return await _dbContext.Posts.Where(x => x.User.Id == userId).CountAsync();
+        }
+
         public async Task<bool> DeletePostAsync(Post post)
         {
             _dbContext.Remove(post);
@@ -138,6 +143,21 @@ namespace Land_Vision.Repositories
             .CountAsync();
         }
 
+        public async Task<bool> HidePostAsync(int postId)
+        {
+            var post = await GetPostAsync(postId);
+            if (post.isHide == false)
+            {
+                post.isHide = true;
+            }
+            else
+            {
+                post.isHide = false;
+            }
+            await UpdatePostAsync(post);
+            return await SaveChangeAsync();
+        }
+
         public async Task<bool> IncreaseViewByPostIdAsync(int postId)
         {
             var post = await GetPostAsync(postId);
@@ -165,5 +185,6 @@ namespace Land_Vision.Repositories
             await UpdatePostAsync(post);
             return await SaveChangeAsync();
         }
+
     }
 }

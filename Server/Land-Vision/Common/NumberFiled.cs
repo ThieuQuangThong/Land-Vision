@@ -10,6 +10,7 @@ namespace Land_Vision.Common
         public static int NOT_INTERIOR = 2;
         public static int RENT = 1;
         public static int SALE = 2;
+        public static int VIP_LEVEL_DEFAULT = 0;
 
     }
 }

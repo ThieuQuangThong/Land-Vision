@@ -5,7 +5,7 @@ import { BehaviorSubject, catchError, map, Observable, of, tap } from 'rxjs';
 import { TokenModel } from './token.model';
 import { LoginComponent } from '../login/login.component';
 import { StorageService } from './storage.service';
-import { User } from './user.model';
+import { User, UserInfor } from './user.model';
 import { Router } from '@angular/router';
 import { AlertService } from './alert.service';
 import { API_URL } from 'src/assets/API_URL';
@@ -93,6 +93,10 @@ public  code: any;
 
   getUserId():number {
     return this.getTokenInformation().nameid;
+  }
+
+  getUserInforById(userId: number): Observable<UserInfor>{
+    return this.http.get<UserInfor>(API_URL.GET_USER_BY_ID(userId));
   }
 
   logout(): void {

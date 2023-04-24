@@ -1,7 +1,4 @@
-﻿
-
-using AutoMapper;
-using Land_Vision.Common;
+﻿using AutoMapper;
 using Land_Vision.Dto.PostDtos;
 using Land_Vision.DTO;
 using Land_Vision.DTO.PostDtos;
@@ -19,12 +16,14 @@ namespace Land_Vision.service
         private readonly IStreetRepository _streetRepository;
         private readonly ICategoryRepository _categoryRepository;
         private readonly IWardRepository _wardRepository;
+        private readonly IUserRepository _userRepository;
         private readonly IPositionRepository _positionRepository;
         private readonly IImageService _imageService;
-
         private readonly IMapper _mapper;
+
         public PostService
         (
+         IUserRepository userRepository,
          IWardRepository wardRepository,
          IImageService imageService,
          IPositionService positionService,
@@ -45,6 +44,7 @@ namespace Land_Vision.service
             _positionRepository = positionRepository;
             _positionService = positionService;
             _wardRepository = wardRepository;
+            _userRepository = userRepository;
         }
 
         public async Task<bool> AddPostPropertyAsync(int userId, CreatePostPropertyDto createPostPropertyDto)
@@ -211,5 +211,16 @@ namespace Land_Vision.service
             };
             return paginResult;
         }
+
+        public async Task<bool> CheckIsUserCanPost(int userId)
+        {
+            int numberOfUserPost = await _postRepository.CountPostByUserIdAsync(userId);
+            var user = await _userRepository.GetUserByIdAsync(userId);
+            if(user.Vip == null){
+                return false;
+            }
+            return user.Vip.VipLevel >= numberOfUserPost ;
+        }
     }
 }
+ 

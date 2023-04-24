@@ -1,7 +1,6 @@
-<div class="navbar no-underline">
     <app-auth-navbar></app-auth-navbar>
 
-</div>
+<app-auth-navbar (messageEvent)="receiveHeight($event)"></app-auth-navbar>
 
 <main>
     <div class="relative pt-16 pb-32 flex content-center items-center justify-center min-h-screen-75">
@@ -34,8 +33,8 @@
         </div>
     </div>
 
-    <section class="pb-20 bg-gray-50 -mt-24">
-        <div class="container mx-auto px-4">
+  <section  class="pb-20 bg-blueGray-200 mt-18">
+    <div [style.padding-top]="paddingTop" class="container mx-auto px-3 ">
 
 
             <div class="relative flex flex-col  min-w-0 break-words bg-white w-full shadow-lg rounded-lg">
@@ -138,10 +137,11 @@
                                 <app-single-product *ngFor="let post of postRespone" [postItem]="post"></app-single-product>
                             </div>
                             <div class="w-full mt-7 flex flex-wrap items-center lg: justify-center">
-                                <button *ngIf="!isFullItem" (click)="loadMore()" class="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded-md shadow-md hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                                <button *ngIf="!isFullItem && !isLoading" (click)="loadMore()" class="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded-md shadow-md hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
                                     type="button">
                         {{'LoadMore' | translate}}
-                    </button>
+                                </button>
+                                <app-loading [isLoading]="isLoading"></app-loading>
                             </div>
                         </div>
 

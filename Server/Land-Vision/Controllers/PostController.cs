@@ -76,7 +76,7 @@ namespace Land_Vision.Controllers
         /// </summary>
         [HttpPost("getSearchedPost/{skipCount}&{maxResultCount}")]
         [ProducesResponseType(200, Type = typeof(PaginationRespone<PostDto>))]
-        public async Task<ActionResult<PaginationRespone<PostDto>>> GetPostsBySearchCondition(int skipCount, int maxResultCount,[FromBody] PostSearchDto postSearchDto)
+        public async Task<ActionResult<PaginationRespone<PostDto>>> GetPostsBySearchCondition(int skipCount, int maxResultCount, [FromBody] PostSearchDto postSearchDto)
         {
             if (!ModelState.IsValid)
             {
@@ -173,7 +173,11 @@ namespace Land_Vision.Controllers
                 {
                     return BadRequest(ModelState);
                 }
-
+              
+                if (! await _postService.CheckIsUserCanPost(userId)){
+                    ModelState.AddModelError("", "you post as many times as you have");
+                    return StatusCode(402, ModelState);        
+                }
                 if (!await _postService.AddPostPropertyAsync(userId, postPropertyDto))
                 {
                     ModelState.AddModelError("", "Something went wrong while saving");
@@ -195,10 +199,10 @@ namespace Land_Vision.Controllers
         /// <summary>
         /// Update post
         /// </summary>
-        [HttpPut]
+        [HttpPut("{postId}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> UpdatePost([FromQuery] int postId, [FromBody] CreatePostPropertyDto postPropertyDto)
+        public async Task<IActionResult> UpdatePost(int postId, [FromBody] CreatePostPropertyDto postPropertyDto)
         {
             using var transaction = await _dbContext.Database.BeginTransactionAsync();
 
@@ -313,6 +317,59 @@ namespace Land_Vision.Controllers
                 return StatusCode(500, ModelState);
             }
             return Ok();
+        }
+
+        // Hide/Unhide Post
+        /// <summary>
+        /// Hide/Unhide post
+        /// </summary>
+        [HttpPut("hideUnhide/{postId}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> HideUnhidePost(int postId)
+        {
+
+            if (!await _postRepository.CheckIsPostExistByIdAsync(postId))
+            {
+                ModelState.AddModelError("", "Post is not exists");
+                return StatusCode(404, ModelState);
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (!await _postRepository.HidePostAsync(postId))
+            {
+                ModelState.AddModelError("", "Something went wrong while Hiding");
+                return StatusCode(500, ModelState);
+            }
+            return Ok();
+        }
+
+        /// <summary>
+        /// check is available to post 
+        /// </summary>
+        [HttpGet("availablePost/{userId}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        [ProducesResponseType(200)]
+        public async Task<ActionResult<bool>> CheckIsAvailablePost(int userId)
+        {
+            if (!await _userRepository.CheckIsExistByIdAsync(userId))
+            {
+                ModelState.AddModelError("", "User is not exists");
+                return StatusCode(404, ModelState);
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            return Ok(await _postService.CheckIsUserCanPost(userId));
         }
 
     }

@@ -5,6 +5,7 @@ namespace Land_Vision.Interface.IRepositories
     public interface IVipRepository
     {
         Task<List<Vip>> GetVipsAsync();
+        Task<Vip> GetVipByLevelAsync(int level);
         Task<bool> DeleteVipByIdAsync(int vipId);
         Task<bool> CheckVipIsExistByIdAsync(int vipId);
         Task<Vip> GetVipByIdAsync(int vipId);

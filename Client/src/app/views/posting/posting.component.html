@@ -91,7 +91,7 @@
 
           <div class="relative w-full mb-3 mt-1">
             <label for="wardsDropdown" class="block uppercase text-blueGray-600 text-xs font-bold mb-2">Category</label>
-            <select id="wardsDropdown" [(ngModel)]="selectedCategoryId" (change)="onDropdownCategoryChange($event)"
+            <select id="wardsDropdown" [(ngModel)]="postRequest.property.categoryId" (change)="onDropdownCategoryChange($event)"
               placeholder="xinchao"
               class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
               <option *ngFor="let category of categorys" [value]="category.id">{{category.name}}</option>
@@ -103,7 +103,7 @@
             <div class="w-full lg:w-6/12 pr-1">
               <label for="districtDropdown"
                 class="block uppercase text-blueGray-600 text-xs font-bold mb-2">District</label>
-              <select *ngIf="!isDistrictLoading" id="districtDropdown" [(ngModel)]="selectedDistrictId"
+              <select *ngIf="!isDistrictLoading" id="districtDropdown" [(ngModel)]="postRequest.property.districtId"
                 (change)="onDropdownDistrictChange($event)"
                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
                 <option *ngFor="let district of districts" [value]="district.id">{{district.name}}</option>
@@ -115,7 +115,7 @@
             </div>
             <div class="w-full lg:w-6/12 pl-1">
               <label for="wardsDropdown" class="block uppercase text-blueGray-600 text-xs font-bold mb-2">Wards</label>
-              <select *ngIf="!isWardLoading" id="wardsDropdown" [(ngModel)]="selectedWardId"
+              <select *ngIf="!isWardLoading" id="wardsDropdown" [(ngModel)]="postRequest.property.wardId"
                 (change)="onDropdownWardChange($event)"
                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
                 <option *ngFor="let ward of wards" [value]="ward.id">{{ward.name}}</option>
@@ -131,7 +131,7 @@
           <div class="relative w-full mb-3 flex flex-wrap justify-center text-left">
             <div class="w-full lg:w-6/12 pr-1">
               <label for="countries" class="block uppercase text-blueGray-600 text-xs font-bold mb-2">Street</label>
-              <select *ngIf="!isStreetLoading" id="streetDropdown" [(ngModel)]="selectedStreetId"
+              <select *ngIf="!isStreetLoading" id="streetDropdown" [(ngModel)]="postRequest.property.streetId"
                 (change)="onDropdownStreetChange($event)"
                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
                 <option *ngFor="let street of streets" [value]="street.id">{{street.name}}</option>
@@ -143,7 +143,7 @@
             </div>
             <div class="w-full lg:w-6/12 pl-1">
               <label for="countries" class="block uppercase text-blueGray-600 text-xs font-bold mb-2">Address</label>
-              <input type="text" [(ngModel)]="selectedAddress" placeholder="Regular Input"
+              <input type="text" [(ngModel)]="postRequest.property.addressNumber" placeholder="Regular Input"
                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full " />
             </div>
           </div>
@@ -156,27 +156,16 @@
             <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="title">
               Title
             </label>
-            <input type="text" [(ngModel)]="title"
+            <input type="text" [(ngModel)]="postRequest.post.title"
               class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
               placeholder="Title" />
           </div>
-
-
-
-          <!-- <div class="relative w-full mb-3">
-            <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="description">
-              Description
-            </label>
-            <input type="text"
-              class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-              placeholder="Description" />
-          </div> -->
 
           <div class="relative w-full mb-3">
             <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="description">
               Description
             </label>
-            <textarea [(ngModel)]="description" rows="4" cols="80"
+            <textarea [(ngModel)]="postRequest.post.description" rows="4" cols="80"
               class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full"
               placeholder="Type a message..."></textarea>
           </div>
@@ -187,6 +176,7 @@
                 Area (m²)
               </label>
               <input type="text"
+              [(ngModel)]="postRequest.property.area"
                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                 placeholder="Title" />
             </div>
@@ -205,6 +195,7 @@
               </div>
 
               <input type="text"
+              [(ngModel)]="postRequest.property.area"
                 class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                 placeholder="Title" />
             </div>
@@ -213,52 +204,12 @@
 
           <div class="relative w-full mb-3 flex flex-wrap justify-center text-left">
             <div class="w-full lg:w-6/12 pr-1">
-              <!-- <div class="col-span-2">
-                    <label for="cover-photo" class="block text-xs font-medium leading-6">Images</label>
-                    <div class="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
-                      <div class="text-center">
-                        <svg class="mx-auto h-12 w-12 text-gray-300" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                          <path fill-rule="evenodd" d="M1.5 6a2.25 2.25 0 012.25-2.25h16.5A2.25 2.25 0 0122.5 6v12a2.25 2.25 0 01-2.25 2.25H3.75A2.25 2.25 0 011.5 18V6zM3 16.06V18c0 .414.336.75.75.75h16.5A.75.75 0 0021 18v-1.94l-2.69-2.689a1.5 1.5 0 00-2.12 0l-.88.879.97.97a.75.75 0 11-1.06 1.06l-5.16-5.159a1.5 1.5 0 00-2.12 0L3 16.061zm10.125-7.81a1.125 1.125 0 112.25 0 1.125 1.125 0 01-2.25 0z" clip-rule="evenodd" />
-                        </svg>
-                        <div class="mt-4 flex text-sm leading-6 text-gray-600">
-                          <label for="file-upload" class="relative cursor-pointer rounded-md bg-white font-semibold text-indigo-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-indigo-600 focus-within:ring-offset-2 hover:text-indigo-500">
-                            <span>Upload a file</span>
-                            <input id="file-upload" src="https://file4.batdongsan.com.vn/resize/1275x717/2023/03/01/20230301154059-3232_wm.jpg" name="file-upload" (change)="upLoadImage($event)" type="file" class="sr-only">
-                          </label>
-                          <p class="pl-1">or drag and drop</p>
-                        </div>
-                        <p class="text-xs leading-5 text-gray-600">PNG, JPG, GIF up to 10MB</p>
-                      </div>
-                    </div>
-                  </div> -->
-              <div class="flex items-center justify-center w-full">
-                <label for="dropzone-file"
-                  class="flex flex-col items-center justify-center w-full h-64 border-2 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                  <div class="flex flex-col items-center justify-center ">
-                    <div class="mt-10 mb-10 text-center">
-                      <h2 class="text-2xl font-semibold mb-1">Upload your files</h2>
-                      <p class="text-xs text-gray-500">File should be of format .mp4, .avi, .mov or .mkv</p>
-                    </div>
-                    <form action="#" class="relative w-4/5  max-w-xs mb-10 rounded-lg shadow-inner">
-                      <input type="file" id="file-upload" class="hidden">
-                      <label for="file-upload"
-                        class="z-20 flex flex-col-reverse items-center justify-center w-full h-full cursor-pointer">
-                        <p class="z-10 text-xs font-light text-center text-gray-500">Drag & Drop your files here</p>
-                        <svg class="z-10 w-8 h-8 text-indigo-400" fill="currentColor" viewBox="0 0 20 20"
-                          xmlns="http://www.w3.org/2000/svg">
-                          <path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"></path>
-                        </svg>
-                      </label>
-                    </form>
-                  </div>
-                  <input id="dropzone-file" type="file" class="hidden" multiple="true" />
-                </label>
-              </div>
+              <app-post-image [isPost]="true"></app-post-image>
             </div>
             <div class="w-full lg:w-6/12 pl-1">
               <label for="wardsDropdown"
                 class="block uppercase text-blueGray-600 text-xs font-bold mb-2">Direction</label>
-              <select [(ngModel)]="selectedDirectionId" id="wardsDropdown"
+              <select [(ngModel)]="postRequest.property.direction" id="wardsDropdown"
                 class="border-0 px-3 py-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
                 <option *ngFor="let direction of directions; let i = index" selected value={{i}}>{{direction|
                   translate}}</option>
@@ -267,7 +218,7 @@
 
               <label for="wardsDropdown"
                 class="block uppercase text-blueGray-600 mt-2 text-xs font-bold mb-2">Interior</label>
-              <select [(ngModel)]="selectedInterior" id="wardsDropdown"
+              <select [(ngModel)]="postRequest.property.interior" id="wardsDropdown"
                 class="border-0 px-3 py-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
                 <option selected value="true">{{'true'| translate}}</option>
                 <option value="false">{{'false'| translate}}</option>
@@ -277,7 +228,7 @@
 
               <label for="wardsDropdown"
                 class="block uppercase text-blueGray-600 mt-2 text-xs font-bold mb-2">Juridical</label>
-              <select [(ngModel)]="selectedJuridical" id="wardsDropdown"
+              <select [(ngModel)]="postRequest.property.juridical" id="wardsDropdown"
                 class="border-0 px-3 py-2 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
                 <option *ngFor="let juridical of juridicals; let i = index" selected value={{i}}>{{juridical|
                   translate}}</option>
@@ -287,36 +238,39 @@
                 Frontage Area
               </label>
               <input type="text"
-                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
+              [(ngModel)]="postRequest.property.frontangeArea"
+                class="number-input border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
                 placeholder="Title" />
-            </div>
-          </div>
 
-          <div class="relative w-full mb-3 flex flex-wrap justify-center text-left">
-            <div class="w-full lg:w-6/12 pr-1">
-              <label for="countries" class="block uppercase text-blueGray-600 text-xs font-bold mb-2">Way in(m²)</label>
-              <input type="text" placeholder="Regular Input"
-                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full " />
-            </div>
-            <div class="w-full lg:w-6/12 pl-1">
-              <label for="countries" class="block uppercase text-blueGray-600 text-xs font-bold mb-2">Number of
-                floor</label>
-              <input type="text" placeholder="Regular Input"
-                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full " />
-            </div>
-          </div>
-          <div class="relative w-full mb-3 flex flex-wrap justify-center text-left">
-            <div class="w-full lg:w-6/12 pr-1">
-              <label for="countries" class="block uppercase text-blueGray-600 text-xs font-bold mb-2">Number of
-                Bed</label>
-              <input type="text" placeholder="Regular Input"
-                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full " />
-            </div>
-            <div class="w-full lg:w-6/12 pl-1">
-              <label for="countries" class="block uppercase text-blueGray-600 text-xs font-bold mb-2">Number of
-                Bath</label>
-              <input type="text" placeholder="Regular Input"
-                class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full " />
+                <label for="countries" class="block uppercase text-blueGray-600 text-xs font-bold mb-2">Way in(m²)</label>
+                <input
+                [(ngModel)]="postRequest.property.wayIn"
+                 type="text" placeholder="Regular Input"
+                  class="number-input border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full " />
+
+
+                  <label for="countries" class="block uppercase text-blueGray-600 text-xs font-bold mb-2">Number of
+                    floor</label>
+                  <input
+                  [(ngModel)]="postRequest.property.numberOfFloor"
+                   type="text" placeholder="Regular Input"
+                    class="number-input border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full " />
+
+
+                    <label for="countries" class="block uppercase text-blueGray-600 text-xs font-bold mb-2">Number of
+                      Bed</label>
+                    <input
+                    [(ngModel)]="postRequest.property.numberOfBed"
+                    type="text" placeholder="Regular Input"
+                      class="number-input border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full " />
+
+
+                      <label for="countries" class="block uppercase text-blueGray-600 text-xs font-bold mb-2">Number of
+                        Bath</label>
+                      <input
+                      [(ngModel)]="postRequest.property.numberOfBath"
+                      type="text" placeholder="Regular Input"
+                        class="number-input border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full " />
             </div>
           </div>
 
@@ -327,7 +281,7 @@
               Submit
             </button> -->
             <div class="button-borders">
-              <button class="primary-button uppercase" type="button"> Submit
+              <button class="primary-button uppercase" type="button" (click)="submit()" > Submit
               </button>
             </div>
           </div>
@@ -337,6 +291,9 @@
     </div>
   </section>
 
-
 </main>
 <app-footer></app-footer>
+<ngx-loading
+[config]="{fullScreenBackdrop: true}"
+[show]="isPosting"
+></ngx-loading>

@@ -22,7 +22,9 @@ namespace Land_Vision.Mapper
             //User
             CreateMap<RegisterUserDto, User>();
             CreateMap<User, UserDto>()
-            .ForMember(x => x.Role, y => y.MapFrom(src => src.Role.Name));
+            .ForMember(x => x.Role, y => y.MapFrom(src => src.Role.Name))
+            .ForMember(x => x.NumberOfUserCanPost, y => y.MapFrom(src => src.Vip.PostLimit))
+            .ForMember(x => x.VipLevel, y => y.MapFrom(src => src.Vip.VipLevel));
 
             //Role
             CreateMap<RoleDto, Role>();

@@ -12,6 +12,7 @@ import {MatIconModule} from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
+import {MatTooltipModule} from '@angular/material/tooltip';
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -94,10 +95,11 @@ import { DirectionTransformPipe } from './_pipes/direction-transform.pipe';
 import { JuridicalTransformPipe } from './_pipes/juridical-transform.pipe';
 import { InteriorTransformPipe } from './_pipes/interior-transform.pipe';
 import { RelativeBuildingTabComponent } from './components/relative-building-tab/relative-building-tab.component';
-import { CarouselComponent } from './components/carousel/carousel.component';
-import { AuthGuard } from './_helper/http.guard';
+import { DistanceTransferPipe } from './_pipes/distance-transfer.pipe';
+import { PostImageComponent } from './components/post-image/post-image.component';
+import { StopPropagationDirectiveService } from './_service/stopPropagationDirectiveService';
 import { AuthTokenInterceptor } from './_helper/http.interceptor';
-// import { AuthGuard } from './_helper/http.guard';
+import { AuthGuard } from './_helper/http.guard';
 
 
 @NgModule({
@@ -139,7 +141,6 @@ import { AuthTokenInterceptor } from './_helper/http.interceptor';
     SettingsComponent,
     TablesComponent,
     IndexComponent,
-    CarouselComponent,
     LandingComponent,
     ProfileComponent,
     ResetPasswordComponent,
@@ -159,11 +160,14 @@ import { AuthTokenInterceptor } from './_helper/http.interceptor';
     JuridicalTransformPipe,
     InteriorTransformPipe,
     RelativeBuildingTabComponent,
-    CarouselComponent,
+    DistanceTransferPipe,
+    PostImageComponent,
+    StopPropagationDirectiveService
     // LoginComponent,
     // RegisterComponent,
   ],
   imports: [
+    MatTooltipModule,
     MatSortModule,
     IvyCarouselModule,
     MatTableModule,
@@ -210,7 +214,7 @@ import { AuthTokenInterceptor } from './_helper/http.interceptor';
       multi: true
     },
     [AuthGuard],
-   
+
   ],
   bootstrap: [AppComponent],
   exports: [
@@ -218,6 +222,7 @@ import { AuthTokenInterceptor } from './_helper/http.interceptor';
     DirectionTransformPipe,
     JuridicalTransformPipe,
     InteriorTransformPipe,
+    DistanceTransferPipe,
   ]
 
 })

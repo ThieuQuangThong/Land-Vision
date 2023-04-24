@@ -11,10 +11,11 @@ namespace Land_Vision.Models
         public int NumberOfView { get; set; }
         public bool IsVerified { get; set; } = false;
         public int transactionType { get; set; }
-        public DateTime CreateDate {get; set;}
+        public bool isHide { get; set; } = false;
+        public DateTime CreateDate { get; set; }
         [Required]
         public User User { get; set; }
-        public int PropertyId {get; set;}
+        public int PropertyId { get; set; }
         [Required]
         public Property Property { get; set; }
         [Required]

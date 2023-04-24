@@ -16,6 +16,7 @@ export class AlertService {
       type : type,
       text : text,
     }
+
     this.alertModel.next(alert);
   }
 

@@ -1,20 +1,10 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { AlertService } from "src/app/_service/alert.service";
 import { PostService } from "src/app/_service/post.service";
-import { PagingModel } from "src/app/models/paging-model";
 import { PostModel } from "src/app/models/post-model";
 import { PostResponeModel } from "src/app/models/post-respone-model";
-import { Slide } from "src/app/components/carousel/carousel.interface";
-import { CarouselComponent } from "../../../components/carousel/carousel.component";
-import { AnimationType, scaleIn,
-  scaleOut,
-  fadeIn,
-  fadeOut,
-  flipIn,
-  flipOut,
-  jackIn,
-  jackOut } from "src/app/components/carousel/carousel.animation";
+
 @Component({
   selector: "app-settings",
   templateUrl: "./settings.component.html",
@@ -34,6 +24,7 @@ export class SettingsComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private postService:PostService) {}
 
+
   onDropdownChange() {
 
     this.selectedAddress = `${this.selectedDistrict}, ${this.selectedWards}, ${this.selectedStreet}`;
@@ -42,19 +33,20 @@ export class SettingsComponent implements OnInit {
 
   ngOnInit() {
     this.postId = this.route.snapshot.params['postId'];
+    this.shareDataService.setPositionPost([]);
     this.postService.getPostById(this.postId)
     .subscribe(
       respone => {
-
         this.postItem = respone;
-        console.log(this.postItem);
+        this.shareDataService.setPositionPost(respone.property.positions);
+        this.shareDataService.setImageSlideValue(this.postItem.images.map(x => x.linkImage));
+
       },
       error =>{
         AlertService.setAlertModel('danger','Some thing went wrong')
       }
     )
 
-
-
-    }
   }
+
+}
