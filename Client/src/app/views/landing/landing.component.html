@@ -1,38 +1,38 @@
 <app-auth-navbar (messageEvent)="receiveHeight($event)"></app-auth-navbar>
 
 <main>
-  <div class="relative pt-16 pb-32 flex content-center items-center justify-center min-h-screen-75">
-    <div class="absolute top-0 w-full h-full bg-center bg-cover" style="
+    <div class="relative pt-16 pb-32 flex content-center items-center justify-center min-h-screen-75">
+        <div class="absolute top-0 w-full h-full bg-center bg-cover" style="
         background-image: url('https://images.unsplash.com/photo-1557804506-669a67965ba0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1267&q=80');
       ">
-      <span id="blackOverlay" class="w-full h-full absolute opacity-75 bg-black"></span>
-    </div>
-    <div class="container relative mx-auto">
-      <div class="items-center flex flex-wrap">
-        <div class="w-full lg:w-6/12 px-4 ml-auto mr-auto text-center">
-          <div class="pr-12">
-            <h1 class="text-white font-semibold text-5xl">
-              Your story starts with us.
-            </h1>
-            <p class="mt-4 text-lg text-blueGray-200">
-              This is a simple example of a Landing Page you can build using Notus Angular. It features multiple CSS
-              components based on the Tailwind CSS design system.
-            </p>
-          </div>
+            <span id="blackOverlay" class="w-full h-full absolute opacity-50 bg-black"></span>
         </div>
-      </div>
-    </div>
-    <div class="top-auto bottom-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden h-70-px"
-      style="transform: translateZ(0)">
-      <svg class="absolute bottom-0 overflow-hidden" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"
-        version="1.1" viewBox="0 0 2560 100" x="0" y="0">
-        <polygon class="text-emerald-500 fill-current" points="2560 0 2560 100 0 100"></polygon>
+        <div class="container relative mx-auto">
+            <div class="items-center flex flex-wrap">
+                <div class="w-full lg:w-6/12 px-4 ml-auto mr-auto text-center">
+                    <div class="pr-12">
+                        <h1 class="text-white font-semibold text-5xl">
+                            Your story starts with us.
+                        </h1>
+                        <p class="mt-4 text-lg text-blueGray-200">
+                            This is a simple example of a Landing Page you can build using Notus Angular. It features multiple CSS components based on the Tailwind CSS design system.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="top-auto bottom-0 left-0 right-0 w-full absolute pointer-events-none overflow-hidden h-70-px" style="transform: translateZ(0)">
+            <svg class="absolute bottom-0 overflow-hidden" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none" version="1.1" viewBox="0 0 2560 100" x="0" y="0">
+        <polygon
+          class="text-blueGray-200 fill-current"
+          points="2560 0 2560 100 0 100"
+        ></polygon>
       </svg>
     </div>
   </div>
 
-  <section class="pb-20 bg-blueGray-200 mt-18">
-    <div [style.padding-top]="paddingTop" class="container mx-auto px-3 ">
+  <section  class="pb-20 bg-blueGray-200 mt-18">
+    <div class="container mx-auto px-3 ">
 
 
       <div class="relative flex flex-col min-w-0 break-words bg-white w-full rounded-lg">
@@ -52,68 +52,54 @@
                 placeholder="Search by listing, location, bedroom number...">
             </div>
 
-            <div class="flex items-center justify-between mt-4">
-              <p class="font-medium m-3">
-                Filters
+                        <div class="flex items-center justify-between mt-4">
+              <p class="font-medium">
+              Filters
               </p>
 
 
-              <div>
-                <div class="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-7 gap-4 mt-1">
-                  <select [(ngModel)]="selectedTransactionTypes"
-                    class="w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
-                    <option *ngFor="let transactionType of transactionTypes; let i = index" value="{{i}}">
-                      {{transactionType | translate}} </option>
-                  </select>
+                        <div>
+                            <div class="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-7 gap-4 mt-1">
+                                <select [(ngModel)]="selectedTransactionTypes" class="w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
+                  <option *ngFor="let transactionType of transactionTypes; let i = index" value="{{i}}">{{transactionType | translate}} </option>
+                </select>
 
-                  <select [(ngModel)]="selectedInterior"
-                    class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
-                    <option *ngFor="let interior of interiors; let i = index" value="{{i}}">{{interior | translate}}
-                    </option>
-                  </select>
+                                <select [(ngModel)]="selectedInterior" class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
+                  <option *ngFor="let interior of interiors; let i = index" value="{{i}}">{{interior | translate}} </option>
+                </select>
 
-                  <select [(ngModel)]="selectedPrice"
-                    class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
-                    <option *ngFor="let price of prices; let i = index" value="{{i}}">{{price | translate}} </option>
+                                <select [(ngModel)]="selectedPrice" class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
+                  <option *ngFor="let price of prices; let i = index" value="{{i}}">{{price | translate}} </option>
 
-                  </select>
+                </select>
 
-                  <select [(ngModel)]="selectedFloor"
-                    class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
-                    <option *ngFor="let floor of floors; let i = index" value="{{i}}">{{floor | translate}} </option>
+                                <select [(ngModel)]="selectedFloor" class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
+                  <option *ngFor="let floor of floors; let i = index" value="{{i}}">{{floor | translate}} </option>
 
-                  </select>
+                </select>
 
-                  <select [(ngModel)]="selectedBedroom"
-                    class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
-                    <option *ngFor="let bedRoom of bedRooms; let i = index" value="{{i}}">{{bedRoom | translate}}
-                    </option>
-                  </select>
+                                <select [(ngModel)]="selectedBedroom" class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
+                  <option *ngFor="let bedRoom of bedRooms; let i = index" value="{{i}}">{{bedRoom | translate}} </option>
+                </select>
 
-                  <select [(ngModel)]="selectedBathroom"
-                    class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
-                    <option *ngFor="let bathRoom of bathRooms; let i = index" value="{{i}}">{{bathRoom | translate}}
-                    </option>
-                  </select>
+                                <select [(ngModel)]="selectedBathroom" class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
+                  <option *ngFor="let bathRoom of bathRooms; let i = index" value="{{i}}">{{bathRoom | translate}} </option>
+                </select>
 
-                  <select [(ngModel)]="selectedDirection"
-                    class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
-                    <option *ngFor="let direction of directions; let i = index" value="{{i}}">{{direction | translate}}
-                    </option>
-                  </select>
+                                <select [(ngModel)]="selectedDirection" class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
+                  <option *ngFor="let direction of directions; let i = index" value="{{i}}">{{direction | translate}} </option>
+                </select>
 
+                            </div>
+                        </div>
+                    </div>
                 </div>
-              </div>
             </div>
-          </div>
-        </div>
 
-
-
-        <div class="mt-12 w-full p-3 ">
-          <span class="font-medium">BROWSE HOT OFFERS</span>
-          <p class="font-bold text-3xl">Lastest Properties</p>
-          <div class="flex flex-wrap items-center justify-center">
+                        <div class="mt-6 w-full">
+                            <span class="font-medium">BROWSE HOT OFFERS</span>
+                            <p class="font-bold text-3xl">Lastest Properties</p>
+                            <div class="flex flex-wrap items-center justify-center">
 
             <app-single-product *ngFor="let post of postRespone" [postItem]="post"></app-single-product>
           </div>
@@ -482,4 +468,4 @@
           </div>
         </div>
       </section>
-      <app-footer></app-footer>
+      <app-footer class="w-full"></app-footer>

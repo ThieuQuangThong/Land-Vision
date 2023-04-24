@@ -58,6 +58,8 @@ export class LandingComponent implements OnInit {
     this.getPost(this.paging);
   }
   receiveHeight($event: any){
+    console.log($event);
+
   this.paddingTop = $event.toString()+"px";
   }
 
