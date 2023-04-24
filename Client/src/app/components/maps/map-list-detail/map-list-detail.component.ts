@@ -172,8 +172,6 @@ export class MapListDetailComponent {
               rings: positionArray
            };
 
-
-
            const polygonGraphic = new Graphic({
             geometry: polygon,
             symbol: polygonSymbol,
