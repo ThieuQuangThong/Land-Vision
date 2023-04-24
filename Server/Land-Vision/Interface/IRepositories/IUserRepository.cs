@@ -7,6 +7,7 @@ namespace Land_Vision.Interface.IRepositories
     public interface IUserRepository
     {
         Task<bool> CheckIsExistByIdAsync(int id);
+        Task<User> GetUserByIdAsync(int id);
         Task<bool> CheckIsExistValidatePasswordToken(string email, string token);
         Task<bool> CheckIsExistIdentificationCardAsync(string idCard);
         Task<User> GetUserByFreshTokenAsync(string freshToken);
@@ -20,7 +21,6 @@ namespace Land_Vision.Interface.IRepositories
         Task<bool> UpdateUserAsync(User user);
         Task<List<User>> GetUsersAsync(Pagination pagination);
         Task<bool> DeleteUserByIdAsync(int userId);
-        Task<User> GetUserAsync(int userId);
 
         Task<bool> SaveChangesAsync();
     }

@@ -45,7 +45,6 @@ namespace Land_Vision.Repositories
             .ToListAsync();
         }
 
-
         public async Task<bool> CodeIsExistAsync(string code)
         {
             return await _dbContext.Users.AnyAsync(p => p.Code == code);
@@ -60,11 +59,6 @@ namespace Land_Vision.Repositories
         public async Task<int> GetUserTotalAsync()
         {
             return await _dbContext.Users.CountAsync();
-        }
-
-        public async Task<User> GetUserAsync(int userId)
-        {
-            return await _dbContext.Users.AsNoTracking().Where(u => u.Id == userId).FirstOrDefaultAsync();
         }
 
         public async Task<bool> CheckIsExistUserByEmailAsync(string email)
@@ -102,6 +96,15 @@ namespace Land_Vision.Repositories
             var user = await _dbContext.Users.Where(x => x.Id == userId).FirstOrDefaultAsync();
             _dbContext.Users.Remove(user);
             return await SaveChangesAsync();
+        }
+
+        public async Task<User> GetUserByIdAsync(int id)
+        {
+            return await _dbContext.Users
+            .Where(x => x.Id == id)
+            .Include(x => x.Vip)
+            .Include(k => k.Role)
+            .FirstOrDefaultAsync();
         }
     }
 }

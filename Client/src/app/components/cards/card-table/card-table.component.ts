@@ -8,16 +8,19 @@ import { FormControl, FormGroup, Validators } from "@angular/forms";
 import { UserService } from "src/app/_service/user.service";
 import { UserModel } from "src/app/models/user-model";
 import {MatSort, Sort} from '@angular/material/sort';
+import { Router } from "@angular/router";
 
 
 @Component({
   selector: "app-card-table",
   templateUrl: "./card-table.component.html",
+  styleUrls: ['./card-table.component.css']
+
 })
 
 export class CardTableComponent implements OnInit {
-  displayedPostsColumns: string[] = ['#', 'title', 'transactionType', 'createAt','poster'];
-  displayedSellersColumns: string[] = ['#', 'name', 'email', 'phone'];
+  displayedPostsColumns: string[] = ['#', 'title', 'transactionType', 'createAt','poster', 'isHide'];
+  displayedSellersColumns: string[] = ['#', 'name', 'email', 'phone', 'dropDown'];
 
   dataSourcePost = new MatTableDataSource<any>();
   dataSourceSeller = new MatTableDataSource<any>();
@@ -51,10 +54,13 @@ export class CardTableComponent implements OnInit {
   }
   private _color = "light";
 
-  constructor(private postService:PostService, private userService : UserService) {
+  constructor(private postService:PostService, private userService : UserService, private router : Router) {
     const now = new Date();
 
 
+  }
+  goToDetail(id : number){
+    this.router.navigate([`productdetails/${id}`])
   }
   ngOnInit(): void {
     this.getAll(this.paging);
@@ -78,6 +84,12 @@ export class CardTableComponent implements OnInit {
       }
     this.dataSourcePost.filter = ''+Math.random();
   };
+
+  hideUnhide(postId : number){
+    this.postService.hideUnhidePost(postId)
+    .subscribe();
+    window.location.reload();
+  }
 
 
   getAll(paging: PagingModel) :void{

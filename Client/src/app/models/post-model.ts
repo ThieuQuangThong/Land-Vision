@@ -10,6 +10,7 @@ export class PostModel {
   numberOfView: number = 0;
   createDate! : Date;
   isVerified:boolean = false;
+  isHide:boolean = false;
   property: PropertyModel = new PropertyModel();
   user: UserModel = new UserModel();
   images: ImageModel[] = [];

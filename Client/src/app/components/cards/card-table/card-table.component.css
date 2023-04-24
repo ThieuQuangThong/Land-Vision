@@ -1,0 +1,14 @@
+tr:hover td {
+    background-color: #ffffff;
+    cursor: pointer;
+    filter: drop-shadow(0 4px 3px rgb(0 0 0 / 0.07)) drop-shadow(0 2px 2px rgb(0 0 0 / 0.06));
+}
+
+td {
+    border: 1px solid rgb(229 231 235);
+}
+
+
+/* .mat-row:hover .mat-cell {
+    background-color: #fff5a2;
+} */

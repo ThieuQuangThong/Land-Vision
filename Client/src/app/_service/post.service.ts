@@ -22,18 +22,29 @@ export class PostService {
   getAllPost(pagingModel: PagingModel):Observable<PostResponeModel> {
     return this.http.get<PostResponeModel>(API_URL.GET_ALL_POST(pagingModel),{withCredentials: true})
   }
+
   getAllPostByTime(pagingModel: PagingModel, startDate : string,endDate : string):Observable<PostResponeModel> {
     return this.http.get<PostResponeModel>(API_URL.GET_ALL_POST_BY_TIME(pagingModel,startDate.replaceAll(' ','-'),endDate.replaceAll(' ','-')),{withCredentials: true})
   }
+
   addPost(postRequest: PostRequest, userId: number):Observable<any>{
     return this.http.post<any>(API_URL.ADD_POST(userId),postRequest);
   }
 
   getPostById(id: number):Observable<PostModel>{
+
     return this.http.get<PostModel>(API_URL.GET_POST_BY_ID(id));
   }
 
   getSearchedPost(pagingModel: PagingModel, searchModel: SearchModel):Observable<PostResponeModel>{
     return this.http.post<PostResponeModel>(API_URL.GET_SEARCHED_POSTS(pagingModel),searchModel);
+  }
+
+  hideUnhidePost(id:number):Observable<any>{
+    return this.http.put<any>(API_URL.HIDE_UNHIDE(id),{});
+  }
+
+  checkIsUserAvailableToPost(userId: number):Observable<boolean>{
+    return this.http.get<boolean>(API_URL.CHECK_IS_USER_AVAILABLE_TO_POST(userId));
   }
 }

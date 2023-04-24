@@ -1,10 +1,9 @@
+import { ShareDataService } from 'src/app/_service/share-data.service';
+import { PositionModel } from './../../../models/position-model';
 import { Component, OnInit, ViewChild, ElementRef, Input, Output, EventEmitter } from "@angular/core";
-import { setDefaultOptions } from 'esri-loader';
 import { loadModules } from 'esri-loader';
 import esri = __esri;
 // import Zoom from "@arcgis/core/widgets/Zoom.js";
-
-import { log } from "esri/config";
 
 @Component({
   selector: "app-map-example",
@@ -53,147 +52,36 @@ export class MapExampleComponent implements OnInit  {
     return this._basemap;
   }
 
-  constructor() {}
-
-  // async initializeMap() {
-  //   try {
-  //     const [
-  //       EsriMap,
-  //       EsriMapView,
-  //       Graphic,
-  //       GraphicsLayer,
-  //       SimpleMarkerSymbol,
-  //       SimpleLineSymbol,
-  //       SimpleFillSymbol,
-  //       Color,
-  //       Polygon
-  //     ] = await loadModules([
-  //       'esri/Map',
-  //       'esri/views/MapView',
-  //       'esri/Graphic',
-  //       'esri/layers/GraphicsLayer',
-  //       'esri/symbols/SimpleMarkerSymbol',
-  //       'esri/symbols/SimpleLineSymbol',
-  //       'esri/symbols/SimpleFillSymbol',
-  //       'esri/Color',
-  //       'esri/geometry/Polygon'
-  //     ]);
-
-  //     const mapProperties: esri.MapProperties = {
-  //       basemap: this._basemap
-  //     };
-  //     const map: esri.Map = new EsriMap(mapProperties);
-
-  //     const graphicsLayer = new GraphicsLayer();
-  //     map.add(graphicsLayer);
-
-  //     const polygonSymbol = new SimpleFillSymbol({
-  //       color: [0, 0, 255, 0.5],
-  //       outline: {
-  //         color: [0, 0, 255],
-  //         width: 1
-  //       }
-  //     });
-
-  //     const polygonGraphic = new Graphic({
-  //       symbol: polygonSymbol
-  //     });
-
-  //     graphicsLayer.add(polygonGraphic);
-
-  //     const mapViewProperties: esri.MapViewProperties = {
-  //       container: this.mapViewEl.nativeElement,
-  //       center: this._center,
-  //       zoom: this._zoom,
-  //       map: map
-  //     };
-  //     const mapView: esri.MapView = new EsriMapView(mapViewProperties);
-
-  //     let vertices: number[][] = [];
-  //     console.log("loaded");
-
-  //     mapView.on("click", (event: esri.ViewClickEvent) => {
-  //       const point = event.mapPoint.clone();
-  //       vertices.push([point.longitude, point.latitude]);
-  //       console.log("sau khi push vo verices:"+vertices);
-
-  //       const polygon = new Polygon({
-  //         rings: [vertices],
-  //         spatialReference: {
-  //           wkid: 4326
-  //         }
-  //       });
-
-  //       polygonGraphic.geometry = polygon;
-  //     });
-
-  //     mapView.on("double-click", (event: esri.ViewDoubleClickEvent) => {
-  //       if (vertices.length >= 3) {
-  //             console.log("polygon:"+vertices);
-  //             // Create a new polygon graphic and add it to the graphics layer
-  //             const polygon = new Polygon({
-  //               rings: [vertices],
-  //               spatialReference: {
-  //                 wkid: 4326
-  //               }
-  //             });
-
-  //         const graphic = new Graphic({
-  //           geometry: polygon,
-  //           symbol: polygonSymbol
-  //         });
-
-  //         graphicsLayer.add(graphic);
-
-  //         // Clear the vertices array for the next polygon
-  //         vertices = [];
-  //       }
-  //     }
-  //     // }
-  //     );
-
-  //     mapView.when(() => {
-  //       this.mapLoaded.emit(true);
-  //     });
-  //   } catch (error) {
-  //     alert('We have an error: ' + error);
-  //   }
-  // }
+  constructor(private shareDataService: ShareDataService) {}
 
   async initializeMap() {
     try {
       const [
         EsriMap,
         EsriMapView,
+        Extent,
         Graphic,
         GraphicsLayer,
-        SimpleMarkerSymbol,
-        SimpleLineSymbol,
         SimpleFillSymbol,
-        Color,
-        Polygon,
-        Compass,
+        Sketch,
         Locate,
         BasemapGallery,
         Fullscreen,
-        // CoordinateConversion,
         Search,
+        webMercatorUtils
       ] = await loadModules([
         'esri/Map',
         'esri/views/MapView',
+        'esri/geometry/Extent',
         'esri/Graphic',
         'esri/layers/GraphicsLayer',
-        'esri/symbols/SimpleMarkerSymbol',
-        'esri/symbols/SimpleLineSymbol',
         'esri/symbols/SimpleFillSymbol',
-        'esri/Color',
-        'esri/geometry/Polygon',
-        'esri/widgets/Compass',
+        'esri/widgets/Sketch',
         'esri/widgets/Locate',
         'esri/widgets/BasemapGallery',
         "esri/widgets/Fullscreen",
-        // 'esri/widgets/CoordinateConversion',
         'esri/widgets/Search',
+        'esri/geometry/support/webMercatorUtils'
       ]);
 
       const mapProperties: esri.MapProperties = {
@@ -212,6 +100,16 @@ export class MapExampleComponent implements OnInit  {
         }
       });
 
+      const extent = new Extent({
+        xmin: 108.07368447123736,
+        ymin: 15.976433319718469,
+        xmax: 108.32431008158854,
+        ymax: 16.131502117889013,
+        spatialReference: {
+          wkid: 4326
+        }
+      });
+
       const polygonGraphic = new Graphic({
         symbol: polygonSymbol
       });
@@ -222,25 +120,14 @@ export class MapExampleComponent implements OnInit  {
         container: this.mapViewEl.nativeElement,
         center: this._center,
         zoom: this._zoom,
-        map: map
+        map: map,
+        constraints: {
+          geometry: extent,
+          minScale: 500000,
+          maxScale: 2000
+        }
       };
       const mapView: esri.MapView = new EsriMapView(mapViewProperties);
-
-      let vertices: number[][] = [];
-
-      // const clearButton = document.getElementById('Polygon');
-      // clearButton!.addEventListener('click', () => {
-      //   vertices = [];
-      //   polygonGraphic.geometry = null;
-      //   graphicsLayer.removeMany(graphicsLayer.graphics.toArray());
-      // });
-
-
-      const compass = new Compass({
-        view: mapView
-      });
-
-      mapView.ui.add(compass, 'top-left');
 
       const locate = new Locate({
         view: mapView
@@ -252,62 +139,94 @@ export class MapExampleComponent implements OnInit  {
         view: mapView
       });
 
-      mapView.ui.add(fullscreen, "top-right");
+      mapView.ui.add(fullscreen, "bottom-right");
 
 
       const basemapGallery = new BasemapGallery({
         view: mapView
       });
 
-      mapView.ui.add(basemapGallery, "top-right");
+      mapView.ui.add(basemapGallery, "bottom-left");
 
-      // const coordinateConversion = new CoordinateConversion({
-      //   view: mapView
-      // });
+      mapView.when(() => {
+        const sketch = new Sketch({
+          layer: graphicsLayer,
+          view: mapView,
+          // graphic will be selected as soon as it is created
+          creationMode: "update"
+        });
 
-      // mapView.ui.add(coordinateConversion, "top-right");
+        mapView.ui.add(sketch, "top-right");
 
+        const search = new Search({
+          view: mapView
+        });
 
-      const search = new Search({
-        view: mapView
-      });
+        mapView.ui.add(search, "top-right");
 
-      mapView.ui.add(search, "top-right");
+        //SKETCH
+        sketch.on("create", (event: any) => {
+          if (event.state === "complete") {
+            const graphic: __esri.Graphic = event.graphic;
+            if (graphic.geometry.type === "polygon") {
+              const polygon: __esri.Polygon = graphic.geometry as __esri.Polygon;
+              const rings = polygon.rings;
+              // Chuyển đổi tọa độ từ EPSG: 3857 sang EPSG: 4326
+              const geographicRings: PositionModel[] = [];
+              for (let i = 0; i < rings.length; i++) {
+                const ring = rings[i];
+              for (let j = 0; j < ring.length; j++) {
+                const geographicRing: PositionModel = new PositionModel();
+                  const webMercatorPoint = {
+                    x: ring[j][0],
+                    y: ring[j][1]
+                  };
+                  const geographicPoint = webMercatorUtils.webMercatorToGeographic(webMercatorPoint);
 
+                  geographicRing.longtitude = geographicPoint.x.toString();
+                  geographicRing.latitude = geographicPoint.y.toString()
 
+                  geographicRings.push(geographicRing);
+                }
 
-
-
-      mapView.on('click', (event: esri.ViewClickEvent) => {
-        const point = event.mapPoint.clone();
-        vertices.push([point.longitude, point.latitude]);
-        console.log('sau khi push vo verices:', vertices);
-
-        const polygon = new Polygon({
-          rings: [vertices],
-          spatialReference: {
-            wkid: 4326
+              }
+              // In kết quả ra console
+              console.log(geographicRings);
+              this.shareDataService.positionPost = geographicRings;
+            }
           }
         });
 
-        polygonGraphic.geometry = polygon;
-      });
-
-      mapView.on("double-click", (event: esri.ViewDoubleClickEvent) => {
-        if (vertices.length > 0) {
-          vertices.pop();
-
-          const polygon = new Polygon({
-            rings: [vertices],
-            spatialReference: {
-              wkid: 4326
+        sketch.on("update", (event: any) => {
+          const graphic: __esri.Graphic = event.graphics[0];
+          if (graphic.geometry.type === "polygon") {
+            const polygon: __esri.Polygon = graphic.geometry as __esri.Polygon;
+            const rings = polygon.rings;
+            // Chuyển đổi tọa độ từ EPSG: 3857 sang EPSG: 4326
+            const geographicRings: PositionModel[] = [];
+            for (let i = 0; i < rings.length; i++) {
+              const ring = rings[i];
+              for (let j = 0; j < ring.length; j++) {
+                const geographicRing: PositionModel = new PositionModel();
+                const webMercatorPoint = {
+                  x: ring[j][0],
+                  y: ring[j][1]
+                };
+                const geographicPoint = webMercatorUtils.webMercatorToGeographic(webMercatorPoint);
+                geographicRing.longtitude = geographicPoint.x.toString();
+                geographicRing.latitude = geographicPoint.y.toString();
+                geographicRings.push(geographicRing);
+              }
             }
-          });
-          polygonGraphic.geometry = polygon;
-        }
-      });
 
-      mapView.when(() => {
+            if (event.toolEventInfo && (event.toolEventInfo.type === "move-stop" || event.toolEventInfo.type === "reshape-stop")) {
+              // In kết quả ra console
+              console.log(geographicRings);
+              this.shareDataService.positionPost = geographicRings;
+            }
+          }
+        });
+
         this.mapLoaded.emit(true);
       });
     } catch (error) {
