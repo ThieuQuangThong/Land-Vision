@@ -33,21 +33,20 @@ export class AuthGuard implements CanActivate {
       const id = Number(route.paramMap.get('id'));
 
 
-      var check = this.auth.checkAccessTokenAndRefresh();
-      console.log(check.status);
+
       var token = this.storage.isLoggedIn();
       if (token) {
         if (state.url == "login"){
           this.router.navigate(['/']);
+          this.auth.refreshToken()
           return true;
         }
         return true;
       } else {
-        // if (route.data['requiredAuth'] == true) {
-        //   this.router.navigate(['404error']);
-        //   return false;
-        // }
-        this.auth.refreshToken()
+        if (route.data['requiredAuth'] == true) {
+          this.router.navigate(['404error']);
+          return false;
+        }
         return true;
       }
 

@@ -17,7 +17,8 @@ HttpClient;
 })
 export class AuthService {
   jwtService: JwtHelperService = new JwtHelperService();
-public  code: any;
+  public  code: any;
+  private token!: string;
   data = {email: '', code: ''};
   headers = new HttpHeaders({ 'Content-Type': 'application/json' });
   public email: any;
@@ -54,6 +55,20 @@ public  code: any;
       );
 
   }
+  getToken(): string {
+    return this.token;
+  }
+
+  setToken(token: string): void {
+    this.token = token;
+  }
+
+  refreshToken(): Observable<string> {
+    const refreshToken = localStorage.getItem('token');
+    const url = 'https://localhost:7165/api/Account/refresh';
+    return this.http.post<string>(url, { refreshToken });
+  }
+
 
   sendEmailForVarification(user: any) {
     console.log(user);
@@ -64,16 +79,6 @@ public  code: any;
     })
   }
 
-  refreshToken(): Observable<any> {
-    const refreshToken = localStorage.getItem('token') ; // Retrieve refresh token from local storage
-    return this.http.post( 'https://localhost:7165/api/Account/refresh', refreshToken )
-      .pipe(
-        tap(response => {
-          // Update token and refresh token in local storage
-          localStorage.setItem('token','');
-        })
-      );
-  }
   getTokenInformation() {
     const token = localStorage.getItem('token');
 
@@ -120,34 +125,7 @@ public  code: any;
     return null;
   }
 
-  public checkAccessTokenAndRefresh(): { status: "", token: "" } {
-    const localStorageTokens = localStorage.getItem('token');
-    var check = true;
-    if (localStorageTokens) {
-      var token = JSON.parse(localStorageTokens) as TokenModel;
-      var isTokenExpired = this.jwtHelper.isTokenExpired(token.accessToken);
-      if (isTokenExpired) {
-        this.refreshToken().subscribe(
-          (tokenNew: TokenModel) => {
-            localStorage.setItem('token', JSON.stringify(tokenNew));
-            return Object({
-              status: check,
-              token: tokenNew,
-            });
-          },
-          err => {
-            this.logout();
-            check = false;
-          }
-        );
-      }
-    } else {
-      check = false;
-    }
-    return Object({
-      status: check,
-    });
-  }
+
 
   forgotPassword(email: string): Observable<any> {
     const url = API_URL.FORGOT_PASSWORD(email);

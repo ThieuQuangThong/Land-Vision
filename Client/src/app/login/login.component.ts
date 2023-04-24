@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit{
       password: ['', [Validators.required, Validators.minLength(6), Validators.maxLength(30)]]
     })
    }
-   
+
 
 
 
@@ -53,6 +53,7 @@ export class LoginComponent implements OnInit{
      }
    }
 
+
    login() {
     this.loading = true;
     const email = this.loginForm?.get('email')?.value;
@@ -60,7 +61,7 @@ export class LoginComponent implements OnInit{
     this.auth.login(email, password).subscribe((response) => {
       this.loading = false;
         const token:TokenModel = new TokenModel()
-        token.accessToken = response
+        token.accessToken = typeof response === 'string' ? response : '';
           localStorage.setItem("token",JSON.stringify(token));
           AlertService.setAlertModel('success',"Login successfully")
           this.route.navigate(['landing'])

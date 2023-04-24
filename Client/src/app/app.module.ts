@@ -212,7 +212,7 @@ import {
   ],
   providers:
   [
-    { provide: HTTP_INTERCEPTORS,
+    {  provide: HTTP_INTERCEPTORS,
       useClass: AuthTokenInterceptor,
       multi: true
     },
