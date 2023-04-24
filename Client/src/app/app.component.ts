@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { SocialAuthService } from '@abacritt/angularx-social-login';
+import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 
 @Component({
@@ -6,7 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent  implements OnInit{
   title = 'Client';
 
   constructor(
@@ -14,5 +15,9 @@ export class AppComponent {
   ){
     translate.addLangs(['en','vi']);
     translate.setDefaultLang('en');
+  }
+
+  ngOnInit() {
+
   }
 }
