@@ -103,6 +103,7 @@ import { RelativeBuildingTabComponent } from './components/relative-building-tab
 import { DistanceTransferPipe } from './_pipes/distance-transfer.pipe';
 import { PostImageComponent } from './components/post-image/post-image.component';
 import { StopPropagationDirectiveService } from './_service/stopPropagationDirectiveService';
+import { MapListDetailComponent } from './components/maps/map-list-detail/map-list-detail.component';
 
 
 @NgModule({
@@ -165,7 +166,8 @@ import { StopPropagationDirectiveService } from './_service/stopPropagationDirec
     RelativeBuildingTabComponent,
     DistanceTransferPipe,
     PostImageComponent,
-    StopPropagationDirectiveService
+    StopPropagationDirectiveService,
+    MapListDetailComponent
     // LoginComponent,
     // RegisterComponent,
   ],
