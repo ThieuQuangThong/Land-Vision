@@ -104,6 +104,8 @@ import {  SocialAuthServiceConfig } from '@abacritt/angularx-social-login';
 import {
   GoogleLoginProvider
 } from '@abacritt/angularx-social-login';
+import { MapListDetailComponent } from './components/maps/map-list-detail/map-list-detail.component';
+
 
 @NgModule({
   declarations: [
@@ -165,7 +167,8 @@ import {
     RelativeBuildingTabComponent,
     DistanceTransferPipe,
     PostImageComponent,
-    StopPropagationDirectiveService
+    StopPropagationDirectiveService,
+    MapListDetailComponent
     // LoginComponent,
     // RegisterComponent,
   ],
