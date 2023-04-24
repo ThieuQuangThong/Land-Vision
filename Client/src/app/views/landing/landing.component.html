@@ -52,55 +52,43 @@
                 placeholder="Search by listing, location, bedroom number...">
             </div>
 
-            <div class="flex items-center justify-between mt-4">
-              <p class="font-medium m-3">
-                Filters
+                        <div class="flex items-center justify-between mt-4">
+              <p class="font-medium">
+              Filters
               </p>
 
 
-              <div>
-                <div class="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-7 gap-4 mt-1">
-                  <select [(ngModel)]="selectedTransactionTypes"
-                    class="w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
-                    <option *ngFor="let transactionType of transactionTypes; let i = index" value="{{i}}">
-                      {{transactionType | translate}} </option>
-                  </select>
+                        <div>
+                            <div class="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-7 gap-4 mt-1">
+                                <select [(ngModel)]="selectedTransactionTypes" class="w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
+                  <option *ngFor="let transactionType of transactionTypes; let i = index" value="{{i}}">{{transactionType | translate}} </option>
+                </select>
 
-                  <select [(ngModel)]="selectedInterior"
-                    class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
-                    <option *ngFor="let interior of interiors; let i = index" value="{{i}}">{{interior | translate}}
-                    </option>
-                  </select>
+                                <select [(ngModel)]="selectedInterior" class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
+                  <option *ngFor="let interior of interiors; let i = index" value="{{i}}">{{interior | translate}} </option>
+                </select>
 
-                  <select [(ngModel)]="selectedPrice"
-                    class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
-                    <option *ngFor="let price of prices; let i = index" value="{{i}}">{{price | translate}} </option>
+                                <select [(ngModel)]="selectedPrice" class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
+                  <option *ngFor="let price of prices; let i = index" value="{{i}}">{{price | translate}} </option>
 
-                  </select>
+                </select>
 
-                  <select [(ngModel)]="selectedFloor"
-                    class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
-                    <option *ngFor="let floor of floors; let i = index" value="{{i}}">{{floor | translate}} </option>
+                                <select [(ngModel)]="selectedFloor" class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
+                  <option *ngFor="let floor of floors; let i = index" value="{{i}}">{{floor | translate}} </option>
 
-                  </select>
+                </select>
 
-                  <select [(ngModel)]="selectedBedroom"
-                    class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
-                    <option *ngFor="let bedRoom of bedRooms; let i = index" value="{{i}}">{{bedRoom | translate}}
-                    </option>
-                  </select>
+                                <select [(ngModel)]="selectedBedroom" class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
+                  <option *ngFor="let bedRoom of bedRooms; let i = index" value="{{i}}">{{bedRoom | translate}} </option>
+                </select>
 
-                  <select [(ngModel)]="selectedBathroom"
-                    class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
-                    <option *ngFor="let bathRoom of bathRooms; let i = index" value="{{i}}">{{bathRoom | translate}}
-                    </option>
-                  </select>
+                                <select [(ngModel)]="selectedBathroom" class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
+                  <option *ngFor="let bathRoom of bathRooms; let i = index" value="{{i}}">{{bathRoom | translate}} </option>
+                </select>
 
-                  <select [(ngModel)]="selectedDirection"
-                    class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
-                    <option *ngFor="let direction of directions; let i = index" value="{{i}}">{{direction | translate}}
-                    </option>
-                  </select>
+                                <select [(ngModel)]="selectedDirection" class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
+                  <option *ngFor="let direction of directions; let i = index" value="{{i}}">{{direction | translate}} </option>
+                </select>
 
                             </div>
                         </div>
@@ -108,10 +96,10 @@
                 </div>
             </div>
 
-        <div class="mt-12 w-full p-3 ">
-          <span class="font-medium">BROWSE HOT OFFERS</span>
-          <p class="font-bold text-3xl">Lastest Properties</p>
-          <div class="flex flex-wrap items-center justify-center">
+                        <div class="mt-6 w-full">
+                            <span class="font-medium">BROWSE HOT OFFERS</span>
+                            <p class="font-bold text-3xl">Lastest Properties</p>
+                            <div class="flex flex-wrap items-center justify-center">
 
             <app-single-product *ngFor="let post of postRespone" [postItem]="post"></app-single-product>
           </div>
