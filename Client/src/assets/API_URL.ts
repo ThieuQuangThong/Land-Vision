@@ -1,6 +1,6 @@
 import { PagingModel } from "src/app/models/paging-model";
 
-export const DOMAIN ='https://localhost:7165';
+export const DOMAIN ='https://localhost:44310';
 
 export const API_URL = {
   GET_ALL_POST: (pagingModel: PagingModel) =>`${DOMAIN}/api/Post/${pagingModel.skipCount}&${pagingModel.maxResultCount}`,
@@ -28,5 +28,7 @@ export const API_URL = {
   GET_SEARCHED_POSTS:(pagingModel: PagingModel) => `${DOMAIN}/api/Post/getSearchedPost/${pagingModel.skipCount}&${pagingModel.maxResultCount}`,
   CHECK_IDENTIFY_CARD:() => `https://api.fpt.ai/vision/idr/vnm`,
   CHECK_IS_USER_AVAILABLE_TO_POST:(userId: number) => `${DOMAIN}/api/Post/availablePost/${userId}`,
-  GET_USER_BY_ID:(userId: number) => `${DOMAIN}/api/Account/getUserById/${userId}`
+  GET_USER_BY_ID:(userId: number) => `${DOMAIN}/api/Account/getUserById/${userId}`,
+  GET_ALL_VIP : () => `${DOMAIN}/api/Vip`,
+  UPDATE_USER_VIP : (userId :number, vipId : number) =>`${DOMAIN}/api/Account/${userId}&${vipId}`
 };
