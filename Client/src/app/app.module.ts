@@ -98,7 +98,10 @@ import { RelativeBuildingTabComponent } from './components/relative-building-tab
 import { DistanceTransferPipe } from './_pipes/distance-transfer.pipe';
 import { PostImageComponent } from './components/post-image/post-image.component';
 import { StopPropagationDirectiveService } from './_service/stopPropagationDirectiveService';
-
+import { TranferVipPipe } from './_pipes/tranfer-vip.pipe';
+import { AuthTokenInterceptor } from './_helper/http.interceptor';
+import { AuthGuard } from './_helper/http.guard';
+import { MapListDetailComponent } from './components/maps/map-list-detail/map-list-detail.component';
 
 @NgModule({
   declarations: [
@@ -161,7 +164,8 @@ import { StopPropagationDirectiveService } from './_service/stopPropagationDirec
     DistanceTransferPipe,
     TranferVipPipe,
     PostImageComponent,
-    StopPropagationDirectiveService
+    StopPropagationDirectiveService,
+    MapListDetailComponent,
     // LoginComponent,
     // RegisterComponent,
   ],
