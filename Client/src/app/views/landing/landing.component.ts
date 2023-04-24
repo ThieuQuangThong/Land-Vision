@@ -75,6 +75,9 @@ export class LandingComponent implements OnInit {
         if(paging.skipCount >= respone.totalCount){
           this.isFullItem = true;
         }
+        else{
+          this.isFullItem = false;
+        }
       },
       error => {
         this.isLoading = false
