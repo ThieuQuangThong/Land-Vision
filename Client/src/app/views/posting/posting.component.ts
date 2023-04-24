@@ -182,7 +182,7 @@ export class PostingComponent implements OnInit {
   submit(){
     this.isPosting = true;
     const userId = this.auth.getUserId();
-    this.postRequest.property.positions = this.shareDataService.positionPost;
+    this.postRequest.property.positions = this.shareDataService.getPositionsValue();
     this.postRequest.post.images = this.shareDataService.getImageSlideValue().map(x => {
       const imageModel: ImageModel = {
         linkImage : x
