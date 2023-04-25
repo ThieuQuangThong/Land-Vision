@@ -1,6 +1,6 @@
 import { PagingModel } from "src/app/models/paging-model";
 
-export const DOMAIN ='https://localhost:44310';
+export const DOMAIN ='https://localhost:7165';
 
 export const API_URL = {
   GET_ALL_POST: (pagingModel: PagingModel) =>`${DOMAIN}/api/Post/${pagingModel.skipCount}&${pagingModel.maxResultCount}`,
@@ -30,5 +30,6 @@ export const API_URL = {
   CHECK_IS_USER_AVAILABLE_TO_POST:(userId: number) => `${DOMAIN}/api/Post/availablePost/${userId}`,
   GET_USER_BY_ID:(userId: number) => `${DOMAIN}/api/Account/getUserById/${userId}`,
   GET_ALL_VIP : () => `${DOMAIN}/api/Vip`,
-  UPDATE_USER_VIP : (userId :number, vipId : number) =>`${DOMAIN}/api/Account/${userId}&${vipId}`
+  UPDATE_USER_VIP : (userId :number, vipId : number) =>`${DOMAIN}/api/Account/${userId}&${vipId}`,
+  GET_INFOR_POSITION_POST:(postId: number) => `${DOMAIN}/api/Post/getAllPositionPost/${postId}`
 };

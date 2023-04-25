@@ -19,7 +19,7 @@ export class ProductDetailComponent implements OnInit {
   selectedStreet: string ='';
   selectedAddress: string ='';
 
-  constructor(private shareDataService: ShareDataService ,private route: ActivatedRoute, private postService:PostService) {}
+  constructor(private  shareDataService: ShareDataService,private route: ActivatedRoute, private postService:PostService) {}
 
 
   onDropdownChange() {
@@ -29,6 +29,7 @@ export class ProductDetailComponent implements OnInit {
 
   ngOnInit() {
     this.postId = this.route.snapshot.params['postId'];
+
     this.shareDataService.setPositionPost([]);
     this.postService.getPostById(this.postId)
     .subscribe(
