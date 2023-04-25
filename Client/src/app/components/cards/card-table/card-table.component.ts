@@ -59,9 +59,7 @@ export class CardTableComponent implements OnInit {
 
 
   }
-  goToDetail(id : number){
-    this.router.navigate([`productdetails/${id}`])
-  }
+
   ngOnInit(): void {
     this.getAll(this.paging);
   }
@@ -87,8 +85,23 @@ export class CardTableComponent implements OnInit {
 
   hideUnhide(postId : number){
     this.postService.hideUnhidePost(postId)
-    .subscribe();
-    window.location.reload();
+    .subscribe(
+      _ =>{
+        const test = this.postRespone.map(x => {
+          if(x.id === postId){
+            x.isHide = !x.isHide
+          }
+          return x;
+        })
+        this.postRespone = test;
+        this.dataSourcePost = new MatTableDataSource(this.postRespone);
+
+        this.dataSourcePost.sort = this.sort;
+        this.dataSourcePost.paginator = this.postPaginator;
+      }
+
+    );
+
   }
 
 

@@ -40,11 +40,6 @@ export class AuthNavbarComponent implements OnInit {
     this.postService.checkIsUserAvailableToPost(userId)
     .subscribe(
       respone =>{
-        if(respone === false){
-          AlertService.setAlertModel('warning',"You must upgrade to post more!");
-          this.router.navigate(['/profile']);
-          return
-        }
         this.router.navigate(['/posting']);
       },
       erorr =>{
