@@ -7,6 +7,7 @@ import { API_URL } from 'src/assets/API_URL';
 import { PostRequest } from '../models/post-request';
 import { PostModel } from '../models/post-model';
 import { SearchModel } from '../models/search-model';
+import { PositonPostModel } from '../models/positonPost-model';
 
 @Injectable({
   providedIn: 'root'
@@ -32,6 +33,7 @@ export class PostService {
   }
 
   getPostById(id: number):Observable<PostModel>{
+    console.log(65564756756);
 
     return this.http.get<PostModel>(API_URL.GET_POST_BY_ID(id));
   }
@@ -47,4 +49,9 @@ export class PostService {
   checkIsUserAvailableToPost(userId: number):Observable<boolean>{
     return this.http.get<boolean>(API_URL.CHECK_IS_USER_AVAILABLE_TO_POST(userId));
   }
+
+  getInforPositionPosts(postId: number): Observable<PositonPostModel[]>{
+    return this.http.get<PositonPostModel[]>(API_URL.GET_INFOR_POSITION_POST(postId));
+  }
+
 }

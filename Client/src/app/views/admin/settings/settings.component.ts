@@ -1,3 +1,4 @@
+import { ShareDataService } from 'src/app/_service/share-data.service';
 import { Component, OnInit } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { AlertService } from "src/app/_service/alert.service";
@@ -19,11 +20,10 @@ export class SettingsComponent implements OnInit {
   selectedWards: string ='';
   selectedStreet: string ='';
   selectedAddress: string ='';
-  shareDataService: any;
 
 
 
-  constructor(private route: ActivatedRoute, private postService:PostService) {}
+  constructor(private  shareDataService: ShareDataService,private route: ActivatedRoute, private postService:PostService) {}
 
 
   onDropdownChange() {
@@ -34,6 +34,7 @@ export class SettingsComponent implements OnInit {
 
   ngOnInit() {
     this.postId = this.route.snapshot.params['postId'];
+
     this.shareDataService.setPositionPost([]);
     this.postService.getPostById(this.postId)
     .subscribe(
@@ -47,6 +48,7 @@ export class SettingsComponent implements OnInit {
         AlertService.setAlertModel('danger','Some thing went wrong')
       }
     )
+
 
   }
 

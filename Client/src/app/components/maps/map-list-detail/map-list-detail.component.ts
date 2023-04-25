@@ -3,6 +3,8 @@ import { PositionModel } from './../../../models/position-model';
 import { Component, OnInit, ViewChild, ElementRef, Input, Output, EventEmitter } from "@angular/core";
 import { loadModules } from 'esri-loader';
 import esri = __esri;
+import { PostService } from 'src/app/_service/post.service';
+import { PositonPostModel } from 'src/app/models/positonPost-model';
 
 @Component({
   selector: 'app-map-list-detail',
@@ -12,6 +14,7 @@ import esri = __esri;
 export class MapListDetailComponent {
 
   @Output() mapLoaded = new EventEmitter<boolean>();
+  @Input() postId: number =0;
   @ViewChild('mapViewNode', { static: true })
   private mapViewEl!: ElementRef;
 
@@ -20,7 +23,7 @@ export class MapListDetailComponent {
    * @private _center sets map center
    * @private _basemap sets type of map
    */
-  private _zoom: number = 18;
+  private _zoom: number = 22;
   private _center: Array<number> = [108.24473386336861, 16.06329028488975];
   private _basemap: string = 'osm';
 
@@ -51,9 +54,11 @@ export class MapListDetailComponent {
     return this._basemap;
   }
 
-  constructor(private shareDataService: ShareDataService) {}
+  constructor(private shareDataService: ShareDataService, private postService: PostService) {}
 
-  async initializeMap() {
+  async initializeMap(centerPos: number[][] =[], otherPos:number[][][], positionPosts: PositonPostModel[] ) {
+
+
     try {
       const [
         EsriMap,
@@ -62,12 +67,10 @@ export class MapListDetailComponent {
         Graphic,
         GraphicsLayer,
         SimpleFillSymbol,
-        Sketch,
         Locate,
         BasemapGallery,
         Fullscreen,
         Search,
-        webMercatorUtils
       ] = await loadModules([
         'esri/Map',
         'esri/views/MapView',
@@ -89,7 +92,9 @@ export class MapListDetailComponent {
       const map: esri.Map = new EsriMap(mapProperties);
 
       const graphicsLayer = new GraphicsLayer();
+      let pointGraphics = new GraphicsLayer();
       map.add(graphicsLayer);
+      map.add(pointGraphics);
 
       const polygonSymbol = new SimpleFillSymbol({
         color: [0, 255, 255, 0.5],
@@ -112,17 +117,16 @@ export class MapListDetailComponent {
       const polygonGraphic = new Graphic({
         symbol: polygonSymbol
       });
-
       graphicsLayer.add(polygonGraphic);
       const mapViewProperties: esri.MapViewProperties = {
         container: this.mapViewEl.nativeElement,
-        center: this._center,
+        center: centerPos.length === 0 ? this._center :centerPos[0],
         zoom: this._zoom,
         map: map,
         constraints: {
           geometry: extent,
           minScale: 500000,
-          maxScale: 2000
+          // maxScale: 3000
         }
       };
       const mapView: esri.MapView = new EsriMapView(mapViewProperties);
@@ -132,7 +136,6 @@ export class MapListDetailComponent {
       });
 
       mapView.ui.add(locate, "top-left");
-
       const fullscreen  = new Fullscreen ({
         view: mapView
       });
@@ -153,34 +156,87 @@ export class MapListDetailComponent {
           view: mapView
         });
 
-        mapView.ui.add(search, "top-right");
+       console.log(otherPos);
 
+       mapView.ui.add(search, "top-right");
+       let i = 0;
+          otherPos.forEach(
+            x =>{
+              const popupTemplate = {
+                title: "{Name}",
+                content: "{Description}"
+             }
+             const attributes = {
+                Description: `<div>
+                <p>Tên: ${positionPosts[i].name}</p>
+                <a href="http://localhost:4200/productdetails/${positionPosts[i].id}">Địa chỉ: ${positionPosts[i].addressNumber}</a>
+                </div>`
+             }
+              const polygon = {
+                type: "polygon",
+                rings: x
+             };
+             const polygonGraphic = new Graphic({
+              geometry: polygon,
+              symbol: polygonSymbol,
+              attributes: attributes,
+              popupTemplate: popupTemplate
+           });
+           graphicsLayer.add(polygonGraphic);
+           i++;
+            }
+          )
 
-
-        this.shareDataService.getPositionPostAsTracking()
+        this.shareDataService.getRelativePlaceAsTracking()
         .subscribe(
           respone =>{
-            const positionArray: number[][] = [];
-            respone.forEach(
-              x => {
-                const {latitude, longtitude} = x;
-                positionArray.push([Number(longtitude), Number(latitude)]);
-              }
-            )
-            const polygon = {
-              type: "polygon",
-              rings: positionArray
+            map.remove(pointGraphics);
+            pointGraphics = new GraphicsLayer();
+            const simpleMarkerSymbol = {
+              type: "picture-marker",  // autocasts as new PictureMarkerSymbol()
+              url: "https://static.arcgis.com/images/Symbols/Shapes/BlackStarLargeB.png",
+              width: "64px",
+              height: "64px"
            };
-
-           const polygonGraphic = new Graphic({
-            geometry: polygon,
-            symbol: polygonSymbol,
-
-         });
-         graphicsLayer.add(polygonGraphic);
+          respone.forEach(
+            x =>{
+              let point = { //Create a point
+                type: "point",
+                longitude: Number(x.longtitude),
+                latitude: Number(x.latitude)
+             };
+             let pointGraphic = new Graphic({
+              geometry: point,
+              symbol: simpleMarkerSymbol,
+           });
+           map.add(pointGraphics);
+           pointGraphics.add(pointGraphic);
+            }
+          )
           }
         )
 
+    //      const point = { //Create a point
+    //       type: "point",
+    //       longitude: 108.20993977685053,
+    //       latitude: 16.031755678530747
+    //    };
+    //    const simpleMarkerSymbol = {
+    //     type: "simple-marker",
+    //     color: [0, 255, 255, 0.5],
+    //     outline: {
+    //       color: [0, 0, 0],
+    //       width: 1
+    //     }
+    //  };
+    //    const pointGraphic = new Graphic({
+    //     geometry: point,
+    //     symbol: simpleMarkerSymbol,
+    //     attributes: attributes,
+    //     popupTemplate: popupTemplate
+    //  });
+    //       graphicsLayer.add(pointGraphic);
+         graphicsLayer.add(polygonGraphic);
 
         this.mapLoaded.emit(true);
       });
@@ -190,7 +246,28 @@ export class MapListDetailComponent {
   }
 
   ngOnInit() {
-    this.initializeMap();
-  }
+    this.postService.getInforPositionPosts(this.postId)
+    .subscribe(
+      respone =>{
+          const positionPosts: PositonPostModel[] =[];
+          const otherPositions: number[][][] = [];
+          const positionArray: number[][] = this.shareDataService.tranferToArsgisPos(respone[0].positions);
+          let j = 0;
+          respone.forEach(
+            x =>{
+              const otherPositionArray = this.shareDataService.tranferToArsgisPos(x.positions)
+              if(otherPositionArray.length > 0){
+                otherPositions.push(otherPositionArray);
+                positionPosts.push(x);
+              }
 
+            }
+          )
+
+
+          this.initializeMap(positionArray,otherPositions,positionPosts);
+      }
+    )
+
+  }
 }

@@ -5,6 +5,7 @@ using Land_Vision.DTO;
 using Land_Vision.DTO.PostDtos;
 using Land_Vision.Interface.IRepositories;
 using Land_Vision.Interface.IServices;
+using Land_Vision.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Land_Vision.Controllers
@@ -153,6 +154,34 @@ namespace Land_Vision.Controllers
             var post = await _postRepository.GetPostByTitleAsync(postTitle);
             return Ok(post);
         }
+
+        // GET all infor position's Post
+        /// <summary>
+        /// GET all infor position's Post
+        /// </summary>
+        [HttpGet("getAllPositionPost/{postId}")]
+        [ProducesResponseType(200, Type = typeof(List<PostsPositionDto>))]
+        public async Task<ActionResult<List<PostsPositionDto>>> GetAllPositionPost(int postId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if(!await _postRepository.CheckIsPostExistByIdAsync(postId)){
+                ModelState.AddModelError("", "Post not exist");
+                return NotFound(ModelState);
+            }
+
+            var postsPositionDto = _mapper.Map<List<PostsPositionDto>>(await _postRepository.GetAllInforPositionOfPostAsync());
+            var swaggItem = postsPositionDto.Where(x => x.Id == postId).FirstOrDefault();
+            postsPositionDto.Remove(swaggItem);
+
+            postsPositionDto.Insert(0,swaggItem);
+
+            return Ok(postsPositionDto);
+        }
+
 
         // POST Post
         /// <summary>

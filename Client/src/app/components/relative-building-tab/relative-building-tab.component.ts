@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NearByServiceService } from 'src/app/_service/near-by-service.service';
+import { ShareDataService } from 'src/app/_service/share-data.service';
 import { PlaceModel } from 'src/app/models/place-model';
 
 @Component({
@@ -13,13 +14,14 @@ export class RelativeBuildingTabComponent {
   texts: string[] = ['Schools','Markets','Parks','Hopitals', 'restaurants','MyPosition'];
   buildingSearch: string[] = ['trường', 'siêu thị', 'Công viên', 'Bệnh', 'Nhà hàng']
   currentBuildingSearchs: PlaceModel[] =[]
-  constructor(private nearByServiceService :NearByServiceService) {
+  constructor(private shareService: ShareDataService, private nearByServiceService :NearByServiceService) {
      }
 
   toggleTabs($tabNumber: number){
     this.openTab = $tabNumber;
     const lat = 16.008983808041833;
     const lng = 108.20735225558515;
-    this.currentBuildingSearchs = this.nearByServiceService.onCloseLocation({latitude:lat.toString(), longtitude: lng.toString()},2, this.buildingSearch[$tabNumber-1])
+    //this.currentBuildingSearchs = this.nearByServiceService.onCloseLocation({latitude:lat.toString(), longtitude: lng.toString()},2, this.buildingSearch[$tabNumber-1])
+    this.shareService.setRelativePlaces(this.currentBuildingSearchs,$tabNumber);
   }
 }
