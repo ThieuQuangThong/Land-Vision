@@ -29,7 +29,7 @@
           <p>Email Verification</p>
         </div>
         <div class="flex flex-row text-sm font-medium text-gray-400">
-          <p>We have sent a code to your email ba**@dipainhouse.com</p>
+          <p>We have sent a code to your email <span>{{email}}</span></p>
         </div>
       </div>
 
@@ -38,7 +38,7 @@
           <form class="flex flex-col space-y-16" [formGroup]="verifyForm" (click)="OnSubmit()">
             <div class="flex flex-row items-center justify-between mx-auto w-full max-w-xs" >
 
-                <ngx-otp-input
+                <ngx-otp-input style="font-size: 7px;"
                   [config]="otpInputConfig"  (otpChange)="handeOtpChange($event)" (fill)="handleFillEvent($event)" class="input" formControlName="code"  >
                 </ngx-otp-input>
 

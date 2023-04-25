@@ -22,6 +22,10 @@ code-input {
   margin-left: 5px;
 
 }
+span{
+  color: #38C390;
+  font-weight: 500;
+}
 a.mt-top{
-  font-weight: 900;
+  font-weight: 700;
 }
