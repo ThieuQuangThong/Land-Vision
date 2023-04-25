@@ -106,5 +106,14 @@ namespace Land_Vision.Repositories
             .Include(k => k.Role)
             .FirstOrDefaultAsync();
         }
+
+        public async Task<bool> UpdateVipUserAsync(int userId, int vipId)
+        {
+            var user = await _dbContext.Users.Where(x => x.Id == userId).FirstOrDefaultAsync();
+            var vip = await _dbContext.Vips.Where(x => x.Id == vipId).FirstOrDefaultAsync();
+            user.Vip = vip;
+            _dbContext.Users.Update(user);
+            return await SaveChangesAsync();
+        }
     }
 }
