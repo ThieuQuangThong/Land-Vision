@@ -29,7 +29,7 @@
           <p>Email Verification</p>
         </div>
         <div class="flex flex-row text-sm font-medium text-gray-400">
-          <p>We have sent a code to your email ba**@dipainhouse.com</p>
+          <p>We have sent a code to your email <span>{{ obfuscateEmail(email) }}</span></p>
         </div>
       </div>
 
@@ -38,7 +38,7 @@
           <form class="flex flex-col space-y-16" [formGroup]="verifyForm" (click)="OnSubmit()">
             <div class="flex flex-row items-center justify-between mx-auto w-full max-w-xs" >
 
-                <ngx-otp-input
+                <ngx-otp-input style="font-size: 7px;"
                   [config]="otpInputConfig"  (otpChange)="handeOtpChange($event)" (fill)="handleFillEvent($event)" class="input" formControlName="code"  >
                 </ngx-otp-input>
 
@@ -46,15 +46,15 @@
 
             <div class="flex flex-col space-y-3">
               <div>
-                <button type="submit" class="flex flex-row items-center justify-center text-center w-full border rounded-xl outline-none py-5 bg-[#38C390]  border-none text-white text-sm shadow-sm">
+                <button type="submit" class="flex flex-row items-center justify-center text-center w-full border rounded-xl outline-none py-2 bg-[#38C390]  border-none text-white text-sm shadow-sm">
                   Verify Account
                 </button>
               </div>
 
             </div>
           </form>
-          <div class=" mt-4 flex flex-row items-center justify-center text-center text-sm font-medium space-x-1 text-gray-500">
-            <p>Didn't recieve code?</p> <a class="flex flex-row items-center -[#38C390] " target="_blank" rel="noopener noreferrer" (click)="resend(email)">Resend</a>
+          <div class=" mt-4 flex flex-row items-center justify-center text-center text-sm font-medium  text-gray-500">
+            <p  >Didn't recieve code?     </p> <a class="mt-top" target="_blank" rel="noopener noreferrer" (click)="resend(email)">Resend</a>
           </div>
         </div>
       </div>

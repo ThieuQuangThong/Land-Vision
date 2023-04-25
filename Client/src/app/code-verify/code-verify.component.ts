@@ -30,16 +30,18 @@ export class CodeVerifyComponent implements OnInit {
 
   };
 
+
   getcode: any;
   code: any;
   constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private router: Router, private auth: AuthService) { }
   email:string ="";
   ngOnInit(): void {
-    this.email = this.route.snapshot.paramMap.get('email')!;
+    this.email = this.auth.decode(this.route.snapshot.paramMap.get('email')!)
     this.verifyForm = this.fb.group({
       code: ['', Validators.required],
     });
     this.handleFillEvent(this.getcode)
+    this.obfuscateEmail(this.email)
   }
   handleFillEvent(hai: string): void {
     this.getcode = hai;
@@ -51,7 +53,12 @@ export class CodeVerifyComponent implements OnInit {
 
   }
 
-
+  obfuscateEmail(email: string): string {
+    const parts = email.split('@');
+    const username = parts[0];
+    const obfuscated = username.substring(0, 4) + '*'.repeat(username.length - 2) ;
+    return obfuscated + '@' + parts[1];
+  }
   getData(email: any, code: any) {
     const data = {
       email: email,
@@ -60,7 +67,7 @@ export class CodeVerifyComponent implements OnInit {
     const url = 'https://localhost:7165/api/Account/validateCode';
     return this.http.post(url, data).subscribe((response: any) => {
       AlertService.setAlertModel("success", "Please enter your new password!")
-      this.router.navigate(['new-password/'+code +"/"+ (this.email)])
+      this.router.navigate(['new-password/'+ this.auth.encode(code) +"/"+ this.auth.encode(email)])
     },
     (error) =>{
       AlertService.setAlertModel("danger", "Some thing went wrong!")
@@ -78,7 +85,7 @@ export class CodeVerifyComponent implements OnInit {
   }
   OnSubmit() {
 
-    console.log(this.code)
+    console.log(this.email)
 
     const code = this.getcode
     this.getData(this.email, code);

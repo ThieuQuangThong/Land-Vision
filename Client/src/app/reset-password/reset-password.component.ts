@@ -41,7 +41,7 @@ export class ResetPasswordComponent implements OnInit {
   forgotPassword(email: string) {
     this.auth.forgotPassword(email).subscribe(res => {
       AlertService.setAlertModel("success", "Please Check your mail!")
-      this.router.navigate(['code-verify/'+ email])
+      this.router.navigate(['code-verify/'+ this.auth.encode(email)])
 
     },
       (err) => {

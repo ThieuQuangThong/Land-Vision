@@ -6,6 +6,7 @@ namespace Land_Vision.Interface.IRepositories
 {
     public interface IPostRepository
     {
+        Task<List<Post>> GetAllInforPositionOfPostAsync();
         Task<int> CountPostByUserIdAsync(int userId);
         Task<bool> HidePostAsync(int postId);
         Task<bool> VerifyPostAsync(int postId);

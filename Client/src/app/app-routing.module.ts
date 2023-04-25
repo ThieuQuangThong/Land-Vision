@@ -11,12 +11,13 @@ import { AuthComponent } from "./layouts/auth/auth.component";
 // admin views
 import { DashboardComponent } from "./views/admin/dashboard/dashboard.component";
 import { MapsComponent } from "./views/admin/maps/maps.component";
-import { SettingsComponent } from "./views/admin/settings/settings.component";
+import { ProductDetailComponent } from "./views/admin/product-detail/product-detail.component";
 import { TablesComponent } from "./views/admin/tables/tables.component";
 
 // auth views
 // import { LoginComponent } from "./views/auth/login/login.component";
 // import { RegisterComponent } from "./views/auth/register/register.component";
+import { AuthGuard } from './_helper/http.guard';
 
 // no layouts views
 import { IndexComponent } from "./views/index/index.component";
@@ -29,8 +30,7 @@ import { CodeVerifyComponent } from './code-verify/code-verify.component';
 import { PostingComponent } from './views/posting/posting.component';
 import { EmailConfirmSucceededComponent } from './views/email-confirm-succeeded/email-confirm-succeeded.component';
 import { PageNotFoundComponent } from './views/page-not-found/page-not-found.component';
-import { ProductDetailComponent } from './components/product-detail/product-detail.component';
-import { AuthGuard } from './_helper/http.guard';
+
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full', },
   {
@@ -83,7 +83,7 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: "productdetails/:postId", component: SettingsComponent,
+    path: "productdetails/:postId", component: ProductDetailComponent,
     data: {
       requiredAuth: false
     },
@@ -104,7 +104,7 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: "product", component: SettingsComponent,
+    path: "product", component: ProductDetailComponent,
     data: {
       requiredAuth: false
     },
@@ -124,7 +124,6 @@ const routes: Routes = [
         },
         canActivate: [AuthGuard]
       },
-      // { path: "settings", component: SettingsComponent },
       { path: "tables", component: TablesComponent },
       { path: "maps", component: MapsComponent },
       { path: "", redirectTo: "dashboard", pathMatch: "full" },
@@ -162,9 +161,6 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   { path: "**", redirectTo: "", pathMatch: "full" },
-
-
-
 ];
 
 @NgModule({

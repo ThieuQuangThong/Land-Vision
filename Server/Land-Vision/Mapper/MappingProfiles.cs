@@ -50,6 +50,10 @@ namespace Land_Vision.Mapper
             CreateMap<Post, PostDto>();
             CreateMap<PostRequestDto, Post>();
             CreateMap<Post, PostRequestDto>();
+            CreateMap<Post, PostsPositionDto>()
+            .ForMember(x => x.Name, y => y.MapFrom(src => src.User.Name))
+            .ForMember(x => x.AddressNumber, y => y.MapFrom(src => src.Property.AddressNumber))
+            .ForMember(x => x.positions, y => y.MapFrom(src => src.Property.Positions));
 
             //Property
             CreateMap<PropertyDto, Property>();
