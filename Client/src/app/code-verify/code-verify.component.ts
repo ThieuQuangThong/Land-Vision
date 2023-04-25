@@ -30,6 +30,7 @@ export class CodeVerifyComponent implements OnInit {
 
   };
 
+
   getcode: any;
   code: any;
   constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private router: Router, private auth: AuthService) { }
@@ -40,6 +41,7 @@ export class CodeVerifyComponent implements OnInit {
       code: ['', Validators.required],
     });
     this.handleFillEvent(this.getcode)
+    this.obfuscateEmail(this.email)
   }
   handleFillEvent(hai: string): void {
     this.getcode = hai;
@@ -51,7 +53,12 @@ export class CodeVerifyComponent implements OnInit {
 
   }
 
-
+  obfuscateEmail(email: string): string {
+    const parts = email.split('@');
+    const username = parts[0];
+    const obfuscated = username.substring(0, 4) + '*'.repeat(username.length - 2) ;
+    return obfuscated + '@' + parts[1];
+  }
   getData(email: any, code: any) {
     const data = {
       email: email,
