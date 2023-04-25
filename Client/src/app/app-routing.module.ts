@@ -11,7 +11,7 @@ import { AuthComponent } from "./layouts/auth/auth.component";
 // admin views
 import { DashboardComponent } from "./views/admin/dashboard/dashboard.component";
 import { MapsComponent } from "./views/admin/maps/maps.component";
-import { SettingsComponent } from "./views/admin/settings/settings.component";
+import { ProductDetailComponent } from "./views/admin/product-detail/product-detail.component";
 import { TablesComponent } from "./views/admin/tables/tables.component";
 
 // auth views
@@ -30,21 +30,86 @@ import { CodeVerifyComponent } from './code-verify/code-verify.component';
 import { PostingComponent } from './views/posting/posting.component';
 import { EmailConfirmSucceededComponent } from './views/email-confirm-succeeded/email-confirm-succeeded.component';
 import { PageNotFoundComponent } from './views/page-not-found/page-not-found.component';
-import { ProductDetailComponent } from './components/product-detail/product-detail.component';
 
 const routes: Routes = [
-  {path: '', redirectTo: 'login', pathMatch: 'full'},
-  {path: "login", component: LoginComponent},
-  {path: "signup", component: SignupComponent},
-  {path: "mapstest", component: MapExampleComponent},
-  {path: "reset-password", component: ResetPasswordComponent},
-  {path: "new-password/:code/:email", component: NewPasswordComponent},
-  {path: "code-verify/:email", component: CodeVerifyComponent},
-  {path: "dashboard", component: DashboardComponent },
-  {path: "productdetails/:postId", component: SettingsComponent },
-  {path: "emailcomfirmed", component: EmailConfirmSucceededComponent },
-  {path: "404error", component: PageNotFoundComponent },
-  {path: "product", component: SettingsComponent },
+  { path: '', redirectTo: 'login', pathMatch: 'full', },
+  {
+    path: "login", component: LoginComponent,
+
+    data: { requỉedAuth: true },
+    canActivate: [AuthGuard]
+
+  },
+  {
+    path: "signup", component: SignupComponent,
+    data: {
+      requiredAuth: false
+    },
+    canActivate: [AuthGuard]
+  },
+  {
+    path: "mapstest", component: MapExampleComponent,
+    data: {
+      requiredAuth: false
+    },
+    canActivate: [AuthGuard]
+  },
+  {
+    path: "reset-password", component: ResetPasswordComponent,
+    data: {
+      requiredAuth: false
+    },
+    canActivate: [AuthGuard]
+  },
+  {
+    path: "new-password/:code/:email", component: NewPasswordComponent,
+    data: {
+      requiredAuth: false
+    },
+    canActivate: [AuthGuard]
+  },
+  {
+    path: "code-verify/:email", component: CodeVerifyComponent,
+    data: {
+      requiredAuth: false
+    },
+    canActivate: [AuthGuard]
+  },
+  {
+    path: "dashboard", component: DashboardComponent,
+    data: {
+      requiredAuth: false
+    },
+    canActivate: [AuthGuard]
+  },
+  {
+    path: "productdetails/:postId", component: ProductDetailComponent,
+    data: {
+      requiredAuth: false
+    },
+    canActivate: [AuthGuard]
+  },
+  {
+    path: "emailcomfirmed", component: EmailConfirmSucceededComponent,
+    data: {
+      requiredAuth: false
+    },
+    canActivate: [AuthGuard]
+  },
+  {
+    path: "404error", component: PageNotFoundComponent,
+    data: {
+      requiredAuth: false
+    },
+    canActivate: [AuthGuard]
+  },
+  {
+    path: "product", component: ProductDetailComponent,
+    data: {
+      requiredAuth: false
+    },
+    canActivate: [AuthGuard]
+  },
 
 
   // admin views
@@ -59,7 +124,6 @@ const routes: Routes = [
         },
         canActivate: [AuthGuard]
       },
-      // { path: "settings", component: SettingsComponent },
       { path: "tables", component: TablesComponent },
       { path: "maps", component: MapsComponent },
       { path: "", redirectTo: "dashboard", pathMatch: "full" },
