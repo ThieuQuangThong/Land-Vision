@@ -21,8 +21,8 @@ export class NewPasswordComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.email = this.route.snapshot.paramMap.get('email')!;
-    this.code = this.route.snapshot.paramMap.get('code')!;
+    this.email = this.auth.decode(this.route.snapshot.paramMap.get('email')!);
+    this.code = this.auth.decode(this.route.snapshot.paramMap.get('code')!);
     this.newpassForm = this.fb.group({
       password: [''],
       confirmPassword: [''],
@@ -48,7 +48,7 @@ export class NewPasswordComponent implements OnInit {
   }
 
   OnSubmit() {
-    console.log(this.auth.code)
+    console.log(this)
     console.log(this.newpassForm.value['password'])
     this.getData(this.email, this.code, this.newpassForm.value['password'])
   }

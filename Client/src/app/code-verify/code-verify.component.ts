@@ -35,7 +35,7 @@ export class CodeVerifyComponent implements OnInit {
   constructor(private route: ActivatedRoute, private http: HttpClient, private fb: FormBuilder, private router: Router, private auth: AuthService) { }
   email:string ="";
   ngOnInit(): void {
-    this.email = this.route.snapshot.paramMap.get('email')!;
+    this.email = this.auth.decode(this.route.snapshot.paramMap.get('email')!)
     this.verifyForm = this.fb.group({
       code: ['', Validators.required],
     });
@@ -60,7 +60,7 @@ export class CodeVerifyComponent implements OnInit {
     const url = 'https://localhost:7165/api/Account/validateCode';
     return this.http.post(url, data).subscribe((response: any) => {
       AlertService.setAlertModel("success", "Please enter your new password!")
-      this.router.navigate(['new-password/'+code +"/"+ (this.email)])
+      this.router.navigate(['new-password/'+ this.auth.encode(code) +"/"+ this.auth.encode(email)])
     },
     (error) =>{
       AlertService.setAlertModel("danger", "Some thing went wrong!")
@@ -78,7 +78,7 @@ export class CodeVerifyComponent implements OnInit {
   }
   OnSubmit() {
 
-    console.log(this.code)
+    console.log(this.email)
 
     const code = this.getcode
     this.getData(this.email, code);
