@@ -34,13 +34,14 @@
         <div [style.padding-top]="paddingTop" class="container mx-auto px-3 ">
 
 
-            <div class="relative flex flex-col min-w-0 break-words bg-white w-full rounded-lg">
-                <div class=" relative flex flex-wrap" style="position: -webkit-sticky;
-        position: sticky; width: 100%; left: 50px; top: 2; padding: 10px; z-index: 1;">
-                    <div class=" stickybar top-0 left-0 z-50  w-full p-2 md:w-full pt-5 shadow rounded-lg bg-white">
-                        <div class="flex mr-1">
-                            <div class=" w-1/6 flex items-center ml-2 h-full">
-                                <button (click)="search()" class=" bg-emerald-500 text-white active:bg-emerald-600 font-bold text-sm  px-14 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150" type="button">
+      <div class="relative flex flex-col min-w-0 break-words bg-white w-full rounded-lg" >
+        <div class=" sticky-search flex flex-wrap"  >
+          <div class=" stickybar top-0 left-0 z-50  w-full p-2 md:w-full pt-5 shadow rounded-lg bg-white">
+            <div class="flex mr-1">
+              <div class=" w-1/6 flex items-center ml-2 h-full">
+                <button (click)="search()"
+                  class=" bg-emerald-500 text-white active:bg-emerald-600 font-bold text-sm  px-14 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none ease-linear transition-all duration-150"
+                  type="button">
                   <i class="fas fa-search"></i> {{'Search' | translate}}
                 </button>
                             </div>
