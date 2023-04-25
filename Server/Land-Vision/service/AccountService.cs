@@ -53,7 +53,7 @@ namespace Land_Vision.service
         public async Task<bool> ForgotPasswordAsync(User user)
         {
             user.Code = await GenerateVerifyCodeAsync();
-            user.CodeExpires = DateTime.Now.AddMinutes(15);
+            user.CodeExpires = DateTime.Now.AddMinutes(NumberFiled.CODE_EXPIRE_TIME);
 
             var content = $"<p>Hello {user.Name},"
             + "</p><p><b>This is your verify code:</b></p><p>"
