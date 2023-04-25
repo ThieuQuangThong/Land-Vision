@@ -40,6 +40,21 @@ namespace Land_Vision.Repositories
             return await SaveChangeAsync();
         }
 
+        public async Task<List<Post>> GetAllInforPositionOfPostAsync()
+        {
+            return  await _dbContext.Posts.Include(l => l.Property.Positions.OrderByDescending(x => x.Id)).Select(x => new Post {
+                Id = x.Id,
+                Property = new Property{
+                    AddressNumber = x.Property.AddressNumber,
+                    Positions = x.Property.Positions.OrderBy(m => m.Id).ToList()
+                },
+                User = new User {
+                    Name = x.User.Name
+                }
+            }
+            ).ToListAsync();
+        }
+
         public async Task<Post> GetPostAsync(int postId)
         {
             return await _dbContext.Posts.Where(p => p.Id == postId)

@@ -1,4 +1,3 @@
-import { PagingModel } from "./paging-model";
 import { SubPlaceModel } from "./subPlace-model";
 
 export class PlaceModel extends SubPlaceModel {
