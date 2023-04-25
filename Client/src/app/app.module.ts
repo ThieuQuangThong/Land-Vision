@@ -97,10 +97,10 @@ import { RelativeBuildingTabComponent } from './components/relative-building-tab
 import { DistanceTransferPipe } from './_pipes/distance-transfer.pipe';
 import { PostImageComponent } from './components/post-image/post-image.component';
 import { StopPropagationDirectiveService } from './_service/stopPropagationDirectiveService';
+import { TranferVipPipe } from './_pipes/tranfer-vip.pipe';
 import { AuthTokenInterceptor } from './_helper/http.interceptor';
 import { AuthGuard } from './_helper/http.guard';
 import { MapListDetailComponent } from './components/maps/map-list-detail/map-list-detail.component';
-
 
 @NgModule({
   declarations: [
@@ -125,7 +125,6 @@ import { MapListDetailComponent } from './components/maps/map-list-detail/map-li
     FooterAdminComponent,
     CardPageVisitsComponent,
     CardProfileComponent,
-    CardSettingsComponent,
     CardSocialTrafficComponent,
     CardStatsComponent,
     CardTableComponent,
@@ -160,9 +159,10 @@ import { MapListDetailComponent } from './components/maps/map-list-detail/map-li
     InteriorTransformPipe,
     RelativeBuildingTabComponent,
     DistanceTransferPipe,
+    TranferVipPipe,
     PostImageComponent,
     StopPropagationDirectiveService,
-    MapListDetailComponent
+    MapListDetailComponent,
     // LoginComponent,
     // RegisterComponent,
   ],
@@ -223,6 +223,7 @@ import { MapListDetailComponent } from './components/maps/map-list-detail/map-li
     JuridicalTransformPipe,
     InteriorTransformPipe,
     DistanceTransferPipe,
+    TranferVipPipe,
   ]
 
 })

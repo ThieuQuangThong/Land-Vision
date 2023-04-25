@@ -19,4 +19,9 @@ export class UserService {
   getAllUser(pagingModel: PagingModel):Observable<UserResponeModel> {
     return this.http.get<UserResponeModel>(API_URL.GET_ALL_USER(pagingModel),{withCredentials: true})
   }
+
+  updateVip(userId : number, vipId : number):Observable<any> {
+    return this.http.put<any>(API_URL.UPDATE_USER_VIP(userId,vipId),{withCredentials: true})
+
+  }
 }

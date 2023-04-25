@@ -19,6 +19,7 @@ namespace Land_Vision.Interface.IRepositories
         Task<int> GetUserTotalAsync();
         Task<bool> CreateUserAsync(User user);
         Task<bool> UpdateUserAsync(User user);
+        Task<bool> UpdateVipUserAsync(int userId, int vipId);
         Task<List<User>> GetUsersAsync(Pagination pagination);
         Task<bool> DeleteUserByIdAsync(int userId);
 

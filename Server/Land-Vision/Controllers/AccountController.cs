@@ -21,10 +21,10 @@ namespace Land_Vision.Controllers
 
         public AccountController(
         IPostRepository postRepository,
-        IUserService userSevice, 
-        IMapper mapper, 
-        IUserRepository userRepository, 
-        IEmailService emailService, 
+        IUserService userSevice,
+        IMapper mapper,
+        IUserRepository userRepository,
+        IEmailService emailService,
         IAccountService accountService)
         {
             _userSevice = userSevice;
@@ -73,12 +73,13 @@ namespace Land_Vision.Controllers
             }
 
             var user = await _userRepository.GetUserByIdAsync(userId);
-            if(user == null){
+            if (user == null)
+            {
                 return NotFound("User is not found");
             }
-            
+
             var userDto = _mapper.Map<UserDto>(user);
-            userDto.Posted = await _postRepository.CountPostByUserIdAsync(user.Id) ;
+            userDto.Posted = await _postRepository.CountPostByUserIdAsync(user.Id);
             return Ok(userDto);
         }
 
@@ -326,6 +327,25 @@ namespace Land_Vision.Controllers
 
             var UsersCount = await _userRepository.GetUserTotalAsync(); ;
             return Ok(UsersCount);
+        }
+
+        // UPDATE user vip
+        /// <summary>
+        /// Update user vip
+        /// </summary>
+        [HttpPut("{userId}&{vipId}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        public async Task<ActionResult<int>> UpdateUserVip(int userId, int vipId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+
+            var UserUpdateVip = await _userRepository.UpdateVipUserAsync(userId, vipId);
+            return Ok(UserUpdateVip);
         }
 
         /// <summary>
