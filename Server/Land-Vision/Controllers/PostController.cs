@@ -260,9 +260,9 @@ namespace Land_Vision.Controllers
             return Ok(postPropertyDto);
         }
 
-        // DELETE street
+        // DELETE post
         /// <summary>
-        /// Delete street
+        /// Delete post
         /// </summary>
         [HttpDelete("{postId}")]
         [ProducesResponseType(400)]
