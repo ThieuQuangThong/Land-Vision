@@ -42,6 +42,11 @@ export class CardTableComponent implements OnInit {
     skipCount : 0,
     maxResultCount : 100,
   }
+
+  goToDetail(id : number){
+    this.router.navigate([`productdetails/${id}`])
+  }
+
   postRespone: PostModel[] = [];
   userRespone: UserModel[] = [];
   public pageSlice : PostModel[] = []
