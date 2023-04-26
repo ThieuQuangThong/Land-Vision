@@ -1,26 +1,24 @@
 <header>
   <nav id="auth-nav" class=" z-20 bg-blueGray-800 fixed top-0 left-0 right-0 border-gray-200 w-screen  dark:bg-gray-800">
       <div class="flex flex-wrap justify-between items-center mx-auto max-w-screen-xl" style="text-decoration-style: none;">
-          <a href="/" class="flex items-center hover:no-underline">
+          <a [routerLink]="['/landing']" class="flex items-center hover:no-underline">
               <span class="self-center text-xl font-semibold whitespace-nowrap text-green-500">Land vision</span>
           </a>
           <div class="flex items-center lg:order-2">
               <div class="text-gray-800 dark:text-white hover:bg-green focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">
                 <ul class="flex flex-col lg:flex-row list-none lg:ml-auto">
                   <li class="flex items-center">
-                    <app-pages-dropdown class="block"></app-pages-dropdown>
+                    <!-- <app-pages-dropdown class="block"></app-pages-dropdown> -->
                   </li>
                   <li class="flex items-center">
-                    <app-notification-dropdown class="block lg:text-black"></app-notification-dropdown>
+                    <!-- <app-notification-dropdown class="block lg:text-black"></app-notification-dropdown> -->
                   </li>
                   <li class="flex items-center mr-8">
                     <app-user-dropdown class="block"></app-user-dropdown>
                   </li>
 
-
-
                   <li>
-                    <select style="margin-top: 13px; border-radius: 20px;" #selLang (change)="translateLanguageTo(selLang.value)">
+                    <select style="border-radius: 20px;" #selLang (change)="translateLanguageTo(selLang.value)">
                       <option *ngFor="let language of translate.getLangs()" [value]="language">{{ language }}</option>
                     </select>
                   </li>
@@ -35,7 +33,7 @@
           </div>
           <div class=" hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1" id="mobile-menu-2">
               <ul class="flex text-base flex-col font-medium lg:flex-row lg:space-x-8 lg:mt-0">
-
+<!--
                   <li>
                       <a href="#" class="block py-2 pr-4 pl-3 hover:no-underline text-white border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 ">
                         Company
@@ -53,7 +51,7 @@
                   </li>
                   <li>
                       <a href="#" class="block py-2 pr-4 pl-3 hover:no-underline text-white border-b border-gray-100 hover:bg-gray-50 lg:hover:bg-transparent lg:border-0 lg:hover:text-primary-700 lg:p-0 dark:text-gray-400 ">Contact</a>
-                  </li>
+                  </li> -->
               </ul>
           </div>
       </div>
