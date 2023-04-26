@@ -102,7 +102,7 @@ namespace Land_Vision.Repositories
         {
             return await _dbContext.Users
             .Where(x => x.Id == id)
-            .Include(x => x.Vip)
+            .Include(x => x.DetailPurchases)
             .Include(k => k.Role)
             .FirstOrDefaultAsync();
         }

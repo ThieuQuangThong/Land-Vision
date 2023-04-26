@@ -9,6 +9,8 @@ import { UserService } from "src/app/_service/user.service";
 import { UserModel } from "src/app/models/user-model";
 import {MatSort, Sort} from '@angular/material/sort';
 import { Router } from "@angular/router";
+import { DetailPurchaseModel } from "src/app/models/detailPurchase-model";
+import { DetailPurchaseService } from "src/app/_service/detail-purchase.service";
 
 
 @Component({
@@ -20,13 +22,19 @@ import { Router } from "@angular/router";
 
 export class CardTableComponent implements OnInit {
   displayedPostsColumns: string[] = ['#', 'title', 'transactionType', 'createAt','poster', 'isHide'];
-  displayedSellersColumns: string[] = ['#', 'name', 'email', 'phone', 'dropDown'];
+  displayedSellersColumns: string[] = ['#', 'name', 'email', 'phone', 'isHide'];
+  displayedRevenuesColumns: string[] = ['#', 'id', 'transactionDate', 'userId', 'vipName','vipPrice'];
+
 
   dataSourcePost = new MatTableDataSource<any>();
   dataSourceSeller = new MatTableDataSource<any>();
+  dataSourceRevenue = new MatTableDataSource<any>();
+
 
   @ViewChild('postPaginator', { static: true }) postPaginator!: MatPaginator;
 @ViewChild('sellerPaginator', { static: true }) sellerPaginator!: MatPaginator;
+@ViewChild('revenuePaginator', { static: true }) revenuePaginator!: MatPaginator;
+
 @ViewChild('empTbSort') empTbSort = new MatSort();
 
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
@@ -44,7 +52,8 @@ export class CardTableComponent implements OnInit {
   }
   postRespone: PostModel[] = [];
   userRespone: UserModel[] = [];
-  public pageSlice : PostModel[] = []
+  detailPurchase: DetailPurchaseModel[] = [];
+
   @Input()
   get color(): string {
     return this._color;
@@ -54,7 +63,7 @@ export class CardTableComponent implements OnInit {
   }
   private _color = "light";
 
-  constructor(private postService:PostService, private userService : UserService, private router : Router) {
+  constructor(private postService:PostService, private userService : UserService, private router : Router, private detailPurchaseService : DetailPurchaseService) {
     const now = new Date();
 
 
@@ -110,6 +119,17 @@ export class CardTableComponent implements OnInit {
         this.dataSourceSeller = new MatTableDataSource(this.userRespone);
         this.dataSourceSeller.sort = this.sort;
         this.dataSourceSeller.paginator = this.sellerPaginator;
+      }
+    )
+
+    this.detailPurchaseService.getDetailPurchase().subscribe(
+      response =>{
+      this.detailPurchase = response;
+      console.log(this.detailPurchase);
+
+        this.dataSourceRevenue = new MatTableDataSource(this.detailPurchase);
+        this.dataSourceRevenue.sort = this.sort;
+        this.dataSourceRevenue.paginator = this.revenuePaginator;
       }
     )
   }

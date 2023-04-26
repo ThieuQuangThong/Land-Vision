@@ -11,7 +11,7 @@
                     <app-card-stats statSubtitle="SELLERS" statTitle={{userCount}} statArrow="down" statPercent="3.48" statPercentColor="text-red-500" statDescripiron="Since last week" statIconName="fas fa-users" statIconColor="bg-blue-500"></app-card-stats>
                 </div>
                 <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
-                    <app-card-stats statSubtitle="REVENUE" statTitle="924" statArrow="down" statPercent="1.10" statPercentColor="text-orange-500" statDescripiron="Since yesterday" statIconName="fa-solid fa-dollar-sign" statIconColor="bg-emerald-500"></app-card-stats>
+                    <app-card-stats statSubtitle="REVENUE" statTitle="{{revenue | moneyTransform}}" statArrow="down" statPercent="1.10" statPercentColor="text-orange-500" statDescripiron="Since yesterday" statIconName="fa-solid fa-dollar-sign" statIconColor="bg-emerald-500"></app-card-stats>
                 </div>
                 <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
                     <app-card-stats statSubtitle="VISITS" statTitle="49,65%" statArrow="up" statPercent="12" statPercentColor="text-emerald-500" statDescripiron="Since last month" statIconName="fas fa-percent" statIconColor="bg-yellow-500"></app-card-stats>

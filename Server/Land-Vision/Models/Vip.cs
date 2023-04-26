@@ -12,7 +12,7 @@ namespace Land_Vision.Models
         public double Price { get; set; }
         [Required]
         public int PostLimit { get; set; }
-        public List<User>? Users { get; set; }
+        public List<User> Users { get; set; }
         public List<DetailPurchase> DetailPurchases { get; set; }
 
     }
