@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/_service/auth.service';
+import { DetailPurchaseService } from 'src/app/_service/detail-purchase.service';
 import { UserService } from 'src/app/_service/user.service';
 
 @Component({
@@ -35,7 +36,8 @@ export class SuccessPaymentComponent implements OnInit{
   constructor(private http :HttpClient,
     private auth:AuthService,
     private userService:UserService,
-    private router : Router
+    private router : Router,
+    private detailPurchaseService : DetailPurchaseService
     ){
 
   }
@@ -47,6 +49,7 @@ export class SuccessPaymentComponent implements OnInit{
     }
     const userId = this.auth.getUserId();
     this.userService.updateVip(userId,this.vipId).subscribe();
+    this.detailPurchaseService.addDetailPurchase(userId,this.vipId).subscribe();
 
   }
   goBackToProFile(){
