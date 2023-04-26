@@ -1,4 +1,5 @@
 using AutoMapper;
+using Land_Vision.Dto.DetailPurchaseDtos;
 using Land_Vision.DTO.CategoryDtos;
 using Land_Vision.DTO.CityDtos;
 using Land_Vision.DTO.DistrictDtos;
@@ -79,6 +80,10 @@ namespace Land_Vision.Mapper
             //Ward
             CreateMap<WardDto, Ward>();
             CreateMap<Ward, WardDto>();
+
+            //Detail purchase
+            CreateMap<DetailPurchaseDto, DetailPurchase>();
+            CreateMap<DetailPurchase, DetailPurchaseDto>();
         }
     }
 }

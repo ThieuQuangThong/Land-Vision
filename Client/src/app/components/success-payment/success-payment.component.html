@@ -19,22 +19,8 @@
     </div>
 
 
-    <div class="bg-white p-6  md:mx-auto" *ngIf="message =='Transaction denied by user.'">
-        <p viewBox="0 0 24 24" class="bg-red-600 w-16 h-16 mx-auto my-6 rounded-full text-center">
-            <i class="fa-solid fa-xmark text-6xl" style="color: #ffffff;"></i>
-        </p>
-        <div class="text-center">
-            <h3 class="md:text-2xl text-base text-gray-900 font-semibold text-center">Transaction failed</h3>
-            <p class="text-gray-600 my-2">You canceled the transaction.</p>
-            <p> Have a great day! </p>
-            <div class="py-10 text-center">
-                <a (click)="goBackToProFile()" class="px-12 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold py-3">
-              GO BACK
-         </a>
-            </div>
-        </div>
-    </div>
-    <div class="bg-white p-6  md:mx-auto" *ngIf="message !='Transaction denied by user.'">
+
+    <div class="bg-white p-6  md:mx-auto" *ngIf="message !='Successful.'">
         <p viewBox="0 0 24 24" class="bg-red-600 w-16 h-16 mx-auto my-6 rounded-full text-center">
             <i class="fa-solid fa-xmark text-6xl" style="color: #ffffff;"></i>
         </p>

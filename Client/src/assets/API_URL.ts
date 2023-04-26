@@ -31,5 +31,7 @@ export const API_URL = {
   GET_USER_BY_ID:(userId: number) => `${DOMAIN}/api/Account/getUserById/${userId}`,
   GET_ALL_VIP : () => `${DOMAIN}/api/Vip`,
   UPDATE_USER_VIP : (userId :number, vipId : number) =>`${DOMAIN}/api/Account/${userId}&${vipId}`,
-  GET_INFOR_POSITION_POST:(postId: number) => `${DOMAIN}/api/Post/getAllPositionPost/${postId}`
+  GET_INFOR_POSITION_POST:(postId: number) => `${DOMAIN}/api/Post/getAllPositionPost/${postId}`,
+  GET_DETAIL_PURCHASE:() => `${DOMAIN}/api/DetailPurchase`,
+  ADD_DETAIL_PURCHASE:(userId :number, vipId :number) => `${DOMAIN}/api/DetailPurchase/${userId}&${vipId}`
 };

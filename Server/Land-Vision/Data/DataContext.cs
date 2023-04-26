@@ -18,12 +18,14 @@ namespace Land_Vision.Data
         public DbSet<Post> Posts { get; set; }
         public DbSet<Image> Images { get; set; }
         public DbSet<Vip> Vips { get; set; }
+        public DbSet<DetailPurchase> DetailPurchases { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Property>()
             .HasOne(a => a.Post)
             .WithOne(b => b.Property)
-            .HasForeignKey<Post>(c =>c.PropertyId);
+            .HasForeignKey<Post>(c => c.PropertyId);
             base.OnModelCreating(modelBuilder);
         }
     }
