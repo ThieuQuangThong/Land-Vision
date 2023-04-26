@@ -41,6 +41,22 @@ namespace Land_Vision.Controllers
             return Ok(detailPurchases);
         }
 
+        // GET All Detail Purchases
+        /// <summary>
+        /// Get all detail purchase
+        /// </summary>
+        [HttpGet("revenue")]
+        [ProducesResponseType(200, Type = typeof(double))]
+        public async Task<IActionResult> GetRevenue()
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            var revenue = await _detailPurchaseRepository.GetRevenue();
+            return Ok(revenue);
+        }
+
 
         // POST DetailPurchase
         /// <summary>

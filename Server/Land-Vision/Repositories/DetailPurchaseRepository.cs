@@ -23,9 +23,16 @@ namespace Land_Vision.Repositories
         public async Task<List<DetailPurchase>> GetAllDetailPurchase()
         {
             return await _dbContext.DetailPurchases.OrderByDescending(x => x.TransactionDate)
-                .AsNoTracking()
+                .Include(x => x.User)
+                .Include(x => x.Vip)
                 .ToListAsync();
         }
+
+        public async Task<double> GetRevenue()
+        {
+            return await _dbContext.DetailPurchases.SumAsync(x => x.Vip.Price);
+        }
+
         public async Task<bool> SaveChangeAsync()
         {
             var saved = await _dbContext.SaveChangesAsync();
