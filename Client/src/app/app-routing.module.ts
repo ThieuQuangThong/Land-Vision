@@ -30,6 +30,7 @@ import { CodeVerifyComponent } from './code-verify/code-verify.component';
 import { PostingComponent } from './views/posting/posting.component';
 import { EmailConfirmSucceededComponent } from './views/email-confirm-succeeded/email-confirm-succeeded.component';
 import { PageNotFoundComponent } from './views/page-not-found/page-not-found.component';
+import { SuccessPaymentComponent } from './components/success-payment/success-payment.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full', },
@@ -148,6 +149,13 @@ const routes: Routes = [
   },
   {
     path: "landing", component: LandingComponent,
+    data: {
+      requiredAuth: true
+    },
+    canActivate: [AuthGuard]
+  },
+  {
+    path: "successPayment", component: SuccessPaymentComponent,
     data: {
       requiredAuth: true
     },
