@@ -7,6 +7,7 @@ import { UserInfor } from "src/app/_service/user.model";
 import { VipService } from "src/app/_service/vip.service";
 import { VipModel } from "src/app/models/vip-model";
 import { VipResponeModel } from "src/app/models/vip-response-model";
+import { Clipboard } from '@angular/cdk/clipboard';
 
 @Component({
   selector: "app-profile",
@@ -17,7 +18,7 @@ import { VipResponeModel } from "src/app/models/vip-response-model";
 export class ProfileComponent implements OnInit {
   vipResponse: VipModel[] = [];
   userInfor: UserInfor = new UserInfor();
-  constructor(private auth: AuthService,private http:HttpClient, private router: Router,private vipService :VipService) {}
+  constructor(private auth: AuthService,private http:HttpClient, private router: Router,private vipService :VipService, private clipboard :Clipboard) {}
 
   ngOnInit(): void {
     const userId = this.auth.getUserId();
@@ -38,4 +39,9 @@ export class ProfileComponent implements OnInit {
 
 
   }
+  copyText(textToCopy: string) {
+    this.clipboard.copy(textToCopy);
+    }
+
+
 }

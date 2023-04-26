@@ -102,6 +102,8 @@ import { AuthTokenInterceptor } from './_helper/http.interceptor';
 import { AuthGuard } from './_helper/http.guard';
 import { MapListDetailComponent } from './components/maps/map-list-detail/map-list-detail.component';
 import { SuccessPaymentComponent } from './components/success-payment/success-payment.component';
+import { ClipboardModule } from 'ngx-clipboard';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -168,6 +170,7 @@ import { SuccessPaymentComponent } from './components/success-payment/success-pa
     // RegisterComponent,
   ],
   imports: [
+    ClipboardModule,
     MatTooltipModule,
     MatSortModule,
     IvyCarouselModule,

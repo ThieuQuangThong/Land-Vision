@@ -169,16 +169,14 @@ namespace Land_Vision.Repositories
             {
                 post.isHide = false;
             }
-            await UpdatePostAsync(post);
-            return await SaveChangeAsync();
+            return await UpdatePostAsync(post);
         }
 
         public async Task<bool> IncreaseViewByPostIdAsync(int postId)
         {
             var post = await GetPostAsync(postId);
             post.NumberOfView += 1;
-            await UpdatePostAsync(post);
-            return await SaveChangeAsync();
+            return await UpdatePostAsync(post);
         }
 
         public async Task<bool> SaveChangeAsync()

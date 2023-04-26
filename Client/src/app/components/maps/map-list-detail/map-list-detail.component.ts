@@ -78,7 +78,6 @@ export class MapListDetailComponent {
         'esri/Graphic',
         'esri/layers/GraphicsLayer',
         'esri/symbols/SimpleFillSymbol',
-        'esri/widgets/Sketch',
         'esri/widgets/Locate',
         'esri/widgets/BasemapGallery',
         "esri/widgets/Fullscreen",
@@ -134,20 +133,19 @@ export class MapListDetailComponent {
       const locate = new Locate({
         view: mapView
       });
-
       mapView.ui.add(locate, "top-left");
-      const fullscreen  = new Fullscreen ({
-        view: mapView
-      });
-
-      mapView.ui.add(fullscreen, "bottom-right");
-
 
       const basemapGallery = new BasemapGallery({
         view: mapView
       });
-
       mapView.ui.add(basemapGallery, "bottom-left");
+
+      const fullscreen  = new Fullscreen ({
+        view: mapView
+      });
+      mapView.ui.add(fullscreen, "bottom-right");
+
+
 
       mapView.when(() => {
 
@@ -155,10 +153,10 @@ export class MapListDetailComponent {
         const search = new Search({
           view: mapView
         });
+        mapView.ui.add(search, "top-right");
 
        console.log(otherPos);
        let i =0;
-       mapView.ui.add(search, "top-right");
           otherPos.forEach(
             x =>{
               console.log('fsfef');

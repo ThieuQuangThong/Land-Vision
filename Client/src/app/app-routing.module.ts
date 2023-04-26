@@ -31,6 +31,7 @@ import { PostingComponent } from './views/posting/posting.component';
 import { EmailConfirmSucceededComponent } from './views/email-confirm-succeeded/email-confirm-succeeded.component';
 import { PageNotFoundComponent } from './views/page-not-found/page-not-found.component';
 import { SuccessPaymentComponent } from './components/success-payment/success-payment.component';
+import { MapListDetailComponent } from './components/maps/map-list-detail/map-list-detail.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full', },
@@ -49,7 +50,7 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: "mapstest", component: MapExampleComponent,
+    path: "mapstestExample", component: MapExampleComponent,
     data: {
       requiredAuth: false
     },
@@ -149,6 +150,13 @@ const routes: Routes = [
   },
   {
     path: "landing", component: LandingComponent,
+    data: {
+      requiredAuth: true
+    },
+    canActivate: [AuthGuard]
+  },
+  {
+    path: "successPayment", component: SuccessPaymentComponent,
     data: {
       requiredAuth: true
     },
