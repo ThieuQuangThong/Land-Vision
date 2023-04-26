@@ -42,7 +42,7 @@ export class LandingComponent implements OnInit {
 
   defaultPaging: PagingModel = {
     skipCount : 0,
-    maxResultCount : 8,
+    maxResultCount : 12,
   }
 
   paging: PagingModel = JSON.parse(JSON.stringify(this.defaultPaging));
