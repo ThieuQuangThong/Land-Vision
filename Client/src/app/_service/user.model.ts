@@ -11,6 +11,7 @@ export class UserInfor {
   name: string='';
   avatarLink: string ='';
   phone: string='';
+  emailExpiresTime : string ='';
   email: string='';
   posted: number = 0;
   vipLevel: number = 0;
