@@ -27,7 +27,7 @@ export class PricingCardComponent {
       case 3 : this.orderInfoo = 'Gói Prosperous'; break;
     }
     const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
-    this.http.post<any>(`https://localhost:44310/api/Momo/momoQR/${this.orderInfoo}&${amount}`,{}, {headers})
+    this.http.post<any>(`https://localhost:7165/api/Momo/momoQR/${this.orderInfoo}&${amount}`,{}, {headers})
        .subscribe(response => {
         const redirectUrl = response['payUrl'];
        if (redirectUrl) { window.location.href =redirectUrl;
