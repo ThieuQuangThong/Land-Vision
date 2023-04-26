@@ -101,7 +101,7 @@ import { TranferVipPipe } from './_pipes/tranfer-vip.pipe';
 import { AuthTokenInterceptor } from './_helper/http.interceptor';
 import { AuthGuard } from './_helper/http.guard';
 import { MapListDetailComponent } from './components/maps/map-list-detail/map-list-detail.component';
-
+import { SuccessPaymentComponent } from './components/success-payment/success-payment.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -163,6 +163,7 @@ import { MapListDetailComponent } from './components/maps/map-list-detail/map-li
     PostImageComponent,
     StopPropagationDirectiveService,
     MapListDetailComponent,
+    SuccessPaymentComponent
     // LoginComponent,
     // RegisterComponent,
   ],

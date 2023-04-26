@@ -14,6 +14,7 @@
 .sticky-search{
   position: -webkit-sticky;
   position: sticky;
-  top: -1px;
+  top: 80px;
   z-index: 50;
 }
+
