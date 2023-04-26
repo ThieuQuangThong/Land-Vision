@@ -11,6 +11,8 @@ namespace Land_Vision.DTO.UserDtos
         public int Posted {get; set;}
         public int VipLevel {get; set;} 
         public int NumberOfUserCanPost {get; set;}
+        public DateTime EmailExpiresTime { get; set; }
+
         public bool isHide { get; set; } = false;
 
     }
