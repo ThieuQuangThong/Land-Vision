@@ -3,8 +3,8 @@
         <div class="absolute top-2 left-2  text-white">
             <div class="flex justify-between">
                 <div class="bg-emerald-500 p-1">
-                    <span *ngIf="postItem.transactionType === 1"> For rent</span>
-                    <span *ngIf="postItem.transactionType === 0"> For sale</span>
+                    <span *ngIf="postItem.transactionType === 1"> {{"For sale" | translate}}</span>
+                    <span *ngIf="postItem.transactionType === 0"> {{"Deposited" | translate}}</span>
                 </div>
                 <div class="ml-1 bg-emerald-600 p-1">
                     <span>{{postItem.property.category.name}}</span>

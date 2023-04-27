@@ -163,6 +163,13 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
+    path: "successPayment", component: SuccessPaymentComponent,
+    data: {
+      requiredAuth: true
+    },
+    canActivate: [AuthGuard]
+  },
+  {
     path: "", component: IndexComponent,
     data: {
       requiredAuth: false

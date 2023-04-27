@@ -26,3 +26,8 @@ width: 15rem;
 .invalid-feedback{
   transition: .2s;
 }
+.logo-img{
+  margin-top: 50px;
+  width: 250px;
+  height: auto;
+}
