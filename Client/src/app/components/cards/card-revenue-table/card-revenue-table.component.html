@@ -1,0 +1,81 @@
+<div class="block w-full ">
+    <!-- Projects table -->
+    <div class=" relative flex flex-col min-w-0 break-words w-full mb-6 shadow-md rounded p-8 text-gray-600" [ngClass]="color === 'light' ? 'bg-white' : 'bg-red-900 text-white'">
+        <div class="grid grid-cols-6 ">
+            <div class="col-start-1 col-end-3 flex content-center">
+                <mat-form-field appearance="fill" [formGroup]="form">
+                    <mat-label class="text-sm">MM/DD/YYYY – MM/DD/YYYY</mat-label>
+                    <mat-date-range-input [rangePicker]="picker">
+                        <input matStartDate placeholder="From date" formControlName="fromDate">
+                        <input matEndDate placeholder="To date" formControlName="toDate">
+                    </mat-date-range-input>
+                    <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-date-range-picker #picker>
+                        <mat-date-range-picker-actions>
+                            <button mat-button matDateRangePickerCancel>Cancel</button>
+                            <button mat-raised-button color="primary" matDateRangePickerApply (click)="applyDateFilter()">Apply</button>
+                        </mat-date-range-picker-actions>
+                    </mat-date-range-picker>
+                </mat-form-field>
+                <!-- <button mat-button class="bg-gray-100 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded h-14" >
+                  <i class="fas fa-search"></i>
+          </button> -->
+            </div>
+
+            <div class="col-start-3 col-span-1 ">
+
+            </div>
+
+            <div class="col-end-7 col-span-1 ">
+                <!-- <select class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm">
+          <option value="">Danang</option>
+        </select> -->
+                <mat-form-field>
+                    <mat-label>Search</mat-label>
+                    <input class="" matInput (keyup)="applyFilter($event)" placeholder="..." #input>
+                </mat-form-field>
+            </div>
+        </div>
+        <table mat-table matSort class="items-center w-full bg-transparent border-collapse " [dataSource]="dataSourceRevenue">
+            <ng-container matColumnDef="#">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="font-semibold"> # </th>
+                <td mat-cell *matCellDef="let i = index"> {{i+1}} </td>
+            </ng-container>
+            <ng-container matColumnDef="id">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="font-semibold"> Id </th>
+                <td mat-cell *matCellDef="let row">
+                    <div class="truncate" style="max-width: 600px;">
+
+                        {{row.id}}
+                    </div>
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="transactionDate">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="font-semibold">Transaction Date</th>
+                <td mat-cell *matCellDef="let row">
+                    {{row.transactionDate|date}}
+                </td>
+            </ng-container>
+            <ng-container matColumnDef="userId">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="font-semibold"> User Id</th>
+                <td mat-cell *matCellDef="let row"> {{row.user.id}} </td>
+            </ng-container>
+            <ng-container matColumnDef="vipName">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="font-semibold"> Package name </th>
+                <td mat-cell *matCellDef="let row" class=" border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4 ">
+                    {{row.vip.name}}
+            </ng-container>
+            <ng-container matColumnDef="vipPrice">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="font-semibold"> Package price </th>
+                <td mat-cell *matCellDef="let row" class=" border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4 ">
+                    {{row.vip.price | moneyTransform}}
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedRevenuesColumns"></tr>
+            <tr class="bg-gray-50 text-gray-600  hover:bg-white hover:text-black" mat-row *matRowDef="let row; columns: displayedRevenuesColumns;"></tr>
+        </table>
+        <mat-paginator #revenuePaginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+
+
+    </div>
+
+</div>

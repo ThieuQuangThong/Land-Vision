@@ -32,6 +32,8 @@ import { EmailConfirmSucceededComponent } from './views/email-confirm-succeeded/
 import { PageNotFoundComponent } from './views/page-not-found/page-not-found.component';
 import { SuccessPaymentComponent } from './components/success-payment/success-payment.component';
 import { MapListDetailComponent } from './components/maps/map-list-detail/map-list-detail.component';
+import { CardAccountTableComponent } from './components/cards/card-account-table/card-account-table.component';
+import { CardRevenueTableComponent } from './components/cards/card-revenue-table/card-revenue-table.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full', },
@@ -128,6 +130,9 @@ const routes: Routes = [
       },
       { path: "tables", component: TablesComponent },
       { path: "maps", component: MapsComponent },
+      { path: "accountTables", component: CardAccountTableComponent },
+      { path: "revenueTables", component: CardRevenueTableComponent },
+
       { path: "", redirectTo: "dashboard", pathMatch: "full" },
     ]
   },

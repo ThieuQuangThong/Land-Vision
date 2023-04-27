@@ -103,6 +103,8 @@ import { AuthGuard } from './_helper/http.guard';
 import { MapListDetailComponent } from './components/maps/map-list-detail/map-list-detail.component';
 import { SuccessPaymentComponent } from './components/success-payment/success-payment.component';
 import { ClipboardModule } from 'ngx-clipboard';
+import { CardAccountTableComponent } from './components/cards/card-account-table/card-account-table.component';
+import { CardRevenueTableComponent } from './components/cards/card-revenue-table/card-revenue-table.component';
 
 @NgModule({
   declarations: [
@@ -165,7 +167,9 @@ import { ClipboardModule } from 'ngx-clipboard';
     PostImageComponent,
     StopPropagationDirectiveService,
     MapListDetailComponent,
-    SuccessPaymentComponent
+    SuccessPaymentComponent,
+    CardAccountTableComponent,
+    CardRevenueTableComponent
     // LoginComponent,
     // RegisterComponent,
   ],
