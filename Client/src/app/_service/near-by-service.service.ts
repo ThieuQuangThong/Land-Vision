@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { PositionModel } from '../models/position-model';
 import { PlaceModel } from '../models/place-model';
 import { SubPlaceModel } from '../models/subPlace-model';
+import { ShareDataService } from './share-data.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,7 @@ import { SubPlaceModel } from '../models/subPlace-model';
 
 export class NearByServiceService {
 
-  constructor() { }
+  constructor(private shareService: ShareDataService) { }
   onCloseLocation(positionModel : PositionModel, limitDistance: number, query: string) : PlaceModel[]{
 
     var map: google.maps.Map | HTMLDivElement;
@@ -52,6 +53,9 @@ export class NearByServiceService {
             }
           }
         )
+        console.log(finalResults);
+
+        this.shareService.setRelativePlaces(finalResults);
       }
     });
     return finalResults;

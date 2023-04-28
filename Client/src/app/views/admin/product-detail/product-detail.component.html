@@ -17,7 +17,7 @@
 
 
 
-    
+
       <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-200 ">
         <div class="flex-auto p-5 lg:p-10">
           <h4 class="text-2xl font-semibold">Product Information</h4>
@@ -299,7 +299,7 @@
             </div>
           </section>
           <app-map-list-detail [postId]="postId"></app-map-list-detail>
-          <app-relative-building-tab></app-relative-building-tab>
+          <app-relative-building-tab [positions]="postItem.property.positions"></app-relative-building-tab>
         </div>
       </div>
 

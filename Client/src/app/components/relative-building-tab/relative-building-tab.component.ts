@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { NearByServiceService } from 'src/app/_service/near-by-service.service';
 import { ShareDataService } from 'src/app/_service/share-data.service';
 import { PlaceModel } from 'src/app/models/place-model';
+import { PositionModel } from 'src/app/models/position-model';
 
 @Component({
   selector: 'app-relative-building-tab',
@@ -10,6 +11,7 @@ import { PlaceModel } from 'src/app/models/place-model';
 })
 export class RelativeBuildingTabComponent {
   openTab = 1;
+  @Input() positions: PositionModel[] = [];
   icons: string[] =['fas fa-space-shuttle text-base mr-1','fas fa-cog text-base mr-1','fas fa-briefcase text-base mr-1','fas fa-briefcase text-base mr-1','fas fa-briefcase text-base mr-1','fas fa-briefcase text-base mr-1'];
   texts: string[] = ['Schools','Markets','Parks','Hopitals', 'restaurants','MyPosition'];
   buildingSearch: string[] = ['trường', 'siêu thị', 'Công viên', 'Bệnh', 'Nhà hàng']
@@ -19,9 +21,8 @@ export class RelativeBuildingTabComponent {
 
   toggleTabs($tabNumber: number){
     this.openTab = $tabNumber;
-    const lat = 16.008983808041833;
-    const lng = 108.20735225558515;
-    //this.currentBuildingSearchs = this.nearByServiceService.onCloseLocation({latitude:lat.toString(), longtitude: lng.toString()},2, this.buildingSearch[$tabNumber-1])
-    this.shareService.setRelativePlaces(this.currentBuildingSearchs,$tabNumber);
+    this.currentBuildingSearchs = this.nearByServiceService.onCloseLocation({latitude:this.positions[0].latitude.toString(), longtitude: this.positions[0].longtitude.toString()},2, this.buildingSearch[$tabNumber-1])
+
+
   }
 }
