@@ -34,6 +34,7 @@ import { SuccessPaymentComponent } from './components/success-payment/success-pa
 import { MapListDetailComponent } from './components/maps/map-list-detail/map-list-detail.component';
 import { CardAccountTableComponent } from './components/cards/card-account-table/card-account-table.component';
 import { CardRevenueTableComponent } from './components/cards/card-revenue-table/card-revenue-table.component';
+import { CardPackageTableComponent } from './components/cards/card-package-table/card-package-table.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full', },
@@ -132,6 +133,7 @@ const routes: Routes = [
       { path: "maps", component: MapsComponent },
       { path: "accountTables", component: CardAccountTableComponent },
       { path: "revenueTables", component: CardRevenueTableComponent },
+      { path: "packageTables", component: CardPackageTableComponent },
 
       { path: "", redirectTo: "dashboard", pathMatch: "full" },
     ]
