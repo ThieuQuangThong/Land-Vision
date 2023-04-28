@@ -20,38 +20,18 @@ export class ShareDataService {
     return this.relavetivePlace.getValue();
   }
 
-  setRelativePlaces(placeModels :PlaceModel[],i :number){
+  setRelativePlaces(placeModels :PlaceModel[]){
     const positions: PositionModel[] = placeModels.map(x => {
       const position: PositionModel = {
+        place : x.place,
         latitude : x.position?.latitude!,
         longtitude: x.position?.longtitude!
       }
       return position;
     })
-    let test :PositionModel[]=[
 
-    ]
-    if(i === 1){
-      test = [      {
-        latitude:'16.031994234986524',
-        longtitude: '108.21074802514354'
-      },
-      {
-        latitude:'16.040445525056004',
-        longtitude: '108.21171969703994'
-      }]
-    }
-    else{
-      test= [
-        {
-          latitude:'16.040445525056004',
-          longtitude: '108.21171969703994'
-        }
-      ]
-    }
-    console.log(test);
 
-    return this.relavetivePlace.next(test);
+    return this.relavetivePlace.next(positions);
   }
 
   getPositionPostAsTracking(): Observable<PositionModel[]>{

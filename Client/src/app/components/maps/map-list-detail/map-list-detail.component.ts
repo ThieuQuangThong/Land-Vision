@@ -183,34 +183,44 @@ export class MapListDetailComponent {
             }
           )
 
-        // this.shareDataService.getRelativePlaceAsTracking()
-        // .subscribe(
-        //   respone =>{
-        //     map.remove(pointGraphics);
-        //     pointGraphics = new GraphicsLayer();
-        //     const simpleMarkerSymbol = {
-        //       type: "picture-marker",  // autocasts as new PictureMarkerSymbol()
-        //       url: "https://static.arcgis.com/images/Symbols/Shapes/BlackStarLargeB.png",
-        //       width: "64px",
-        //       height: "64px"
-        //    };
-        //   respone.forEach(
-        //     x =>{
-        //       let point = { //Create a point
-        //         type: "point",
-        //         longitude: Number(x.longtitude),
-        //         latitude: Number(x.latitude)
-        //      };
-        //      let pointGraphic = new Graphic({
-        //       geometry: point,
-        //       symbol: simpleMarkerSymbol,
-        //    });
-        //    map.add(pointGraphics);
-        //    pointGraphics.add(pointGraphic);
-        //     }
-        //   )
-        //   }
-        // )
+        this.shareDataService.getRelativePlaceAsTracking()
+        .subscribe(
+          respone =>{
+            map.remove(pointGraphics);
+            pointGraphics = new GraphicsLayer();
+            const simpleMarkerSymbol = {
+              type: "picture-marker",  // autocasts as new PictureMarkerSymbol()
+              url: "https://static.arcgis.com/images/Symbols/Shapes/BlueStarLargeB.png",
+              width: "64px",
+              height: "64px"
+           };
+          respone.forEach(
+            x =>{
+              let point = { //Create a point
+                type: "point",
+                longitude: Number(x.longtitude),
+                latitude: Number(x.latitude)
+             };
+             const popupTemplatePoint = {
+              title: "{Name}",
+              content: "{Description}"
+           }
+           const attributePoint = {
+              Description: `<p>Tên: ${x.place?.name} </p>
+              <a >Địa chỉ: ${x.place?.formatted_address}</a>`
+           }
+             let pointGraphic = new Graphic({
+              geometry: point,
+              symbol: simpleMarkerSymbol,
+              attributes: attributePoint,
+              popupTemplate: popupTemplatePoint
+           });
+           map.add(pointGraphics);
+           pointGraphics.add(pointGraphic);
+            }
+          )
+          }
+        )
 
 
         this.mapLoaded.emit(true);

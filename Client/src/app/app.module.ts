@@ -196,7 +196,7 @@ import { CardRevenueTableComponent } from './components/cards/card-revenue-table
     NgxOtpInputModule,
     HttpClientModule,
     AgmCoreModule.forRoot({
-      apiKey : 'AIzaSyAxofJGDu4RCNoGXCcdmXj8o4WL7j5vZj0'
+      apiKey : 'AIzaSyDomFYPpQGSvKFE02VovMc-PaqcZ1KCAzE'
     }),
     TranslateModule.forRoot({
       loader: {
