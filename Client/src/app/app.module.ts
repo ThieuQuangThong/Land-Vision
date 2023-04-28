@@ -105,6 +105,7 @@ import { SuccessPaymentComponent } from './components/success-payment/success-pa
 import { ClipboardModule } from 'ngx-clipboard';
 import { CardAccountTableComponent } from './components/cards/card-account-table/card-account-table.component';
 import { CardRevenueTableComponent } from './components/cards/card-revenue-table/card-revenue-table.component';
+import { CardPackageTableComponent } from './components/cards/card-package-table/card-package-table.component';
 
 @NgModule({
   declarations: [
@@ -169,7 +170,8 @@ import { CardRevenueTableComponent } from './components/cards/card-revenue-table
     MapListDetailComponent,
     SuccessPaymentComponent,
     CardAccountTableComponent,
-    CardRevenueTableComponent
+    CardRevenueTableComponent,
+    CardPackageTableComponent
     // LoginComponent,
     // RegisterComponent,
   ],

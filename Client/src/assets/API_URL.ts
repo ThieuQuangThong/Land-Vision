@@ -34,5 +34,6 @@ export const API_URL = {
   GET_INFOR_POSITION_POST:(postId: number) => `${DOMAIN}/api/Post/getAllPositionPost/${postId}`,
   GET_DETAIL_PURCHASE:() => `${DOMAIN}/api/DetailPurchase`,
   ADD_DETAIL_PURCHASE:(userId :number, vipId :number) => `${DOMAIN}/api/DetailPurchase/${userId}&${vipId}`,
-  GET_REVENUE:() => `${DOMAIN}/api/DetailPurchase/revenue`
+  GET_REVENUE:() => `${DOMAIN}/api/DetailPurchase/revenue`,
+
 };
