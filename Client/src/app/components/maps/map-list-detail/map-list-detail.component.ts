@@ -162,11 +162,10 @@ export class MapListDetailComponent {
               console.log('fsfef');
               const popupTemplate = {
                 title: "{Name}",
-                content: "{Description}"
+                content: "{Description}",
              }
              const attributes = {
-                Description: `<p>Tên: ${positionPosts[i].name} </p>
-                <a href="http://localhost:4200/productdetails/${positionPosts[i].id}">Địa chỉ: ${positionPosts[i].addressNumber}</a>`
+                Description: `<p class ="mb-0"><span class="text-xl font-semibold mb-0">Tên:</span> ${positionPosts[i].name}</p><p class ="mb-0"><span class="text-xl font-semibold mb-0">Giá:</span> 10 Tỷ</p><a href="http://localhost:4200/productdetails/${positionPosts[i].id}"><span class="text-xl font-semibold">Địa chỉ:</span> ${positionPosts[i].addressNumber}</a><a href="https://richnguyen.vn/wp-content/uploads/2020/08/buc-anh-bat-dong-san-dep-3.jpg"><img src="https://richnguyen.vn/wp-content/uploads/2020/08/buc-anh-bat-dong-san-dep-3.jpg" alt="Ảnh bất động sản đẹp"></a>`
              }
               const polygon = {
                 type: "polygon",
@@ -176,7 +175,7 @@ export class MapListDetailComponent {
               geometry: polygon,
               symbol: polygonSymbol,
               attributes: attributes,
-              popupTemplate: popupTemplate
+              popupTemplate: popupTemplate,
            });
            graphicsLayer.add(polygonGraphic);
            i++;
@@ -203,7 +202,8 @@ export class MapListDetailComponent {
              };
              const popupTemplatePoint = {
               title: "{Name}",
-              content: "{Description}"
+              content: "{Description}",
+              trigger: "hover"
            }
            const attributePoint = {
               Description: `<p>Tên: ${x.place?.name} </p>
