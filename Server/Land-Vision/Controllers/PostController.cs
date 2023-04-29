@@ -54,6 +54,27 @@ namespace Land_Vision.Controllers
             return Ok(Paginposts);
         }
 
+        // GET Posts by userId
+        /// <summary>
+        /// Get posts by userId
+        /// </summary>
+        [HttpGet("getPost/{userId}/User")]
+        [ProducesResponseType(200, Type = typeof(List<PostDto>))]
+        public async Task<ActionResult<PaginationRespone<PostDto>>> GetPostsByUserId(int userId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if(!await _userRepository.CheckIsExistByIdAsync(userId)){
+                return NotFound("User is not exist");      
+            }
+
+            var PostDtos = _mapper.Map<List<PostDto>>(await _postRepository.GetPostsByUserIdAsync(userId));
+            return Ok(PostDtos);
+        }
+
         // GET posts count
         /// <summary>
         /// Get posts count

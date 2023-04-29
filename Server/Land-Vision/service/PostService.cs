@@ -131,10 +131,13 @@ namespace Land_Vision.service
             {
                 // Tìm kiếm thuộc tính tương ứng trong entity
                 var entityProperty = entityProperties.FirstOrDefault(p => p.Name == dtoProperty.Name);
-
                 // Nếu tìm thấy thì cập nhật giá trị của thuộc tính
                 if (entityProperty != null)
                 {
+                    if (entityProperty.PropertyType.IsGenericType && entityProperty.PropertyType.GetGenericTypeDefinition() == typeof(List<>))
+                    {
+                        continue;
+                    }
                     var value = dtoProperty.GetValue(dto);
                     entityProperty.SetValue(entity, value);
                 }
@@ -148,6 +151,7 @@ namespace Land_Vision.service
 
             var street = await _streetRepository.GetStreetByIdAsync(createPostPropertyDto.property.StreetId);
             var category = await _categoryRepository.GetCategoryAsync(createPostPropertyDto.property.CategoryId);
+            var ward = await _wardRepository.GetWardByIdAsync(createPostPropertyDto.property.WardId);
 
             if (street == null)
             {
@@ -164,8 +168,13 @@ namespace Land_Vision.service
                 throw new Exception("Property is not found");
             }
 
+            if (ward == null){
+                throw new Exception("Ward is not found");  
+            }
+
             property.Street = street;
             property.Category = category;
+            property.Ward = ward;
 
             UpdateEntityFromDto(property, createPostPropertyDto.property);
 
@@ -182,7 +191,7 @@ namespace Land_Vision.service
             {
                 throw new Exception("Post is not found");
             }
-
+            post.Images = _mapper.Map<List<Image>>(createPostPropertyDto.post.images);
             UpdateEntityFromDto(post, createPostPropertyDto.post);
 
             if (!await _postRepository.UpdatePostAsync(post))

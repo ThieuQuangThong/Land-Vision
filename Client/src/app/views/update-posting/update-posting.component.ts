@@ -1,32 +1,31 @@
-import { ShareDataService } from './../../_service/share-data.service';
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { AlertService } from 'src/app/_service/alert.service';
 import { AuthService } from 'src/app/_service/auth.service';
 import { CategoryService } from 'src/app/_service/category.service';
 import { CityInformationService } from 'src/app/_service/city-information.service';
 import { PostService } from 'src/app/_service/post.service';
+import { ShareDataService } from 'src/app/_service/share-data.service';
 import { CategoryModel } from 'src/app/models/category-model';
 import { DistrictModel } from 'src/app/models/district-model';
 import { ImageModel } from 'src/app/models/image-model';
-import { PostRequest } from 'src/app/models/post-request';
+import { PostRequest, PostWithoutProperty } from 'src/app/models/post-request';
 import { StreetModel } from 'src/app/models/street-model';
 import { WardModel } from 'src/app/models/ward-model';
 import { PROPERTY_INFOR } from 'src/assets/common/propertyInfor';
+import { inforStreet } from '../posting/posting.component';
+import { ActivatedRoute, Router } from '@angular/router';
+import { PostModel } from 'src/app/models/post-model';
 
-export class inforStreet {
-  districtName: string ="";
-  wardName: string ="";
-  streetName: string ="";
-}
 @Component({
-  selector: 'app-posting',
-  templateUrl: './posting.component.html',
-  styleUrls: ['./posting.component.css']
+  selector: 'app-update-posting',
+  templateUrl: './update-posting.component.html',
+  styleUrls: ['./update-posting.component.css']
 })
+export class UpdatePostingComponent {
+  postId: number = 0;
+  currentPosting: PostModel = new PostModel();
 
-export class PostingComponent implements OnInit {
   isPosting: boolean = false;
   postRequest: PostRequest = new PostRequest();
 
@@ -43,6 +42,7 @@ export class PostingComponent implements OnInit {
   isStreetLoading: boolean = false;
 
   constructor(
+    private route: ActivatedRoute,
     private router: Router,
     private shareDataService: ShareDataService,
     private postService: PostService,
@@ -64,8 +64,8 @@ export class PostingComponent implements OnInit {
     this.currentSeletedInfor.districtName = this.filterTextContent(event);
     this.currentSeletedInforTracking.next(this.currentSeletedInfor);
 
-    this.getAndSetWardByDistrictId(this.postRequest.property.districtId);
-    this.getAndSetStreetByDistrictId(this.postRequest.property.districtId);
+    this.getAndSetWardByDistrictId(this.postRequest.property.districtId,false);
+    this.getAndSetStreetByDistrictId(this.postRequest.property.districtId,false);
   }
 
   onDropdownCategoryChange(event: any) {}
@@ -88,9 +88,43 @@ export class PostingComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.getAndSetDistrict();
-    this.getAndSetDirection();
-    this.getAndSetCategory();
+    this.postId = this.route.snapshot.params['postId'];
+    this.postService.getPostById(this.postId)
+    .subscribe(
+      respone => {
+        this.postRequest.property = respone.property;
+        this.postRequest.post = respone as PostWithoutProperty
+
+        this.shareDataService.setImageSlideValue(respone.images.map(
+          x => x.linkImage
+        ))
+
+        this.postRequest.property.districtId = respone.property.district.id;
+        this.currentSeletedInfor.districtName = respone.property.district.name;
+        this.getAndSetWardByDistrictId(this.postRequest.property.districtId);
+        this.getAndSetStreetByDistrictId(this.postRequest.property.districtId);
+
+        this.postRequest.property.wardId = respone.property.ward.id;
+        this.currentSeletedInfor.wardName = respone.property.ward.name;
+
+        this.postRequest.property.streetId = respone.property.street.id;
+        this.currentSeletedInfor.streetName = respone.property.street.name;
+
+        this.postRequest.property.categoryId = respone.property.category.id;
+        this.postRequest.property.direction = respone.property.direction;
+
+        this.currentSeletedInforTracking.next(this.currentSeletedInfor);
+
+        this.shareDataService.setPositionPost(this.postRequest.property.positions)
+        this.getAndSetDistrict();
+        this.getAndSetDirection();
+        this.getAndSetCategory();
+
+      },
+      error => {
+        AlertService.setAlertModel('danger','Some thing went wrong');
+      }
+    )
     this.currentSeletedInforTracking.subscribe(
       respone => {
         const {districtName, wardName, streetName} = respone;
@@ -117,7 +151,6 @@ export class PostingComponent implements OnInit {
     .subscribe(
       respone => {
         this.categorys = respone;
-        this.postRequest.property.categoryId = respone[0].id;
       }
     )
   }
@@ -127,12 +160,8 @@ export class PostingComponent implements OnInit {
     this.cityService.getDistrict().subscribe(
       respone =>{
         const {name,id} = respone[0];
-        this.currentSeletedInfor.districtName = name;
         this.districts = respone;
-        this.postRequest.property.districtId = id
-        this.getAndSetWardByDistrictId(id);
-        this.getAndSetStreetByDistrictId(id);
-        this.currentSeletedInforTracking.next(this.currentSeletedInfor);
+
         this.isDistrictLoading = false;
       },
       error =>{
@@ -141,16 +170,20 @@ export class PostingComponent implements OnInit {
     );
   }
 
-  getAndSetWardByDistrictId(districtId: number){
+  getAndSetWardByDistrictId(districtId: number, isGetData: boolean = true){
     this.isWardLoading = true;
     this.cityService.getWardByDistrictId(districtId).subscribe(
       respone =>{
         const {id, name} = respone[0];
         this.wards = respone;
-        this.postRequest.property.wardId = id;
 
-        this.currentSeletedInfor.wardName = name;
-        this.currentSeletedInforTracking.next(this.currentSeletedInfor);
+        if(isGetData === false){
+          this.postRequest.property.wardId = id;
+
+          this.currentSeletedInfor.wardName = name;
+          this.currentSeletedInforTracking.next(this.currentSeletedInfor);
+
+        }
 
         this.isWardLoading = false;
       },
@@ -161,17 +194,19 @@ export class PostingComponent implements OnInit {
     );
   }
 
-  getAndSetStreetByDistrictId(districtId: number){
+  getAndSetStreetByDistrictId(districtId: number, isGetData: boolean = true){
     this.isStreetLoading = true;
     this.cityService.getStreetByDistrictId(districtId).subscribe(
       respone =>{
         const {id, name} = respone[0];
         this.streets = respone;
-        this.postRequest.property.streetId = id;
+        if(isGetData === false){
+          this.postRequest.property.streetId = id;
 
-        this.currentSeletedInfor.streetName = name;
-        this.currentSeletedInforTracking.next(this.currentSeletedInfor);
+          this.currentSeletedInfor.streetName = name;
+          this.currentSeletedInforTracking.next(this.currentSeletedInfor);
 
+        }
         this.isStreetLoading = false;
       },
       error =>{
@@ -191,13 +226,13 @@ export class PostingComponent implements OnInit {
       return imageModel;
     });
 
-    this.postService.addPost(this.postRequest, userId)
+    this.postService.updatePostById(this.postId,this.postRequest)
     .subscribe(
       response =>{
         this.isPosting = false;
         this.shareDataService.setImageSlideValue([]);
         this.postRequest = new PostRequest();
-        this.router.navigate(['/landing']);
+        this.router.navigate(['/profile'])
         AlertService.setAlertModel('success','Add post successfully')
       },
       error => {
@@ -205,6 +240,18 @@ export class PostingComponent implements OnInit {
         AlertService.setAlertModel('danger','Some thing went wrong')
       }
     )
+  }
 
+  delete(){
+    this.postService.deletePostById(this.postId)
+    .subscribe(
+      _ =>{
+        this.router.navigate(['/profile'])
+        AlertService.setAlertModel('success','Delete successfully')
+      },
+      erorr =>{
+        AlertService.setAlertModel('danger','Some thing went wrong')
+      }
+    )
   }
 }

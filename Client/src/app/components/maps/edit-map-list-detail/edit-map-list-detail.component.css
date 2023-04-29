@@ -1,0 +1,10 @@
+@import url('https://js.arcgis.com/4.14/esri/css/main.css');
+
+.esri-view {
+  height: 1000%;
+  padding:0;
+  margin:0;
+}
+/* .esri-widget--zoom {
+  padding: 10px;
+} */

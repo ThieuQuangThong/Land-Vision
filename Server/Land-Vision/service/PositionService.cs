@@ -33,9 +33,8 @@ namespace Land_Vision.service
         {
             var currentPositions = await _positionRepository.GetPositionsByPropertyIdAsync(propertyId);
             if(currentPositions != null){
-                if(!await _positionRepository.DeletePositionListAsync(currentPositions)){
-                    throw new Exception("Some thing went wrong when delete positions");
-                }
+                await _positionRepository.DeletePositionListAsync(currentPositions);
+
             }
 
             if(!await AddPositionListAsync(propertyId, positions)){

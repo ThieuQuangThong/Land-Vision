@@ -29,11 +29,13 @@ export const API_URL = {
   CHECK_IDENTIFY_CARD:() => `https://api.fpt.ai/vision/idr/vnm`,
   CHECK_IS_USER_AVAILABLE_TO_POST:(userId: number) => `${DOMAIN}/api/Post/availablePost/${userId}`,
   GET_USER_BY_ID:(userId: number) => `${DOMAIN}/api/Account/getUserById/${userId}`,
-  GET_ALL_VIP : () => `${DOMAIN}/api/Vip`,
+  GET_ALL_VIP:() => `${DOMAIN}/api/Vip`,
   UPDATE_USER_VIP : (userId :number, vipId : number) =>`${DOMAIN}/api/Account/${userId}&${vipId}`,
   GET_INFOR_POSITION_POST:(postId: number) => `${DOMAIN}/api/Post/getAllPositionPost/${postId}`,
   GET_DETAIL_PURCHASE:() => `${DOMAIN}/api/DetailPurchase`,
   ADD_DETAIL_PURCHASE:(userId :number, vipId :number) => `${DOMAIN}/api/DetailPurchase/${userId}&${vipId}`,
   GET_REVENUE:() => `${DOMAIN}/api/DetailPurchase/revenue`,
-
+  GET_POSTS_BY_USER_ID: (userId: number ) => `${DOMAIN}/api/Post/getPost/${userId}/User`,
+  UPDATE_POST_BY_ID: (postId: number) => `${DOMAIN}/api/Post/${postId}`,
+  DELETE_POST_ID:(postId: number) => `${DOMAIN}/api/Post/${postId}`
 };

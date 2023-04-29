@@ -33,8 +33,6 @@ export class PostService {
   }
 
   getPostById(id: number):Observable<PostModel>{
-    console.log(65564756756);
-
     return this.http.get<PostModel>(API_URL.GET_POST_BY_ID(id));
   }
 
@@ -52,6 +50,18 @@ export class PostService {
 
   getInforPositionPosts(postId: number): Observable<PositonPostModel[]>{
     return this.http.get<PositonPostModel[]>(API_URL.GET_INFOR_POSITION_POST(postId));
+  }
+
+  getPostsByUserId(userId: number): Observable<PostModel[]>{
+    return this.http.get<PostModel[]>(API_URL.GET_POSTS_BY_USER_ID(userId));
+  }
+
+  updatePostById(postId: number,postRequest: PostRequest): Observable<any>{
+    return this.http.put(API_URL.UPDATE_POST_BY_ID(postId),postRequest);
+  }
+
+  deletePostById(postId: number): Observable<any>{
+    return this.http.delete(API_URL.DELETE_POST_ID(postId));
   }
 
 }

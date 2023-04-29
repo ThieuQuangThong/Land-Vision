@@ -35,6 +35,7 @@ import { MapListDetailComponent } from './components/maps/map-list-detail/map-li
 import { CardAccountTableComponent } from './components/cards/card-account-table/card-account-table.component';
 import { CardRevenueTableComponent } from './components/cards/card-revenue-table/card-revenue-table.component';
 import { CardPackageTableComponent } from './components/cards/card-package-table/card-package-table.component';
+import { UpdatePostingComponent } from './views/update-posting/update-posting.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full', },
@@ -89,6 +90,13 @@ const routes: Routes = [
   },
   {
     path: "productdetails/:postId", component: ProductDetailComponent,
+    data: {
+      requiredAuth: false
+    },
+    canActivate: [AuthGuard]
+  },
+  {
+    path: "update-posting/:postId", component: UpdatePostingComponent,
     data: {
       requiredAuth: false
     },

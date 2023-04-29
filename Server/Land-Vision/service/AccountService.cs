@@ -55,9 +55,31 @@ namespace Land_Vision.service
             user.Code = await GenerateVerifyCodeAsync();
             user.CodeExpires = DateTime.Now.AddMinutes(NumberFiled.CODE_EXPIRE_TIME);
 
-            var content = $"<p>Hello {user.Name},"
-            + "</p><p><b>This is your verify code:</b></p><p>"
-            + $"{user.Code}</p>";
+            var content = string.Format(@"<div>
+        <div
+            style=""border: 1px solid #c1baba;width: 40vw; border-radius: 40px; overflow: hidden; box-shadow: 0px 7px 22px 0px rgba(0, 0, 0, .3);"">
+            <div style=""background-color: #0fd59f; width: 100%; height: 60px;"">
+                <h1 
+                    style=""font-size: 23px; height: 60px; line-height: 60px; margin: 0; text-align: center; color: white;"">
+                    Your Verification Code</h1>
+            </div>
+            <div 
+                style=""width: 100%; height: 300px; background-color: #fff; padding: 15px;"">
+                <p 
+                    style=""font-size: 20px; text-align: center; color: #343434; margin-top: 0;"">Enter this verification code in
+                    field:</p>
+                <div
+                    style=""display: block; width: 60%; margin: 30px auto; background-color: #ddd; border-radius: 40px; padding: 20px; text-align: center; font-size: 36px; font-family: 'Open Sans'; letter-spacing: 10px; box-shadow: 0px 7px 22px 0px rgba(0, 0, 0, .1);"">
+                    <span style=""color: #343434;"">{0}</span>
+                </div>
+                <p 
+                    style=""font-size: 20px; text-align: center;  margin-bottom: 0;"">
+                    Verification code is valid only for {1} minutes</p>
+            </div>
+            <div style=""width: 100%; height: 60px; background-color: #fff;""></div>
+        </div>
+    </div>
+",user.Code,NumberFiled.CODE_EXPIRE_TIME);
             var message = new Message
             (
                 new string[] {user.Email},
