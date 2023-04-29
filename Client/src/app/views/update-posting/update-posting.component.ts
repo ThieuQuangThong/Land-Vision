@@ -243,15 +243,18 @@ export class UpdatePostingComponent {
   }
 
   delete(){
-    this.postService.deletePostById(this.postId)
-    .subscribe(
-      _ =>{
-        this.router.navigate(['/profile'])
-        AlertService.setAlertModel('success','Delete successfully')
-      },
-      erorr =>{
-        AlertService.setAlertModel('danger','Some thing went wrong')
-      }
-    )
-  }
+    if(confirm("Are you to delete")){
+      this.postService.deletePostById(this.postId)
+      .subscribe(
+        _ =>{
+          this.router.navigate(['/profile'])
+          AlertService.setAlertModel('success','Delete successfully')
+        },
+        erorr =>{
+          AlertService.setAlertModel('danger','Some thing went wrong')
+        }
+      )
+    }
+    }
+
 }
