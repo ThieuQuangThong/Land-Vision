@@ -5,6 +5,9 @@ namespace Land_Vision.DTO.PropertyDtos
 {
     public class PropertyRequestDto
     {
+                public int WardId { get; set; }
+                [Required]
+        public List<PositionDto> Positions { get; set; }   
         [Required]
         public double Area { get; set; }
         public double FrontangeArea { get; set; }
@@ -19,9 +22,6 @@ namespace Land_Vision.DTO.PropertyDtos
         public int NumberOfBed { get; set; }
         public int NumberOfBath { get; set; }
         public int CategoryId { get; set; }
-        public int WardId { get; set; }
-        public int StreetId { get; set; }
-        [Required]
-        public List<PositionDto> Positions { get; set; }       
+        public int StreetId { get; set; }    
     }
 }

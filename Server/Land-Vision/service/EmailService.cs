@@ -25,7 +25,7 @@ namespace Land_Vision.service
             emailMessage.From.Add(new MailboxAddress(TextField.SENDER_NAME,_emailConfig.From));
             emailMessage.To.AddRange(message.To);
             emailMessage.Subject = message.Subject;
-            emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Html) { Text = string.Format("<div style='color:red;'>{0}</div>", message.Content) };
+            emailMessage.Body = new TextPart(MimeKit.Text.TextFormat.Html) { Text = string.Format("<div>{0}</div>", message.Content) };
             return emailMessage;
         }
 

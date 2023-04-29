@@ -6,6 +6,10 @@ import esri = __esri;
 import { PlaceModel } from 'src/app/models/place-model';
 import { PostService } from 'src/app/_service/post.service';
 import { PositonPostModel } from 'src/app/models/positonPost-model';
+import { PopupTemplate } from 'src/app/models/popupTemplate';
+import { Attributes } from 'src/app/models/attributes';
+import { PopUpObject } from 'src/app/models/popUpObject';
+
 
 @Component({
   selector: 'app-map-list-detail',
@@ -92,8 +96,10 @@ export class MapListDetailComponent {
 
       const graphicsLayer = new GraphicsLayer();
       let pointGraphics = new GraphicsLayer();
+      let realEstateGraphic = new GraphicsLayer();
       map.add(graphicsLayer);
       map.add(pointGraphics);
+      map.add(realEstateGraphic);
 
       const polygonSymbol = new SimpleFillSymbol({
         color: [0, 255, 255, 0.5],
@@ -155,18 +161,14 @@ export class MapListDetailComponent {
         });
         mapView.ui.add(search, "top-right");
 
-       console.log(otherPos);
-       let i =0;
+          let i =0;
           otherPos.forEach(
             x =>{
-              console.log('fsfef');
-              const popupTemplate = {
-                title: "{Name}",
-                content: "{Description}",
-             }
-             const attributes = {
-                Description: `<p class ="mb-0"><span class="text-xl font-semibold mb-0">Tên:</span> ${positionPosts[i].name}</p><p class ="mb-0"><span class="text-xl font-semibold mb-0">Giá:</span> 10 Tỷ</p><a href="http://localhost:4200/productdetails/${positionPosts[i].id}"><span class="text-xl font-semibold">Địa chỉ:</span> ${positionPosts[i].addressNumber}</a><a href="https://richnguyen.vn/wp-content/uploads/2020/08/buc-anh-bat-dong-san-dep-3.jpg"><img src="https://richnguyen.vn/wp-content/uploads/2020/08/buc-anh-bat-dong-san-dep-3.jpg" alt="Ảnh bất động sản đẹp"></a>`
-             }
+              if(i > 0){
+                return;
+              }
+
+             const popUpObect = this.shareDataService.setPopUpObject(`<p class ="mb-0"><span class="text-xl font-semibold mb-0">Tên:</span> ${positionPosts[i].name}</p><p class ="mb-0"><span class="text-xl font-semibold mb-0">Giá:</span> 10 Tỷ</p><a href="http://localhost:4200/productdetails/${positionPosts[i].id}"><span class="text-xl font-semibold">Địa chỉ:</span> ${positionPosts[i].addressNumber}</a><a href="https://richnguyen.vn/wp-content/uploads/2020/08/buc-anh-bat-dong-san-dep-3.jpg"><img src="https://richnguyen.vn/wp-content/uploads/2020/08/buc-anh-bat-dong-san-dep-3.jpg" alt="Ảnh bất động sản đẹp"></a>`)
               const polygon = {
                 type: "polygon",
                 rings: x
@@ -174,10 +176,30 @@ export class MapListDetailComponent {
              const polygonGraphic = new Graphic({
               geometry: polygon,
               symbol: polygonSymbol,
-              attributes: attributes,
-              popupTemplate: popupTemplate,
+              attributes: popUpObect.Attributes,
+              popupTemplate: popUpObect.PopupTemplate
            });
+
+           pointGraphics = new GraphicsLayer();
+           const simpleMarkerSymbol1 = {
+             type: "picture-marker",  // autocasts as new PictureMarkerSymbol()
+             url: "https://static.arcgis.com/images/Symbols/Shapes/RedStarLargeB.png",
+             width: "64px",
+             height: "64px"
+          };
+          let point1 = { //Create a point
+            type: "point",
+            longitude: Number(positionPosts[i].positions[0].longtitude),
+            latitude: Number(positionPosts[i].positions[0].latitude)
+         };
+          let pointGraphic1 = new Graphic({
+            geometry: point1,
+            symbol: simpleMarkerSymbol1,
+         });
+          console.log(point1);
+
            graphicsLayer.add(polygonGraphic);
+           realEstateGraphic.add(pointGraphic1);
            i++;
             }
           )
@@ -200,20 +222,15 @@ export class MapListDetailComponent {
                 longitude: Number(x.longtitude),
                 latitude: Number(x.latitude)
              };
-             const popupTemplatePoint = {
-              title: "{Name}",
-              content: "{Description}",
-              trigger: "hover"
-           }
-           const attributePoint = {
-              Description: `<p>Tên: ${x.place?.name} </p>
-              <a >Địa chỉ: ${x.place?.formatted_address}</a>`
-           }
+
+            const popUpOb = this.shareDataService.setPopUpObject(`<p>Tên: ${x.place?.name} </p>
+            <a >Địa chỉ: ${x.place?.formatted_address}</a>`)
+
              let pointGraphic = new Graphic({
               geometry: point,
               symbol: simpleMarkerSymbol,
-              attributes: attributePoint,
-              popupTemplate: popupTemplatePoint
+              attributes: popUpOb.Attributes,
+              popupTemplate: popUpOb.PopupTemplate
            });
            map.add(pointGraphics);
            pointGraphics.add(pointGraphic);
@@ -253,4 +270,6 @@ export class MapListDetailComponent {
     )
 
   }
+
+
 }

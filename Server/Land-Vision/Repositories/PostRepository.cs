@@ -112,6 +112,21 @@ namespace Land_Vision.Repositories
             .ToListAsync();
         }
 
+        public async Task<List<Post>> GetPostsByUserIdAsync(int userId)
+        {
+            return await _dbContext.Posts
+            .OrderByDescending(p => p.CreateDate)            
+            .Include(x => x.User)
+            .Include(l => l.Images)
+            .Include(k => k.Property.Ward)
+            .Include(c => c.Property.Street)
+            .Include(j => j.Property.Street.District)
+            .Include(i => i.Property.Street.District.City)
+            .Include(m => m.Property.Category)
+            .Include(n => n.Property.Positions)
+            .Where(x => x.User.Id == userId).ToListAsync();
+        }
+
         public async Task<List<Post>> GetSearchedPosts(Pagination pagination, PostSearchDto postSearchDto)
         {
             var text = postSearchDto.Text;

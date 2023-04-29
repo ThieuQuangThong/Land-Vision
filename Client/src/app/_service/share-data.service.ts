@@ -2,6 +2,9 @@ import { Injectable } from '@angular/core';
 import { PositionModel } from '../models/position-model';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { PlaceModel } from '../models/place-model';
+import { PopupTemplate } from '../models/popupTemplate';
+import { PopUpObject } from '../models/popUpObject';
+import { Attributes } from '../models/attributes';
 
 @Injectable({
   providedIn: 'root'
@@ -79,6 +82,22 @@ export class ShareDataService {
       }
     )
     return positionArray;
+  }
+
+  setPopUpObject(description: string ="", title:string = "{Name}",content:string ="{Description}") : PopUpObject{
+    const popupTemplatePoint: PopupTemplate = {
+      title: title,
+      content: content
+   }
+   const attributePoint: Attributes = {
+      Description: description
+   }
+
+   const result: PopUpObject = {
+    PopupTemplate:popupTemplatePoint,
+    Attributes: attributePoint
+   }
+   return  result;
   }
   constructor() { }
 }

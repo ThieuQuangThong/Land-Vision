@@ -8,11 +8,17 @@ import { PostModel } from 'src/app/models/post-model';
   styleUrls: ['./single-product.component.css']
 })
 export class SingleProductComponent {
+  @Input() isView: boolean = true;
   @Input() postItem: PostModel = new PostModel();
 
 constructor(private router: Router) {}
 
   goToDetail(){
-    this.router.navigate([`productdetails/${this.postItem.id}`])
+    if(this.isView === true){
+      this.router.navigate([`productdetails/${this.postItem.id}`])
+    }
+    else{
+      this.router.navigate([`update-posting/${this.postItem.id}`])
+    }
   }
 }

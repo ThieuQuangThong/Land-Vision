@@ -22,6 +22,7 @@ namespace Land_Vision.Interface.IRepositories
         Task<bool> DeletePostAsync(Post post);
         Task<List<Post>> GetSearchedPosts(Pagination pagination, PostSearchDto postSearchDto);
         Task<int> GetTotalCountSearchedPostAsync(PostSearchDto postSearchDto);
+        Task<List<Post>> GetPostsByUserIdAsync(int userId);
         Task<bool> SaveChangeAsync();
     }
 }

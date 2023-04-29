@@ -8,6 +8,9 @@ import { VipService } from "src/app/_service/vip.service";
 import { VipModel } from "src/app/models/vip-model";
 import { VipResponeModel } from "src/app/models/vip-response-model";
 import { Clipboard } from '@angular/cdk/clipboard';
+import { PostResponeModel } from "src/app/models/post-respone-model";
+import { PostService } from "src/app/_service/post.service";
+import { PostModel } from "src/app/models/post-model";
 
 @Component({
   selector: "app-profile",
@@ -16,12 +19,22 @@ import { Clipboard } from '@angular/cdk/clipboard';
 
 })
 export class ProfileComponent implements OnInit {
+  userPosts: PostModel[] = [];
   vipResponse: VipModel[] = [];
   userInfor: UserInfor = new UserInfor();
-  constructor(private auth: AuthService,private http:HttpClient, private router: Router,private vipService :VipService, private clipboard :Clipboard) {}
+  constructor(private postService: PostService, private auth: AuthService,private http:HttpClient, private router: Router,private vipService :VipService, private clipboard :Clipboard) {}
 
   ngOnInit(): void {
     const userId = this.auth.getUserId();
+    this.postService.getPostsByUserId(userId)
+    .subscribe(
+      respone =>{
+        this.userPosts = respone;
+      },
+      error => {
+        AlertService.setAlertModel('danger', 'Some thing went wrong');
+      }
+    )
     this.auth.getUserInforById(userId)
     .subscribe(
       respone => {
