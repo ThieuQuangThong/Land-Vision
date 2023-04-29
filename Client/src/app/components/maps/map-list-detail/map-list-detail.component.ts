@@ -168,8 +168,7 @@ export class MapListDetailComponent {
                 return;
               }
 
-             const popUpObect = this.shareDataService.setPopUpObject(`<p>Tên: ${positionPosts[i].name} </p>
-             <a href="http://localhost:4200/productdetails/${positionPosts[i].id}">Địa chỉ: ${positionPosts[i].addressNumber}</a>`)
+             const popUpObect = this.shareDataService.setPopUpObject(`<p class ="mb-0"><span class="text-xl font-semibold mb-0">Tên:</span> ${positionPosts[i].name}</p><p class ="mb-0"><span class="text-xl font-semibold mb-0">Giá:</span> 10 Tỷ</p><a href="http://localhost:4200/productdetails/${positionPosts[i].id}"><span class="text-xl font-semibold">Địa chỉ:</span> ${positionPosts[i].addressNumber}</a><a href="https://richnguyen.vn/wp-content/uploads/2020/08/buc-anh-bat-dong-san-dep-3.jpg"><img src="https://richnguyen.vn/wp-content/uploads/2020/08/buc-anh-bat-dong-san-dep-3.jpg" alt="Ảnh bất động sản đẹp"></a>`)
               const polygon = {
                 type: "polygon",
                 rings: x
