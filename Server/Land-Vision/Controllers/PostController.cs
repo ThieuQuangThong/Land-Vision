@@ -235,13 +235,12 @@ namespace Land_Vision.Controllers
             {
                 return BadRequest(ModelState);
             }
+            var postsPositionDto = _mapper.Map<List<PostsPositionDto>>(await _postRepository.GetAllInforPositionOfPostAsync());
 
             if(!await _postRepository.CheckIsPostExistByIdAsync(postId)){
-                ModelState.AddModelError("", "Post not exist");
-                return NotFound(ModelState);
+                return Ok(postsPositionDto);
             }
 
-            var postsPositionDto = _mapper.Map<List<PostsPositionDto>>(await _postRepository.GetAllInforPositionOfPostAsync());
             var swaggItem = postsPositionDto.Where(x => x.Id == postId).FirstOrDefault();
             postsPositionDto.Remove(swaggItem);
 
@@ -289,7 +288,6 @@ namespace Land_Vision.Controllers
                 await transaction.RollbackAsync();
                 return StatusCode(500, ex.Message);
             }
-
         }
 
         // POST Appove Post
