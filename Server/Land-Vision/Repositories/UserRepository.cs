@@ -104,6 +104,7 @@ namespace Land_Vision.Repositories
             .Where(x => x.Id == id)
             .Include(x => x.Vip)
             .Include(k => k.Role)
+            .Include(p => p.Posts)
             .FirstOrDefaultAsync();
         }
 
@@ -115,5 +116,6 @@ namespace Land_Vision.Repositories
             _dbContext.Users.Update(user);
             return await SaveChangesAsync();
         }
+
     }
 }

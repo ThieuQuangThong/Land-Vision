@@ -158,7 +158,7 @@
           <p class="font-bold text-3xl">{{"Lastest Properties" | translate}}</p>
           <div class="flex flex-wrap items-center justify-start">
 
-            <app-single-product *ngFor="let post of postRespone" [postItem]="post"></app-single-product>
+            <app-single-product *ngFor="let post of postRespone" [postItem]="post" [status]="status"></app-single-product>
           </div>
           <div class="w-full mt-7 flex flex-wrap items-center lg: justify-center">
             <button *ngIf="!isFullItem && !isLoading" (click)="loadMore()"

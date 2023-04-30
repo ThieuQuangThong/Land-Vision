@@ -104,6 +104,7 @@ namespace Land_Vision.service
             };
             return paginResult;
         }
+
         public async Task<PaginationRespone<PostDto>> GetPostsByTimeAsync(Pagination pagination, DateTime startDate, DateTime endDate)
         {
             var posts = await _postRepository.GetPostsByTimeAsync(pagination, startDate, endDate);
@@ -121,6 +122,7 @@ namespace Land_Vision.service
             };
             return paginResult;
         }
+
         public static void UpdateEntityFromDto<TEntity, TDto>(TEntity entity, TDto dto)
         {
             // Lấy ra tất cả các thuộc tính của entity
@@ -192,6 +194,7 @@ namespace Land_Vision.service
                 throw new Exception("Post is not found");
             }
             post.Images = _mapper.Map<List<Image>>(createPostPropertyDto.post.images);
+            post.ApproveStatus = 1;
             UpdateEntityFromDto(post, createPostPropertyDto.post);
 
             if (!await _postRepository.UpdatePostAsync(post))
@@ -229,6 +232,25 @@ namespace Land_Vision.service
                 return false;
             }
             return user.Vip.VipLevel >= numberOfUserPost ;
+        }
+
+        public async Task<PaginationRespone<PostDto>> GetUnapprovedPostsAsync(Pagination pagination)
+        {
+            var posts = await _postRepository.GetUnapprovedPostsAsync(pagination);
+
+            var postTotal = await _postRepository.GetCountUnapprovedPostsAsync();
+            var postDtos = _mapper.Map<List<PostDto>>(posts);
+
+            var paginResult = new PaginationRespone<PostDto>(postDtos)
+            {
+                pagination = new Pagination
+                {
+                    SkipCount = pagination.SkipCount,
+                    MaxResultCount = pagination.MaxResultCount,
+                },
+                TotalCount = postTotal,
+            };
+            return paginResult;  
         }
     }
 }

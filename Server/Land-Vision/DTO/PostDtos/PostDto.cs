@@ -15,7 +15,7 @@ namespace Land_Vision.DTO.PostDtos
         public bool isVerified { get; set; } = false;
         public int transactionType { get; set; }
         public bool isHide { get; set; } = false;
-
+        public int ApproveStatus {get; set;} = 1;
         public DateTime CreateDate { get; set; }
         public PropertyDto Property { get; set; }
         public UserDto User { get; set; }

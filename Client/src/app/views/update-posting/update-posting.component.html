@@ -53,15 +53,15 @@
               <ul class="flex mb-0 list-none flex-wrap pt-3 pb-4 flex-row">
                 <li class="-mb-px mr-2 last:mr-0 flex-auto text-center">
                   <a class="text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal"
-                    (click)="toggleTabs(1)"
-                    [ngClass]="{'text-blueGray-600 bg-white': openTab !== 1, 'text-white bg-blueGray-600': openTab === 1}">
+                    (click)="toggleTabs(0)"
+                    [ngClass]="{'text-blueGray-600 bg-white': openTab !== 0, 'text-white bg-blueGray-600': openTab === 0}">
                     Sale
                   </a>
                 </li>
                 <li class="-mb-px mr-2 last:mr-0 flex-auto text-center">
                   <a class="text-xs font-bold uppercase px-5 py-3 shadow-lg rounded block leading-normal"
-                    (click)="toggleTabs(2)"
-                    [ngClass]="{'text-blueGray-600 bg-white': openTab !== 2, 'text-white bg-blueGray-600': openTab === 2}">
+                    (click)="toggleTabs(1)"
+                    [ngClass]="{'text-blueGray-600 bg-white': openTab !== 1, 'text-white bg-blueGray-600': openTab === 1}">
                     Rent
                   </a>
                 </li>

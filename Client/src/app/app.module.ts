@@ -109,6 +109,9 @@ import { CardPackageTableComponent } from './components/cards/card-package-table
 import { UpdatePostingComponent } from './views/update-posting/update-posting.component';
 import { EditMapListDetailComponent } from './components/maps/edit-map-list-detail/edit-map-list-detail.component';
 import { PricingDialogComponent } from './components/pricing-dialog/pricing-dialog.component';
+import { TranformTransactionTypePipe } from './_pipes/tranform-transaction-type.pipe';
+import { CardApproveTableComponent } from './components/cards/card-approve-table/card-approve-table.component';
+import { ApproveDetailComponent } from './views/admin/approve-detail/approve-detail.component';
 
 @NgModule({
   declarations: [
@@ -177,7 +180,10 @@ import { PricingDialogComponent } from './components/pricing-dialog/pricing-dial
     CardPackageTableComponent,
     UpdatePostingComponent,
     EditMapListDetailComponent,
-    PricingDialogComponent
+    PricingDialogComponent,
+    TranformTransactionTypePipe,
+    CardApproveTableComponent,
+    ApproveDetailComponent,
     // LoginComponent,
     // RegisterComponent,
   ],
@@ -240,6 +246,7 @@ import { PricingDialogComponent } from './components/pricing-dialog/pricing-dial
     InteriorTransformPipe,
     DistanceTransferPipe,
     TranferVipPipe,
+    TranformTransactionTypePipe,
   ]
 
 })

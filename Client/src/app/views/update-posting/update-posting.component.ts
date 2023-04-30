@@ -94,6 +94,7 @@ export class UpdatePostingComponent {
       respone => {
         this.postRequest.property = respone.property;
         this.postRequest.post = respone as PostWithoutProperty
+        this.openTab = respone.transactionType
 
         this.shareDataService.setImageSlideValue(respone.images.map(
           x => x.linkImage
@@ -226,7 +227,7 @@ export class UpdatePostingComponent {
       return imageModel;
     });
 
-    this.postService.updatePostById(this.postId,this.postRequest)
+    this.postService.updatePostById(this.postId,userId,this.postRequest)
     .subscribe(
       response =>{
         this.isPosting = false;
@@ -244,7 +245,7 @@ export class UpdatePostingComponent {
 
   delete(){
     if(confirm("Are you to delete")){
-      this.postService.deletePostById(this.postId)
+      this.postService.deletePostById(this.postId, this.auth.getUserId())
       .subscribe(
         _ =>{
           this.router.navigate(['/profile'])

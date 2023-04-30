@@ -1,0 +1,237 @@
+<main class="mt-8">
+  <section class="pb-20 bg-blueGray-800">
+    <div class="container mx-auto px-4">
+
+
+
+
+      <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-200 ">
+        <div class="flex-auto p-5 lg:p-10">
+          <h4 class="text-2xl font-semibold">Product Information</h4>
+          <section class="text-gray-700 body-font overflow-hidden rounded-lg  bg-white">
+            <div class="container px-5 py-12 mx-auto">
+              <div class="w-full mx-auto flex flex-wrap">
+                <!-- <img alt="ecommerce" class="lg:w-1/2 w-full object-cover object-center rounded border border-gray-200" src="https://www.whitmorerarebooks.com/pictures/medium/2465.jpg"> -->
+
+                <div alt="ecommerce" id="default-carousel"
+                  class="relative lg:w-1/2 w-full object-cover object-center rounded border border-gray-200"
+                  data-carousel="slide">
+                  <app-post-image></app-post-image>
+
+
+                </div>
+
+                <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
+                  <h2 class="text-sm title-font text-gray-500 tracking-widest">{{postItem.property.addressNumber}}</h2>
+                  <h1 class="text-gray-900 text-3xl title-font font-medium mb-48">{{postItem.title}}</h1>
+                  <div class="flex mt-20">
+                    <span class="title-font font-medium text-2xl text-gray-900">{{postItem.property.price |
+                      moneyTransform}}</span>
+                  </div>
+
+                  <div class="mb-6">
+                    <h2 class="mb-2 text-lg font-bold text-gray-700 dark:text-gray-400">System Specs :</h2>
+                    <div class="bg-blueGray-200 rounded-xl">
+                      <div class="p-3 lg:p-5 ">
+                        <div class="p-2 rounded-xl lg:p-3  bg-gray-50">
+                          <div class="w-full flex flex-wrap justify-between gap-x-1">
+                            <div class="w-1/5 ml-4 mb-4 md:w-2/5 flex items-center">
+                              <span>
+                                <i class="fa fa-square" aria-hidden="true"></i>
+                              </span>
+                              <div class="text-base pl-3 font-medium">
+                                <span>
+                                  Area:
+                                </span>
+                                <span>
+                                  {{postItem.property.area}}
+                                </span>
+                              </div>
+                            </div>
+                            <div class="w-2/5 mb-4 md:w-2/5 flex items-center">
+                              <span>
+                                <i class="fa fa-thumb-tack" aria-hidden="true"></i>
+                              </span>
+                              <div class="text-base pl-3 font-medium">
+                                <span>
+                                  Frontage:
+                                </span>
+                                <span>
+                                  {{postItem.property.frontangeArea}}
+                                </span>
+                              </div>
+                            </div>
+                            <div class="w-1/5 ml-4 mb-4 md:w-2/5 flex items-center">
+                              <span>
+                                <i class="fa fa-money" aria-hidden="true"></i>
+                              </span>
+                              <div class="text-base pl-3 font-medium">
+                                <span>
+                                  Price:
+                                </span>
+                                <span>
+                                  {{postItem.property.price | moneyTransform}}
+                                </span>
+                              </div>
+                            </div>
+
+                            <div class="w-1/5 mb-4 md:w-2/5 flex items-center">
+                              <span>
+                                <i class="fa fa-book" aria-hidden="true"></i>
+                              </span>
+                              <div class="text-base pl-3 font-medium">
+                                <span>
+                                  Juridical:
+                                </span>
+                                <span>
+                                  {{postItem.property.juridical | juridicalTransform | translate}}
+                                </span>
+                              </div>
+                            </div>
+
+                            <div class="w-1/5 ml-4 mb-4 md:w-2/5 flex items-center">
+                              <span>
+                                <i class="fa fa-check" aria-hidden="true"></i>
+                              </span>
+                              <div class="text-base pl-3 font-medium">
+                                <span>
+                                  Is interior:
+                                </span>
+                                <span>
+                                  {{postItem.property.interior | interiorTransform | translate}}
+                                </span>
+                              </div>
+                            </div>
+
+                            <div class="w-1/5 mb-4 md:w-2/5 flex items-center">
+                              <span>
+                                <i class="fa fa-safari" aria-hidden="true"></i>
+                              </span>
+                              <div class="text-base pl-3 font-medium">
+                                <span>
+                                  Direction:
+                                </span>
+                                <span>
+                                  {{postItem.property.direction | directionTransform | translate}}
+                                </span>
+                              </div>
+                            </div>
+
+                            <div class="w-1/5 ml-4 mb-4 md:w-2/5 flex items-center">
+                              <span>
+                                <i class="fa fa-road" aria-hidden="true"></i>
+                              </span>
+                              <div class="text-base pl-3 font-medium">
+                                <span>
+                                  Way In:
+                                </span>
+                                <span>
+                                  {{postItem.property.wayIn}}
+                                </span>
+                              </div>
+                            </div>
+
+                            <div class="w-1/5 mb-4 md:w-2/5 flex items-center">
+                              <span>
+                                <i class="fa fa-level-up" aria-hidden="true"></i>
+                              </span>
+                              <div class="text-base pl-3 font-medium">
+                                <span>
+                                  Floor:
+                                </span>
+                                <span>
+                                  {{postItem.property.numberOfFloor}}
+                                </span>
+                              </div>
+                            </div>
+
+                            <div class="w-1/5 ml-4 mb-4 md:w-2/5 flex items-center">
+                              <span>
+                                <i class="fa fa-bed" aria-hidden="true"></i>
+                              </span>
+                              <div class="text-base pl-3 font-medium">
+                                <span>
+                                  Bed:
+                                </span>
+                                <span>
+                                  {{postItem.property.numberOfBed}}
+                                </span>
+                              </div>
+                            </div>
+
+                            <div class="w-1/5 mb-4 md:w-2/5 flex items-center">
+                              <span>
+                                <i class="fa fa-bath" aria-hidden="true"></i>
+                              </span>
+                              <div class="text-base pl-3 font-medium">
+                                <span>
+                                  Bath:
+                                </span>
+                                <span>
+                                  {{postItem.property.numberOfBath}}
+                                </span>
+                              </div>
+                            </div>
+
+                            <div class="w-1/5 ml-4 mb-4 md:w-2/5 flex items-center">
+                              <span>
+                                <i class="fa fa-location-arrow" aria-hidden="true"></i>
+                              </span>
+                              <div class="text-base pl-3 font-medium">
+                                <span>
+                                  District:
+                                </span>
+                                <span>
+                                  {{postItem.property.district.name}}
+                                </span>
+                              </div>
+                            </div>
+
+                            <div class="w-1/5 mb-4 md:w-2/5 flex items-center">
+                              <span>
+                                <i class="fa fa-thumb-tack" aria-hidden="true"></i>
+                              </span>
+                              <div class="text-base pl-3 font-medium">
+                                <span>
+                                  Ward:
+                                </span>
+                                <span>
+                                  {{postItem.property.ward.name}}
+                                </span>
+                              </div>
+                            </div>
+
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <label class="title-font font-medium text-2xl text-gray-900" for="leading-relaxed">Description </label>
+                  <p class="leading-relaxed">{{postItem.description}}</p>
+
+                </div>
+              </div>
+            </div>
+          </section>
+          <app-map-list-detail [postId]="postId"></app-map-list-detail>
+          <div class="w-full flex justify-around text-center mt-6">
+            <!-- <button
+              class="bg-blueGray-800 text-white active:bg-blueGray-600 text-sm font-bold uppercase px-6 py-3 rounded shadow hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+              type="button">
+              Submit
+            </button> -->
+            <div class="button-borders">
+              <button class="primary-button uppercase" type="button" (click)="approve()" > Approve
+              </button>
+            </div>
+            <div class="button-borders">
+              <button class="primary-button uppercase" type="button" (click)="delete()" > Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</main>

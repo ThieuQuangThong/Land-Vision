@@ -70,8 +70,13 @@
 
                 </div>
 
-                <div class="flex">
-                  <app-single-product *ngFor="let userPost of userPosts" [postItem]="userPost" [isView]="false" ></app-single-product>
+                    <!-- <div class="w-full  grid grid-cols-1 md:grid-cols-3 gap-6 mx-auto">
+
+                        <app-pricing-card *ngFor="let vip of vipResponse" [vipItem]="vip"></app-pricing-card>
+                    </div>
+                </div> -->
+                <div class="flex" style="flex-wrap: wrap;">
+                  <app-single-product *ngFor="let userPost of userPosts" [postItem]="userPost" [status]="status" ></app-single-product>
                 </div>
 
             </div>

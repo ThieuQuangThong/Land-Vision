@@ -1,0 +1,14 @@
+<div
+  class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded"
+>
+  <div class="rounded-t mb-0 px-4 py-3 bg-transparent">
+    <div class="flex flex-wrap items-center">
+      <div class="relative w-full max-w-full flex-grow flex-1">
+        <h2 class="text-blueGray-700 text-xl font-semibold">Approve table</h2>
+      </div>
+    </div>
+  </div>
+  <div class="p-4 flex" style="flex-wrap: wrap;">
+      <app-single-product *ngFor="let unapprovedPost of unapprovedPosts" [postItem]="unapprovedPost" [status]="status" ></app-single-product>
+  </div>
+</div>

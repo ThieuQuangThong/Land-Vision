@@ -12,6 +12,7 @@ namespace Land_Vision.Models
         public bool IsVerified { get; set; } = false;
         public int transactionType { get; set; }
         public bool isHide { get; set; } = false;
+        public int ApproveStatus {get; set;} = 1;
         public DateTime CreateDate { get; set; }
         [Required]
         public User User { get; set; }

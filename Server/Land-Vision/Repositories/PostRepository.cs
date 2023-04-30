@@ -55,6 +55,12 @@ namespace Land_Vision.Repositories
             ).ToListAsync();
         }
 
+        public async Task<int> GetCountUnapprovedPostsAsync()
+        {
+            return await _dbContext.Posts.Where(x => x.ApproveStatus == NumberFiled.Unapproved)
+            .CountAsync();
+        }
+
         public async Task<Post> GetPostAsync(int postId)
         {
             return await _dbContext.Posts.Where(p => p.Id == postId)
@@ -76,12 +82,13 @@ namespace Land_Vision.Repositories
 
         public async Task<int> GetPostCountAsync()
         {
-            return await _dbContext.Posts.CountAsync();
+            return await _dbContext.Posts.Where(d => d.ApproveStatus == NumberFiled.APPROVED).CountAsync();
         }
 
         public async Task<List<Post>> GetPostsAsync(Pagination pagination)
         {
             return await _dbContext.Posts.AsNoTracking()
+            .Where(d => d.ApproveStatus == NumberFiled.APPROVED)
             .OrderByDescending(p => p.CreateDate)
             .Skip(pagination.SkipCount)
             .Take(pagination.MaxResultCount)
@@ -95,6 +102,7 @@ namespace Land_Vision.Repositories
             .Include(n => n.Property.Positions)
             .ToListAsync();
         }
+
         public async Task<List<Post>> GetPostsByTimeAsync(Pagination pagination, DateTime startDate, DateTime endDate)
         {
             return await _dbContext.Posts.AsNoTracking()
@@ -135,7 +143,8 @@ namespace Land_Vision.Repositories
             }
 
             return await _dbContext.Posts
-            .Where(x => (postSearchDto.TransactionType == NumberFiled.ALL || x.transactionType == postSearchDto.TransactionType)
+            .Where(x => x.ApproveStatus == NumberFiled.APPROVED 
+            && (postSearchDto.TransactionType == NumberFiled.ALL || x.transactionType == postSearchDto.TransactionType)
             && (postSearchDto.InteriorStatus == NumberFiled.ALL ||x.Property.Interior == postSearchDto.InteriorStatus)
             && (postSearchDto.Price == NumberFiled.ALL ||x.Property.Price <= postSearchDto.Price)
             && (postSearchDto.NumberOfFloor == NumberFiled.ALL ||x.Property.NumberOfFloor == postSearchDto.NumberOfFloor)
@@ -162,7 +171,8 @@ namespace Land_Vision.Repositories
                 text = text.Trim();
             }
 
-            return _dbContext.Posts.Where(x => (postSearchDto.TransactionType == NumberFiled.ALL || x.transactionType == postSearchDto.TransactionType)
+            return _dbContext.Posts.Where(x => x.ApproveStatus == NumberFiled.APPROVED
+            &&(postSearchDto.TransactionType == NumberFiled.ALL || x.transactionType == postSearchDto.TransactionType)
             && ( postSearchDto.InteriorStatus == NumberFiled.ALL ||x.Property.Interior == postSearchDto.InteriorStatus)
             && ( postSearchDto.Price == NumberFiled.ALL ||x.Property.Price <= postSearchDto.Price)
             && ( postSearchDto.NumberOfFloor == NumberFiled.ALL ||x.Property.NumberOfFloor == postSearchDto.NumberOfFloor)
@@ -171,6 +181,22 @@ namespace Land_Vision.Repositories
             && ( postSearchDto.Direction == NumberFiled.ALL ||x.Property.Direction == postSearchDto.Direction)
             && (String.IsNullOrEmpty(text) || x.Title.Contains(text) || x.Description.Contains(text)))
             .CountAsync();
+        }
+
+        public Task<List<Post>> GetUnapprovedPostsAsync(Pagination pagination)
+        {
+            return _dbContext.Posts.Where(d => d.ApproveStatus == NumberFiled.Unapproved)
+            .Skip(pagination.SkipCount)
+            .Take(pagination.MaxResultCount)
+            .Include(x => x.User)
+            .Include(l => l.Images)
+            .Include(k => k.Property.Ward)
+            .Include(c => c.Property.Street)
+            .Include(j => j.Property.Street.District)
+            .Include(i => i.Property.Street.District.City)
+            .Include(m => m.Property.Category)
+            .Include(n => n.Property.Positions)
+            .ToListAsync();
         }
 
         public async Task<bool> HidePostAsync(int postId)

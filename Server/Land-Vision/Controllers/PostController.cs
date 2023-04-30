@@ -1,4 +1,5 @@
 using AutoMapper;
+using Land_Vision.Common;
 using Land_Vision.Data;
 using Land_Vision.Dto.PostDtos;
 using Land_Vision.DTO;
@@ -160,6 +161,52 @@ namespace Land_Vision.Controllers
             return Ok(_mapper.Map<PostDto>(post));
         }
 
+        // GET unapproved post 
+        /// <summary>
+        /// GET unapproved post
+        /// </summary>
+        [HttpGet("getUnapprovedPost/{skipCount}&{maxResultCount}")]
+        [ProducesResponseType(200, Type = typeof(PostDto))]
+        public async Task<IActionResult> GetUnapprovedPostAsync(int skipCount, int maxResultCount)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var Paginposts = await _postService.GetUnapprovedPostsAsync(new Pagination
+            {
+                SkipCount = skipCount,
+                MaxResultCount = maxResultCount
+            });
+            return Ok(Paginposts);
+        }
+
+        // get post is unapproved 
+        /// <summary>
+        /// get post is unapproved 
+        /// </summary>
+        [HttpGet("getPostIsUnApproved/{postId}")]
+        [ProducesResponseType(200, Type = typeof(PostDto))]
+        public async Task<IActionResult> GetPostIsUnApproved(int postId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var post = await _postRepository.GetPostAsync(postId);
+            if(post == null){
+                return NotFound(); 
+            }
+
+            if(post.ApproveStatus != NumberFiled.Unapproved){
+                throw new Exception(); 
+            }
+
+            return Ok(_mapper.Map<PostDto>(post));
+        }
+
         // GET Post by title
         /// <summary>
         /// Get post by title
@@ -224,10 +271,10 @@ namespace Land_Vision.Controllers
                     return BadRequest(ModelState);
                 }
               
-                if (! await _postService.CheckIsUserCanPost(userId)){
-                    ModelState.AddModelError("", "you post as many times as you have");
-                    return StatusCode(402, ModelState);        
-                }
+                // if (! await _postService.CheckIsUserCanPost(userId)){
+                //     ModelState.AddModelError("", "you post as many times as you have");
+                //     return StatusCode(402, ModelState);        
+                // }
                 if (!await _postService.AddPostPropertyAsync(userId, postPropertyDto))
                 {
                     ModelState.AddModelError("", "Something went wrong while saving");
@@ -245,14 +292,53 @@ namespace Land_Vision.Controllers
 
         }
 
+        // POST Appove Post
+        /// <summary>
+        /// Appove Post
+        /// </summary>
+        [HttpPost("appovePost/{postId}")]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(400)]
+        public async Task<IActionResult> ApprovePost(int postId)
+        {
+            using var transaction = await _dbContext.Database.BeginTransactionAsync();
+            try
+            {
+
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+              
+                var post = await _postRepository.GetPostAsync(postId);
+                if (post == null)
+                {
+                    return NotFound("Post is not found");
+                }
+                
+                post.ApproveStatus = NumberFiled.APPROVED;
+
+                await _postRepository.UpdatePostAsync(post);
+
+                await transaction.CommitAsync();
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                await transaction.RollbackAsync();
+                return StatusCode(500, ex.Message);
+            }
+
+        }
+
         // UPDATE Post
         /// <summary>
         /// Update post
         /// </summary>
-        [HttpPut("{postId}")]
+        [HttpPut("{postId}&{userId}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
-        public async Task<IActionResult> UpdatePost(int postId, [FromBody] CreatePostPropertyDto postPropertyDto)
+        public async Task<IActionResult> UpdatePost(int userId, int postId, [FromBody] CreatePostPropertyDto postPropertyDto)
         {
             using var transaction = await _dbContext.Database.BeginTransactionAsync();
 
@@ -262,15 +348,22 @@ namespace Land_Vision.Controllers
             }
 
             var post = await _postRepository.GetPostAsync(postId);
+
             if (post == null)
             {
                 ModelState.AddModelError("", "City not exists");
                 return StatusCode(404, ModelState);
             }
+
+            if(post.User.Id != userId){
+                ModelState.AddModelError("", "Something went wrong");
+                return StatusCode(500, ModelState);
+            }
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+
 
             if (!await _postService.UpdatePostPropertyAsync(postId, postPropertyDto))
             {
@@ -285,17 +378,22 @@ namespace Land_Vision.Controllers
         /// <summary>
         /// Delete post
         /// </summary>
-        [HttpDelete("{postId}")]
+        [HttpDelete("{postId}&{userId}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public async Task<IActionResult> DeletePostById(int postId)
+        public async Task<IActionResult> DeletePostById(int postId, int userId)
         {
             var post = await _postRepository.GetPostAsync(postId);
             if (post == null)
             {
                 ModelState.AddModelError("", "Post is not exists");
                 return StatusCode(404, ModelState);
+            }
+
+            if(post.User.Id != userId){
+                ModelState.AddModelError("", "Something went wrong");
+                return StatusCode(500, ModelState);
             }
 
             if (!ModelState.IsValid)

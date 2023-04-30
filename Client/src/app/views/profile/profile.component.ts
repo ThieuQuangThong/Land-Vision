@@ -11,6 +11,7 @@ import { Clipboard } from '@angular/cdk/clipboard';
 import { PostResponeModel } from "src/app/models/post-respone-model";
 import { PostService } from "src/app/_service/post.service";
 import { PostModel } from "src/app/models/post-model";
+import { PROPERTY_INFOR } from "src/assets/common/propertyInfor";
 
 @Component({
   selector: "app-profile",
@@ -19,6 +20,7 @@ import { PostModel } from "src/app/models/post-model";
 
 })
 export class ProfileComponent implements OnInit {
+  status:number = PROPERTY_INFOR.isUpdate;
   userPosts: PostModel[] = [];
   vipResponse: VipModel[] = [];
   userInfor: UserInfor = new UserInfor();
