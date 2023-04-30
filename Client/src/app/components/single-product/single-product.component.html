@@ -14,7 +14,8 @@
         </div>
 
         <div>
-            <img src={{postItem.images[0].linkImage}} class="w-full h-44 rounded-t-lg object-cover" />
+          <img *ngIf="postItem.images.length <= 0" src='https://user-images.githubusercontent.com/43302778/106805462-7a908400-6645-11eb-958f-cd72b74a17b3.jpg' class="w-full h-44 rounded-t-lg object-cover" />
+            <img *ngIf="postItem.images.length > 0" src={{postItem.images[0].linkImage}} class="w-full h-44 rounded-t-lg object-cover" />
         </div>
         <div class=" rounded-b-lg ">
             <!-- <div class="flex items-center justify-between px-4 pt-4">
