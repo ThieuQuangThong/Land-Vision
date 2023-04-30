@@ -27,6 +27,11 @@ namespace Land_Vision.Data
             .WithOne(b => b.Property)
             .HasForeignKey<Post>(c => c.PropertyId);
             base.OnModelCreating(modelBuilder);
+
+            modelBuilder.Entity<Post>()
+            .Property(p => p.ApproveStatus)
+            .HasDefaultValue(1);
+
         }
     }
 }

@@ -7,6 +7,7 @@ namespace Land_Vision.Interface.IServices
     public interface IPostService
     {
         Task<bool> CheckIsUserCanPost(int userId);
+        Task<PaginationRespone<PostDto>> GetUnapprovedPostsAsync(Pagination pagination);
         Task<PaginationRespone<PostDto>> GetPostsAsync(Pagination pagination);
         Task<PaginationRespone<PostDto>> GetSearchedPostsAsync(Pagination pagination, PostSearchDto postSearchDto);
         Task<PaginationRespone<PostDto>> GetPostsByTimeAsync(Pagination pagination, DateTime startDate, DateTime endDate);

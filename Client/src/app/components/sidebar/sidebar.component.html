@@ -125,6 +125,18 @@
                     </a>
                 </li>
 
+                <li class="items-center">
+                  <a [routerLink]="['/admin/approveTables']" class="text-xs uppercase py-3 font-bold block" routerLinkActive #approveTables="routerLinkActive" [ngClass]="
+                  approveTables.isActive
+              ? 'text-red-600 hover:text-red-700'
+              : 'text-blueGray-700 hover:text-blueGray-500'
+          ">
+                      <i class="fas fa-bag-shopping mr-2 text-sm" [ngClass]="
+                      approveTables.isActive ? 'opacity-75' : 'text-blueGray-300'
+            "></i> Approve Post
+                  </a>
+              </li>
+
 
             </ul>
         </div>

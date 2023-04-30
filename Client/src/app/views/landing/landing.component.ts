@@ -14,6 +14,7 @@ import { PROPERTY_INFOR } from "src/assets/common/propertyInfor";
 })
 export class LandingComponent implements OnInit {
 
+  status: number = PROPERTY_INFOR.isView;
   isLoading: boolean = false;
 
   mainSearch: SearchModel = new SearchModel();
@@ -47,7 +48,7 @@ export class LandingComponent implements OnInit {
 
   defaultPaging: PagingModel = {
     skipCount : 0,
-    maxResultCount : 12,
+    maxResultCount : PROPERTY_INFOR.maxResultCount,
   }
 
   paging: PagingModel = JSON.parse(JSON.stringify(this.defaultPaging));

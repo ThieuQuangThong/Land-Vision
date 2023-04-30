@@ -36,6 +36,9 @@ export const API_URL = {
   ADD_DETAIL_PURCHASE:(userId :number, vipId :number) => `${DOMAIN}/api/DetailPurchase/${userId}&${vipId}`,
   GET_REVENUE:() => `${DOMAIN}/api/DetailPurchase/revenue`,
   GET_POSTS_BY_USER_ID: (userId: number ) => `${DOMAIN}/api/Post/getPost/${userId}/User`,
-  UPDATE_POST_BY_ID: (postId: number) => `${DOMAIN}/api/Post/${postId}`,
-  DELETE_POST_ID:(postId: number) => `${DOMAIN}/api/Post/${postId}`
+  UPDATE_POST_BY_ID: (postId: number, userId: number) => `${DOMAIN}/api/Post/${postId}&${userId}`,
+  DELETE_POST_ID:(postId: number, userId: number) => `${DOMAIN}/api/Post/${postId}&${userId}`,
+  GET_UNAPPROVED_POSTS:(pagingModel: PagingModel) => `${DOMAIN}/api/Post/getUnapprovedPost/${pagingModel.skipCount}&${pagingModel.maxResultCount}`,
+  GET_UNAPPROVED_POST_BY_ID:(postId: number) => `${DOMAIN}/api/Post/getPostIsUnApproved/${postId}`,
+  APPROVE_POST_BY_ID:(postId: number) => `${DOMAIN}/api/Post/appovePost/${postId}`
 };

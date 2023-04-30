@@ -6,7 +6,6 @@ import { SignupComponent } from './signup/signup.component';
 
 // layouts
 import { AdminComponent } from "./layouts/admin/admin.component";
-import { AuthComponent } from "./layouts/auth/auth.component";
 
 // admin views
 import { DashboardComponent } from "./views/admin/dashboard/dashboard.component";
@@ -31,12 +30,13 @@ import { PostingComponent } from './views/posting/posting.component';
 import { EmailConfirmSucceededComponent } from './views/email-confirm-succeeded/email-confirm-succeeded.component';
 import { PageNotFoundComponent } from './views/page-not-found/page-not-found.component';
 import { SuccessPaymentComponent } from './components/success-payment/success-payment.component';
-import { MapListDetailComponent } from './components/maps/map-list-detail/map-list-detail.component';
 import { CardAccountTableComponent } from './components/cards/card-account-table/card-account-table.component';
 import { CardRevenueTableComponent } from './components/cards/card-revenue-table/card-revenue-table.component';
 import { CardPackageTableComponent } from './components/cards/card-package-table/card-package-table.component';
 import { UpdatePostingComponent } from './views/update-posting/update-posting.component';
 import { PricingDialogComponent } from './components/pricing-dialog/pricing-dialog.component';
+import { CardApproveTableComponent } from './components/cards/card-approve-table/card-approve-table.component';
+import { ApproveDetailComponent } from './views/admin/approve-detail/approve-detail.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full', },
@@ -150,6 +150,10 @@ const routes: Routes = [
       { path: "accountTables", component: CardAccountTableComponent },
       { path: "revenueTables", component: CardRevenueTableComponent },
       { path: "packageTables", component: CardPackageTableComponent },
+      { path: "approveTables", component: CardApproveTableComponent },
+      {
+        path: "approveDetail/:postId", component: ApproveDetailComponent
+      },
 
       { path: "", redirectTo: "dashboard", pathMatch: "full" },
     ]

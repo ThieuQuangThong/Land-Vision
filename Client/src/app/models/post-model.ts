@@ -7,6 +7,7 @@ export class PostModel {
   title: string = "";
   description: string = "";
   transactionType: number =0;
+  approveStatus: number = -1;
   numberOfView: number = 0;
   createDate! : Date;
   isVerified:boolean = false;

@@ -3,8 +3,7 @@
         <div class="absolute top-2 left-2  text-white">
             <div class="flex justify-between">
                 <div class="bg-emerald-500 p-1">
-                    <span *ngIf="postItem.transactionType === 1"> {{"For sale" | translate}}</span>
-                    <span *ngIf="postItem.transactionType === 0"> {{"Deposited" | translate}}</span>
+                    <span> For {{postItem.transactionType | tranformTransactionType}}</span>
                 </div>
                 <div class="ml-1 bg-emerald-600 p-1">
                     <span>{{postItem.property.category.name}}</span>
@@ -31,7 +30,11 @@
             </div> -->
             <div class="p-3">
                 <!-- <div id="postTitle" class="flex items-center justify-between pr-0 mr-0 h-12 "> -->
-                <p id="two-line" class="text-sm  font-medium  h-full text-ellipsis ">{{postItem.title}}</p>
+                <div style="display: flex;">
+                  <p id="two-line" class="text-sm  font-medium  h-full text-ellipsis ">{{postItem.title}}</p>
+                  <span *ngIf = "postItem.approveStatus == 0"  style="height: 20px;" class="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Approved</span>
+                  <span *ngIf = "postItem.approveStatus == 1" style="height: 20px;" class="bg-yellow-100 text-yellow-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300">Pending</span>
+                </div>
 
                 <!-- </div> -->
 

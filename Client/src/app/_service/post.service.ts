@@ -56,12 +56,24 @@ export class PostService {
     return this.http.get<PostModel[]>(API_URL.GET_POSTS_BY_USER_ID(userId));
   }
 
-  updatePostById(postId: number,postRequest: PostRequest): Observable<any>{
-    return this.http.put(API_URL.UPDATE_POST_BY_ID(postId),postRequest);
+  updatePostById(postId: number, userId: number, postRequest: PostRequest): Observable<any>{
+    return this.http.put(API_URL.UPDATE_POST_BY_ID(postId,userId),postRequest);
   }
 
-  deletePostById(postId: number): Observable<any>{
-    return this.http.delete(API_URL.DELETE_POST_ID(postId));
+  deletePostById(postId: number, userId: number): Observable<any>{
+    return this.http.delete(API_URL.DELETE_POST_ID(postId, userId));
+  }
+
+  getUnapprovedPosts(pagingModel: PagingModel): Observable<PostResponeModel>{
+    return this.http.get<PostResponeModel>(API_URL.GET_UNAPPROVED_POSTS(pagingModel));
+  }
+
+  getUnapprovedPostById(postId: number): Observable<PostModel>{
+    return this.http.get<PostModel>(API_URL.GET_UNAPPROVED_POST_BY_ID(postId));
+  }
+
+  approvePost(postId: number): Observable<any>{
+    return this.http.post(API_URL.APPROVE_POST_BY_ID(postId),{});
   }
 
 }
