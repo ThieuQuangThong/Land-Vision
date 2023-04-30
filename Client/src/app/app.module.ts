@@ -108,6 +108,7 @@ import { CardRevenueTableComponent } from './components/cards/card-revenue-table
 import { CardPackageTableComponent } from './components/cards/card-package-table/card-package-table.component';
 import { UpdatePostingComponent } from './views/update-posting/update-posting.component';
 import { EditMapListDetailComponent } from './components/maps/edit-map-list-detail/edit-map-list-detail.component';
+import { PricingDialogComponent } from './components/pricing-dialog/pricing-dialog.component';
 
 @NgModule({
   declarations: [
@@ -175,7 +176,8 @@ import { EditMapListDetailComponent } from './components/maps/edit-map-list-deta
     CardRevenueTableComponent,
     CardPackageTableComponent,
     UpdatePostingComponent,
-    EditMapListDetailComponent
+    EditMapListDetailComponent,
+    PricingDialogComponent
     // LoginComponent,
     // RegisterComponent,
   ],

@@ -40,6 +40,11 @@ export class LandingComponent implements OnInit {
   directions: string[] =[...PROPERTY_INFOR.allDirection, ...PROPERTY_INFOR.directions]
   selectedDirection: number = 0;
 
+  openTab = 1;
+  toggleTabs($tabNumber: number){
+    this.openTab = $tabNumber;
+  }
+
   defaultPaging: PagingModel = {
     skipCount : 0,
     maxResultCount : 12,

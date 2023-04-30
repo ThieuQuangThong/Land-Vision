@@ -105,9 +105,55 @@
           </div>
         </div>
 
+        <div class="flex flex-wrap">
+          <div class="w-full">
+            <ul class="flex mb-0 mx-5 list-none flex-wrap pt-3 pb-4 flex-row">
+              <li class="-mb-px mr-2 last:mr-0 flex-auto text-center">
+                <a class="text-xs font-bold uppercase px-5 py-3 shadow-lg cursor-pointer rounded block leading-normal"
+                  (click)="toggleTabs(1)"
+                  [ngClass]="{'text-blueGray-600 bg-blueGray-100': openTab !== 1, 'text-white bg-blueGray-600': openTab === 1}">
+                  Gallery View
+                </a>
+              </li>
+              <li class="-mb-px mr-2 last:mr-0 flex-auto text-center">
+                <a class="text-xs font-bold uppercase px-5 py-3 shadow-lg cursor-pointer rounded block leading-normal"
+                  (click)="toggleTabs(2)"
+                  [ngClass]="{'text-blueGray-600 bg-blueGray-100': openTab !== 2, 'text-white bg-blueGray-600': openTab === 2}">
+                  Map View
+                </a>
+              </li>
+            </ul>
+            <div class="relative flex flex-col min-w-0 break-words bg-white w-full mb-6 shadow-lg rounded">
+              <div class="flex-auto">
+                <div class="tab-content tab-space">
+                  <div [ngClass]="{'hidden': openTab !== 1, 'block': openTab === 1}">
+                    <div class="mt-12 w-full p-3 ">
+                      <span class="font-medium">{{"BROWSE HOT OFFERS" | translate}}</span>
+                      <p class="font-bold text-3xl">{{"Lastest Properties" | translate}}</p>
+                      <div class="flex flex-wrap items-center justify-start">
 
+                        <app-single-product *ngFor="let post of postRespone" [postItem]="post"></app-single-product>
+                      </div>
+                      <div class="w-full mt-7 flex flex-wrap items-center lg: justify-center">
+                        <button *ngIf="!isFullItem && !isLoading" (click)="loadMore()"
+                          class="bg-emerald-500 text-white active:bg-emerald-600 font-bold uppercase text-sm px-6 py-3 rounded-md shadow-md hover:shadow-lg outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+                          type="button">
+                          {{'LoadMore' | translate}}
+                        </button>
+                        <app-loading [isLoading]="isLoading"></app-loading>
+                      </div>
+                    </div>
+                  </div>
+                  <div [ngClass]="{'hidden': openTab !== 2, 'block': openTab === 2}">
+                    <app-map-example></app-map-example>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-        <div class="mt-12 w-full p-3 ">
+        <!-- <div class="mt-12 w-full p-3 ">
           <span class="font-medium">{{"BROWSE HOT OFFERS" | translate}}</span>
           <p class="font-bold text-3xl">{{"Lastest Properties" | translate}}</p>
           <div class="flex flex-wrap items-center justify-start">
@@ -122,7 +168,7 @@
             </button>
             <app-loading [isLoading]="isLoading"></app-loading>
           </div>
-        </div>
+        </div> -->
 
       </div>
     </div>

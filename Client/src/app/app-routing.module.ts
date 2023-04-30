@@ -36,6 +36,7 @@ import { CardAccountTableComponent } from './components/cards/card-account-table
 import { CardRevenueTableComponent } from './components/cards/card-revenue-table/card-revenue-table.component';
 import { CardPackageTableComponent } from './components/cards/card-package-table/card-package-table.component';
 import { UpdatePostingComponent } from './views/update-posting/update-posting.component';
+import { PricingDialogComponent } from './components/pricing-dialog/pricing-dialog.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full', },
@@ -55,6 +56,13 @@ const routes: Routes = [
   },
   {
     path: "mapstestExample", component: MapExampleComponent,
+    data: {
+      requiredAuth: false
+    },
+    canActivate: [AuthGuard]
+  },
+  {
+    path: "pricing", component: PricingDialogComponent,
     data: {
       requiredAuth: false
     },

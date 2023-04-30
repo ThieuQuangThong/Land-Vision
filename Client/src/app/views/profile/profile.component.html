@@ -65,53 +65,11 @@
                     </div>
                     <div class="mt-10 py-10 border-t border-blueGray-200 text-center">
                         <div class="flex flex-wrap justify-center">
-                            <!-- <div class="relative w-full mb-3 mt-8">
-                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="title">
-                  Description
-                </label>
-                <input type="text"
-                  class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                  value="
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia temporibus quaerat iure ipsa magnam doloribus natus sed architecto, soluta labore, obcaecati nemo adipisci animi neque molestiae! Placeat, corporis dicta. Accusamus.
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia temporibus quaerat iure ipsa magnam doloribus natus sed architecto, soluta labore, obcaecati nemo adipisci animi neque molestiae! Placeat, corporis dicta. Accusamus."
-                  disabled
-                  placeholder="Title" />
-              </div> -->
-                            <!-- <div class="relative w-full mb-3 mt-8">
-                <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="title">
-                  Description
-                </label>
-                <input id="description" type="text"
-                  class="w-10/12 border-0 px-3 py-3 h placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring ease-linear transition-all duration-150"
-                  value="Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia temporibus quaerat iure ipsa magnam doloribus natus sed architecto, soluta labore, obcaecati nemo adipisci animi neque molestiae! Placeat, corporis dicta. Accusamus.
-                  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Officia temporibus quaerat iure ipsa magnam doloribus natus sed architecto, soluta labore, obcaecati nemo adipisci animi neque molestiae! Placeat, corporis dicta. Accusamus."
-                  disabled
-                  placeholder="Title" />
-                <button class="w-1/6 bg-blue-500 hover:bg-blue-700 text-white font-bold rounded"
-                  onClick="document.querySelector('#description').removeAttribute('disabled')">Edit</button>
-
-                  <div class="w-1/6 button-borders">
-                    <button class="primary-button" onClick="document.querySelector('#description').removeAttribute('disabled')"> Edit
-                    </button>
-                  </div>
-
-              </div> -->
-
                         </div>
                     </div>
 
                 </div>
-                <!-- <div class="p-6">
-                    <div class=" mb-10">
-                        <p class="font-bold text-4xl flex justify-center">Chose your package</p>
-                        <p class="text-xl flex justify-center">Buy more posting to get our latest offers</p>
-                    </div>
 
-                    <div class="w-full  grid grid-cols-1 md:grid-cols-3 gap-6 mx-auto">
-
-                        <app-pricing-card *ngFor="let vip of vipResponse" [vipItem]="vip"></app-pricing-card>
-                    </div>
-                </div> -->
                 <div class="flex">
                   <app-single-product *ngFor="let userPost of userPosts" [postItem]="userPost" [isView]="false" ></app-single-product>
                 </div>
