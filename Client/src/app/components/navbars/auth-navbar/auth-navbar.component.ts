@@ -40,7 +40,13 @@ export class AuthNavbarComponent implements OnInit {
     this.postService.checkIsUserAvailableToPost(userId)
     .subscribe(
       respone =>{
-        this.router.navigate(['/posting']);
+        if(respone == true){
+          this.router.navigate(['/posting']);
+        }
+        else {
+          this.router.navigate(['/pricing']);
+          AlertService.setAlertModel('warn',"You must buy more package to post!");
+        }
       },
       erorr =>{
         AlertService.setAlertModel('danger',"Some thing went wrong");

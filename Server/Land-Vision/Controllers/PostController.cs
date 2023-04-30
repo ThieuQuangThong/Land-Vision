@@ -269,11 +269,16 @@ namespace Land_Vision.Controllers
                 {
                     return BadRequest(ModelState);
                 }
+
+                if(!await _userRepository.CheckIsExistByIdAsync(userId)){
+                    return NotFound("User is not found");
+                }
               
-                // if (! await _postService.CheckIsUserCanPost(userId)){
-                //     ModelState.AddModelError("", "you post as many times as you have");
-                //     return StatusCode(402, ModelState);        
-                // }
+                if (! await _postService.CheckIsUserCanPost(userId)){
+                    ModelState.AddModelError("", "you post as many times as you have");
+                    return StatusCode(402, ModelState);        
+                }
+
                 if (!await _postService.AddPostPropertyAsync(userId, postPropertyDto))
                 {
                     ModelState.AddModelError("", "Something went wrong while saving");

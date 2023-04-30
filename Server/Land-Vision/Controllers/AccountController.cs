@@ -17,6 +17,7 @@ namespace Land_Vision.Controllers
         private readonly IUserService _userSevice;
         private readonly IUserRepository _userRepository;
         private readonly IPostRepository _postRepository;
+         private readonly IDetailPurchaseRepository _detailPurchaseRepository;
         private readonly IMapper _mapper;
 
         public AccountController(
@@ -25,7 +26,9 @@ namespace Land_Vision.Controllers
         IMapper mapper,
         IUserRepository userRepository,
         IEmailService emailService,
-        IAccountService accountService)
+        IAccountService accountService,
+        IDetailPurchaseRepository detailPurchaseRepository
+        )
         {
             _userSevice = userSevice;
             _mapper = mapper;
@@ -33,6 +36,7 @@ namespace Land_Vision.Controllers
             _emailService = emailService;
             _userRepository = userRepository;
             _postRepository = postRepository;
+            _detailPurchaseRepository = detailPurchaseRepository;
         }
 
         /// <summary>
@@ -79,6 +83,7 @@ namespace Land_Vision.Controllers
             }
 
             var userDto = _mapper.Map<UserDto>(user);
+            userDto.NumberOfUserCanPost =  await _detailPurchaseRepository.CountPostUserBuy(userId);
             userDto.Posted = await _postRepository.CountPostByUserIdAsync(user.Id);
             return Ok(userDto);
         }

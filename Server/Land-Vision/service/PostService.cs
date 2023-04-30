@@ -19,6 +19,7 @@ namespace Land_Vision.service
         private readonly IUserRepository _userRepository;
         private readonly IPositionRepository _positionRepository;
         private readonly IImageService _imageService;
+        private readonly IDetailPurchaseRepository _detailPurchaseRepository;
         private readonly IMapper _mapper;
 
         public PostService
@@ -32,7 +33,8 @@ namespace Land_Vision.service
          IPropertyRepository propertyRepository,
          ICategoryRepository categoryRepository,
          IStreetRepository streetRepository,
-         IPositionRepository positionRepository)
+         IPositionRepository positionRepository,
+         IDetailPurchaseRepository detailPurchaseRepository)
         {
             _imageService = imageService;
             _mapper = mapper;
@@ -45,6 +47,7 @@ namespace Land_Vision.service
             _positionService = positionService;
             _wardRepository = wardRepository;
             _userRepository = userRepository;
+            _detailPurchaseRepository = detailPurchaseRepository;
         }
 
         public async Task<bool> AddPostPropertyAsync(int userId, CreatePostPropertyDto createPostPropertyDto)
@@ -226,12 +229,9 @@ namespace Land_Vision.service
 
         public async Task<bool> CheckIsUserCanPost(int userId)
         {
-            int numberOfUserPost = await _postRepository.CountPostByUserIdAsync(userId);
-            var user = await _userRepository.GetUserByIdAsync(userId);
-            if(user.Vip == null){
-                return false;
-            }
-            return user.Vip.VipLevel >= numberOfUserPost ;
+            int postOfUserPost = await _detailPurchaseRepository.CountPostUserBuy(userId);
+            int posted = await _postRepository.CountPostByUserIdAsync(userId);
+            return postOfUserPost > posted ;
         }
 
         public async Task<PaginationRespone<PostDto>> GetUnapprovedPostsAsync(Pagination pagination)

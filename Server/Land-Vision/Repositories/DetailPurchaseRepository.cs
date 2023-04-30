@@ -20,6 +20,21 @@ namespace Land_Vision.Repositories
             return await SaveChangeAsync();
         }
 
+        public async Task<int> CountPostUserBuy(int userId)
+        {
+            var userPurchases = await _dbContext.DetailPurchases
+            .Include(x => x.Vip)
+            .Where(p => p.User.Id == userId)
+            .ToListAsync();
+
+            var sum = 0;
+            userPurchases.ForEach(
+                k => sum += k.Vip.PostLimit
+            );
+
+            return sum;
+        }
+
         public async Task<List<DetailPurchase>> GetAllDetailPurchase()
         {
             return await _dbContext.DetailPurchases.OrderByDescending(x => x.TransactionDate)
