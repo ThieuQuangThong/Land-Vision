@@ -1,24 +1,9 @@
-
-import { HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {
-  ActivatedRouteSnapshot,
-  CanActivate,
-  Router,
-  RouterStateSnapshot,
-  UrlTree,
-} from '@angular/router';
-import { Observable } from 'rxjs';
-import { AuthService } from '../_service/auth.service';
+import { Router, CanActivate } from '@angular/router';
 import { StorageService } from '../_service/storage.service';
-import { User } from '../_service/user.model';
-import { JwtHelperService } from '@auth0/angular-jwt';
-
 
 @Injectable()
-export class AuthGuard implements CanActivate {
-  jwtService: JwtHelperService = new JwtHelperService();
-  // constructor(private auth: AuthService, private router: Router, private storage: StorageService) {}
+export class AuthGuard2 implements CanActivate {
 
   constructor(private router: Router, private storage: StorageService) {}
 
@@ -34,5 +19,4 @@ export class AuthGuard implements CanActivate {
     this.router.navigate(['/login']);
     return false;
   }
-
 }

@@ -40,10 +40,13 @@ export class AuthNavbarComponent implements OnInit {
     this.postService.checkIsUserAvailableToPost(userId)
     .subscribe(
       respone =>{
-        this.router.navigate(['/posting']);
+       if(userId){
+        this.router.navigate(['/posting'])
+       }
+       
       },
       erorr =>{
-        AlertService.setAlertModel('danger',"Some thing went wrong");
+        AlertService.setAlertModel('danger',"You need to login to use posting");
       }
     )
   }
@@ -54,5 +57,8 @@ export class AuthNavbarComponent implements OnInit {
 
   setNavbarOpen() {
     this.navbarOpen = !this.navbarOpen;
+  }
+  isLoggedIn() {
+    return this.auth.isLoggedIn();
   }
 }

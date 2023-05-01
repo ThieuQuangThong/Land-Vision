@@ -10,28 +10,29 @@ import { VipModel } from 'src/app/models/vip-model';
   styleUrls: ['./pricing-card.component.css']
 })
 export class PricingCardComponent {
-  orderInfoo : string ='';
+  orderInfoo: string = '';
   @Input() vipItem: VipModel = new VipModel();
   headers = new HttpHeaders().set('Content-Type', 'application/json');
-  constructor(private http:HttpClient){
+  constructor(private http: HttpClient) {
     console.log(this.vipItem);
 
-   }
+  }
 
 
-  pay(orderInfo : number, amount : number)
-  {
-    switch (orderInfo){
-      case 1 : this.orderInfoo = 'Gói Fortune'; break;
-      case 2 : this.orderInfoo = 'Gói Wealth'; break;
-      case 3 : this.orderInfoo = 'Gói Prosperous'; break;
+  pay(orderInfo: number, amount: number) {
+    switch (orderInfo) {
+      case 1: this.orderInfoo = 'Gói Fortune'; break;
+      case 2: this.orderInfoo = 'Gói Wealth'; break;
+      case 3: this.orderInfoo = 'Gói Prosperous'; break;
     }
     const headers = new HttpHeaders({ 'Content-Type': 'application/json', 'Access-Control-Allow-Origin': '*' });
-    this.http.post<any>(`https://localhost:7165/api/Momo/momoQR/${this.orderInfoo}&${amount}`,{}, {headers})
-       .subscribe(response => {
+    this.http.post<any>(`https://localhost:7165/api/Momo/momoQR/${this.orderInfoo}&${amount}`, {}, { headers })
+      .subscribe(response => {
         const redirectUrl = response['payUrl'];
-       if (redirectUrl) { window.location.href =redirectUrl;
-      } })
-}
+        if (redirectUrl) {
+          window.location.href = redirectUrl;
+        }
+      })
+  }
 
 }
