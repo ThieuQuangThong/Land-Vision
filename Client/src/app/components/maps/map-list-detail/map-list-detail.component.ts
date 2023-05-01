@@ -1,14 +1,9 @@
 import { ShareDataService } from 'src/app/_service/share-data.service';
-import { PositionModel } from './../../../models/position-model';
-import { Component, OnInit, ViewChild, ElementRef, Input, Output, EventEmitter } from "@angular/core";
+import { Component, ViewChild, ElementRef, Input, Output, EventEmitter } from "@angular/core";
 import { loadModules } from 'esri-loader';
 import esri = __esri;
-import { PlaceModel } from 'src/app/models/place-model';
 import { PostService } from 'src/app/_service/post.service';
 import { PositonPostModel } from 'src/app/models/positonPost-model';
-import { PopupTemplate } from 'src/app/models/popupTemplate';
-import { Attributes } from 'src/app/models/attributes';
-import { PopUpObject } from 'src/app/models/popUpObject';
 
 
 @Component({
@@ -19,7 +14,8 @@ import { PopUpObject } from 'src/app/models/popUpObject';
 export class MapListDetailComponent {
 
   @Output() mapLoaded = new EventEmitter<boolean>();
-  @Input() postId: number =0;
+  @Input() isShowAll: boolean = false;
+  @Input() postId: number = 0;
   @ViewChild('mapViewNode', { static: true })
   private mapViewEl!: ElementRef;
 
@@ -125,7 +121,7 @@ export class MapListDetailComponent {
       graphicsLayer.add(polygonGraphic);
       const mapViewProperties: esri.MapViewProperties = {
         container: this.mapViewEl.nativeElement,
-        center: centerPos.length === 0 ? this._center :centerPos[0],
+        center: centerPos.length === 0|| this.isShowAll === true ? this._center : centerPos[0],
         zoom: this._zoom,
         map: map,
         constraints: {
@@ -164,8 +160,10 @@ export class MapListDetailComponent {
           let i =0;
           otherPos.forEach(
             x =>{
-              if(i > 0){
-                return;
+              if(!this.isShowAll){
+                if(i > 0){
+                  return;
+                }
               }
 
              const popUpObect = this.shareDataService.setPopUpObject(`<p class ="mb-0"><span class="text-xl font-semibold mb-0">Tên:</span> ${positionPosts[i].name}</p><p class ="mb-0"><span class="text-xl font-semibold mb-0">Giá:</span> 10 Tỷ</p><a href="http://localhost:4200/productdetails/${positionPosts[i].id}"><span class="text-xl font-semibold">Địa chỉ:</span> ${positionPosts[i].addressNumber}</a><a href="https://richnguyen.vn/wp-content/uploads/2020/08/buc-anh-bat-dong-san-dep-3.jpg"><img src="https://richnguyen.vn/wp-content/uploads/2020/08/buc-anh-bat-dong-san-dep-3.jpg" alt="Ảnh bất động sản đẹp"></a>`)
@@ -195,6 +193,8 @@ export class MapListDetailComponent {
           let pointGraphic1 = new Graphic({
             geometry: point1,
             symbol: simpleMarkerSymbol1,
+            attributes: popUpObect.Attributes,
+            popupTemplate: popUpObect.PopupTemplate
          });
           console.log(point1);
 

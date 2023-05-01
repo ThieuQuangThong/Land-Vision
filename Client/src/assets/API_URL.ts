@@ -40,5 +40,6 @@ export const API_URL = {
   DELETE_POST_ID:(postId: number, userId: number) => `${DOMAIN}/api/Post/${postId}&${userId}`,
   GET_UNAPPROVED_POSTS:(pagingModel: PagingModel) => `${DOMAIN}/api/Post/getUnapprovedPost/${pagingModel.skipCount}&${pagingModel.maxResultCount}`,
   GET_UNAPPROVED_POST_BY_ID:(postId: number) => `${DOMAIN}/api/Post/getPostIsUnApproved/${postId}`,
-  APPROVE_POST_BY_ID:(postId: number) => `${DOMAIN}/api/Post/appovePost/${postId}`
+  APPROVE_POST_BY_ID:(postId: number) => `${DOMAIN}/api/Post/appovePost/${postId}`,
+  QR_MOMO: (orderInfor: string, amount: number) => `https://localhost:7165/api/Momo/momoQR/${orderInfor}&${amount}`
 };

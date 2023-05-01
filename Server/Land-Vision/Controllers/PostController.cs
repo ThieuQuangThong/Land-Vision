@@ -235,13 +235,12 @@ namespace Land_Vision.Controllers
             {
                 return BadRequest(ModelState);
             }
+            var postsPositionDto = _mapper.Map<List<PostsPositionDto>>(await _postRepository.GetAllInforPositionOfPostAsync());
 
             if(!await _postRepository.CheckIsPostExistByIdAsync(postId)){
-                ModelState.AddModelError("", "Post not exist");
-                return NotFound(ModelState);
+                return Ok(postsPositionDto);
             }
 
-            var postsPositionDto = _mapper.Map<List<PostsPositionDto>>(await _postRepository.GetAllInforPositionOfPostAsync());
             var swaggItem = postsPositionDto.Where(x => x.Id == postId).FirstOrDefault();
             postsPositionDto.Remove(swaggItem);
 
@@ -270,11 +269,16 @@ namespace Land_Vision.Controllers
                 {
                     return BadRequest(ModelState);
                 }
+
+                if(!await _userRepository.CheckIsExistByIdAsync(userId)){
+                    return NotFound("User is not found");
+                }
               
-                // if (! await _postService.CheckIsUserCanPost(userId)){
-                //     ModelState.AddModelError("", "you post as many times as you have");
-                //     return StatusCode(402, ModelState);        
-                // }
+                if (! await _postService.CheckIsUserCanPost(userId)){
+                    ModelState.AddModelError("", "you post as many times as you have");
+                    return StatusCode(402, ModelState);        
+                }
+
                 if (!await _postService.AddPostPropertyAsync(userId, postPropertyDto))
                 {
                     ModelState.AddModelError("", "Something went wrong while saving");
@@ -289,7 +293,6 @@ namespace Land_Vision.Controllers
                 await transaction.RollbackAsync();
                 return StatusCode(500, ex.Message);
             }
-
         }
 
         // POST Appove Post
