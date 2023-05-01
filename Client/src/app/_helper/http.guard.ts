@@ -18,21 +18,39 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 @Injectable()
 export class AuthGuard implements CanActivate {
   jwtService: JwtHelperService = new JwtHelperService();
-  // constructor(private auth: AuthService, private router: Router, private storage: StorageService) {}
+  constructor(private auth: AuthService, private router: Router, private storage: StorageService) {}
 
-  constructor(private router: Router, private storage: StorageService) {}
+  canActivate(
+    route: ActivatedRouteSnapshot,
+    state: RouterStateSnapshot
 
-  canActivate() {
-    var token = this.storage.isLoggedIn();
-    // Kiểm tra xem người dùng đã đăng nhập hay chưa
-    if (token) {
-      // Nếu đã đăng nhập thì cho phép truy cập vào trang
-      return true
-    }
 
-    // Nếu chưa đăng nhập, chuyển hướng đến trang đăng nhập
-    this.router.navigate(['/login']);
-    return false;
+  ):
+    | boolean
+    | UrlTree
+    | Observable<boolean | UrlTree>
+    | Promise<boolean | UrlTree> {
+      const id = Number(route.paramMap.get('id'));
+
+
+
+      var token = this.storage.isLoggedIn();
+      if (token) {
+        if (state.url == "login"){
+          this.router.navigate(['/']);
+          this.auth.refreshToken()
+          return true;
+        }
+        return true;
+      } else {
+        if (route.data['requiredAuth'] == true) {
+          this.router.navigate(['404error']);
+          return false;
+        }
+        return true;
+      }
+
+
+
   }
-
 }

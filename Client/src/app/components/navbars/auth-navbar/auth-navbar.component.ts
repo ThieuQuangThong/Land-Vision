@@ -22,7 +22,7 @@ export class AuthNavbarComponent implements OnInit {
     ){}
 
   ngOnInit(): void {
-
+    this.isLoggin()
   }
 
   @HostListener('window:resize')
@@ -50,6 +50,8 @@ export class AuthNavbarComponent implements OnInit {
       },
       erorr =>{
         AlertService.setAlertModel('danger',"You need to login to use posting");
+        this.router.navigate(['/login']);
+
       }
     )
   }
@@ -61,7 +63,24 @@ export class AuthNavbarComponent implements OnInit {
   setNavbarOpen() {
     this.navbarOpen = !this.navbarOpen;
   }
-  isLoggedIn() {
-    return this.auth.isLoggedIn();
+
+  isLoggin(){
+    const userId = this.auth.getUserId();
+    this.postService.checkIsUserAvailableToPost(userId)
+    .subscribe(
+      respone =>{
+        if(respone == true){
+
+        }
+        else {
+          
+
+        }
+      },
+      erorr =>{
+        console.log(0);
+
+      }
+    )
   }
 }

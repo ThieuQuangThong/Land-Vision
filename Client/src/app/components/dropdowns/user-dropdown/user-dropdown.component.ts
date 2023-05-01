@@ -1,4 +1,5 @@
 import { Component, AfterViewInit, ViewChild, ElementRef } from "@angular/core";
+import { Router } from "@angular/router";
 import { createPopper } from "@popperjs/core";
 import { AuthService } from "src/app/_service/auth.service";
 
@@ -7,7 +8,7 @@ import { AuthService } from "src/app/_service/auth.service";
   templateUrl: "./user-dropdown.component.html",
 })
 export class UserDropdownComponent implements AfterViewInit {
-  constructor(private auth: AuthService){}
+  constructor(private auth: AuthService, private router: Router){}
   dropdownPopoverShow = false;
   @ViewChild("btnDropdownRef", { static: false }) btnDropdownRef!: ElementRef;
   @ViewChild("popoverDropdownRef", { static: false })
@@ -42,5 +43,6 @@ export class UserDropdownComponent implements AfterViewInit {
   logout(): void {
     // Xóa thông tin người dùng khỏi localStorage hoặc sessionStorage khi đăng xuất
     localStorage.removeItem('token');
+    this.router.navigate(['login'])
   }
 }

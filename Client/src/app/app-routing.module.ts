@@ -65,7 +65,7 @@ const routes: Routes = [
   {
     path: "posting", component: PostingComponent,
     data: {
-      requiredAuth: true
+      requiredAuth: false
     },
     canActivate: [AuthGuard]
   },

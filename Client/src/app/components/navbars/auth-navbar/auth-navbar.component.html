@@ -23,10 +23,11 @@
                       <option *ngFor="let language of translate.getLangs()" [value]="language">{{ language }}</option>
                     </select>
                   </li>
-
+                  <!-- <div *ngIf="isLoggedIn(); then loggedInUser; else loginButton"></div> -->
                   <li class="flex items-center">
                     <app-user-dropdown class="block"></app-user-dropdown>
                   </li>
+                  
                 </ul>
               </div>
           </div>
