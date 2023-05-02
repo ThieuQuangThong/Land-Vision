@@ -32,7 +32,7 @@
             <div class="p-3">
                 <!-- <div id="postTitle" class="flex items-center justify-between pr-0 mr-0 h-12 "> -->
                 <div style="display: flex;">
-                  <p id="two-line" class="text-sm  font-medium  h-full text-ellipsis ">{{postItem.title}}</p>
+                  <p  id="two-line" class="text-sm  font-medium h-full text-ellipsis ">{{postItem.title.length <= 10 ? postItem.title : postItem.title.substring(0, 20)}}...</p>
                   <span *ngIf = "postItem.approveStatus == 0"  style="height: 20px;" class="bg-green-100 text-green-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-green-900 dark:text-green-300">Approved</span>
                   <span *ngIf = "postItem.approveStatus == 1" style="height: 20px;" class="bg-yellow-100 text-yellow-800 text-xs font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-yellow-900 dark:text-yellow-300">Pending</span>
                 </div>

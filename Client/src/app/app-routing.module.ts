@@ -37,9 +37,10 @@ import { UpdatePostingComponent } from './views/update-posting/update-posting.co
 import { PricingDialogComponent } from './components/pricing-dialog/pricing-dialog.component';
 import { CardApproveTableComponent } from './components/cards/card-approve-table/card-approve-table.component';
 import { ApproveDetailComponent } from './views/admin/approve-detail/approve-detail.component';
+import { AuthGuard2 } from './_helper/guard';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'login', pathMatch: 'full', },
+  { path: '', redirectTo: 'landing', pathMatch: 'full', },
   {
     path: "login", component: LoginComponent,
 
@@ -56,6 +57,13 @@ const routes: Routes = [
   },
   {
     path: "mapstestExample", component: MapExampleComponent,
+    data: {
+      requiredAuth: false
+    },
+    canActivate: [AuthGuard]
+  },
+  {
+    path: "posting", component: PostingComponent,
     data: {
       requiredAuth: false
     },
@@ -178,7 +186,7 @@ const routes: Routes = [
   {
     path: "landing", component: LandingComponent,
     data: {
-      requiredAuth: true
+      requiredAuth: false
     },
     canActivate: [AuthGuard]
   },
