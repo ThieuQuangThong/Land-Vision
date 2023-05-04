@@ -5,9 +5,11 @@ using Land_Vision.DTO.vipDtos;
 using Microsoft.AspNetCore.Mvc;
 using Land_Vision.Models;
 using Land_Vision.service;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Land_Vision.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class VipController : ControllerBase
@@ -25,6 +27,7 @@ namespace Land_Vision.Controllers
         /// <summary>
         /// Get Vips
         /// </summary>
+        [Authorize(Roles = "User,Admin")]
         [HttpGet]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
@@ -44,6 +47,7 @@ namespace Land_Vision.Controllers
         /// <summary>
         /// Add vip
         /// </summary>
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
@@ -62,6 +66,7 @@ namespace Land_Vision.Controllers
         /// <summary>
         /// Update vip
         /// </summary>
+        [Authorize(Roles = "Admin")]
         [HttpPut()]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
@@ -89,6 +94,7 @@ namespace Land_Vision.Controllers
         /// <summary>
         /// Delete vip
         /// </summary>
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{vipId}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]

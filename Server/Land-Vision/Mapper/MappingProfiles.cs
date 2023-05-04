@@ -53,8 +53,11 @@ namespace Land_Vision.Mapper
             CreateMap<Post, PostRequestDto>();
             CreateMap<Post, PostsPositionDto>()
             .ForMember(x => x.Name, y => y.MapFrom(src => src.User.Name))
+            .ForMember(x => x.AvatarLink, y => y.MapFrom(src => src.User.AvatarLink))
+            .ForMember(x => x.Price, y => y.MapFrom(src => src.Property.Price))
             .ForMember(x => x.AddressNumber, y => y.MapFrom(src => src.Property.AddressNumber))
-            .ForMember(x => x.positions, y => y.MapFrom(src => src.Property.Positions));
+            .ForMember(x => x.positions, y => y.MapFrom(src => src.Property.Positions))
+            .ForMember(x => x.UserId, y => y.MapFrom(src => src.User.Id));        
 
             //Property
             CreateMap<PropertyDto, Property>();

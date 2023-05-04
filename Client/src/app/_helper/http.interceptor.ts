@@ -35,7 +35,7 @@ export class AuthTokenInterceptor implements HttpInterceptor {
   ) {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    const token = this.authService.getToken();
+    const token = this.store.getAccessToken();
     if (token) {
       request = request.clone({
         setHeaders: {
@@ -43,13 +43,14 @@ export class AuthTokenInterceptor implements HttpInterceptor {
         }
       });
     }
-
     return next.handle(request).pipe(
       catchError(error => {
-        if (error.status === 401) {
+        if (error.status === 401 && token!= null ) {
           return this.authService.refreshToken().pipe(
             switchMap((newToken: string) => {
               this.authService.setToken(newToken);
+              this.store.setToken(newToken);
+              this.authService.setUserProfileByToken(newToken);
               request = request.clone({
                 setHeaders: {
                   Authorization: `Bearer ${newToken}`

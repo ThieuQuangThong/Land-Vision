@@ -83,10 +83,10 @@
                     <ng-container matColumnDef="isHide">
                         <th mat-header-cell *matHeaderCellDef mat-sort-header class="font-semibold"> </th>
                         <td mat-cell *matCellDef="let row" class="border-t-0 px-6 align-middle border-l-0 border-r-0 text-sm whitespace-nowrap p-4 text-right">
-                            <button *ngIf="row.isHide===false" stopPropagation (click)="hideUnhide(row.id)" class="hover:text-red-600 hover:cursor-pointer" matTooltip="Hide this post" aria-label="Button that displays a tooltip when focused or hovered over">
+                            <button *ngIf="row.isHide===true" stopPropagation (click)="hideUnhide(row.id)" class="hover:text-red-600 hover:cursor-pointer" matTooltip="Hide this post" aria-label="Button that displays a tooltip when focused or hovered over">
                               <i class="fa-sharp fa-regular fa-eye-slash " ></i>
                             </button>
-                            <button *ngIf="row.isHide===true" stopPropagation (click)="hideUnhide(row.id)" class=" hover:text-gray-600 text-red-600 hover:cursor-pointer" matTooltip="Unhide this post" aria-label="Button that displays a tooltip when focused or hovered over">
+                            <button *ngIf="row.isHide=== false" stopPropagation (click)="hideUnhide(row.id)" class=" hover:text-gray-600 text-red-600 hover:cursor-pointer" matTooltip="Unhide this post" aria-label="Button that displays a tooltip when focused or hovered over">
                               <i class="fa-sharp fa-regular fa-eye " ></i>
                             </button>
                         </td>

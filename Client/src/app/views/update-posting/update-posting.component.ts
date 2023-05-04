@@ -16,6 +16,7 @@ import { PROPERTY_INFOR } from 'src/assets/common/propertyInfor';
 import { inforStreet } from '../posting/posting.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PostModel } from 'src/app/models/post-model';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-update-posting',
@@ -42,8 +43,8 @@ export class UpdatePostingComponent {
   isStreetLoading: boolean = false;
 
   constructor(
+    private location: Location,
     private route: ActivatedRoute,
-    private router: Router,
     private shareDataService: ShareDataService,
     private postService: PostService,
     private auth:AuthService,
@@ -233,8 +234,8 @@ export class UpdatePostingComponent {
         this.isPosting = false;
         this.shareDataService.setImageSlideValue([]);
         this.postRequest = new PostRequest();
-        this.router.navigate(['/profile'])
-        AlertService.setAlertModel('success','Add post successfully')
+        this.location.back();
+        AlertService.setAlertModel('success','Update post successfully')
       },
       error => {
         this.isPosting = false;
@@ -248,7 +249,7 @@ export class UpdatePostingComponent {
       this.postService.deletePostById(this.postId, this.auth.getUserId())
       .subscribe(
         _ =>{
-          this.router.navigate(['/profile'])
+          this.location.back();
           AlertService.setAlertModel('success','Delete successfully')
         },
         erorr =>{

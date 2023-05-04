@@ -1,15 +1,13 @@
 ﻿using AutoMapper;
 using Land_Vision.Dto.DetailPurchaseDtos;
-using Land_Vision.DTO.StreetDtos;
-using Land_Vision.DTO;
 using Land_Vision.Interface.IRepositories;
 using Land_Vision.Models;
-using Land_Vision.Repositories;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Land_Vision.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class DetailPurchaseController : ControllerBase
@@ -25,10 +23,12 @@ namespace Land_Vision.Controllers
             _detailPurchaseRepository = detailPurchaseRepository;
             _mapper = mapper;
         }
+
         // GET All Detail Purchases
         /// <summary>
         /// Get all detail purchase
         /// </summary>
+        [Authorize(Roles = "Admin")]        
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(IEnumerable<DetailPurchase>))]
         public async Task<IActionResult> GetDetailPurchases()
@@ -41,10 +41,11 @@ namespace Land_Vision.Controllers
             return Ok(detailPurchases);
         }
 
-        // GET All Detail Purchases
+        // GET Revenue
         /// <summary>
-        /// Get all detail purchase
+        /// Get Revenue
         /// </summary>
+        [Authorize(Roles = "Admin")]
         [HttpGet("revenue")]
         [ProducesResponseType(200, Type = typeof(double))]
         public async Task<IActionResult> GetRevenue()
@@ -62,6 +63,7 @@ namespace Land_Vision.Controllers
         /// <summary>
         /// Add DetailPurchase
         /// </summary>
+        [Authorize(Roles = "User")]
         [HttpPost("{userId}&{vipId}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]

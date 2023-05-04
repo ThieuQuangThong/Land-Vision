@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json.Linq;
 using System.Net;
 using System.Security.Cryptography;
@@ -6,11 +7,14 @@ using System.Text;
 
 namespace Land_Vision.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class MomoController : ControllerBase
     {
         public MomoController() { }
+
+        [Authorize(Roles = "User")]
         [HttpPost("momoQR/{orderInfoo}&{amountt}")]
         public IActionResult PostQR(string orderInfoo, string amountt)
         {

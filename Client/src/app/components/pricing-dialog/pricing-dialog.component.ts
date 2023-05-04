@@ -23,7 +23,7 @@ export class PricingDialogComponent implements OnInit {
   mainSearch: SearchModel = new SearchModel();
   text: string = "";
 
-  transactionTypes: string[] = [ ...PROPERTY_INFOR.all, ...PROPERTY_INFOR.TransactionTypes];
+  transactionTypes: string[] = [ ...PROPERTY_INFOR.allTransaction, ...PROPERTY_INFOR.TransactionTypes];
   selectedTransactionTypes: number = 0;
 
 

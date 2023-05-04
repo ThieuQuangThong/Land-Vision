@@ -6,6 +6,7 @@ namespace Land_Vision.Interface.IRepositories
 {
     public interface IPostRepository
     {
+        Task<List<Post>> GetApprovedPostByUserIdAsync(int userId);
         Task<List<Post>> GetUnapprovedPostsAsync(Pagination pagination);
         Task<int> GetCountUnapprovedPostsAsync();
         Task<List<Post>> GetAllInforPositionOfPostAsync();

@@ -60,9 +60,6 @@ export class LoginComponent implements OnInit{
     const password = this.loginForm?.get('password')?.value;
     this.auth.login(email, password).subscribe((response) => {
       this.loading = false;
-        const token:TokenModel = new TokenModel()
-        token.accessToken = typeof response === 'string' ? response : '';
-          localStorage.setItem("token",JSON.stringify(token));
           AlertService.setAlertModel('success',"Login successfully")
           this.route.navigate(['landing'])
           // this.toast.success({detail: "Welcome you !", summary:response.message, duration: 5000})

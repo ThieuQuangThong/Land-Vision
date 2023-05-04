@@ -125,7 +125,6 @@ export class EditMapListDetailComponent {
         constraints: {
           geometry: extent,
           minScale: 500000,
-          maxScale: 2000
         }
       };
       const mapView: esri.MapView = new EsriMapView(mapViewProperties);

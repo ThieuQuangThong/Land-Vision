@@ -1,3 +1,4 @@
+import { User } from './_service/user.model';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -37,15 +38,17 @@ import { UpdatePostingComponent } from './views/update-posting/update-posting.co
 import { PricingDialogComponent } from './components/pricing-dialog/pricing-dialog.component';
 import { CardApproveTableComponent } from './components/cards/card-approve-table/card-approve-table.component';
 import { ApproveDetailComponent } from './views/admin/approve-detail/approve-detail.component';
-import { AuthGuard2 } from './_helper/guard';
+import { PROPERTY_INFOR } from 'src/assets/common/propertyInfor';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'landing', pathMatch: 'full', },
+  { path: '', redirectTo: 'landing', pathMatch: 'full'},
+  {
+    path: "landing", component: LandingComponent,
+  },
   {
     path: "login", component: LoginComponent,
 
-    data: { requỉedAuth: true },
-    canActivate: [AuthGuard]
+    data: { requiredAuth: true },
 
   },
   {
@@ -53,14 +56,13 @@ const routes: Routes = [
     data: {
       requiredAuth: false
     },
-    canActivate: [AuthGuard]
   },
   {
     path: "mapstestExample", component: MapExampleComponent,
     data: {
-      requiredAuth: false
-    },
-    canActivate: [AuthGuard]
+      requiredAuth: false,
+      requiredRole: PROPERTY_INFOR.Role.UserAndAdmin
+    }
   },
   {
     path: "posting", component: PostingComponent,
@@ -72,7 +74,8 @@ const routes: Routes = [
   {
     path: "pricing", component: PricingDialogComponent,
     data: {
-      requiredAuth: false
+      requiredAuth: false,
+      requiredRole: PROPERTY_INFOR.Role.user
     },
     canActivate: [AuthGuard]
   },
@@ -81,40 +84,37 @@ const routes: Routes = [
     data: {
       requiredAuth: false
     },
-    canActivate: [AuthGuard]
   },
   {
     path: "new-password/:code/:email", component: NewPasswordComponent,
     data: {
       requiredAuth: false
     },
-    canActivate: [AuthGuard]
   },
   {
     path: "code-verify/:email", component: CodeVerifyComponent,
     data: {
       requiredAuth: false
     },
-    canActivate: [AuthGuard]
   },
   {
     path: "dashboard", component: DashboardComponent,
     data: {
-      requiredAuth: false
+      requiredAuth: false,
     },
     canActivate: [AuthGuard]
   },
   {
     path: "productdetails/:postId", component: ProductDetailComponent,
     data: {
-      requiredAuth: false
-    },
-    canActivate: [AuthGuard]
+      requiredAuth: false,
+    }
   },
   {
     path: "update-posting/:postId", component: UpdatePostingComponent,
     data: {
-      requiredAuth: false
+      requiredAuth: false,
+      requiredRole: PROPERTY_INFOR.Role.UserAndAdmin
     },
     canActivate: [AuthGuard]
   },
@@ -123,44 +123,68 @@ const routes: Routes = [
     data: {
       requiredAuth: false
     },
-    canActivate: [AuthGuard]
   },
   {
     path: "404error", component: PageNotFoundComponent,
     data: {
       requiredAuth: false
     },
-    canActivate: [AuthGuard]
   },
-  {
-    path: "product", component: ProductDetailComponent,
-    data: {
-      requiredAuth: false
-    },
-    canActivate: [AuthGuard]
-  },
-
 
   // admin views
   {
     path: "admin",
     component: AdminComponent,
+    canActivate: [AuthGuard],
+    data:{
+      requiredRole: PROPERTY_INFOR.Role.admin
+    },
     children: [
       {
         path: "dashboard", component: DashboardComponent,
         data: {
-          requiredAuth: false
+          requiredAuth: false,
+          requiredRole: PROPERTY_INFOR.Role.admin
         },
         canActivate: [AuthGuard]
       },
-      { path: "tables", component: TablesComponent },
-      { path: "maps", component: MapsComponent },
-      { path: "accountTables", component: CardAccountTableComponent },
-      { path: "revenueTables", component: CardRevenueTableComponent },
-      { path: "packageTables", component: CardPackageTableComponent },
-      { path: "approveTables", component: CardApproveTableComponent },
+      { path: "tables", component: TablesComponent,
+      data:{
+        requiredRole: PROPERTY_INFOR.Role.admin
+      },
+      canActivate: [AuthGuard]
+     },
+      { path: "maps", component: MapsComponent ,
+      data:{
+        requiredRole: PROPERTY_INFOR.Role.admin
+      },
+      canActivate: [AuthGuard]},
+      { path: "accountTables", component: CardAccountTableComponent,
+      data:{
+        requiredRole: PROPERTY_INFOR.Role.admin
+      },
+      canActivate: [AuthGuard] },
+      { path: "revenueTables", component: CardRevenueTableComponent ,
+      data:{
+        requiredRole: PROPERTY_INFOR.Role.admin
+      },
+      canActivate: [AuthGuard]},
+      { path: "packageTables", component: CardPackageTableComponent ,
+      data:{
+        requiredRole: PROPERTY_INFOR.Role.admin
+      },
+      canActivate: [AuthGuard]},
+      { path: "approveTables", component: CardApproveTableComponent,
+      data:{
+        requiredRole: PROPERTY_INFOR.Role.admin
+      } ,
+      canActivate: [AuthGuard]},
       {
-        path: "approveDetail/:postId", component: ApproveDetailComponent
+        path: "approveDetail/:postId", component: ApproveDetailComponent,
+        data:{
+          requiredRole: PROPERTY_INFOR.Role.admin
+        },
+        canActivate: [AuthGuard]
       },
 
       { path: "", redirectTo: "dashboard", pathMatch: "full" },
@@ -177,7 +201,7 @@ const routes: Routes = [
   },
   // no layout views
   {
-    path: "profile", component: ProfileComponent,
+    path: "profile/:userId", component: ProfileComponent,
     data: {
       requiredAuth: true
     },
@@ -209,7 +233,6 @@ const routes: Routes = [
     data: {
       requiredAuth: false
     },
-    canActivate: [AuthGuard]
   },
   { path: "**", redirectTo: "", pathMatch: "full" },
 ];

@@ -4,6 +4,7 @@ using Land_Vision.DTO;
 using Land_Vision.DTO.Ward;
 using Land_Vision.Interface.IRepositories;
 using Land_Vision.Interface.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Land_Vision.Controllers
@@ -71,6 +72,7 @@ namespace Land_Vision.Controllers
         /// <summary>
         /// Add wards
         /// </summary>
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]

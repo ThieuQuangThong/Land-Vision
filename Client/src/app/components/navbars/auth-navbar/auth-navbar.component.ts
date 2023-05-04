@@ -8,9 +8,11 @@ import { PostService } from "src/app/_service/post.service";
 @Component({
   selector: "app-auth-navbar",
   templateUrl: "./auth-navbar.component.html",
+  styleUrls: ["./auth-navbar.component.css"],
 })
 export class AuthNavbarComponent implements OnInit {
   navbarOpen = false;
+  isSeller: boolean = false;
   @Output() messageEvent = new EventEmitter<any>();
 
   constructor(
@@ -22,7 +24,17 @@ export class AuthNavbarComponent implements OnInit {
     ){}
 
   ngOnInit(): void {
-    this.isLoggin()
+    this.auth.getUserProfileAsTracking()
+    .subscribe(
+      respone =>{
+        if(respone){
+          this.isSeller = true
+        }
+        else{
+          this.isSeller = false
+        }
+      }
+    )
   }
 
   @HostListener('window:resize')
@@ -36,24 +48,30 @@ export class AuthNavbarComponent implements OnInit {
   }
 
   onPosting(){
-    const userId = this.auth.getUserId();
-    this.postService.checkIsUserAvailableToPost(userId)
-    .subscribe(
-      respone =>{
-        if(respone == true){
-          this.router.navigate(['/posting']);
-        }
-        else {
-          this.router.navigate(['/pricing']);
-          AlertService.setAlertModel('warn',"You must buy more package to post!");
-        }
-      },
-      erorr =>{
-        AlertService.setAlertModel('danger',"You need to login to use posting");
+      const userId = this.auth.getUserId();
+      if(!userId){
         this.router.navigate(['/login']);
-
+        AlertService.setAlertModel('warn',"You must to login!");
+        return
       }
-    )
+      this.postService.checkIsUserAvailableToPost(userId)
+      .subscribe(
+        respone =>{
+          if(respone == true){
+            this.router.navigate(['/posting']);
+          }
+          else {
+            this.router.navigate(['/pricing']);
+            AlertService.setAlertModel('warn',"You must buy more package to post!");
+          }
+        },
+        erorr =>{
+          AlertService.setAlertModel('danger',"Some thing went wrong1");
+        }
+      )
+
+
+
   }
 
     translateLanguageTo(lang: string) {
@@ -73,7 +91,7 @@ export class AuthNavbarComponent implements OnInit {
 
         }
         else {
-          
+
 
         }
       },

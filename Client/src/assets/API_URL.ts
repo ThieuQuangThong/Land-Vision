@@ -41,5 +41,6 @@ export const API_URL = {
   GET_UNAPPROVED_POSTS:(pagingModel: PagingModel) => `${DOMAIN}/api/Post/getUnapprovedPost/${pagingModel.skipCount}&${pagingModel.maxResultCount}`,
   GET_UNAPPROVED_POST_BY_ID:(postId: number) => `${DOMAIN}/api/Post/getPostIsUnApproved/${postId}`,
   APPROVE_POST_BY_ID:(postId: number) => `${DOMAIN}/api/Post/appovePost/${postId}`,
-  QR_MOMO: (orderInfor: string, amount: number) => `https://localhost:7165/api/Momo/momoQR/${orderInfor}&${amount}`
+  QR_MOMO: (orderInfor: string, amount: number) => `https://localhost:7165/api/Momo/momoQR/${orderInfor}&${amount}`,
+  GET_APPROVED_POST_BY_USER_ID:(userId: number) => `${DOMAIN}/api/Post/getPostIsApproved/${userId}`
 };

@@ -6,7 +6,7 @@ using Land_Vision.DTO;
 using Land_Vision.DTO.PostDtos;
 using Land_Vision.Interface.IRepositories;
 using Land_Vision.Interface.IServices;
-using Land_Vision.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Land_Vision.Controllers
@@ -59,6 +59,7 @@ namespace Land_Vision.Controllers
         /// <summary>
         /// Get posts by userId
         /// </summary>
+        [Authorize(Roles = "Admin,User")]
         [HttpGet("getPost/{userId}/User")]
         [ProducesResponseType(200, Type = typeof(List<PostDto>))]
         public async Task<ActionResult<PaginationRespone<PostDto>>> GetPostsByUserId(int userId)
@@ -119,6 +120,7 @@ namespace Land_Vision.Controllers
         /// <summary>
         /// Get all posts by time
         /// </summary>
+        [Authorize(Roles = "Admin")]
         [HttpGet("PostByTime/{skipCount}&{maxResultCount}&{startDate}&{endDate}")]
         [ProducesResponseType(200, Type = typeof(PaginationRespone<PostDto>))]
         public async Task<ActionResult<PaginationRespone<PostDto>>> GetPostsByTime(int skipCount, int maxResultCount, string startDate, string endDate)
@@ -165,6 +167,7 @@ namespace Land_Vision.Controllers
         /// <summary>
         /// GET unapproved post
         /// </summary>
+        [Authorize(Roles = "Admin")]
         [HttpGet("getUnapprovedPost/{skipCount}&{maxResultCount}")]
         [ProducesResponseType(200, Type = typeof(PostDto))]
         public async Task<IActionResult> GetUnapprovedPostAsync(int skipCount, int maxResultCount)
@@ -182,10 +185,11 @@ namespace Land_Vision.Controllers
             return Ok(Paginposts);
         }
 
-        // get post is unapproved 
+        // get post is unapproved by id
         /// <summary>
-        /// get post is unapproved 
+        /// get post is unapproved by id
         /// </summary>
+        [Authorize(Roles = "Admin")]
         [HttpGet("getPostIsUnApproved/{postId}")]
         [ProducesResponseType(200, Type = typeof(PostDto))]
         public async Task<IActionResult> GetPostIsUnApproved(int postId)
@@ -205,6 +209,28 @@ namespace Land_Vision.Controllers
             }
 
             return Ok(_mapper.Map<PostDto>(post));
+        }
+
+        // Get get approved post by user id
+        /// <summary>
+        /// get approved post by user id
+        /// </summary>
+        [HttpGet("getPostIsApproved/{userId}")]
+        [ProducesResponseType(200, Type = typeof(List<PostDto>))]
+        public async Task<IActionResult> GetPostIsApproved(int userId)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if(!await _userRepository.CheckIsExistByIdAsync(userId)){
+                return NotFound("User is Not found");    
+            }
+
+            var posts = await _postRepository.GetApprovedPostByUserIdAsync(userId);
+
+            return Ok(_mapper.Map<List<PostDto>>(posts));
         }
 
         // GET Post by title
@@ -249,11 +275,11 @@ namespace Land_Vision.Controllers
             return Ok(postsPositionDto);
         }
 
-
         // POST Post
         /// <summary>
         /// Add post
         /// </summary>
+        [Authorize(Roles = "User")]
         [HttpPost("{userId}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
@@ -299,6 +325,7 @@ namespace Land_Vision.Controllers
         /// <summary>
         /// Appove Post
         /// </summary>
+        [Authorize(Roles = "Admin")]
         [HttpPost("appovePost/{postId}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
@@ -338,6 +365,7 @@ namespace Land_Vision.Controllers
         /// <summary>
         /// Update post
         /// </summary>
+        [Authorize(Roles = "User")]
         [HttpPut("{postId}&{userId}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
@@ -381,6 +409,7 @@ namespace Land_Vision.Controllers
         /// <summary>
         /// Delete post
         /// </summary>
+        [Authorize(Roles = "User,Admin")]
         [HttpDelete("{postId}&{userId}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
@@ -474,6 +503,7 @@ namespace Land_Vision.Controllers
         /// <summary>
         /// Hide/Unhide post
         /// </summary>
+        [Authorize(Roles = "Admin")]
         [HttpPut("hideUnhide/{postId}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
@@ -502,6 +532,7 @@ namespace Land_Vision.Controllers
         /// <summary>
         /// check is available to post 
         /// </summary>
+        [Authorize(Roles = "User,Admin")]
         [HttpGet("availablePost/{userId}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]

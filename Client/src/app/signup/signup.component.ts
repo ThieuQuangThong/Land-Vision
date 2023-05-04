@@ -49,7 +49,6 @@ export class SignupComponent implements OnInit {
   }
 
   signupdata(registrationForm: FormGroup) {
-
     this.http.post<any>(API_URL.REGISTER_ACCOUNT(), registrationForm.value)
       .subscribe(res => {
         AlertService.setAlertModel("success","Create an account successfully!")

@@ -1,9 +1,16 @@
 export const PROPERTY_INFOR = {
-  maxResultCount: 12,
+  Role :{
+    admin: 'Admin',
+    user: 'User',
+    UserAndAdmin: 'Admin,User'
+  },
+  currentUser: 'currentUser',
+  maxResultCount: 8,
   isView: 0,
   isUpdate: 1,
   isApprove: 2,
-  all: ['All'],
+  allTransaction: ['AllTransaction'],
+  allCategory: 'AllCategory',
   allPrice: ['AnyPrice'],
   allFloor: ['AllFloor'],
   allDirection: ['AllDirection'],
@@ -16,7 +23,7 @@ export const PROPERTY_INFOR = {
   floors: ['1Floor','2Floor','3Floor','4Floor','5Floor','MoreFloor'],
   bedRooms:['1BedRoom','2BedRooms','3BedRooms','4BedRooms','5BedRooms','MoreBedRoom'],
   prices: ['500','1000','1500','2000','2500','3000'],
-  priceValues: [0, 500000000, 1000000000, 1500000000, 2500000000, 3000000000],
+  priceValues: [0, 500000000, 1000000000, 1500000000,2000000000, 2500000000, 3000000000],
   TransactionTypes: ['Sale', 'Rent'],
   Interior: ['True', 'False'],
   VipName: ['','Fortune', 'Wealth','Prosperous'],

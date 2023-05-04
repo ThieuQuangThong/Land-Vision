@@ -8,13 +8,14 @@ import { PostRequest } from '../models/post-request';
 import { PostModel } from '../models/post-model';
 import { SearchModel } from '../models/search-model';
 import { PositonPostModel } from '../models/positonPost-model';
+import { MoneyTranformPipe } from '../_pipes/money-tranform.pipe';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PostService {
 
-  constructor(private http: HttpClient) {}
+  constructor(private moneyTranformPipe: MoneyTranformPipe, private http: HttpClient) {}
 
   getPostCount():Observable<number> {
     return this.http.get<number>(API_URL.GET_POST_COUNT(),{withCredentials: true})
@@ -49,7 +50,7 @@ export class PostService {
   }
 
   getInforPositionPosts(postId: number): Observable<PositonPostModel[]>{
-    return this.http.get<PositonPostModel[]>(API_URL.GET_INFOR_POSITION_POST(postId));
+    return this.http.get<PositonPostModel[]>(API_URL.GET_INFOR_POSITION_POST(postId))
   }
 
   getPostsByUserId(userId: number): Observable<PostModel[]>{
@@ -74,6 +75,10 @@ export class PostService {
 
   approvePost(postId: number): Observable<any>{
     return this.http.post(API_URL.APPROVE_POST_BY_ID(postId),{});
+  }
+
+  getApprovedPostByUserId(userId: number):  Observable<PostModel[]>{
+    return this.http.get<PostModel[]>(API_URL.GET_APPROVED_POST_BY_USER_ID(userId));
   }
 
 }

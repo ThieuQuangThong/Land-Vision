@@ -26,12 +26,12 @@ namespace Land_Vision.Repositories
 
         public async Task<bool> CheckIsPostExistByIdAsync(int postId)
         {
-            return await _dbContext.Posts.AnyAsync(x => x.Id == postId);
+            return await _dbContext.Posts.AnyAsync(x => x.Id == postId );
         }
 
         public async Task<int> CountPostByUserIdAsync(int userId)
         {
-            return await _dbContext.Posts.Where(x => x.User.Id == userId).CountAsync();
+            return await _dbContext.Posts.Where(x => x.User.Id == userId && x.isHide == false ).CountAsync();
         }
 
         public async Task<bool> DeletePostAsync(Post post)
@@ -42,28 +42,51 @@ namespace Land_Vision.Repositories
 
         public async Task<List<Post>> GetAllInforPositionOfPostAsync()
         {
-            return  await _dbContext.Posts.Include(l => l.Property.Positions.OrderByDescending(x => x.Id)).Select(x => new Post {
+            return  await _dbContext.Posts
+            .Include(l => l.Property.Positions.OrderByDescending(x => x.Id))
+            .Include(o => o.Images)
+            .Where(x => x.isHide == false)
+            .Select(x => new Post {
                 Id = x.Id,
                 Property = new Property{
                     AddressNumber = x.Property.AddressNumber,
-                    Positions = x.Property.Positions.OrderBy(m => m.Id).ToList()
+                    Positions = x.Property.Positions.OrderBy(m => m.Id).ToList(),
+                    Price = x.Property.Price                    
                 },
+                Images = x.Images,
                 User = new User {
-                    Name = x.User.Name
+                    Name = x.User.Name,
+                    AvatarLink = x.User.AvatarLink,
+                    Id = x.User.Id
                 }
             }
             ).ToListAsync();
         }
 
+        public Task<List<Post>> GetApprovedPostByUserIdAsync(int userId)
+        {
+            return _dbContext.Posts.OrderByDescending(p => p.CreateDate)            
+            .Include(x => x.User)
+            .Include(l => l.Images)
+            .Include(k => k.Property.Ward)
+            .Include(c => c.Property.Street)
+            .Include(j => j.Property.Street.District)
+            .Include(i => i.Property.Street.District.City)
+            .Include(m => m.Property.Category)
+            .Include(n => n.Property.Positions)
+            .Where(x => x.User.Id == userId && x.ApproveStatus == NumberFiled.APPROVED && x.isHide == false).ToListAsync();
+        }
+
         public async Task<int> GetCountUnapprovedPostsAsync()
         {
-            return await _dbContext.Posts.Where(x => x.ApproveStatus == NumberFiled.Unapproved)
+            return await _dbContext.Posts.Where(x => x.ApproveStatus == NumberFiled.Unapproved && x.isHide == false)
             .CountAsync();
         }
 
         public async Task<Post> GetPostAsync(int postId)
         {
-            return await _dbContext.Posts.Where(p => p.Id == postId)
+            return await _dbContext.Posts
+            .Where(p => p.Id == postId)
             .Include(x => x.User)
             .Include(l => l.Images)
             .Include(k => k.Property.Ward)
@@ -132,7 +155,7 @@ namespace Land_Vision.Repositories
             .Include(i => i.Property.Street.District.City)
             .Include(m => m.Property.Category)
             .Include(n => n.Property.Positions)
-            .Where(x => x.User.Id == userId).ToListAsync();
+            .Where(x => x.User.Id == userId && x.isHide == false).ToListAsync();
         }
 
         public async Task<List<Post>> GetSearchedPosts(Pagination pagination, PostSearchDto postSearchDto)
@@ -143,13 +166,21 @@ namespace Land_Vision.Repositories
             }
 
             return await _dbContext.Posts
-            .Where(x => x.ApproveStatus == NumberFiled.APPROVED 
+            .Where(x => x.ApproveStatus == NumberFiled.APPROVED && x.isHide == false
             && (postSearchDto.TransactionType == NumberFiled.ALL || x.transactionType == postSearchDto.TransactionType)
-            && (postSearchDto.InteriorStatus == NumberFiled.ALL ||x.Property.Interior == postSearchDto.InteriorStatus)
-            && (postSearchDto.Price == NumberFiled.ALL ||x.Property.Price <= postSearchDto.Price)
-            && (postSearchDto.NumberOfFloor == NumberFiled.ALL ||x.Property.NumberOfFloor == postSearchDto.NumberOfFloor)
-            && (postSearchDto.NumberOfBed == NumberFiled.ALL ||x.Property.NumberOfBed == postSearchDto.NumberOfBed)
-            && (postSearchDto.NumberOfBath == NumberFiled.ALL ||x.Property.NumberOfBath == postSearchDto.NumberOfBath)
+            && (postSearchDto.CategoryId == NumberFiled.ALL_CATEGORY ||x.Property.CategoryId == postSearchDto.CategoryId)
+            && (postSearchDto.Price == NumberFiled.ALL ||x.Property.Price <= postSearchDto.Price
+                ||(postSearchDto.Price == NumberFiled.OVER_THREE_BILLION && postSearchDto.Price <= x.Property.Price))
+
+            && (postSearchDto.NumberOfFloor == NumberFiled.ALL ||x.Property.NumberOfFloor == postSearchDto.NumberOfFloor
+                ||(postSearchDto.NumberOfFloor == NumberFiled.OVER_SIX && x.Property.NumberOfFloor >= NumberFiled.OVER_SIX))
+
+            && (postSearchDto.NumberOfBed == NumberFiled.ALL ||x.Property.NumberOfBed == postSearchDto.NumberOfBed
+                ||(postSearchDto.NumberOfBed == NumberFiled.OVER_SIX && x.Property.NumberOfBed >= NumberFiled.OVER_SIX))
+
+            && (postSearchDto.NumberOfBath == NumberFiled.ALL ||x.Property.NumberOfBath == postSearchDto.NumberOfBath 
+                ||(postSearchDto.NumberOfBath == NumberFiled.OVER_SIX && x.Property.NumberOfBath >= NumberFiled.OVER_SIX))
+
             && (postSearchDto.Direction == NumberFiled.ALL ||x.Property.Direction == postSearchDto.Direction)
             && (String.IsNullOrEmpty(text) || x.Title.Contains(text) || x.Description.Contains(text)))
             .Skip(pagination.SkipCount)
@@ -161,6 +192,7 @@ namespace Land_Vision.Repositories
             .Include(i => i.Property.Street.District.City)
             .Include(m => m.Property.Category)
             .Include(n => n.Property.Positions)
+            .OrderByDescending(h => h.CreateDate)
             .ToListAsync();
         }
 
@@ -171,13 +203,21 @@ namespace Land_Vision.Repositories
                 text = text.Trim();
             }
 
-            return _dbContext.Posts.Where(x => x.ApproveStatus == NumberFiled.APPROVED
+            return _dbContext.Posts.Where(x => x.ApproveStatus == NumberFiled.APPROVED && x.isHide == false
             &&(postSearchDto.TransactionType == NumberFiled.ALL || x.transactionType == postSearchDto.TransactionType)
-            && ( postSearchDto.InteriorStatus == NumberFiled.ALL ||x.Property.Interior == postSearchDto.InteriorStatus)
-            && ( postSearchDto.Price == NumberFiled.ALL ||x.Property.Price <= postSearchDto.Price)
-            && ( postSearchDto.NumberOfFloor == NumberFiled.ALL ||x.Property.NumberOfFloor == postSearchDto.NumberOfFloor)
-            && ( postSearchDto.NumberOfBed == NumberFiled.ALL ||x.Property.NumberOfBed == postSearchDto.NumberOfBed)
-            && ( postSearchDto.NumberOfBath == NumberFiled.ALL ||x.Property.NumberOfBath == postSearchDto.NumberOfBath)
+            && ( postSearchDto.CategoryId == NumberFiled.ALL_CATEGORY ||x.Property.Interior == postSearchDto.CategoryId)
+            && ( postSearchDto.Price == NumberFiled.ALL || x.Property.Price <= postSearchDto.Price
+                ||(postSearchDto.Price == NumberFiled.OVER_THREE_BILLION && postSearchDto.Price <= x.Property.Price))
+
+            && ( postSearchDto.NumberOfFloor == NumberFiled.ALL ||x.Property.NumberOfFloor == postSearchDto.NumberOfFloor
+                ||(postSearchDto.NumberOfFloor == NumberFiled.OVER_SIX && x.Property.NumberOfFloor >= NumberFiled.OVER_SIX))
+
+            && ( postSearchDto.NumberOfBed == NumberFiled.ALL ||x.Property.NumberOfBed == postSearchDto.NumberOfBed
+                ||(postSearchDto.NumberOfBed == NumberFiled.OVER_SIX && x.Property.NumberOfBed >= NumberFiled.OVER_SIX))
+
+            && ( postSearchDto.NumberOfBath == NumberFiled.ALL ||x.Property.NumberOfBath == postSearchDto.NumberOfBath
+                ||(postSearchDto.NumberOfBath == NumberFiled.OVER_SIX && x.Property.NumberOfBath >= NumberFiled.OVER_SIX))
+
             && ( postSearchDto.Direction == NumberFiled.ALL ||x.Property.Direction == postSearchDto.Direction)
             && (String.IsNullOrEmpty(text) || x.Title.Contains(text) || x.Description.Contains(text)))
             .CountAsync();
@@ -185,7 +225,7 @@ namespace Land_Vision.Repositories
 
         public Task<List<Post>> GetUnapprovedPostsAsync(Pagination pagination)
         {
-            return _dbContext.Posts.Where(d => d.ApproveStatus == NumberFiled.Unapproved)
+            return _dbContext.Posts.Where(d => d.ApproveStatus == NumberFiled.Unapproved&& d.isHide == false)
             .Skip(pagination.SkipCount)
             .Take(pagination.MaxResultCount)
             .Include(x => x.User)

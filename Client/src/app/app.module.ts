@@ -236,6 +236,7 @@ import { ApproveDetailComponent } from './views/admin/approve-detail/approve-det
       multi: true
     },
     [AuthGuard],
+    MoneyTranformPipe
 
   ],
   bootstrap: [AppComponent],

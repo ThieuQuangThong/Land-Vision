@@ -1,3 +1,4 @@
+using Land_Vision.Common;
 using Land_Vision.Data;
 using Land_Vision.DTO;
 using Land_Vision.DTO.UserDtos;
@@ -39,7 +40,9 @@ namespace Land_Vision.Repositories
 
         public async Task<List<User>> GetUsersAsync(Pagination pagination)
         {
-            return await _dbContext.Users.Include(x => x.Role).AsNoTracking()
+            return await _dbContext.Users.Include(x => x.Role)
+            .Where(J => J.Role.Name == RoleField.USER)
+            .AsNoTracking()
             .Skip(pagination.SkipCount)
             .Take(pagination.MaxResultCount)
             .ToListAsync();
@@ -58,7 +61,9 @@ namespace Land_Vision.Repositories
 
         public async Task<int> GetUserTotalAsync()
         {
-            return await _dbContext.Users.CountAsync();
+            return await _dbContext.Users
+            .Where(x => x.Role.Name == RoleField.USER)
+            .CountAsync();
         }
 
         public async Task<bool> CheckIsExistUserByEmailAsync(string email)
@@ -78,7 +83,8 @@ namespace Land_Vision.Repositories
 
         public async Task<User> GetUserByFreshTokenAsync(string freshToken)
         {
-            return await _dbContext.Users.Where(x => x.RefreshToken == freshToken).FirstOrDefaultAsync();
+            return await _dbContext.Users.Where(x => x.RefreshToken == freshToken).Include(c => c.Role)
+            .FirstOrDefaultAsync();
         }
 
         public async Task<bool> CheckIsExistValidatePasswordToken(string email, string token)
