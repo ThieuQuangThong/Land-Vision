@@ -2,6 +2,7 @@ using AutoMapper;
 using Land_Vision.DTO.RoleDtos;
 using Land_Vision.Interface.IRepositories;
 using Land_Vision.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Land_Vision.Controllers
@@ -21,6 +22,7 @@ namespace Land_Vision.Controllers
         /// <summary>
         /// Add role.
         /// </summary>
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ProducesResponseType(200)]
         public async Task<IActionResult> AddRole(RoleDto roleDto)

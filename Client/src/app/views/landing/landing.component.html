@@ -34,7 +34,7 @@
   <section class="pb-20 bg-blueGray-200">
     <div [style.padding-top]="paddingTop" class="container mx-auto px-3 ">
       <div class="relative flex flex-col min-w-0 break-words bg-white w-full rounded-lg">
-        <div class=" sticky-search flex flex-wrap">
+        <div class=" sticky-search flex flex-wrap text-sm title-font text-gray-500 tracking-widest;" style="z-index: 10">
           <div class=" stickybar top-0 left-0 z-50  w-full p-2 md:w-full pt-3 shadow rounded-lg bg-white">
             <div class="flex mr-1">
               <div class=" w-1/6 flex items-center ml-2 h-full">
@@ -63,9 +63,9 @@
                       {{transactionType | translate}} </option>
                   </select>
 
-                  <select [(ngModel)]="selectedInterior"
+                  <select [(ngModel)]="selectedcategoryId"
                     class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
-                    <option *ngFor="let interior of interiors; let i = index" value="{{i}}">{{interior | translate}}
+                    <option *ngFor="let category of categories; let i = index" value="{{category.id}}">{{category.name| translate}}
                     </option>
                   </select>
 

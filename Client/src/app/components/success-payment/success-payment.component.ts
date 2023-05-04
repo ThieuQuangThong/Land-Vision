@@ -53,6 +53,7 @@ export class SuccessPaymentComponent implements OnInit{
 
   }
   goBackToProFile(){
-    this.router.navigate(['/profile']);
+    const user = this.auth.getUserProfile();
+    this.router.navigate(['/profile/'+ user?.nameid]);
   }
 }

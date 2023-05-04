@@ -5,10 +5,12 @@ using Land_Vision.DTO.StreetDtos;
 using Land_Vision.Interface.IRepositories;
 using Land_Vision.Interface.IServices;
 using Land_Vision.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Land_Vision.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class StreetController : ControllerBase
@@ -84,6 +86,7 @@ namespace Land_Vision.Controllers
         /// <summary>
         /// Add street
         /// </summary>
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
@@ -116,10 +119,11 @@ namespace Land_Vision.Controllers
             return Ok(streetCreate);
         }
 
-        // POST Street
+        // POST street list
         /// <summary>
         /// Add street list
         /// </summary>
+        [Authorize(Roles = "Admin")]
         [HttpPost("addStreetList")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
@@ -155,6 +159,7 @@ namespace Land_Vision.Controllers
         /// <summary>
         /// Update street
         /// </summary>
+        [Authorize(Roles = "Admin")]
         [HttpPut("{streetId}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
@@ -186,11 +191,11 @@ namespace Land_Vision.Controllers
             return Ok(street);
         }
 
-
         // DELETE street
         /// <summary>
         /// Delete street
         /// </summary>
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{streetId}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]

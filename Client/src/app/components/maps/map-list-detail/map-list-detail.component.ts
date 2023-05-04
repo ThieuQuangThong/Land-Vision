@@ -4,6 +4,7 @@ import { loadModules } from 'esri-loader';
 import esri = __esri;
 import { PostService } from 'src/app/_service/post.service';
 import { PositonPostModel } from 'src/app/models/positonPost-model';
+import { MoneyTranformPipe } from 'src/app/_pipes/money-tranform.pipe';
 
 
 @Component({
@@ -11,6 +12,8 @@ import { PositonPostModel } from 'src/app/models/positonPost-model';
   templateUrl: './map-list-detail.component.html',
   styleUrls: ['./map-list-detail.component.css']
 })
+
+
 export class MapListDetailComponent {
 
   @Output() mapLoaded = new EventEmitter<boolean>();
@@ -55,7 +58,7 @@ export class MapListDetailComponent {
     return this._basemap;
   }
 
-  constructor(private shareDataService: ShareDataService, private postService: PostService) {}
+  constructor(private moneyTranformPipe: MoneyTranformPipe, private shareDataService: ShareDataService, private postService: PostService) {}
 
   async initializeMap(centerPos: number[][] =[], otherPos:number[][][],positionPosts:PositonPostModel[] ) {
 
@@ -166,7 +169,8 @@ export class MapListDetailComponent {
                 }
               }
 
-             const popUpObect = this.shareDataService.setPopUpObject(`<p class ="mb-0"><span class="text-xl font-semibold mb-0">Tên:</span> ${positionPosts[i].name}</p><p class ="mb-0"><span class="text-xl font-semibold mb-0">Giá:</span> 10 Tỷ</p><a href="http://localhost:4200/productdetails/${positionPosts[i].id}"><span class="text-xl font-semibold">Địa chỉ:</span> ${positionPosts[i].addressNumber}</a><a href="https://richnguyen.vn/wp-content/uploads/2020/08/buc-anh-bat-dong-san-dep-3.jpg"><img src="https://richnguyen.vn/wp-content/uploads/2020/08/buc-anh-bat-dong-san-dep-3.jpg" alt="Ảnh bất động sản đẹp"></a>`)
+             const popUpObect =
+             this.shareDataService.setPopUpObject(`<a href="http://localhost:4200/profile/${positionPosts[i].userId}" class ="mb-0"><span class="text-xl font-semibold mb-0">Tên:</span> ${positionPosts[i].name}</a><p class ="mb-0"><span class="text-xl font-semibold mb-0">Giá:</span> ${this.moneyTranformPipe.transform(positionPosts[i].price)}</p><a href="http://localhost:4200/productdetails/${positionPosts[i].id}"><span class="text-xl font-semibold">Địa chỉ:</span> ${positionPosts[i].addressNumber}</a><a><img style="width: 150px;height: 150px;" src="${positionPosts[i].images[0].linkImage}" alt="Ảnh bất động sản đẹp"></a>`)
               const polygon = {
                 type: "polygon",
                 rings: x
@@ -182,8 +186,8 @@ export class MapListDetailComponent {
            const simpleMarkerSymbol1 = {
              type: "picture-marker",  // autocasts as new PictureMarkerSymbol()
              url: "https://static.arcgis.com/images/Symbols/Shapes/RedStarLargeB.png",
-             width: "64px",
-             height: "64px"
+             width: "50px",
+             height: "50px"
           };
           let point1 = { //Create a point
             type: "point",
@@ -203,7 +207,7 @@ export class MapListDetailComponent {
            i++;
             }
           )
-
+      if( !this.isShowAll){
         this.shareDataService.getRelativePlaceAsTracking()
         .subscribe(
           respone =>{
@@ -212,8 +216,8 @@ export class MapListDetailComponent {
             const simpleMarkerSymbol = {
               type: "picture-marker",  // autocasts as new PictureMarkerSymbol()
               url: "https://static.arcgis.com/images/Symbols/Shapes/BlueStarLargeB.png",
-              width: "64px",
-              height: "64px"
+              width: "50px",
+              height: "50px"
            };
           respone.forEach(
             x =>{
@@ -238,8 +242,7 @@ export class MapListDetailComponent {
           )
           }
         )
-
-
+      }
         this.mapLoaded.emit(true);
       });
     } catch (error) {
@@ -248,6 +251,7 @@ export class MapListDetailComponent {
   }
 
   ngOnInit() {
+    this.shareDataService.setRelativePlaces([]);
     this.postService.getInforPositionPosts(this.postId)
     .subscribe(
       respone =>{

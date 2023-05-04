@@ -8,5 +8,6 @@ namespace Land_Vision.Common
         public static string COOKIE_NAME_OF_REFRESH_TOKEN = "FreshToken";
         public static string COOKIE_NAME_OF_VALIDATE_PASS_TOKEN = "ForgotPassToken";
         public static string COOKIE_NAME = "cookie";
+        public static string DEFAULT_VIP ="Fortune";
     }
 }

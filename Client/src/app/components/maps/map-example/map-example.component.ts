@@ -11,7 +11,6 @@ import esri = __esri;
   styleUrls: ["./map-example.component.css"],
 })
 export class MapExampleComponent implements OnInit  {
-
   @Output() mapLoaded = new EventEmitter<boolean>();
   @ViewChild('mapViewNode', { static: true })
   private mapViewEl!: ElementRef;
@@ -125,7 +124,6 @@ export class MapExampleComponent implements OnInit  {
         constraints: {
           geometry: extent,
           minScale: 500000,
-          maxScale: 2000
         }
       };
       const mapView: esri.MapView = new EsriMapView(mapViewProperties);

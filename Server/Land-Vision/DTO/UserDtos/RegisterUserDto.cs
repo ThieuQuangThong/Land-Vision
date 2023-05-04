@@ -6,12 +6,9 @@ namespace Land_Vision.DTO.UserDtos
     {
         [Required]
         public string Name { get; set; }
-        [Required]
-        public string FrontOfIdentityCard {get; set;}
-        [Required]
-        public string BackOfIdentityCard { get; set; }  
-        [Required]
-        public string IdentityNumber { get; set; }
+        public string FrontOfIdentityCard {get; set;}="";
+        public string BackOfIdentityCard { get; set; } =""; 
+        public string IdentityNumber { get; set; }="";
         [Required]
         public string Email { get; set; }
         [Required]

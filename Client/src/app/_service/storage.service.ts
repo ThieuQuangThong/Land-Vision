@@ -1,17 +1,12 @@
-import { Token } from '@angular/compiler';
+import { Router } from '@angular/router';
 import { Injectable } from '@angular/core';
-import { JwtHelperService } from '@auth0/angular-jwt';
-import { catchError, map, Observable, of } from 'rxjs';
-import { AuthService } from './auth.service';
-import { TokenModel } from './token.model';
-
 const TOKEN = 'token';
 
 @Injectable({
   providedIn: 'root',
 })
 export class StorageService {
-  constructor() {}
+  constructor(private router: Router) {}
 
   public deleteToken(): boolean {
     try {
@@ -23,32 +18,23 @@ export class StorageService {
     return false;
   }
 
-  public setToken(token: TokenModel): boolean {
+  public setToken(token: string): boolean {
     try {
       localStorage.removeItem(TOKEN);
-      localStorage.setItem(TOKEN, JSON.stringify(token));
+      localStorage.setItem(TOKEN, token);
       return true;
     } catch {
       return false;
     }
   }
 
-  public getToken(): TokenModel | null {
+
+  public getAccessToken(): string | null{
     const tokenLocalStorage = localStorage.getItem(TOKEN);
     if (tokenLocalStorage) {
-      let token = JSON.parse(tokenLocalStorage) as TokenModel;
-      return token;
+      return tokenLocalStorage;
     }
     return null;
-  }
-
-  public getAccessToken(): string {
-    const tokenLocalStorage = localStorage.getItem(TOKEN);
-    if (tokenLocalStorage) {
-      let token = JSON.parse(tokenLocalStorage) as TokenModel;
-      return token.accessToken;
-    }
-    return '';
   }
 
   public isLoggedIn(): boolean {

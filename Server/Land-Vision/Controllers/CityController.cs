@@ -3,10 +3,12 @@ using Land_Vision.DTO.CityDtos;
 using Land_Vision.DTO.DistrictDtos;
 using Land_Vision.Interface.IRepositories;
 using Land_Vision.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Land_Vision.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CityController : ControllerBase
@@ -77,6 +79,7 @@ namespace Land_Vision.Controllers
         /// <summary>
         /// Add city.
         /// </summary>
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
@@ -111,6 +114,7 @@ namespace Land_Vision.Controllers
         /// <summary>
         /// Update city by id.
         /// </summary>
+        [Authorize(Roles = "Admin")]
         [HttpPut("{cityId}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
@@ -145,6 +149,7 @@ namespace Land_Vision.Controllers
         /// <summary>
         /// Delete city by id.
         /// </summary>
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{cityId}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]

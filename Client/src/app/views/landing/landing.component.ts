@@ -1,5 +1,7 @@
+import { CategoryService } from './../../_service/category.service';
 import { Component, OnInit } from "@angular/core";
 import { PostService } from "src/app/_service/post.service";
+import { CategoryModel } from "src/app/models/category-model";
 import { PagingModel } from "src/app/models/paging-model";
 import { PostModel } from "src/app/models/post-model";
 import { SearchModel } from "src/app/models/search-model";
@@ -20,11 +22,11 @@ export class LandingComponent implements OnInit {
   mainSearch: SearchModel = new SearchModel();
   text: string = "";
 
-  transactionTypes: string[] = [ ...PROPERTY_INFOR.all, ...PROPERTY_INFOR.TransactionTypes];
+  transactionTypes: string[] = [ ...PROPERTY_INFOR.allTransaction, ...PROPERTY_INFOR.TransactionTypes];
   selectedTransactionTypes: number = 0;
 
-  interiors: string[] = [ ...PROPERTY_INFOR.all, ...PROPERTY_INFOR.Interior];
-  selectedInterior: number = 0;
+  categories: CategoryModel[] = [];
+  selectedcategoryId: number = -1;
 
   prices: string[] = [...PROPERTY_INFOR.allPrice, ...PROPERTY_INFOR.prices]
   selectedPrice: number = 0;
@@ -57,16 +59,32 @@ export class LandingComponent implements OnInit {
   postRespone: PostModel[] = [];
 
   paddingTop: string = '';
-  constructor(private postService:PostService) {
+  constructor(private postService:PostService, private categoryService: CategoryService) {
   }
 
   ngOnInit(): void {
+    this.getCategorys();
     this.getPost(this.paging);
   }
   receiveHeight($event: any){
     console.log($event);
 
   this.paddingTop = $event.toString()+"px";
+  }
+
+  getCategorys(){
+    this.categoryService.getCategory()
+    .subscribe(
+      respone =>{
+        const AllCategoryOption:CategoryModel ={
+          id: -1,
+          name: PROPERTY_INFOR.allCategory
+        }
+        this.categories.push(AllCategoryOption)
+        this.categories.push(...respone);
+
+      }
+    )
   }
 
   getPost(paging: PagingModel){
@@ -98,8 +116,8 @@ export class LandingComponent implements OnInit {
     const searchObject: SearchModel = {
       text: this.text,
       transactionType: this.selectedTransactionTypes,
-      interiorStatus: this.selectedInterior,
-      price: this.selectedPrice,
+      categoryId: this.selectedcategoryId,
+      price: Number(PROPERTY_INFOR.priceValues[this.selectedPrice]),
       numberOfBed: this.selectedBedroom,
       numberOfFloor: this.selectedFloor,
       numberOfBath: this.selectedBathroom,

@@ -5,10 +5,12 @@ using Land_Vision.DTO.DistrictDtos;
 using Land_Vision.DTO.StreetDtos;
 using Land_Vision.Interface.IRepositories;
 using Land_Vision.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Land_Vision.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class DistrictController : ControllerBase
@@ -77,6 +79,7 @@ namespace Land_Vision.Controllers
         /// <summary>
         /// Add district
         /// </summary>
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
@@ -112,6 +115,7 @@ namespace Land_Vision.Controllers
         /// <summary>
         /// Add district list
         /// </summary>
+        [Authorize(Roles = "Admin")]
         [HttpPost("addDistrictList/{cityId}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
@@ -155,6 +159,7 @@ namespace Land_Vision.Controllers
         /// <summary>
         /// Update district
         /// </summary>
+        [Authorize(Roles = "Admin")]
         [HttpPut("{districtId}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
@@ -191,6 +196,7 @@ namespace Land_Vision.Controllers
         /// <summary>
         /// Delete district
         /// </summary>
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{districtId}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]

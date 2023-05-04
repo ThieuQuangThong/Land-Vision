@@ -8,9 +8,9 @@ namespace Land_Vision.DTO.PostDtos
         [Required]
         public int TransactionType { get; set; }
         [Required]
-        public int InteriorStatus { get; set; }
+        public int CategoryId { get; set; }
         [Required]
-        public int Price { get; set; }
+        public double Price { get; set; }
         [Required]
         public int NumberOfFloor { get; set; }
         [Required]

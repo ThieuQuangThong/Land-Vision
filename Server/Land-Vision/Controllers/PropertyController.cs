@@ -1,9 +1,11 @@
 using Land_Vision.Common;
 using Land_Vision.Interface.IRepositories;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Land_Vision.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class PropertyController : ControllerBase
@@ -18,6 +20,7 @@ namespace Land_Vision.Controllers
         /// <summary>
         /// Delete Property
         /// </summary>
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{propertyId}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]

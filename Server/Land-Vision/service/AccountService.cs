@@ -15,6 +15,7 @@ namespace Land_Vision.service
 {
     public class AccountService : IAccountService
     {
+        private readonly IDetailPurchaseRepository _detailPurchaseRepository;
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
         private readonly IEmailService _emailService;
@@ -24,6 +25,7 @@ namespace Land_Vision.service
 
         public AccountService
         (
+        IDetailPurchaseRepository detailPurchaseRepository,
         IVipRepository vipRepository,
         IRoleRepository roleRepository,
         IUserRepository userRepository,
@@ -32,6 +34,7 @@ namespace Land_Vision.service
         IConfiguration configuration
         )
         {
+            _detailPurchaseRepository = detailPurchaseRepository;
             _roleRepository = roleRepository;
             _config = configuration;
             _userRepository = userRepository;
@@ -112,7 +115,7 @@ namespace Land_Vision.service
                     new Claim(ClaimTypes.Email, user.Email),
                 }),
 
-                Expires = DateTime.UtcNow.AddMinutes(5),
+                Expires = DateTime.Now.AddMinutes(NumberFiled.ACCESS_TOKEN_EXPIRE_TIME),
                 Issuer = issuer,
                 Audience = audience,
                 SigningCredentials = new SigningCredentials
@@ -237,23 +240,30 @@ namespace Land_Vision.service
 
         public async Task<bool> RegisterAccountAsync(RegisterUserDto registerUserDto)
         {
+
             if(await _userRepository.GetUserByEmailAsync(registerUserDto.Email) != null){
                 throw new Exception("Email is already taken!");
             }
             var role = await _roleRepository.GetRoleByNameAsync(RoleField.USER);
-            var vip = await _vipRepository.GetVipByLevelAsync(NumberFiled.VIP_LEVEL_DEFAULT);
+            var vip = await _vipRepository.GetVipByNameAsync(TextField.DEFAULT_VIP);
             var user = _mapper.Map<User>(registerUserDto);
             var newPasswordObject = HashPassword(registerUserDto.password);
             user.PasswordHash = newPasswordObject.hashedPassword;
             user.PasswordSalt = newPasswordObject.PasswordSalt;
             user.EmailExpiresTime = DateTime.Now.AddMinutes(5);
             user.Role = role;
-            user.Vip = vip;
 
             if(!await _userRepository.CreateUserAsync(user)){
                 return false; 
             };
+            var detailPurchase = new DetailPurchase(){
+                TransactionDate = DateTime.Now,
+                User = user,
+                Vip = vip,
+            };
 
+            await _detailPurchaseRepository.AddDetailPurchaseAsync(detailPurchase);
+            
             var confirmEmailToken = _emailService.GenerateEmailConfirmToken(user);
             var confirmationLinkUrl = _config["Url"] + "api/Account/confirmEmail/" + confirmEmailToken.ToString();
             var content = $"<p>Hello {user.Name},"

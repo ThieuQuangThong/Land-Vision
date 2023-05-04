@@ -42,6 +42,11 @@ namespace Land_Vision.Repositories
             return await _dbContext.Vips.Where(x => x.VipLevel == level).FirstOrDefaultAsync();
         }
 
+        public async Task<Vip> GetVipByNameAsync(string name)
+        {
+            return await _dbContext.Vips.Where(p => p.Name == name).FirstOrDefaultAsync();
+        }
+
         public async Task<List<Vip>> GetVipsAsync()
         {
             return await _dbContext.Vips.ToListAsync();

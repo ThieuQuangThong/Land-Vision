@@ -2,25 +2,27 @@
   <div class="items-center flex">
     <span class="w-8 h-8 text-sm text-white bg-blueGray-200 inline-flex items-center justify-center rounded-full">
       <img alt="..." class="w-full rounded-full align-middle border-none shadow-lg"
-        src="assets/img/team-1-800x800.jpg" />
+        src="{{avatarLink}}" />
     </span>
   </div>
 </a>
 <div class="min-w-48 z-50" #popoverDropdownRef>
   <div class="bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg mt-1 min-w-48"
     [ngClass]="dropdownPopoverShow ? 'block' : 'hidden'">
-    <a routerLink="/profile"
-      class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700">
+    <a
+      (click)="MyProfile()"
+      class="pointerHover text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700">
       My profile
     </a>
-    <a href="#pablo"
-      class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700">
+    <a
+      class="pointerHover text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700">
       Another action
     </a>
 
     <div class="h-0 my-2 border border-solid border-blueGray-100"></div>
-    <a (click)="logout()"
-      class="text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700">
+    <a
+      (click)="logout()"
+      class="pointerHover text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700">
       Logout
     </a>
   </div>

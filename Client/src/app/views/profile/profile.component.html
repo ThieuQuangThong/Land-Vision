@@ -39,7 +39,7 @@
                                     <span class="text-xl font-bold block uppercase tracking-wide text-blueGray-600">
                   {{userInfor.numberOfUserCanPost-userInfor.posted }}
                   </span>
-                                    <span class="text-sm text-blueGray-400">Post remaning</span>
+                                    <span class="text-sm text-blueGray-400">Post remaining</span>
                                 </div>
                             </div>
                         </div>
@@ -76,7 +76,7 @@
                     </div>
                 </div> -->
                 <div class="flex" style="flex-wrap: wrap;">
-                  <app-single-product *ngFor="let userPost of userPosts" [postItem]="userPost" [status]="status" ></app-single-product>
+                  <app-single-product *ngFor="let userPost of userPosts" [postUserId] ="postUserId" [postItem]="userPost" [status]="status" ></app-single-product>
                 </div>
 
             </div>

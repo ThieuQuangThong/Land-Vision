@@ -3,10 +3,12 @@ using Land_Vision.DTO.PositionDtos;
 using Land_Vision.Interface.IRepositories;
 using Land_Vision.Interface.IServices;
 using Land_Vision.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Land_Vision.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class PositionController : ControllerBase
@@ -65,6 +67,7 @@ namespace Land_Vision.Controllers
         /// <summary>
         /// Add position.
         /// </summary>
+        [Authorize(Roles = "User,Admin")]
         [HttpPost("{propertyId}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
@@ -93,6 +96,7 @@ namespace Land_Vision.Controllers
         /// <summary>
         /// Update position by id.
         /// </summary>
+        [Authorize(Roles = "Admin,User")]
         [HttpPut("{positionId}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
@@ -127,6 +131,7 @@ namespace Land_Vision.Controllers
         /// <summary>
         /// Update position list of property by property id.
         /// </summary>
+        [Authorize(Roles = "Admin,User")]
         [HttpPut("updatePositionList/{propertyId}/PropertyId")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
@@ -161,6 +166,7 @@ namespace Land_Vision.Controllers
         /// <summary>
         /// Delete position by id.
         /// </summary>
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{positionId}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]

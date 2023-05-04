@@ -1,15 +1,14 @@
-import { HttpClient, HttpEvent, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { JwtHelperService } from '@auth0/angular-jwt';
-import { BehaviorSubject, catchError, map, Observable, of, tap } from 'rxjs';
+import { BehaviorSubject, catchError, Observable, of, tap } from 'rxjs';
 import { TokenModel } from './token.model';
-import { LoginComponent } from '../login/login.component';
 import { StorageService } from './storage.service';
 import { User, UserInfor } from './user.model';
 import { Router } from '@angular/router';
 import { AlertService } from './alert.service';
 import { API_URL } from 'src/assets/API_URL';
-import jwt_decode from "jwt-decode";
+import { CookieService } from 'ngx-cookie-service';
 
 HttpClient;
 @Injectable({
@@ -22,8 +21,47 @@ export class AuthService {
   data = {email: '', code: ''};
   headers = new HttpHeaders({ 'Content-Type': 'application/json' });
   public email: any;
-  constructor(private http: HttpClient, private storage: StorageService, private jwtHelper: JwtHelperService, private router: Router) { }
+  userInfor =new BehaviorSubject<UserInfor>(new UserInfor());
+  constructor(private cookieService: CookieService, private http: HttpClient, private storage: StorageService, private jwtHelper: JwtHelperService, private router: Router) {
+    const token = this.storage.getAccessToken();
+    if( token != null){
+      this.setUserProfileByToken(token);
+    }
+   }
   userProfile = new BehaviorSubject<User | null>(null);
+
+  getUserProfileAsTracking(): Observable<User| null>{
+    return this.userProfile.asObservable();
+  }
+
+  getUserProfile():User | null{
+    return this.userProfile.getValue();
+  }
+
+  setUserProfileByToken(token:string|null ){
+    if(token === null){
+      this.userProfile.next(null);
+      return;
+    }
+
+    var userInfo = this.jwtService.decodeToken(token) as User;
+
+    this.getUserInforById(userInfo.nameid)
+    .subscribe(
+      respone => {
+        this.setUserInfor(respone);
+      }
+    )
+    this.userProfile.next(userInfo);
+  }
+
+  getUserInforAsTracking(): Observable<UserInfor>{
+    return this.userInfor.asObservable();
+  }
+
+  setUserInfor(userInfor: UserInfor){
+    this.userInfor.next(userInfor);
+  }
 
   login(email: string, password: string) {
     const body = {
@@ -34,12 +72,9 @@ export class AuthService {
     )
       .pipe(
         tap((response) => {
-          const token: TokenModel = new TokenModel()
-          token.accessToken = response
-          this.storage.setToken(token);
-          var userInfo = this.jwtService.decodeToken(token.accessToken) as User;
+          this.storage.setToken(response);
+          this.setUserProfileByToken(response);
 
-          this.userProfile.next(userInfo);
           return true;
         }),
         catchError((error) => {
@@ -64,9 +99,7 @@ export class AuthService {
   }
 
   refreshToken(): Observable<string> {
-    const refreshToken = localStorage.getItem('token');
-    const url = 'https://localhost:7165/api/Account/refresh';
-    return this.http.post<string>(url, { refreshToken });
+    return this.http.get(API_URL.REFRESH_TOKEN(), {responseType: 'text',withCredentials: true});
   }
 
 
@@ -80,14 +113,12 @@ export class AuthService {
   }
 
   getTokenInformation() {
-    const token = localStorage.getItem('token');
+    const token = this.storage.getAccessToken()
 
     if(!token){
       return "";
     }
-    const payloadBase64 = JSON.parse(token).accessToken.split('.')[1];
-    const payloadJson = atob(payloadBase64);
-    const payloadObject = JSON.parse(payloadJson);
+    const payloadObject = this.jwtService.decodeToken(token)
 
     return payloadObject
 
@@ -103,7 +134,10 @@ export class AuthService {
 
   logout(): void {
     // Xóa thông tin người dùng khỏi localStorage hoặc sessionStorage khi đăng xuất
-    localStorage.removeItem('token');
+    this.storage.deleteToken();
+    this.setUserProfileByToken(null);
+    this.cookieService.deleteAll();
+    this.router.navigate([''])
   }
 
   isLoggedIn(): boolean {
@@ -139,7 +173,6 @@ export class AuthService {
     };
     const url = API_URL.VALIDATE_CODE();
     return this.http.post(url, data).subscribe((response: any) => {
-      console.log(response);
       alert("ok")
       this.router.navigate(['new-password/'+this.code])
 

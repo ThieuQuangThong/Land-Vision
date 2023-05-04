@@ -4,6 +4,7 @@ namespace Land_Vision.Interface.IRepositories
 {
     public interface IVipRepository
     {
+        Task<Vip> GetVipByNameAsync(string name);
         Task<List<Vip>> GetVipsAsync();
         Task<Vip> GetVipByLevelAsync(int level);
         Task<bool> DeleteVipByIdAsync(int vipId);

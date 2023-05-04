@@ -14,7 +14,7 @@ import { PagingModel } from 'src/app/models/paging-model';
   styleUrls: ['./card-revenue-table.component.css']
 })
 export class CardRevenueTableComponent implements OnInit {
-  displayedRevenuesColumns: string[] = ['#', 'id', 'transactionDate', 'userId', 'vipName','vipPrice'];
+  displayedRevenuesColumns: string[] = ['#', 'transactionDate', 'userId', 'vipName','vipPrice'];
 
   dataSourceRevenue = new MatTableDataSource<any>();
 

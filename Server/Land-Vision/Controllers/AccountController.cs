@@ -1,9 +1,11 @@
 using AutoMapper;
 using Land_Vision.Common;
+using Land_Vision.Data;
 using Land_Vision.DTO;
 using Land_Vision.DTO.UserDtos;
 using Land_Vision.Interface.IRepositories;
 using Land_Vision.Interface.IServices;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Land_Vision.Controllers
@@ -12,6 +14,7 @@ namespace Land_Vision.Controllers
     [Route("api/[controller]")]
     public class AccountController : ControllerBase
     {
+        private readonly DataContext _dbContext;
         private readonly IEmailService _emailService;
         private readonly IAccountService _accountService;
         private readonly IUserService _userSevice;
@@ -21,6 +24,7 @@ namespace Land_Vision.Controllers
         private readonly IMapper _mapper;
 
         public AccountController(
+        DataContext dbContext,
         IPostRepository postRepository,
         IUserService userSevice,
         IMapper mapper,
@@ -30,6 +34,7 @@ namespace Land_Vision.Controllers
         IDetailPurchaseRepository detailPurchaseRepository
         )
         {
+            _dbContext = dbContext;
             _userSevice = userSevice;
             _mapper = mapper;
             _accountService = accountService;
@@ -42,6 +47,7 @@ namespace Land_Vision.Controllers
         /// <summary>
         /// Get all user.
         /// </summary>
+        [Authorize(Roles = "Admin")]
         [HttpGet("{skipCount}&{maxResultCount}")]
         [ProducesResponseType(200, Type = typeof(PaginationRespone<UserDto>))]
         public async Task<ActionResult<PaginationRespone<UserDto>>> GetUsers(int skipCount = 0, int maxResultCount = 0)
@@ -112,23 +118,33 @@ namespace Land_Vision.Controllers
         [ProducesResponseType(200)]
         public async Task<IActionResult> RegisterAccount(RegisterUserDto registerUserDto)
         {
-
-            if (await _userRepository.CheckIsExistIdentificationCardAsync(registerUserDto.IdentityNumber))
+            using var transaction = await _dbContext.Database.BeginTransactionAsync();
+            try
             {
-                ModelState.AddModelError("error", "Id card is already exist!");
-                return StatusCode(400, ModelState);
-            }
+                if (await _userRepository.CheckIsExistIdentificationCardAsync(registerUserDto.IdentityNumber))
+                    {
+                        ModelState.AddModelError("error", "Id card is already exist!");
+                        return StatusCode(400, ModelState);
+                    }
 
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+                    if (!ModelState.IsValid)
+                    {
+                        return BadRequest(ModelState);
+                    }
 
-            if (!await _accountService.RegisterAccountAsync(registerUserDto))
-            {
-                throw new Exception("Some thing went wrong when add user!");
+                    if (!await _accountService.RegisterAccountAsync(registerUserDto))
+                    {
+                        throw new Exception("Some thing went wrong when add user!");
+                    }
+                    await transaction.CommitAsync();
+                    return Ok();
             }
-            return Ok();
+            catch (System.Exception ex)
+            {
+                await transaction.RollbackAsync();
+                
+                throw ex;
+            }
         }
 
         /// <summary>
@@ -161,7 +177,7 @@ namespace Land_Vision.Controllers
             HttpContext.Response.Cookies.Append(TextField.COOKIE_NAME_OF_VALIDATE_PASS_TOKEN, validatePassToken,
                 new CookieOptions
                 {
-                    Expires = DateTime.Now.AddMinutes(NumberFiled.VALIDATE_PASS_TOKEN_EXPIRE_TIME),
+                    Expires = DateTime.Now.AddMinutes(NumberFiled.VALIDATE_PASSWORD_TOKEN_EXPIRE_TIME),
                     HttpOnly = true,
                     Secure = true,
                     IsEssential = true,
@@ -285,8 +301,8 @@ namespace Land_Vision.Controllers
         /// Refresh
         /// </summary>
         [HttpGet("refresh")]
-        [ProducesResponseType(200, Type = typeof(string))]
-        public async Task<ActionResult<TokenDto>> Refresh()
+        [ProducesResponseType(200)]
+        public async Task<ActionResult> Refresh()
         {
             var cookieTokenObject = Request.Headers[TextField.COOKIE_NAME].ToString();
             string? freshToken = _accountService.GetValueFromCookieByName(cookieTokenObject, TextField.COOKIE_NAME_OF_REFRESH_TOKEN);
@@ -321,6 +337,7 @@ namespace Land_Vision.Controllers
         /// <summary>
         /// Get users count
         /// </summary>
+        [Authorize(Roles = "Admin")]
         [HttpGet("getUserCount")]
         [ProducesResponseType(200, Type = typeof(int))]
         public async Task<ActionResult<int>> GetUsers()
@@ -338,6 +355,7 @@ namespace Land_Vision.Controllers
         /// <summary>
         /// Update user vip
         /// </summary>
+        [Authorize(Roles = "User")]
         [HttpPut("{userId}&{vipId}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
@@ -356,6 +374,7 @@ namespace Land_Vision.Controllers
         /// <summary>
         /// Delete account
         /// </summary>
+        [Authorize(Roles = "Admin")]
         [HttpDelete("{accountId}")]
         [ProducesResponseType(200, Type = typeof(string))]
         public async Task<ActionResult<TokenDto>> DeleteAccount(int accountId)
