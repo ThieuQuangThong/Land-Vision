@@ -15,6 +15,17 @@
       My profile
     </a>
     <a
+      *ngIf="isAdmin"
+      [routerLink]="['/admin/dashboard']"
+      class="pointerHover text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700">
+      Management
+    </a>
+    <a
+      (click)="BuyPackage()"
+      class="pointerHover text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700">
+      Buy post package
+    </a>
+    <a
       class="pointerHover text-sm py-2 px-4 font-normal block w-full whitespace-nowrap bg-transparent text-blueGray-700">
       Another action
     </a>

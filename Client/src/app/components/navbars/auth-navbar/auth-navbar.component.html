@@ -5,12 +5,8 @@
               <span class="self-center text-xl font-semibold whitespace-nowrap text-green-500">Land vision</span>
           </a>
           <div class="flex items-center width-items-center lg:order-2">
-              <a (click)="onPosting()"  *ngIf="router.url.includes('landing')" class=" cursor-pointer text-white button bg-green-600 hover:bg-green-700 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"> <i class="fas fa-plus"></i> Posting</a>
-
-              <!-- <li>
-                <button mat-raised-button (click)="openDialog()">Pick one</button>
-              </li> -->
-              <div class="  dark:text-white hover:bg-green focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">
+              <a   (click)="onPosting()"  *ngIf="!(router.url.includes('posting')) && isSeller" class="text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"> <i class="fas fa-plus"></i> Posting</a>
+              <div class=" dark:text-white hover:bg-green focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">
                 <ul class="flex flex-col lg:flex-row list-none lg:ml-auto">
 
                   <li class="mr-8 ">
@@ -22,10 +18,9 @@
                   <li class="flex items-center account" *ngIf="isSeller">
                     <app-user-dropdown class="block"></app-user-dropdown>
                   </li>
-                  <li class="flex items-center account" *ngIf="!isSeller">
-                    <a  routerLink="/login" class=" cursor-pointer text-white button bg-green-600 hover:bg-green-700 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"> Login </a>
+                  <li class="flex items-center account"  *ngIf="!isSeller">
+                    <button [routerLink]="['/login']" class="animated-button block rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5">Login</button>
                   </li>
-
                 </ul>
               </div>
 

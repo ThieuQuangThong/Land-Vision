@@ -31,7 +31,7 @@ export class AuthNavbarComponent implements OnInit {
           this.isSeller = true
         }
         else{
-          this.isSeller = false
+          this.isSeller = false;
         }
       }
     )

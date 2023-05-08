@@ -1,5 +1,5 @@
 <div class="mx-2 w-72  mb-8   hover:cursor-pointer hover:shadow-lg active:bg-gray-200 ease-linear transition-all duration-150">
-    <div (click)="goToDetail()" class="shadow-md relative bg-gray-50 hover:bg-white text-gray-600 hover:text-black">
+    <div (click)="goToDetail()" class="shadow-md  rounded-lg border-2 border-blueGray-200 relative bg-gray-50 hover:bg-white text-gray-600 hover:text-black">
         <div class="absolute top-2 left-2  text-white">
             <div class="flex justify-between">
                 <div class="bg-emerald-500 p-1">
@@ -17,7 +17,7 @@
           <img *ngIf="postItem.images.length <= 0" src='https://user-images.githubusercontent.com/43302778/106805462-7a908400-6645-11eb-958f-cd72b74a17b3.jpg' class="w-full h-44 rounded-t-lg object-cover" />
             <img *ngIf="postItem.images.length > 0" src={{postItem.images[0].linkImage}} class="w-full h-44 rounded-t-lg object-cover" />
         </div>
-        <div class=" rounded-b-lg ">
+        <div class="rounded-b-lg border-t-2 border-t-blueGray-200" >
             <!-- <div class="flex items-center justify-between px-4 pt-4">
                 <div>
                     <span class="text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-red-600 bg-red-200 last:mr-0 mr-1">
@@ -29,7 +29,7 @@
                     <p class="text-xs text-yellow-500">Information</p>
                 </div>
             </div> -->
-            <div class="p-3">
+            <div class="p-3 rounded-b-lg ">
                 <!-- <div id="postTitle" class="flex items-center justify-between pr-0 mr-0 h-12 "> -->
                 <div style="display: flex;">
                   <p  id="two-line" class="text-sm  font-medium h-full text-ellipsis ">{{postItem.title.length <= 10 ? postItem.title : postItem.title.substring(0, 20)}}...</p>
@@ -58,7 +58,7 @@
 
                 <div class="flex items-center justify-between border-t border-gray-200">
                     <!-- <img [src]="postItem.user.avatarLink" alt=""> -->
-                    <p class="truncate text-xs m-0 text-gray-600  text-right max-w-[30%] mt-2">{{postItem.user.name}}</p>
+                    <p class="truncate text-xs m-0 text-gray-600  text-right max-w-[45%] mt-2">{{postItem.user.name}}</p>
 
 
                     <p class="text-xs m-0 text-gray-600  text-right mt-2">{{postItem.createDate | date}}</p>
