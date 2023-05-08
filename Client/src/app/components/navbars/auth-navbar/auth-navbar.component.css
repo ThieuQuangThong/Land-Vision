@@ -1,0 +1,23 @@
+@media only screen and (max-width: 570px) {
+  .width-items-center{
+    width: 10rem !important;
+  }
+  .account{
+    display: block;
+  }
+
+}
+@media only screen and (max-width: 850px) {
+  .width-items-center{
+    width: 10rem !important;
+  }
+  a.button{
+    margin: -60px;
+  }
+  .account{
+    display: block;
+  }
+  .mr-8{
+    display: none;
+  }
+}
