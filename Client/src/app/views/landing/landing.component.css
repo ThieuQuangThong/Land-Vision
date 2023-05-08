@@ -18,3 +18,8 @@
   z-index: 50;
 }
 
+@media only screen and (max-width: 450px) {
+  body {
+    background-color: lightblue;
+  }
+}

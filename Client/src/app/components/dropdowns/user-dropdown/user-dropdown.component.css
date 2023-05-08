@@ -2,3 +2,9 @@
   cursor: pointer;
 }
 
+@media only screen and (max-width: 570px) {
+ 
+  .account{
+
+  }
+}
