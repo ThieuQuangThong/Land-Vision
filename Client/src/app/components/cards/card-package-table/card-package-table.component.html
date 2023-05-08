@@ -1,6 +1,6 @@
 <div class="block w-full ">
     <!-- Projects table -->
-    <div class=" relative flex flex-col min-w-0 break-words w-full mb-6 shadow-md rounded p-8 text-gray-600" [ngClass]="color === 'light' ? 'bg-white' : 'bg-red-900 text-white'">
+    <div *ngIf="!showAdd" class=" relative flex flex-col min-w-0 break-words w-full mb-6 shadow-md rounded p-8 text-gray-600" [ngClass]="color === 'light' ? 'bg-white' : 'bg-red-900 text-white'">
         <div class="grid grid-cols-6 ">
             <div class="col-start-1 col-end-3 flex content-center">
                 <!-- <button mat-button class="bg-gray-100 hover:bg-gray-300 text-gray-800 font-bold py-2 px-4 rounded h-14" >
@@ -30,53 +30,89 @@
             <ng-container matColumnDef="name">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header class="font-semibold"> Name </th>
                 <td mat-cell *matCellDef="let row">
-                    <div #nameEdit style="max-width: 600px;" *ngIf="!editorEnabled" (click)="enableEditor()">
+                    {{row.name}}
+                    <!-- <input matInput placeholder="Name" [value]="row.name" class="p-2 active:border-indigo-500/100" [(ngModel)]="row.name" (keyup.enter)="save()" (blur)="disableEditor()"> -->
 
-                        {{row.name}}
-                    </div>
-                    <input class=" appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" *ngIf="editorEnabled" [(ngModel)]="row.name" (keyup.enter)="save()" (blur)="disableEditor()">
                 </td>
             </ng-container>
             <ng-container matColumnDef="price">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header class="font-semibold">Price</th>
+                <th mat-header-cell *matHeaderCellDef mat-sort-header class="font-semibold">Price (VND)</th>
                 <td mat-cell *matCellDef="let row">
                     {{row.price | moneyTransform}}
+                    <!-- <input matInput placeholder="Price" [value]="row.price " class="p-2 active:border-indigo-500/100" [(ngModel)]="row.price" (keyup.enter)="save()" (blur)="disableEditor()"> -->
+
                 </td>
             </ng-container>
             <ng-container matColumnDef="postLimit">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header class="font-semibold"> Post Limit</th>
-                <td mat-cell *matCellDef="let row"> {{row.postLimit}} </td>
+                <td mat-cell *matCellDef="let row">
+                    {{row.postLimit}}
+                    <!-- <input matInput placeholder="postLimit" [value]="row.postLimit " class="p-2 active:border-indigo-500/100" [(ngModel)]="row.postLimit" (keyup.enter)="save()" (blur)="disableEditor()"> -->
+                </td>
             </ng-container>
             <ng-container matColumnDef="edit">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header class="font-semibold"></th>
-                <td mat-cell *matCellDef="let row" class=" border-t-0 px-6 align-middle border-l-0 border-r-0 text-lg whitespace-nowrap mr-6 text-right">
+                <td mat-cell *matCellDef="let row" class=" border-t-0 align-middle border-l-0 border-r-0 text-lg whitespace-nowrap text-right">
 
-                    <div *ngIf="!editorEnabled">
-                        <button (click)="enableEditor()" matTooltip="Edit" aria-label="Button that displays a tooltip when focused or hovered over">
+                    <div class="flex justify-end">
+                        <button class="focus:outline-none shadow-none hover:bg-white" (click)="openDialog(row.id,'0ms', '0ms')" matTooltip="Edit">
                       <i class="fa-solid fa-pen-to-square hover:text-red-600 hover:cursor-pointer pr-4" >  </i>
                       </button>
-                        <button matTooltip="Delete" aria-label="Button that displays a tooltip when focused or hovered over">
-                        <i class="fa-solid fa-trash hover:text-red-600 hover:cursor-pointer" ></i>
-                        </button>
-                    </div>
+                        <button class="focus:outline-none shadow-none hover:bg-white" (click)="deletePackge(row.id)" matTooltip="Delete this package">
+                      <i class="fa-solid fa-trash hover:text-red-600 hover:cursor-pointer pr-4" >  </i>
 
-                    <div *ngIf="editorEnabled">
-                        <button matTooltip="Save" aria-label="Button that displays a tooltip when focused or hovered over">
-                    <i class="fa-regular fa-floppy-disk hover:text-red-600 hover:cursor-pointer pr-4"></i>
-                    </button>
-                        <button (click)="disableEditor()" matTooltip="Cancel" aria-label="Button that displays a tooltip when focused or hovered over">
-                      <i class="fa-solid fa-ban hover:text-red-600 hover:cursor-pointer"></i>
-                      </button>
+                        </button>
                     </div>
 
                 </td>
             </ng-container>
             <tr mat-header-row *matHeaderRowDef="displayedPackagesColumns"></tr>
-            <tr class="bg-gray-50 text-gray-600  hover:bg-white hover:text-black" mat-row *matRowDef="let row; columns: displayedPackagesColumns;"></tr>
+            <tr class="bg-gray-50 text-gray-600  hover:bg-white hover:text-black" mat-row *matRowDef="let row; columns: displayedPackagesColumns; "></tr>
+
         </table>
-        <mat-paginator #packagePaginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+        <div class="flex justify-between">
+            <button (click)="showAddForm()" type="submit" class="h-9 rounded-md bg-blue-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+              <i class="fa-sharp fa-solid fa-plus"></i>
+              Add</button>
+
+            <mat-paginator #packagePaginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of users"></mat-paginator>
+        </div>
+
+
 
 
     </div>
+    <form (ngSubmit)="addPackage()" *ngIf="showAdd" class="bg-white relative flex flex-col min-w-0 break-words w-full mb-6 shadow-md rounded p-8 text-gray-600">
+        <div class="space-y-12">
+            <div class=" pb-12">
+                <h1>Add package</h1>
+                <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                    <div class="sm:col-span-2 sm:col-start-1">
+                        <label for="city" class="block text-sm font-medium leading-6 text-gray-900">Name</label>
+                        <div class="mt-2">
+                            <input placeholder="Name of package" [(ngModel)]="packageName" type="text" name="packageName" id="packageName" autocomplete="packageName" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        </div>
+                    </div>
 
+                    <div class="sm:col-span-2">
+                        <label for="region" class="block text-sm font-medium leading-6 text-gray-900">Price(VND)</label>
+                        <div class="mt-2">
+                            <input placeholder="Price" [(ngModel)]="packagePrice" type="text" name="packagePrice" id="packagePrice" autocomplete="packagePrice" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        </div>
+                    </div>
+
+                    <div class="sm:col-span-2">
+                        <label for="postal-code" class="block text-sm font-medium leading-6 text-gray-900">Post limit</label>
+                        <div class="mt-2">
+                            <input placeholder="Post limit" [(ngModel)]="packagePostLimit" type="text" name="packagePostLimit-code" id="packagePostLimit" autocomplete="packagePostLimit" class="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="mt-6 flex items-center justify-end gap-x-6">
+            <button (click)="disableAddForm()" type="button" class="text-sm font-semibold leading-6 text-gray-900">Cancel</button>
+            <button type="submit" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Save</button>
+        </div>
+    </form>
 </div>

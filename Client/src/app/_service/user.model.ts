@@ -15,6 +15,7 @@ export class UserInfor {
   email: string='';
   posted: number = 0;
   vipLevel: number = 0;
+  identityNumber:string ="";
   numberOfUserCanPost: number = 0;
   isHide: boolean = false;
 }

@@ -45,6 +45,26 @@ namespace Land_Vision.Controllers
         }
 
         /// <summary>
+        /// Get Vip By Id
+        /// </summary>
+        [Authorize(Roles = "Admin")]
+        [HttpGet("{vipId}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
+        public async Task<ActionResult<VipDto>> GetVipById(int vipId)
+        {
+
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var vip = await _vipRepository.GetVipByIdAsync(vipId);
+            return Ok(_mapper.Map<VipDto>(vip));
+        }
+
+        /// <summary>
         /// Add vip
         /// </summary>
         [Authorize(Roles = "Admin")]
