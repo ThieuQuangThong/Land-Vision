@@ -5,7 +5,7 @@ export const PROPERTY_INFOR = {
     UserAndAdmin: 'Admin,User'
   },
   currentUser: 'currentUser',
-  maxResultCount: 8,
+  maxResultCount: 12,
   isView: 0,
   isUpdate: 1,
   isApprove: 2,
