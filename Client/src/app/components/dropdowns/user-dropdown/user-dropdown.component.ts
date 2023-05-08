@@ -68,6 +68,8 @@ export class UserDropdownComponent implements AfterViewInit {
 
   MyProfile(){
     const userId = this.auth.getUserId();
-    this.Router.navigate(['/profile/'+userId])
+    this.Router.navigateByUrl('/profile/'+userId).then(() => {
+      location.reload();
+    });
   }
 }

@@ -185,9 +185,9 @@ export class MapListDetailComponent {
            pointGraphics = new GraphicsLayer();
            const simpleMarkerSymbol1 = {
              type: "picture-marker",  // autocasts as new PictureMarkerSymbol()
-             url: "https://static.arcgis.com/images/Symbols/Shapes/RedStarLargeB.png",
-             width: "50px",
-             height: "50px"
+             url: "https://static.arcgis.com/images/Symbols/Shapes/RedPin1LargeB.png",
+             width: "40px",
+             height: "40px"
           };
           let point1 = { //Create a point
             type: "point",
@@ -215,7 +215,7 @@ export class MapListDetailComponent {
             pointGraphics = new GraphicsLayer();
             const simpleMarkerSymbol = {
               type: "picture-marker",  // autocasts as new PictureMarkerSymbol()
-              url: "https://static.arcgis.com/images/Symbols/Shapes/BlueStarLargeB.png",
+              url: "https://static.arcgis.com/images/Symbols/Shapes/BluePin1LargeB.png",
               width: "50px",
               height: "50px"
            };
