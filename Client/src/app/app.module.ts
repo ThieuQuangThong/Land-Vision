@@ -13,6 +13,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import {MatTableModule} from '@angular/material/table';
 import {MatSortModule} from '@angular/material/sort';
 import {MatTooltipModule} from '@angular/material/tooltip';
+import {MatDialogModule} from '@angular/material/dialog'
 
 
 import { AppRoutingModule } from './app-routing.module';
@@ -112,6 +113,8 @@ import { PricingDialogComponent } from './components/pricing-dialog/pricing-dial
 import { TranformTransactionTypePipe } from './_pipes/tranform-transaction-type.pipe';
 import { CardApproveTableComponent } from './components/cards/card-approve-table/card-approve-table.component';
 import { ApproveDetailComponent } from './views/admin/approve-detail/approve-detail.component';
+import { CardPackageDetailComponent } from './components/cards/card-package-detail/card-package-detail.component';
+import { CardAccountDetailComponent } from './components/cards/card-account-detail/card-account-detail.component';
 
 @NgModule({
   declarations: [
@@ -184,10 +187,13 @@ import { ApproveDetailComponent } from './views/admin/approve-detail/approve-det
     TranformTransactionTypePipe,
     CardApproveTableComponent,
     ApproveDetailComponent,
+    CardPackageDetailComponent,
+    CardAccountDetailComponent
     // LoginComponent,
     // RegisterComponent,
   ],
   imports: [
+    MatDialogModule,
     ClipboardModule,
     MatTooltipModule,
     MatSortModule,

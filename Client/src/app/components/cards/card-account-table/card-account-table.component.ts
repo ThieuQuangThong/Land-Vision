@@ -1,5 +1,6 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -7,6 +8,7 @@ import { Router } from '@angular/router';
 import { UserService } from 'src/app/_service/user.service';
 import { PagingModel } from 'src/app/models/paging-model';
 import { UserModel } from 'src/app/models/user-model';
+import { CardAccountDetailComponent } from '../card-account-detail/card-account-detail.component';
 
 @Component({
   selector: 'app-card-account-table',
@@ -53,12 +55,19 @@ export class CardAccountTableComponent implements OnInit {
   userRespone: UserModel[] = [];
 
 
-  constructor( private userService : UserService, private router : Router) {
+  constructor(public dialog: MatDialog, private userService : UserService, private router : Router) {
     const now = new Date();
 
 
   }
-
+  openProfileDialog(id:number, enterAnimationDuration: string, exitAnimationDuration: string): void {
+    this.dialog.open(CardAccountDetailComponent, {
+      data : {id},
+      width: '1000px',
+      enterAnimationDuration,
+      exitAnimationDuration,
+    });
+  }
   ngOnInit(): void {
     this.getAll(this.paging);
   }

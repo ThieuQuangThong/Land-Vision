@@ -39,6 +39,7 @@ import { PricingDialogComponent } from './components/pricing-dialog/pricing-dial
 import { CardApproveTableComponent } from './components/cards/card-approve-table/card-approve-table.component';
 import { ApproveDetailComponent } from './views/admin/approve-detail/approve-detail.component';
 import { PROPERTY_INFOR } from 'src/assets/common/propertyInfor';
+import { CardPackageDetailComponent } from './components/cards/card-package-detail/card-package-detail.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'landing', pathMatch: 'full'},
@@ -173,7 +174,14 @@ const routes: Routes = [
       data:{
         requiredRole: PROPERTY_INFOR.Role.admin
       },
+
       canActivate: [AuthGuard]},
+      {
+        path: "packageDetails/:postId", component: CardPackageDetailComponent,
+        data: {
+          requiredAuth: PROPERTY_INFOR.Role.admin
+        },
+        canActivate: [AuthGuard]},
       { path: "approveTables", component: CardApproveTableComponent,
       data:{
         requiredRole: PROPERTY_INFOR.Role.admin
