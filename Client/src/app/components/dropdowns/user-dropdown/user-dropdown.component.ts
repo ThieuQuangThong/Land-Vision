@@ -3,6 +3,7 @@ import { Component, AfterViewInit, ViewChild, ElementRef } from "@angular/core";
 import { createPopper } from "@popperjs/core";
 import { AuthService } from "src/app/_service/auth.service";
 import { StorageService } from "src/app/_service/storage.service";
+import { PROPERTY_INFOR } from 'src/assets/common/propertyInfor';
 
 @Component({
   selector: "app-user-dropdown",
@@ -18,6 +19,7 @@ export class UserDropdownComponent implements AfterViewInit {
   @ViewChild("btnDropdownRef", { static: false }) btnDropdownRef!: ElementRef;
   @ViewChild("popoverDropdownRef", { static: false })
   popoverDropdownRef!: ElementRef;
+  isAdmin: boolean = false;
   avatarLink:string = "";
 
   ngAfterViewInit() {
@@ -31,15 +33,15 @@ export class UserDropdownComponent implements AfterViewInit {
   }
 
   ngOnInit(): void {
-  this.auth.getUserProfileAsTracking()
-    .subscribe(
-      respone => {
-        this.auth.getUserInforById(respone?.nameid!)
-        .subscribe(
-          _ => {
-            this.avatarLink = _.avatarLink;
-          }
-        )
+    this.auth.getUserProfileAsTracking().subscribe(
+      (respone) => {
+        if (respone?.role === PROPERTY_INFOR.Role.admin) {
+          this.isAdmin = true;
+        }
+        else this.isAdmin = false
+        this.auth.getUserInforById(respone?.nameid!).subscribe((user) => {
+          this.avatarLink = user?.avatarLink;
+        });
       }
     );
   }
@@ -70,6 +72,11 @@ export class UserDropdownComponent implements AfterViewInit {
     const userId = this.auth.getUserId();
     this.Router.navigateByUrl('/profile/'+userId).then(() => {
       location.reload();
+    });
+  }
+
+  BuyPackage(){
+    this.Router.navigateByUrl('/pricing').then(() => {
     });
   }
 }
