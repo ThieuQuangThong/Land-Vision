@@ -15,7 +15,7 @@ import { PROPERTY_INFOR } from "src/assets/common/propertyInfor";
 
 })
 export class LandingComponent implements OnInit {
-
+  
   status: number = PROPERTY_INFOR.isView;
   isLoading: boolean = false;
 
