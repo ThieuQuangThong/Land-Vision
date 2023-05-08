@@ -20,7 +20,7 @@ export class MapExampleComponent implements OnInit  {
    * @private _center sets map center
    * @private _basemap sets type of map
    */
-  private _zoom: number = 18;
+  private _zoom: number = 15;
   private _center: Array<number> = [108.21147547864406, 16.06505300439531];
   private _basemap: string = 'osm';
 
@@ -66,6 +66,7 @@ export class MapExampleComponent implements OnInit  {
         Sketch,
         Locate,
         BasemapGallery,
+        Expand,
         Fullscreen,
         Search,
         webMercatorUtils
@@ -79,6 +80,7 @@ export class MapExampleComponent implements OnInit  {
         'esri/widgets/Sketch',
         'esri/widgets/Locate',
         'esri/widgets/BasemapGallery',
+        "esri/widgets/Expand",
         "esri/widgets/Fullscreen",
         'esri/widgets/Search',
         'esri/geometry/support/webMercatorUtils',
@@ -145,15 +147,38 @@ export class MapExampleComponent implements OnInit  {
         view: mapView
       });
 
-      mapView.ui.add(basemapGallery, "bottom-left");
+      // mapView.ui.add(basemapGallery, "bottom-left");
+      const bgExpand = new Expand({
+        view: mapView,
+        content: basemapGallery
+      });
+      mapView.ui.add(bgExpand, "top-left");
 
       mapView.when(() => {
         const sketch = new Sketch({
           layer: graphicsLayer,
           view: mapView,
+          visibleElements: {
+            selectionTools: {
+              "lasso-selection": false,
+              "rectangle-selection": false
+            },
+            createTools: {
+              "point": false,
+              "polyline": false
+            }
+          },
           // graphic will be selected as soon as it is created
           creationMode: "update"
         });
+
+        sketch.when(() => {
+          // Lấy instance của SketchViewModel của Sketch widget
+          var sketchViewModel = sketch.viewModel;
+
+          // Đặt giá trị của Enable snapping thành true
+          sketchViewModel.set("snappingOptions.enabled", true);
+        })
 
         mapView.ui.add(sketch, "top-right");
 

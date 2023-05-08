@@ -99,7 +99,7 @@ export class PostingComponent implements OnInit {
           wardName: wardName,
           streetName: streetName,
         }
-        this.postRequest.property.addressNumber = `${districtName}, ${wardName}, ${streetName}`;
+        this.postRequest.property.addressNumber = `${streetName}, ${wardName}, ${districtName}`;
       }
     )
   }

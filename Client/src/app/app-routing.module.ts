@@ -75,7 +75,7 @@ const routes: Routes = [
     path: "pricing", component: PricingDialogComponent,
     data: {
       requiredAuth: false,
-      requiredRole: PROPERTY_INFOR.Role.user
+      requiredRole: PROPERTY_INFOR.Role.UserAndAdmin
     },
     canActivate: [AuthGuard]
   },
