@@ -28,7 +28,7 @@ export class MapListDetailComponent {
    * @private _basemap sets type of map
    */
   private _zoom: number = 22;
-  private _center: Array<number> = [108.24473386336861, 16.06329028488975];
+  private _center: Array<number> = [108.21147547864406, 16.06505300439531];
   private _basemap: string = 'osm';
 
   @Input()
@@ -72,6 +72,7 @@ export class MapListDetailComponent {
         SimpleFillSymbol,
         Locate,
         BasemapGallery,
+        Expand,
         Fullscreen,
         Search,
       ] = await loadModules([
@@ -83,6 +84,7 @@ export class MapListDetailComponent {
         'esri/symbols/SimpleFillSymbol',
         'esri/widgets/Locate',
         'esri/widgets/BasemapGallery',
+        "esri/widgets/Expand",
         "esri/widgets/Fullscreen",
         'esri/widgets/Search',
         'esri/geometry/support/webMercatorUtils',
@@ -143,7 +145,14 @@ export class MapListDetailComponent {
       const basemapGallery = new BasemapGallery({
         view: mapView
       });
-      mapView.ui.add(basemapGallery, "bottom-left");
+      // mapView.ui.add(basemapGallery, "bottom-left");
+
+
+      const bgExpand = new Expand({
+        view: mapView,
+        content: basemapGallery
+      });
+      mapView.ui.add(bgExpand, "top-left");
 
       const fullscreen  = new Fullscreen ({
         view: mapView
