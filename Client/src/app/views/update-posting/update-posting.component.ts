@@ -29,7 +29,7 @@ export class UpdatePostingComponent {
 
   isPosting: boolean = false;
   postRequest: PostRequest = new PostRequest();
-
+  decodeId: any;
   openTab = 1;
   interiors: string[] = PROPERTY_INFOR.Interior;
   directions: string[] = [];
@@ -90,6 +90,7 @@ export class UpdatePostingComponent {
 
   ngOnInit() {
     this.postId = this.route.snapshot.params['postId'];
+     this.decodeId = this.auth.decode(this.postId.toString());
     this.postService.getPostById(this.postId)
     .subscribe(
       respone => {
@@ -228,7 +229,7 @@ export class UpdatePostingComponent {
       return imageModel;
     });
 
-    this.postService.updatePostById(this.postId,userId,this.postRequest)
+    this.postService.updatePostById(this.decodeId,userId,this.postRequest)
     .subscribe(
       response =>{
         this.isPosting = false;
@@ -246,7 +247,7 @@ export class UpdatePostingComponent {
 
   delete(){
     if(confirm("Are you to delete")){
-      this.postService.deletePostById(this.postId, this.auth.getUserId())
+      this.postService.deletePostById(this.decodeId, this.auth.getUserId())
       .subscribe(
         _ =>{
           this.location.back();

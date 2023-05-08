@@ -19,7 +19,6 @@ export class SingleProductComponent {
 constructor(private router: Router, private auth: AuthService, private route: ActivatedRoute) {}
 
   goToDetail(){
-    // this.postId = this.route.snapshot.params['postId'];
     const user = this.auth.getUserProfile();
     const encodedPostId = this.auth.encode(this.postItem.id.toString());
 
@@ -30,7 +29,7 @@ constructor(private router: Router, private auth: AuthService, private route: Ac
       this.router.navigate([`productdetails/${encodedPostId}`])
     }
     else if(this.status === PROPERTY_INFOR.isUpdate && user.role !== PROPERTY_INFOR.Role.admin ){
-      this.router.navigate([`update-posting/${this.postItem.id}`])
+      this.router.navigate([`update-posting/${encodedPostId}`])
     }
   }
 
