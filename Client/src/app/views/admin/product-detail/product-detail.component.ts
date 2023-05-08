@@ -4,22 +4,23 @@ import { ActivatedRoute } from "@angular/router";
 import { AlertService } from "src/app/_service/alert.service";
 import { PostService } from "src/app/_service/post.service";
 import { PostModel } from "src/app/models/post-model";
+import { AuthService } from 'src/app/_service/auth.service';
 
 @Component({
   selector: "app-product-detail",
   templateUrl: "./product-detail.component.html",
 })
 export class ProductDetailComponent implements OnInit {
-
+  postTitle: string = '';
   postItem: PostModel = new PostModel()
   postId: number = 0;
-
+  decodeid: any;
   selectedDistrict: string ='';
   selectedWards: string ='';
   selectedStreet: string ='';
   selectedAddress: string ='';
 
-  constructor(private  shareDataService: ShareDataService,private route: ActivatedRoute, private postService:PostService) {}
+  constructor(private  shareDataService: ShareDataService,private route: ActivatedRoute, private postService:PostService, private auth: AuthService) {}
 
 
   onDropdownChange() {
@@ -28,10 +29,12 @@ export class ProductDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+
     this.postId = this.route.snapshot.params['postId'];
+    this.decodeid = this.auth.decode(this.postId.toString())
 
     this.shareDataService.setPositionPost([]);
-    this.postService.getPostById(this.postId)
+    this.postService.getPostById(this.decodeid)
     .subscribe(
       respone => {
         this.postItem = respone;
