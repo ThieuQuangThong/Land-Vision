@@ -21,6 +21,9 @@ export class VipService {
   addVip(vipRequestModel : VipRequestModel):Observable<any>{
     return this.http.post<any>(API_URL.ADD_VIP(),vipRequestModel)
   }
+  updateVip(packageId :number,vipRequestModel : VipRequestModel):Observable<any>{
+    return this.http.put<any>(API_URL.UPDATE_VIP(packageId),vipRequestModel)
+  }
   deleteVip(packageId : number){
     return this.http.delete<any>(API_URL.DELETE_VIP(packageId))
   }

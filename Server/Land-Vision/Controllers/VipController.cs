@@ -80,35 +80,38 @@ namespace Land_Vision.Controllers
                 return BadRequest(ModelState);
             }
 
-            return await _vipRepository.AddVipAsync(_mapper.Map<Vip>(vipDto)); 
+            return await _vipRepository.AddVipAsync(_mapper.Map<Vip>(vipDto));
         }
 
         /// <summary>
         /// Update vip
         /// </summary>
         [Authorize(Roles = "Admin")]
-        [HttpPut()]
+        [HttpPut("{vipId}")]
         [ProducesResponseType(400)]
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
-        public async Task<ActionResult<Vip>> UpdateVip(VipDto vipDto)
+        public async Task<ActionResult<Vip>> UpdateVip(int vipId, VipDto vipDto)
         {
 
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            var vip = await _vipRepository.GetVipByIdAsync(vipDto.Id);
-            if(vip == null){
+            var vip = await _vipRepository.GetVipByIdAsync(vipId);
+            vipDto.Id = vipId;
+            if (vip == null)
+            {
                 return NotFound();
             }
 
-            PostService.UpdateEntityFromDto(vip,vipDto);
-            if( !await _vipRepository.UpdateVipAsync(vip)){
+            PostService.UpdateEntityFromDto(vip, vipDto);
+            if (!await _vipRepository.UpdateVipAsync(vip))
+            {
                 throw new Exception("Some thing went wrong");
             }
-            
-            return vip; 
+
+            return vip;
         }
 
         /// <summary>
@@ -126,14 +129,16 @@ namespace Land_Vision.Controllers
             {
                 return BadRequest(ModelState);
             }
-            if(!await _vipRepository.CheckVipIsExistByIdAsync(vipId)){
+            if (!await _vipRepository.CheckVipIsExistByIdAsync(vipId))
+            {
                 return NotFound();
             }
-            if( !await _vipRepository.DeleteVipByIdAsync(vipId)){
+            if (!await _vipRepository.DeleteVipByIdAsync(vipId))
+            {
                 throw new Exception("Some thing went wrong");
             }
-            
-            return Ok(); 
+
+            return Ok();
         }
     }
 }

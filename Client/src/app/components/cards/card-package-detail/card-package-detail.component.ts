@@ -25,7 +25,7 @@ export class CardPackageDetailComponent implements OnInit {
 
   constructor ( private route: ActivatedRoute, private vipService : VipService, public dialogRef : MatDialogRef<CardPackageTableComponent>,
 
-    @Inject(MAT_DIALOG_DATA) public data: { id:  number }){}
+    @Inject(MAT_DIALOG_DATA) public data: { id:  number, name : string, price : number, postLimit : number }){}
 
   ngOnInit(): void {
     this.packageId = this.data.id;
@@ -33,16 +33,9 @@ export class CardPackageDetailComponent implements OnInit {
     .subscribe(
       respone => {
         this.package = respone;
-
+        this.data.name = this.package.name;
+        this.data.postLimit = this.package.postLimit;
+        this.data.price = this.package.price;
       })
-  }
-
-  deletePackage(packageId : number){
-    this.vipService.deleteVip(packageId).subscribe(
-      () => {
-        this.vipResponse = this.vipResponse.filter(x => x.id !== packageId);
-        this.dataSourcePackage = new MatTableDataSource(this.vipResponse);
-      }
-    );
   }
 }

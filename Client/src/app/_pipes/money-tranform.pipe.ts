@@ -10,11 +10,11 @@ export class MoneyTranformPipe implements PipeTransform {
     const million = 1000000;
     const nganDong = 1000;
     if (value >= billion) {
-      return (value / billion).toFixed(2) + ' Tỷ';
+      return (value / billion).toFixed(2) + 'Billion';
     } else if (value >= million) {
-      return (value / million).toFixed(2) + ' Triệu';
+      return (value / million).toFixed(2) + ' Million';
     } else if (value >= nganDong) {
-      return (value / nganDong).toFixed(3) + 'đ';
+      return (value / nganDong).toFixed(3) + 'K';
     }
      else {
       return value.toString() + 'đ';

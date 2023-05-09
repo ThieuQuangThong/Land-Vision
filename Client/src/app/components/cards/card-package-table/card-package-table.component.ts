@@ -175,11 +175,28 @@ deletePackge(packageId : number){
     }
   }
   openDialog(id:number, enterAnimationDuration: string, exitAnimationDuration: string): void {
-    this.dialog.open(CardPackageDetailComponent, {
-      data : {id},
+    const dialogRef = this.dialog.open(CardPackageDetailComponent, {
+      data : {id, name : this.packageName, price : this.packagePrice, postLimit : this.packagePostLimit},
       width: '500px',
       enterAnimationDuration,
       exitAnimationDuration,
+    });
+    dialogRef.afterClosed().subscribe(result => {
+      const idDeleted = result.id;
+      this.vipRequestModel.name = result.name;
+      this.vipRequestModel.price = result.price;
+      this.vipRequestModel.postLimit = result.postLimit;
+      console.log(result);
+
+      this.vipService.updateVip(idDeleted, this.vipRequestModel).subscribe(
+        () => {
+          const index = this.vipResponse.findIndex(x => x.id === idDeleted);
+          if (index !== -1) {
+            this.vipResponse[index] = {...result};
+            this.dataSourcePackage = new MatTableDataSource(this.vipResponse);
+          }
+        }
+      );
     });
   }
 }

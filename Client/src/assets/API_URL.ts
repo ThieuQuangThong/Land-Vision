@@ -32,6 +32,7 @@ export const API_URL = {
   GET_ALL_VIP:() => `${DOMAIN}/api/Vip`,
   GET_VIP_BY_ID:(packageId : number) => `${DOMAIN}/api/Vip/${packageId}`,
   ADD_VIP:() => `${DOMAIN}/api/Vip`,
+  UPDATE_VIP:(vipId : number) => `${DOMAIN}/api/Vip/${vipId}`,
   DELETE_VIP:(packageId : number)=>`${DOMAIN}/api/Vip/${packageId}`,
   UPDATE_USER_VIP : (userId :number, vipId : number) =>`${DOMAIN}/api/Account/${userId}&${vipId}`,
   GET_INFOR_POSITION_POST:(postId: number) => `${DOMAIN}/api/Post/getAllPositionPost/${postId}`,
