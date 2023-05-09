@@ -59,10 +59,17 @@ addPackage(){
   this.vipRequestModel.price = this.packagePrice
   this.vipRequestModel.postLimit = this.packagePostLimit
   this.vipService.addVip(this.vipRequestModel).subscribe(
+    response =>{
+      this.vipResponse.push(response);
+      this.dataSourcePackage = new MatTableDataSource(this.vipResponse);
+      this.dataSourcePackage.sort = this.sort;
+      this.dataSourcePackage.paginator = this.packagePaginator;
+    }
+
 
   );
 
-
+  this.showAdd = false;
 }
 deletePackge(packageId : number){
   this.vipService.deleteVip(packageId).subscribe(
