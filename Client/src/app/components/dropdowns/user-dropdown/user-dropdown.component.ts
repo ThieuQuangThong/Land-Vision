@@ -33,15 +33,26 @@ export class UserDropdownComponent implements AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.auth.getUserProfileAsTracking().subscribe(
-      (respone) => {
+    this.auth.getUserInforAsTracking()
+    .subscribe(
+      respone => {
+        this.avatarLink = respone.avatarLink;
+      }
+    )
+
+  this.auth.getUserProfileAsTracking()
+    .subscribe(
+      respone => {
         if (respone?.role === PROPERTY_INFOR.Role.admin) {
           this.isAdmin = true;
         }
         else this.isAdmin = false
-        this.auth.getUserInforById(respone?.nameid!).subscribe((user) => {
-          this.avatarLink = user?.avatarLink;
-        });
+        this.auth.getUserInforById(respone?.nameid!)
+        .subscribe(
+          user => {
+            this.avatarLink = user.avatarLink;
+          }
+        )
       }
     );
   }
