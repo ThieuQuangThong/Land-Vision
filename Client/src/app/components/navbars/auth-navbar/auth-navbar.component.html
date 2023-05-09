@@ -10,7 +10,7 @@
                 <ul class="flex flex-col lg:flex-row list-none lg:ml-auto">
 
                   <li class="mr-8 ">
-                    <select style="border-radius: 20px;" #selLang (change)="translateLanguageTo(selLang.value)">
+                    <select class="rounded-2xl" #selLang (change)="translateLanguageTo(selLang.value)">
                       <option *ngFor="let language of translate.getLangs()" [value]="language">{{ language }}</option>
                     </select>
                   </li>

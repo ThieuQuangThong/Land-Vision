@@ -1,5 +1,11 @@
 <!-- Header -->
 <div class="relative bg-green-500 md:pt-32 pb-32 pt-12">
+<div class="absolute right-6 top-6 flex items-center">
+  <div class="inline-block mr-4 mb-0" > Change Language : <select class="rounded-2xl" #selLang (change)="translateLanguageTo(selLang.value)">
+    <option *ngFor="let language of translate.getLangs()" [value]="language">{{ language }}</option>
+  </select></div>
+  <app-user-dropdown class="hidden md:inline-block w-9 h-9 "></app-user-dropdown>
+</div>
     <div class="px-4 md:px-10 mx-auto w-full">
         <div>
             <!-- Card stats -->
@@ -14,10 +20,7 @@
                     <app-card-stats statSubtitle="REVENUE" statTitle="{{revenue | moneyTransform}}" statArrow="down" statPercent="1.10" statPercentColor="text-orange-500" statDescripiron="Since yesterday" statIconName="fa-solid fa-dollar-sign" statIconColor="bg-emerald-500"></app-card-stats>
                 </div>
                 <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
-                    <app-card-stats statSubtitle="VISITS" statTitle="49,65%" statArrow="up" statPercent="12" statPercentColor="text-emerald-500" statDescripiron="Since last month" statIconName="fas fa-percent" statIconColor="bg-yellow-500"></app-card-stats>
-                    Change Language : <select #selLang (change)="translateLanguageTo(selLang.value)">
-            <option *ngFor="let language of translate.getLangs()" [value]="language">{{ language }}</option>
-          </select>
+                    <app-card-stats statSubtitle="VISITS" statTitle="15 962" statArrow="up" statPercent="12" statPercentColor="text-emerald-500" statDescripiron="Since last month" statIconName="fas fa-percent" statIconColor="bg-yellow-500"></app-card-stats>
                 </div>
             </div>
         </div>
