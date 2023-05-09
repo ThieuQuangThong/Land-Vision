@@ -43,10 +43,14 @@ export class UserDropdownComponent implements AfterViewInit {
   this.auth.getUserProfileAsTracking()
     .subscribe(
       respone => {
+        if (respone?.role === PROPERTY_INFOR.Role.admin) {
+          this.isAdmin = true;
+        }
+        else this.isAdmin = false
         this.auth.getUserInforById(respone?.nameid!)
         .subscribe(
-          _ => {
-            this.avatarLink = _.avatarLink;
+          user => {
+            this.avatarLink = user.avatarLink;
           }
         )
       }
