@@ -1,9 +1,9 @@
 export class User {
-  nameid!: number;
-  unique_name!: String;
-  email!: String;
-  role!: string;
-  exp!: number;
+  nameid: number = 0;
+  unique_name: String = '';
+  email: String = '';
+  role: string = '';
+  exp: number = 0;
 }
 
 export class UserInfor {
