@@ -1,4 +1,5 @@
-﻿using Land_Vision.Models;
+﻿using Land_Vision.Dto.DateTimeDtos;
+using Land_Vision.Models;
 
 namespace Land_Vision.Interface.IRepositories
 {
@@ -7,6 +8,7 @@ namespace Land_Vision.Interface.IRepositories
         Task<List<DetailPurchase>> GetAllDetailPurchase();
         Task<int> CountPostUserBuy(int userId);
         Task<double> GetRevenue();
+        Task<DateTimeRevenueDto> SumRevenueByDateTimeAsync();
         Task<bool> AddDetailPurchaseAsync(DetailPurchase detailPurchase);
         Task<bool> SaveChangeAsync();
     }

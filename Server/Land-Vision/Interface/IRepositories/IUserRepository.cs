@@ -1,3 +1,4 @@
+using Land_Vision.Dto.DateTimeDtos;
 using Land_Vision.DTO;
 using Land_Vision.DTO.UserDtos;
 using Land_Vision.Models;
@@ -8,6 +9,7 @@ namespace Land_Vision.Interface.IRepositories
     {
         Task<bool> CheckIsExistByIdAsync(int id);
         Task<User> GetUserByIdAsync(int id);
+        Task<DateTimeDto> CountUserByDateTimeAsync();
         Task<bool> CheckIsExistValidatePasswordToken(string email, string token);
         Task<bool> CheckIsExistIdentificationCardAsync(string idCard);
         Task<User> GetUserByFreshTokenAsync(string freshToken);

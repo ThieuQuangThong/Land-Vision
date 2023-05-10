@@ -1,4 +1,5 @@
-﻿using Land_Vision.DTO;
+﻿using Land_Vision.Dto.DateTimeDtos;
+using Land_Vision.DTO;
 using Land_Vision.DTO.PostDtos;
 using Land_Vision.Models;
 
@@ -11,6 +12,7 @@ namespace Land_Vision.Interface.IRepositories
         Task<int> GetCountUnapprovedPostsAsync();
         Task<List<Post>> GetAllInforPositionOfPostAsync();
         Task<int> CountPostByUserIdAsync(int userId);
+        Task<DateTimeDto> CountPostByDateTimeAsync();
         Task<bool> HidePostAsync(int postId);
         Task<bool> VerifyPostAsync(int postId);
         Task<bool> CheckIsPostExistByIdAsync(int postId);

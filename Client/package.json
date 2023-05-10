@@ -48,6 +48,7 @@
     "jwt-decode": "^3.1.2",
     "ngx-clipboard": "^16.0.0",
     "ngx-cookie-service": "^15.0.0",
+    "ngx-echarts": "^15.0.3",
     "ngx-loading": "^15.0.0",
     "ngx-otp-input": "^0.11.4",
     "ngx-owl-carousel-o": "^15.0.0",

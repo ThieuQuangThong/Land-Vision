@@ -1,6 +1,7 @@
 using AutoMapper;
 using Land_Vision.Common;
 using Land_Vision.Data;
+using Land_Vision.Dto.DateTimeDtos;
 using Land_Vision.Dto.PostDtos;
 using Land_Vision.DTO;
 using Land_Vision.DTO.PostDtos;
@@ -69,8 +70,9 @@ namespace Land_Vision.Controllers
                 return BadRequest(ModelState);
             }
 
-            if(!await _userRepository.CheckIsExistByIdAsync(userId)){
-                return NotFound("User is not exist");      
+            if (!await _userRepository.CheckIsExistByIdAsync(userId))
+            {
+                return NotFound("User is not exist");
             }
 
             var PostDtos = _mapper.Map<List<PostDto>>(await _postRepository.GetPostsByUserIdAsync(userId));
@@ -114,6 +116,27 @@ namespace Land_Vision.Controllers
             },
             postSearchDto);
             return Ok(Paginposts);
+        }
+
+        /// <summary>
+        /// Count post by date time
+        /// </summary>
+        [Authorize(Roles = "Admin")]
+        [HttpGet("countPostByDateTime")]
+        [ProducesResponseType(200, Type = typeof(DateTimeDto))]
+        public async Task<ActionResult<DateTimeDto>> CountPostByDateTime()
+        {
+            var dateTimeDto = await _postRepository.CountPostByDateTimeAsync();
+            if (dateTimeDto == null)
+            {
+                return NotFound();
+            }
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+
+            return Ok(dateTimeDto);
         }
 
         // GET Posts By Time
@@ -200,12 +223,14 @@ namespace Land_Vision.Controllers
             }
 
             var post = await _postRepository.GetPostAsync(postId);
-            if(post == null){
-                return NotFound(); 
+            if (post == null)
+            {
+                return NotFound();
             }
 
-            if(post.ApproveStatus != NumberFiled.Unapproved){
-                throw new Exception(); 
+            if (post.ApproveStatus != NumberFiled.Unapproved)
+            {
+                throw new Exception();
             }
 
             return Ok(_mapper.Map<PostDto>(post));
@@ -224,8 +249,9 @@ namespace Land_Vision.Controllers
                 return BadRequest(ModelState);
             }
 
-            if(!await _userRepository.CheckIsExistByIdAsync(userId)){
-                return NotFound("User is Not found");    
+            if (!await _userRepository.CheckIsExistByIdAsync(userId))
+            {
+                return NotFound("User is Not found");
             }
 
             var posts = await _postRepository.GetApprovedPostByUserIdAsync(userId);
@@ -263,14 +289,15 @@ namespace Land_Vision.Controllers
             }
             var postsPositionDto = _mapper.Map<List<PostsPositionDto>>(await _postRepository.GetAllInforPositionOfPostAsync());
 
-            if(!await _postRepository.CheckIsPostExistByIdAsync(postId)){
+            if (!await _postRepository.CheckIsPostExistByIdAsync(postId))
+            {
                 return Ok(postsPositionDto);
             }
 
             var swaggItem = postsPositionDto.Where(x => x.Id == postId).FirstOrDefault();
             postsPositionDto.Remove(swaggItem);
 
-            postsPositionDto.Insert(0,swaggItem);
+            postsPositionDto.Insert(0, swaggItem);
 
             return Ok(postsPositionDto);
         }
@@ -296,13 +323,15 @@ namespace Land_Vision.Controllers
                     return BadRequest(ModelState);
                 }
 
-                if(!await _userRepository.CheckIsExistByIdAsync(userId)){
+                if (!await _userRepository.CheckIsExistByIdAsync(userId))
+                {
                     return NotFound("User is not found");
                 }
-              
-                if (! await _postService.CheckIsUserCanPost(userId)){
+
+                if (!await _postService.CheckIsUserCanPost(userId))
+                {
                     ModelState.AddModelError("", "you post as many times as you have");
-                    return StatusCode(402, ModelState);        
+                    return StatusCode(402, ModelState);
                 }
 
                 if (!await _postService.AddPostPropertyAsync(userId, postPropertyDto))
@@ -339,13 +368,13 @@ namespace Land_Vision.Controllers
                 {
                     return BadRequest(ModelState);
                 }
-              
+
                 var post = await _postRepository.GetPostAsync(postId);
                 if (post == null)
                 {
                     return NotFound("Post is not found");
                 }
-                
+
                 post.ApproveStatus = NumberFiled.APPROVED;
 
                 await _postRepository.UpdatePostAsync(post);
@@ -386,7 +415,8 @@ namespace Land_Vision.Controllers
                 return StatusCode(404, ModelState);
             }
 
-            if(post.User.Id != userId){
+            if (post.User.Id != userId)
+            {
                 ModelState.AddModelError("", "Something went wrong");
                 return StatusCode(500, ModelState);
             }
@@ -423,7 +453,8 @@ namespace Land_Vision.Controllers
                 return StatusCode(404, ModelState);
             }
 
-            if(post.User.Id != userId){
+            if (post.User.Id != userId)
+            {
                 ModelState.AddModelError("", "Something went wrong");
                 return StatusCode(500, ModelState);
             }

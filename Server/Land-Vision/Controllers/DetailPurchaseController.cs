@@ -4,6 +4,8 @@ using Land_Vision.Interface.IRepositories;
 using Land_Vision.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
+using Land_Vision.Dto.DateTimeDtos;
+using Land_Vision.Repositories;
 
 namespace Land_Vision.Controllers
 {
@@ -28,7 +30,7 @@ namespace Land_Vision.Controllers
         /// <summary>
         /// Get all detail purchase
         /// </summary>
-        [Authorize(Roles = "Admin")]        
+        [Authorize(Roles = "Admin")]
         [HttpGet]
         [ProducesResponseType(200, Type = typeof(IEnumerable<DetailPurchase>))]
         public async Task<IActionResult> GetDetailPurchases()
@@ -58,6 +60,26 @@ namespace Land_Vision.Controllers
             return Ok(revenue);
         }
 
+        /// <summary>
+        /// Count revenue by date time
+        /// </summary>
+        [Authorize(Roles = "Admin")]
+        [HttpGet("countPostByDateTime")]
+        [ProducesResponseType(200, Type = typeof(DateTimeRevenueDto))]
+        public async Task<ActionResult<DateTimeRevenueDto>> SumRevenueByDateTime()
+        {
+            var dateTimeDto = await _detailPurchaseRepository.SumRevenueByDateTimeAsync();
+            if (dateTimeDto == null)
+            {
+                return NotFound();
+            }
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+
+            return Ok(dateTimeDto);
+        }
 
         // POST DetailPurchase
         /// <summary>

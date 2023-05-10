@@ -115,6 +115,7 @@ import { CardApproveTableComponent } from './components/cards/card-approve-table
 import { ApproveDetailComponent } from './views/admin/approve-detail/approve-detail.component';
 import { CardPackageDetailComponent } from './components/cards/card-package-detail/card-package-detail.component';
 import { CardAccountDetailComponent } from './components/cards/card-account-detail/card-account-detail.component';
+import { NgxEchartsModule } from 'ngx-echarts';
 
 @NgModule({
   declarations: [
@@ -193,6 +194,14 @@ import { CardAccountDetailComponent } from './components/cards/card-account-deta
     // RegisterComponent,
   ],
   imports: [
+    NgxEchartsModule.forRoot({
+      /**
+       * This will import all modules from echarts.
+       * If you only need custom modules,
+       * please refer to [Custom Build] section.
+       */
+      echarts: () => import('echarts'), // or import('./path-to-my-custom-echarts')
+    }),
     MatDialogModule,
     ClipboardModule,
     MatTooltipModule,
