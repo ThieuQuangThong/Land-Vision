@@ -179,7 +179,8 @@ export class MapListDetailComponent {
               }
 
              const popUpObect =
-             this.shareDataService.setPopUpObject(`<a href="http://localhost:4200/profile/${positionPosts[i].userId}" class ="mb-0"><span class="text-xl font-semibold mb-0">Tên:</span> ${positionPosts[i].name}</a><p class ="mb-0"><span class="text-xl font-semibold mb-0">Giá:</span> ${this.moneyTranformPipe.transform(positionPosts[i].price)}</p><a href="http://localhost:4200/productdetails/${positionPosts[i].id}"><span class="text-xl font-semibold">Địa chỉ:</span> ${positionPosts[i].addressNumber}</a><a><img style="width: 150px;height: 150px;" src="${positionPosts[i].images[0].linkImage}" alt="Ảnh bất động sản đẹp"></a>`)
+             this.shareDataService.setPopUpObject(`<div class="flex flex-col"><a class="text-base font-bold mb-0" target="_blank">${positionPosts[i].title}</a>
+             <a href="http://localhost:4200/profile/${positionPosts[i].userId}" class="mb-0" target="_blank"><span class="font-bold mb-0 text-black">Tên:</span>${positionPosts[i].name}</a><p class="mb-0"><span class="font-bold mb-0">Giá:</span>${this.moneyTranformPipe.transform(positionPosts[i].price)}</p><p class="mb-0"><span class="font-bold mb-0">Diện tích:</span>${positionPosts[i].area} m²</p><a href="http://localhost:4200/productdetails/73" class="flex items-center" target="_blank"><span class="font-bold mr-2">Địa chỉ:</span>${positionPosts[i].addressNumber}</a><a><img src="${positionPosts[i].images[0].linkImage}" alt="Ảnh bất động sản đẹp" class="w-150 h-150"></a></div>`)
               const polygon = {
                 type: "polygon",
                 rings: x
