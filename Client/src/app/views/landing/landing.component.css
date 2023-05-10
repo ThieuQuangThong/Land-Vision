@@ -13,7 +13,7 @@
 
 .sticky-search{
   position: -webkit-sticky;
-  position: sticky;
+  position: sticky !important;
   top: 57px;
   z-index: 50;
 }
