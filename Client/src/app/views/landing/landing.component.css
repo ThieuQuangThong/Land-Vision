@@ -13,7 +13,7 @@
 
 .sticky-search{
   position: -webkit-sticky;
-  position: sticky;
+  position: sticky !important;
   top: 57px;
   z-index: 50;
 }
@@ -22,4 +22,17 @@
   body {
     background-color: lightblue;
   }
+}
+#dropdown-list {
+  width: 200px;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  font-size: 14px;
+  color: #333;
+}
+
+#dropdown-list {
+  padding: 5px !important;
 }
