@@ -35,7 +35,7 @@
 
                         <div class="w-full lg:w-4/12 px-4 lg:order-3 lg:text-right lg:self-center">
                           <div class="py-6 px-3 mt-32 sm:mt-0">
-                            <button *ngIf="isMyProfile" (click)="dialog.showModal()" class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Edit</button>
+                            <button *ngIf="isMyProfile" (click)="open();dialog.showModal();" class="text-white bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-2 mb-2">Edit</button>
                           </div>
                         </div>
 
@@ -100,7 +100,7 @@
 
         </div>
     </section>
-    <dialog class="flex flex-col bg-blueGray-200 rounded-lg w-1/3" #dialog>
+    <dialog [ngClass]="openDialog ? 'hidden':'flex'" class="flex-col bg-blueGray-200 rounded-lg w-1/3" #dialog>
       <p class="text-xl font-medium">Edit your information</p>
       <div class="w-full mb-3 pt-0">
         <input class="px-3 py-3 placeholder-blueGray-300 text-blueGray-600 relative bg-white rounded text-sm shadow outline-none focus:outline-none focus:shadow-outline w-full" type="text" placeholder="User name" [(ngModel)]="contactInformationChanging.name"/>

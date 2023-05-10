@@ -58,7 +58,8 @@ namespace Land_Vision.Mapper
             .ForMember(x => x.Price, y => y.MapFrom(src => src.Property.Price))
             .ForMember(x => x.AddressNumber, y => y.MapFrom(src => src.Property.AddressNumber))
             .ForMember(x => x.positions, y => y.MapFrom(src => src.Property.Positions))
-            .ForMember(x => x.UserId, y => y.MapFrom(src => src.User.Id));        
+            .ForMember(x => x.UserId, y => y.MapFrom(src => src.User.Id))
+            .ForMember(x => x.Area, y => y.MapFrom(src => src.Property.Area));        
 
             //Property
             CreateMap<PropertyDto, Property>();
