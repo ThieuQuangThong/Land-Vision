@@ -6,7 +6,9 @@ using Land_Vision.DTO;
 using Land_Vision.DTO.UserDtos;
 using Land_Vision.Interface.IRepositories;
 using Land_Vision.Interface.IServices;
+using Land_Vision.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Land_Vision.Controllers
@@ -437,6 +439,28 @@ namespace Land_Vision.Controllers
                     StatusCode = problemDetails.Status
                 };
             }
+        }
+        
+        [Authorize(Roles = "Admin,User")]
+        [HttpPatch("updateFlexible/{userId}")]
+        public async Task<IActionResult> UpdateUserFlexible(int userId, [FromBody] JsonPatchDocument<UpdateUserDto> patchDoc)
+        {
+            if(patchDoc == null)
+            {
+                return BadRequest("patchDoc object is null");
+            }
+
+            var user = await _userRepository.GetUserByIdAsync(userId);
+            if (user == null)
+            {
+                return NotFound("User is not found!");
+            }
+
+            var userToPactch = _mapper.Map<UpdateUserDto>(user);
+            patchDoc.ApplyTo(userToPactch);
+            _mapper.Map(userToPactch, user);
+            await _userRepository.SaveChangesAsync();
+            return NoContent();
         }
     }
 }

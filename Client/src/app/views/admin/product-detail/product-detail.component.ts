@@ -5,36 +5,36 @@ import { AlertService } from "src/app/_service/alert.service";
 import { PostService } from "src/app/_service/post.service";
 import { PostModel } from "src/app/models/post-model";
 import { AuthService } from 'src/app/_service/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: "app-product-detail",
   templateUrl: "./product-detail.component.html",
+  styleUrls: ['./product-detail.component.css']
 })
 export class ProductDetailComponent implements OnInit {
   postTitle: string = '';
   postItem: PostModel = new PostModel()
   postId: number = 0;
-  decodeid: any;
   selectedDistrict: string ='';
   selectedWards: string ='';
   selectedStreet: string ='';
   selectedAddress: string ='';
 
-  constructor(private  shareDataService: ShareDataService,private route: ActivatedRoute, private postService:PostService, private auth: AuthService) {}
+  constructor(private  shareDataService: ShareDataService,private route: ActivatedRoute, private postService:PostService, private auth: AuthService,private Router: Router,) {}
 
 
   onDropdownChange() {
-
     this.selectedAddress = `${this.selectedDistrict}, ${this.selectedWards}, ${this.selectedStreet}`;
   }
 
   ngOnInit() {
 
-    this.postId = this.route.snapshot.params['postId'];
-    this.decodeid = this.auth.decode(this.postId.toString())
+    const encodeId = this.route.snapshot.params['postId'];
+    this.postId = Number(this.auth.decode(encodeId))
 
     this.shareDataService.setPositionPost([]);
-    this.postService.getPostById(this.decodeid)
+    this.postService.getPostById(this.postId)
     .subscribe(
       respone => {
         this.postItem = respone;
@@ -46,5 +46,9 @@ export class ProductDetailComponent implements OnInit {
         AlertService.setAlertModel('danger','Some thing went wrong')
       }
     )
+  }
+  MyProfile(){
+    const idSeller = this.postItem.user.id.toString()
+    this.Router.navigateByUrl('/profile/'+idSeller)
   }
 }

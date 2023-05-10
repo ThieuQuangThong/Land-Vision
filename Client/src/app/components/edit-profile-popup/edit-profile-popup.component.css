@@ -1,0 +1,11 @@
+p {
+  font-family: Lato;
+}
+
+dialog {
+  padding: 10px;
+}
+
+dialog div {
+  margin: 10px;
+}

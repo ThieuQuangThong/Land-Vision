@@ -52,7 +52,6 @@
           <section class="text-gray-700 body-font overflow-hidden rounded-lg  bg-white">
             <div class="container px-5 py-12 mx-auto">
               <div class="w-full mx-auto flex flex-wrap">
-                <!-- <img alt="ecommerce" class="lg:w-1/2 w-full object-cover object-center rounded border border-gray-200" src="https://www.whitmorerarebooks.com/pictures/medium/2465.jpg"> -->
 
                 <div alt="ecommerce" id="default-carousel"
                   class="relative lg:w-1/2 w-full object-cover object-center rounded border border-gray-200"
@@ -65,7 +64,10 @@
                 <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
                   <h2 class="text-sm title-font text-gray-500 tracking-widest">{{postItem.property.addressNumber}}</h2>
                   <h1 class="text-gray-900 text-3xl title-font font-medium mb-48">{{postItem.title}}</h1>
-                  <div class="flex mt-20">
+                  <button (click)="MyProfile()" class="directSeller">
+                    <span>Seller Info</span>
+                  </button>
+                  <div class="flex">
                     <span class="title-font font-medium text-2xl text-gray-900">{{postItem.property.price |
                       moneyTransform}}</span>
                   </div>
@@ -122,7 +124,7 @@
                               </span>
                               <div class="text-base pl-3 font-medium">
                                 <span>
-                                  Juridical:
+                                  Legal:
                                 </span>
                                 <span>
                                   {{postItem.property.juridical | juridicalTransform | translate}}

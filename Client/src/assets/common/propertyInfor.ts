@@ -27,5 +27,5 @@ export const PROPERTY_INFOR = {
   TransactionTypes: ['Sale', 'Rent'],
   Interior: ['True', 'False'],
   VipName: ['','Fortune', 'Wealth','Prosperous'],
-  ApproveStatus: ['Approved','Pending']
+  ApproveStatus: ['Approved','Pending','Reject']
 };

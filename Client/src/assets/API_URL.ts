@@ -46,5 +46,16 @@ export const API_URL = {
   GET_UNAPPROVED_POST_BY_ID:(postId: number) => `${DOMAIN}/api/Post/getPostIsUnApproved/${postId}`,
   APPROVE_POST_BY_ID:(postId: number) => `${DOMAIN}/api/Post/appovePost/${postId}`,
   QR_MOMO: (orderInfor: string, amount: number) => `https://localhost:7165/api/Momo/momoQR/${orderInfor}&${amount}`,
-  GET_APPROVED_POST_BY_USER_ID:(userId: number) => `${DOMAIN}/api/Post/getPostIsApproved/${userId}`
+  GET_APPROVED_POST_BY_USER_ID:(userId: number) => `${DOMAIN}/api/Post/getPostIsApproved/${userId}`,
+  UPDATE_USER_PATCH_BY_USER_ID: (userId: number) => `${DOMAIN}/api/Account/updateFlexible/${userId}`
 };
+
+export const PATCH_PATH = {
+  USER:{
+    NAME: '/name',
+    EMAIL: '/email',
+    AVAVAR_LINK: '/avatarLink',
+    PHONE: '/phone'
+  }
+}
+

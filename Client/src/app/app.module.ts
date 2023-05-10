@@ -115,6 +115,7 @@ import { CardApproveTableComponent } from './components/cards/card-approve-table
 import { ApproveDetailComponent } from './views/admin/approve-detail/approve-detail.component';
 import { CardPackageDetailComponent } from './components/cards/card-package-detail/card-package-detail.component';
 import { CardAccountDetailComponent } from './components/cards/card-account-detail/card-account-detail.component';
+import { EditProfilePopupComponent } from './components/edit-profile-popup/edit-profile-popup.component';
 import { NgxEchartsModule } from 'ngx-echarts';
 
 @NgModule({
@@ -189,7 +190,8 @@ import { NgxEchartsModule } from 'ngx-echarts';
     CardApproveTableComponent,
     ApproveDetailComponent,
     CardPackageDetailComponent,
-    CardAccountDetailComponent
+    CardAccountDetailComponent,
+    EditProfilePopupComponent,
     // LoginComponent,
     // RegisterComponent,
   ],
