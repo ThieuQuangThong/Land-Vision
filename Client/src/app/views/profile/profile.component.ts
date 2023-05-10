@@ -22,6 +22,7 @@ export class ProfileComponent implements OnInit {
 
   @ViewChild('dialog') myDialog: ElementRef | undefined;
 
+  openDialog:boolean = true;
   ischangingProfile: boolean = false;
   status:number = PROPERTY_INFOR.isUpdate;
   isMyProfile: boolean = false;
@@ -139,7 +140,11 @@ export class ProfileComponent implements OnInit {
   )
   }
 
+  open(){
+    this.openDialog = false;
+  }
   close(){
+    this.openDialog = true;
     this.contactInformationChanging = JSON.parse(JSON.stringify(this.initContactInformation));
     this.myDialog?.nativeElement.close();
   }
