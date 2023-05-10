@@ -16,7 +16,6 @@ export class ProductDetailComponent implements OnInit {
   postTitle: string = '';
   postItem: PostModel = new PostModel()
   postId: number = 0;
-  decodeid: any;
   selectedDistrict: string ='';
   selectedWards: string ='';
   selectedStreet: string ='';
@@ -26,17 +25,16 @@ export class ProductDetailComponent implements OnInit {
 
 
   onDropdownChange() {
-
     this.selectedAddress = `${this.selectedDistrict}, ${this.selectedWards}, ${this.selectedStreet}`;
   }
 
   ngOnInit() {
 
-    this.postId = this.route.snapshot.params['postId'];
-    this.decodeid = this.auth.decode(this.postId.toString())
+    const encodeId = this.route.snapshot.params['postId'];
+    this.postId = Number(this.auth.decode(encodeId))
 
     this.shareDataService.setPositionPost([]);
-    this.postService.getPostById(this.decodeid)
+    this.postService.getPostById(this.postId)
     .subscribe(
       respone => {
         this.postItem = respone;
