@@ -1,141 +1,161 @@
-<nav class="md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:flex-row md:flex-nowrapshadow-xl bg-white flex flex-wrap items-center justify-between relative md:w-64 z-10 py-0 px-0">
-    <div class="md:flex-col md:items-stretch md:min-h-full md:flex-nowrap px-0 flex flex-wrap items-center justify-between w-full mx-auto">
-        <!-- Toggler -->
-        <button class="cursor-pointer text-black opacity-50 md:hidden px-3 py-1 text-xl leading-none bg-transparent rounded border border-solid border-transparent" type="button" (click)="toggleCollapseShow('bg-white m-2 py-3 px-6')">
+<nav
+  class="md:left-0 md:block md:fixed md:top-0 md:bottom-0 md:flex-row md:flex-nowrapshadow-xl bg-white flex flex-wrap items-center justify-between relative md:w-64 z-10 py-0 px-0">
+  <div
+    class="md:flex-col md:items-stretch md:min-h-full md:flex-nowrap px-0 flex flex-wrap items-center justify-between w-full mx-auto">
+    <!-- Toggler -->
+    <button
+      class="cursor-pointer text-black opacity-50 md:hidden px-3 py-1 text-xl leading-none bg-transparent rounded border border-solid border-transparent"
+      type="button" (click)="toggleCollapseShow('bg-white m-2 py-3 px-6')">
       <i class="fas fa-bars"></i>
     </button>
-        <!-- Brand -->
-        <a [routerLink]="['/landing']" class=" md:block text-left md:pb-2 text-green-600 hover:text-green-400 bg-gray-800 mr-0 inline-block whitespace-nowrap text-xl uppercase font-bold p-4 px-0 hover:no-underline">
-          Land Vision
-        </a>
-        <!-- Divider -->
-        <hr class="md:min-w-full" />
-        <!-- User -->
-        <ul class="md:hidden items-center flex flex-wrap list-none">
-            <li class="inline-block relative">
-                <app-user-dropdown class="block"></app-user-dropdown>
-            </li>
-        </ul>
-        <!-- Collapse -->
-        <div class="md:flex md:flex-col md:items-stretch md:opacity-100 md:relative md:mt-4 md:shadow-none shadow absolute top-0 left-0 right-0 z-40 overflow-y-auto overflow-x-hidden h-auto items-center flex-1 rounded" [ngClass]="collapseShow">
-            <!-- Collapse header -->
-            <div class="md:min-w-full md:hidden block  mb-4 border-b border-solid border-blueGray-200">
-                <div class="flex flex-wrap">
-                    <div class="w-6/12">
-                      <a [routerLink]="['/']" class="md:block text-left md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-0 px-0">
-Land Vision
-                      </a>
-                    </div>
-                  <div class="w-6/12 flex justify-end">
-                <button type="button" class="cursor-pointer text-black opacity-50 md:hidden px-1 py-1 text-xl leading-none bg-transparent rounded border border-solid border-transparent" (click)="toggleCollapseShow('hidden')">
-                  <i class="fas fa-times"></i>
-                </button>
-                    </div>
-                </div>
-            </div>
-            <a class="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block pt-1 pl-1.5 pb-4 no-underline">
-                Admin Layout Pages
+    <!-- Brand -->
+    <a [routerLink]="['/landing']"
+      class=" md:block text-left md:pb-2 text-green-600 hover:text-green-400 bg-gray-800 mr-0 inline-block whitespace-nowrap text-xl uppercase font-bold p-4 px-0 hover:no-underline">
+      Land Vision
+    </a>
+    <!-- Divider -->
+    <hr class="md:min-w-full" />
+    <!-- User -->
+    <ul class="md:hidden items-center flex flex-wrap list-none">
+      <li class="inline-block relative">
+        <app-user-dropdown class="block"></app-user-dropdown>
+      </li>
+    </ul>
+    <!-- Collapse -->
+    <div
+      class="md:flex md:flex-col md:items-stretch md:opacity-100 md:relative md:mt-4 md:shadow-none shadow absolute top-0 left-0 right-0 z-40 overflow-y-auto overflow-x-hidden h-auto items-center flex-1 rounded"
+      [ngClass]="collapseShow">
+      <!-- Collapse header -->
+      <div class="md:min-w-full md:hidden block  mb-4 border-b border-solid border-blueGray-200">
+        <div class="flex flex-wrap">
+          <div class="w-6/12">
+            <a [routerLink]="['/']"
+              class="md:block text-left md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm uppercase font-bold p-0 px-0">
+              Land Vision
             </a>
+          </div>
+          <div class="w-6/12 flex justify-end">
+            <button type="button"
+              class="cursor-pointer text-black opacity-50 md:hidden px-1 py-1 text-xl leading-none bg-transparent rounded border border-solid border-transparent"
+              (click)="toggleCollapseShow('hidden')">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+      <a class="md:min-w-full text-blueGray-500 text-xs uppercase font-bold block pt-1 pl-1.5 pb-4 no-underline">
+        Admin Layout Pages
+      </a>
 
-            <!-- Navigation -->
+      <!-- Navigation -->
 
-            <ul class="md:flex-col md:min-w-full flex flex-col list-none">
-                <li class="items-center">
-                    <a [routerLink]="['/admin/dashboard']" class="text-xs uppercase py-3 font-bold block" routerLinkActive #adminDashboard="routerLinkActive" [ngClass]="
+      <ul class="md:flex-col md:min-w-full flex flex-col list-none">
+        <li class="items-center">
+          <a [routerLink]="['/admin/dashboard']" class="text-xs uppercase py-3 font-bold block" routerLinkActive
+            #adminDashboard="routerLinkActive" [ngClass]="
           adminDashboard.isActive
             ? 'text-red-600 hover:text-red-700'
             : 'text-blueGray-700 hover:text-blueGray-500'
         ">
-                        <i class="fas fa-tv ml-2 mr-2 pl-1.5 text-center w-4  text-sm" [ngClass]="
+            <i class="fas fa-tv ml-2 mr-2 pl-1.5 text-center w-4  text-sm" [ngClass]="
             adminDashboard.isActive ? 'opacity-75' : 'text-blueGray-300'
           "></i> Dashboard
-                    </a>
-                </li>
-                <li class="items-center">
-                    <a [routerLink]="['/admin/tables']" class="text-xs uppercase py-3 font-bold block" routerLinkActive #adminSettings="routerLinkActive" [ngClass]="
+          </a>
+        </li>
+        <li class="items-center">
+          <a [routerLink]="['/admin/tables']" class="text-xs uppercase py-3 font-bold block" routerLinkActive
+            #adminSettings="routerLinkActive" [ngClass]="
               adminSettings.isActive
                 ? 'text-red-600 hover:text-red-700'
                 : 'text-blueGray-700 hover:text-blueGray-500'
             ">
-                        <i class="fa-sharp fa-regular fa-newspaper ml-2 mr-2 pl-1.5 text-center w-4  text-sm" [ngClass]="
+            <i class="fa-sharp fa-regular fa-newspaper ml-2 mr-2 pl-1.5 text-center w-4  text-sm" [ngClass]="
                 adminSettings.isActive ? 'opacity-75' : 'text-blueGray-300'
               "></i> Post management
-                    </a>
-                </li>
+          </a>
+        </li>
 
-                <li class="items-center">
-                    <a [routerLink]="['/admin/accountTables']" class="text-xs uppercase py-3 font-bold block" routerLinkActive #adminAccountTable="routerLinkActive" [ngClass]="
+        <li class="items-center">
+          <a [routerLink]="['/admin/accountTables']" class="text-xs uppercase py-3 font-bold block" routerLinkActive
+            #adminAccountTable="routerLinkActive" [ngClass]="
                     adminAccountTable.isActive
               ? 'text-red-600 hover:text-red-700'
               : 'text-blueGray-700 hover:text-blueGray-500'
           ">
-                        <i class="fa-solid fa-users ml-2 mr-2 pl-1.5 text-center w-4  text-sm" [ngClass]="
+            <i class="fa-solid fa-users ml-2 mr-2 pl-1.5 text-center w-4  text-sm" [ngClass]="
                         adminAccountTable.isActive ? 'opacity-75' : 'text-blueGray-300'
             "></i>
-                        Account management
-                    </a>
-                </li>
+            Account management
+          </a>
+        </li>
 
-                <li class="items-center">
-                    <a [routerLink]="['/admin/revenueTables']" class="text-xs uppercase py-3 font-bold block" routerLinkActive #adminRevenueTable="routerLinkActive" [ngClass]="
+        <li class="items-center">
+          <a [routerLink]="['/admin/revenueTables']" class="text-xs uppercase py-3 font-bold block" routerLinkActive
+            #adminRevenueTable="routerLinkActive" [ngClass]="
                     adminRevenueTable.isActive
             ? 'text-red-600 hover:text-red-700'
             : 'text-blueGray-700 hover:text-blueGray-500'
         ">
-                        <i class="fa-solid fa-dollar-sign ml-2 mr-2 pl-1.5 text-center w-4  text-sm" [ngClass]="
+            <i class="fa-solid fa-dollar-sign ml-2 mr-2 pl-1.5 text-center w-4  text-sm" [ngClass]="
                         adminRevenueTable.isActive ? 'opacity-75' : 'text-blueGray-300'
           "></i> Revenue management
-                    </a>
-                </li>
+          </a>
+        </li>
 
-                <li class="items-center">
-                    <a [routerLink]="['/admin/maps']" class="text-xs uppercase py-3 font-bold block" routerLinkActive #adminMaps="routerLinkActive" [ngClass]="
+        <li class="items-center">
+          <a [routerLink]="['/admin/maps']" class="text-xs uppercase py-3 font-bold block" routerLinkActive
+            #adminMaps="routerLinkActive" [ngClass]="
             adminMaps.isActive
               ? 'text-red-600 hover:text-red-700'
               : 'text-blueGray-700 hover:text-blueGray-500'
           ">
-                        <i class="fas fa-map-marked ml-2 mr-2 pl-1.5 text-center w-4  text-sm" [ngClass]="
+            <i class="fas fa-map-marked ml-2 mr-2 pl-1.5 text-center w-4  text-sm" [ngClass]="
               adminMaps.isActive ? 'opacity-75' : 'text-blueGray-300'
             "></i> Maps
-                    </a>
-                </li>
+          </a>
+        </li>
 
-                <li class="items-center">
-                    <a [routerLink]="['/admin/packageTables']" class="text-xs uppercase py-3 font-bold block" routerLinkActive #adminPackageTables="routerLinkActive" [ngClass]="
+        <li class="items-center">
+          <a [routerLink]="['/admin/packageTables']" class="text-xs uppercase py-3 font-bold block" routerLinkActive
+            #adminPackageTables="routerLinkActive" [ngClass]="
                   adminPackageTables.isActive
               ? 'text-red-600 hover:text-red-700'
               : 'text-blueGray-700 hover:text-blueGray-500'
           ">
-                        <i class="fa-solid fa-money-check-dollar ml-2 mr-2 pl-1.5 text-center w-4  text-sm" [ngClass]="
+            <i class="fa-solid fa-money-check-dollar ml-2 mr-2 pl-1.5 text-center w-4  text-sm" [ngClass]="
                       adminPackageTables.isActive ? 'opacity-75' : 'text-blueGray-300'
             "></i> Package
-                    </a>
-                </li>
+          </a>
+        </li>
 
-                <li class="items-center">
-                    <a [routerLink]="['/admin/approveTables']" class="text-xs uppercase py-3 font-bold block" routerLinkActive #approveTables="routerLinkActive" [ngClass]="
+        <li class="items-center">
+          <a [routerLink]="['/admin/approveTables']" class="text-xs uppercase py-3 font-bold block" routerLinkActive
+            #approveTables="routerLinkActive" [ngClass]="
                   approveTables.isActive
               ? 'text-red-600 hover:text-red-700'
               : 'text-blueGray-700 hover:text-blueGray-500'
           ">
-                        <i class="fa-solid fa-signs-post ml-2 mr-2 pl-1.5 text-center w-4  text-sm" [ngClass]="
+            <i class="fa-solid fa-signs-post ml-2 mr-2 pl-1.5 text-center w-4  text-sm" [ngClass]="
                       approveTables.isActive ? 'opacity-75' : 'text-blueGray-300'
             "></i> Approve Post
-                    </a>
-                </li>
+          </a>
+        </li>
 
-                <li class="items-center">
-                    <a (click)="logout()" href="" class="text-xs uppercase py-3 font-bold block" routerLinkActive #logoutTables="routerLinkActive" [ngClass]="
+        <li class="items-center">
+          <a (click)="logout()" href="" class="text-xs uppercase py-3 font-bold block" routerLinkActive
+            #logoutTables="routerLinkActive" [ngClass]="
                 logoutTables.isActive
             ? 'text-red-600 hover:text-red-700'
             : 'text-blueGray-700 hover:text-blueGray-500'
         ">
-                        <i class="fa-solid fa-door-open ml-2 mr-2 pl-1.5 text-center w-4  text-sm" [ngClass]="
+            <i class="fa-solid fa-door-open ml-2 mr-2 pl-1.5 text-center w-4  text-sm" [ngClass]="
                     logoutTables.isActive ? 'opacity-75' : 'text-blueGray-300'
           "></i> Logout
-                </a>
-            </li>
-            </ul>
-        </div>
+          </a>
+        </li>
+
+
+      </ul>
     </div>
+  </div>
 </nav>
