@@ -36,38 +36,35 @@
       <div class="relative flex flex-col min-w-0 break-words bg-white w-full rounded-lg">
         <div class=" sticky-search flex flex-wrap text-sm title-font text-gray-500 tracking-widest;" style="z-index: 10">
           <div class=" stickybar top-0 left-0 z-50  w-full p-2 md:w-full pt-3 shadow rounded-lg bg-white">
-            <div class="flex mr-1">
-              <div class=" w-1/62 flex items-center ml-2 h-full">
-                <button (click)="search()"
-                  class=" bg-emerald-500 text-white active:bg-emerald-600 font-bold text-sm  px-14 py-3 rounded shadow hover:bg-emerald-600 outline-none focus:outline-none ease-linear transition-all duration-150"
+            <div style="width: 102%;" class="flex ">
+                <select  [(ngModel)]="selectedcategoryId"
+                class="filter-width px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
+                <option *ngFor="let category of categories; let i = index" value="{{category.id}}">{{category.name| translate}}
+                </option>
+              </select>
+                <input [(ngModel)]="text" type="text"
+                  class=" ml-2 py-4 w-5/6  rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white border-spacing-0 text-sm"
+                  placeholder="Search by listing, location, bedroom number...">
+              <div  class=" w-1/62 flex items-center ml-2 h-full">
+                <button style="  top: 24px;right: 20px;" (click)="search()"
+                  class=" absolute bg-emerald-500 text-white active:bg-emerald-600 font-bold text-sm  px-10 py-3 rounded  hover:bg-emerald-600 outline-none focus:outline-none ease-linear transition-all duration-150"
                   type="button">
                   <i class="fas fa-search"></i> {{'Search' | translate}}
                 </button>
               </div>
-              <input [(ngModel)]="text" type="text"
-                class=" ml-2 py-3 w-5/6  rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white focus:ring-0 text-sm"
-                placeholder="Search by listing, location, bedroom number...">
             </div>
 
-            <div class="flex items-center justify-between mt-4">
-              <p class="font-medium m-3">
-                {{"Filters"| translate}}
-              </p>
-
+            <div class=" items-center justify-between mt-4">
 
               <div>
-                <div class="grid grid-cols-2 md:grid-cols-4 xl:grid-cols-7 gap-4 mt-1">
+                <div class="grid grid-cols-4  md:grid-cols-4 xl:grid-cols-5  gap-4 mt-1">
                   <select [(ngModel)]="selectedTransactionTypes"
                     class="w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
                     <option *ngFor="let transactionType of transactionTypes; let i = index" value="{{i}}">
                       {{transactionType | translate}} </option>
                   </select>
 
-                  <select [(ngModel)]="selectedcategoryId"
-                    class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
-                    <option *ngFor="let category of categories; let i = index" value="{{category.id}}">{{category.name| translate}}
-                    </option>
-                  </select>
+
 
                   <select [(ngModel)]="selectedPrice"
                     class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
@@ -75,11 +72,11 @@
 
                   </select>
 
-                  <select [(ngModel)]="selectedFloor"
+                  <!-- <select [(ngModel)]="selectedFloor"
                     class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
                     <option *ngFor="let floor of floors; let i = index" value="{{i}}">{{floor | translate}} </option>
 
-                  </select>
+                  </select> -->
 
                   <select [(ngModel)]="selectedBedroom"
                     class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
