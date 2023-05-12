@@ -30,7 +30,7 @@ export class ProfileComponent implements OnInit {
   openDialog:boolean = true;
   openDialogImage:boolean = true;
   ischangingProfile: boolean = false;
-  status:number = PROPERTY_INFOR.isUpdate;
+  status:number = PROPERTY_INFOR.isToUpdate;
   isMyProfile: boolean = false;
   postUserId: number = 0;
   userPosts: PostModel[] = [];

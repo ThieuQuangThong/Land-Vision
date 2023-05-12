@@ -6,6 +6,8 @@ import { PagingModel } from "src/app/models/paging-model";
 import { PostModel } from "src/app/models/post-model";
 import { SearchModel } from "src/app/models/search-model";
 import { PROPERTY_INFOR } from "src/assets/common/propertyInfor";
+import {ToastrService} from 'ngx-toastr'
+import { AuthService } from 'src/app/_service/auth.service';
 
 @Component({
   selector: "app-landing",
@@ -15,8 +17,8 @@ import { PROPERTY_INFOR } from "src/assets/common/propertyInfor";
 
 })
 export class LandingComponent implements OnInit {
-  
-  status: number = PROPERTY_INFOR.isView;
+
+  status: number = PROPERTY_INFOR.isToView;
   isLoading: boolean = false;
 
   mainSearch: SearchModel = new SearchModel();
@@ -59,18 +61,42 @@ export class LandingComponent implements OnInit {
   postRespone: PostModel[] = [];
 
   paddingTop: string = '';
-  constructor(private postService:PostService, private categoryService: CategoryService) {
+  constructor(
+    public toastr: ToastrService,
+    private postService:PostService,
+    private categoryService: CategoryService,
+    private auth: AuthService) {
   }
 
   ngOnInit(): void {
+    const userId = this.auth.getUserId();
+    if(userId){
+      this.auth.getUserInforById(userId)
+      .subscribe(
+        respone =>{
+          if(respone.numberOfNotification > 0 ){
+            this.showChangingStatusNotfication(respone.numberOfNotification)
+          }
+        }
+      );
+    }
+
     this.getCategorys();
     this.getPost(this.paging);
   }
+
+  showChangingStatusNotfication(numberOfNotification: number){
+    this.toastr.warning(`You have ${numberOfNotification} changing in your posts from Admin`, 'Major Error', {
+      timeOut: 3000,
+   });
+  }
+
   receiveHeight($event: any){
     console.log($event);
 
   this.paddingTop = $event.toString()+"px";
   }
+
 
   getCategorys(){
     this.categoryService.getCategory()
@@ -109,7 +135,6 @@ export class LandingComponent implements OnInit {
         this.isLoading = false
       }
     )
-
   }
 
   search(){

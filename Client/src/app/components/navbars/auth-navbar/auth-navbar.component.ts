@@ -4,6 +4,8 @@ import { TranslateService } from "@ngx-translate/core";
 import { AlertService } from "src/app/_service/alert.service";
 import { AuthService } from "src/app/_service/auth.service";
 import { PostService } from "src/app/_service/post.service";
+import {ToastrService} from 'ngx-toastr'
+
 
 @Component({
   selector: "app-auth-navbar",
@@ -20,7 +22,8 @@ export class AuthNavbarComponent implements OnInit {
     private elementRef: ElementRef,
     public translate: TranslateService,
     public router: Router,
-    private postService: PostService
+    private postService: PostService,
+    public toastr: ToastrService
     ){}
 
   ngOnInit(): void {
@@ -29,6 +32,7 @@ export class AuthNavbarComponent implements OnInit {
       respone =>{
         if(respone){
           this.isSeller = true
+
         }
         else{
           this.isSeller = false;
@@ -36,7 +40,6 @@ export class AuthNavbarComponent implements OnInit {
       }
     )
   }
-
   @HostListener('window:resize')
 
   onResize() {

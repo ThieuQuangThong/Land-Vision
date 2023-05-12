@@ -225,7 +225,7 @@
               </button>
             </div>
             <div class="button-borders">
-              <button class="primary-button uppercase" type="button" (click)="delete()" > Delete
+              <button *ngIf="isChooseOtherReason === false" class="primary-button uppercase" type="button" (click)="dialog.showModal()" > Reject
               </button>
             </div>
           </div>
@@ -235,3 +235,22 @@
     </div>
   </section>
 </main>
+<dialog #dialog >
+<div style="display: flex; flex-direction: column">
+  <select id="rejectReason" [(ngModel)]="selectedRejectReason"
+  (change)="onDropdownReasonChange($event)"
+  class="border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150">
+  <option *ngFor="let rejectReason of rejectReasons; let i = index" [value]="i">{{rejectReason}}</option>
+</select>
+<textarea id="w3review" [(ngModel)]="rejectReasonText" name="w3review" rows="4" cols="50" *ngIf="isChooseOtherReason">
+
+</textarea>
+  <div>
+    <button (click)="save()">Save</button>
+  </div>
+  <div>
+    <button (click)="close()">Cancel</button>
+  </div>
+  <!-- <ngx-loading [config]="{fullScreenBackdrop: true}" [show]="ischangingProfile"></ngx-loading> -->
+</div>
+</dialog>

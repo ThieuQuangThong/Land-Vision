@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.EntityFrameworkCore;
 
 namespace Land_Vision.Models
 {
@@ -46,7 +47,7 @@ namespace Land_Vision.Models
         public string? ValidateResetToken { get; set; }
 
         public DateTime EmailExpiresTime { get; set; }
-
+        public int numberOfNotification => Posts.Where(x => x.IsChangingStatus == true).Count();
         [Required]
         public Role Role { get; set; }
         public Vip? Vip { get; set; }

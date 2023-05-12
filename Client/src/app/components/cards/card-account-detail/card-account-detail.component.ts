@@ -13,7 +13,7 @@ import { PROPERTY_INFOR } from 'src/assets/common/propertyInfor';
   styleUrls: ['./card-account-detail.component.css']
 })
 export class CardAccountDetailComponent implements OnInit{
-  status:number = PROPERTY_INFOR.isUpdate;
+  status:number = PROPERTY_INFOR.isToUpdate;
   userInfor: UserInfor = new UserInfor();
   userId:number = 0;
   postUserId: number = 0;

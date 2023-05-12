@@ -24,7 +24,7 @@ export const API_URL = {
   GET_DIRECTIONS:() => `${DOMAIN}/api/Property/getDirections`,
   GET_CATEGORYS:() => `${DOMAIN}/api/Category`,
   ADD_POST:(userId: number) =>`${DOMAIN}/api/Post/${userId}`,
-  GET_POST_BY_ID:(postId: number) => `${DOMAIN}/api/Post/${postId}`,
+  GET_POST_BY_ID:(postId: number, sawNotification: boolean) => `${DOMAIN}/api/Post/getPostDetail/${postId}&${sawNotification}`,
   GET_SEARCHED_POSTS:(pagingModel: PagingModel) => `${DOMAIN}/api/Post/getSearchedPost/${pagingModel.skipCount}&${pagingModel.maxResultCount}`,
   CHECK_IDENTIFY_CARD:() => `https://api.fpt.ai/vision/idr/vnm`,
   CHECK_IS_USER_AVAILABLE_TO_POST:(userId: number) => `${DOMAIN}/api/Post/availablePost/${userId}`,
@@ -47,7 +47,8 @@ export const API_URL = {
   APPROVE_POST_BY_ID:(postId: number) => `${DOMAIN}/api/Post/appovePost/${postId}`,
   QR_MOMO: (orderInfor: string, amount: number) => `https://localhost:7165/api/Momo/momoQR/${orderInfor}&${amount}`,
   GET_APPROVED_POST_BY_USER_ID:(userId: number) => `${DOMAIN}/api/Post/getPostIsApproved/${userId}`,
-  UPDATE_USER_PATCH_BY_USER_ID: (userId: number) => `${DOMAIN}/api/Account/updateFlexible/${userId}`
+  UPDATE_USER_PATCH_BY_USER_ID: (userId: number) => `${DOMAIN}/api/Account/updateFlexible/${userId}`,
+  REJECT_POST_BY_ID: (postId: number) => `${DOMAIN}/api/Post/rejectPost/${postId}`
 };
 
 export const PATCH_PATH = {

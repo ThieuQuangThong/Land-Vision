@@ -27,6 +27,8 @@ export class UpdatePostingComponent {
   postId: number = 0;
   currentPosting: PostModel = new PostModel();
 
+  isReject: boolean = false;
+  rejectReasonText: string ='';
   isPosting: boolean = false;
   postRequest: PostRequest = new PostRequest();
   openTab = 1;
@@ -90,9 +92,13 @@ export class UpdatePostingComponent {
   ngOnInit() {
     const encodeId = this.route.snapshot.params['postId'];
      this.postId = Number(this.auth.decode(encodeId));
-    this.postService.getPostById(this.postId)
+    this.postService.getPostById(this.postId,true)
     .subscribe(
       respone => {
+        if(respone.approveStatus === PROPERTY_INFOR.isReject){
+          this.isReject = true;
+          this.rejectReasonText = respone.rejectReason;
+        }
         this.postRequest.property = respone.property;
         this.postRequest.post = respone as PostWithoutProperty
         this.openTab = respone.transactionType
@@ -121,7 +127,6 @@ export class UpdatePostingComponent {
         this.getAndSetDistrict();
         this.getAndSetDirection();
         this.getAndSetCategory();
-
       },
       error => {
         AlertService.setAlertModel('danger','Some thing went wrong');

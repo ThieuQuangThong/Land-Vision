@@ -9,7 +9,9 @@ export class PostModel {
   transactionType: number =0;
   approveStatus: number = -1;
   numberOfView: number = 0;
+  rejectReason: string ='';
   createDate! : Date;
+  isChangingStatus: boolean = false;
   isVerified:boolean = false;
   isHide:boolean = false;
   property: PropertyModel = new PropertyModel();
