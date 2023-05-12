@@ -86,6 +86,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AgmCoreModule } from '@agm/core';
 import {IvyCarouselModule} from 'carousel-angular';
+import { ImageCropperModule } from 'ngx-image-cropper';
 import { EmailConfirmSucceededComponent } from './views/email-confirm-succeeded/email-confirm-succeeded.component';
 import { PageNotFoundComponent } from './views/page-not-found/page-not-found.component';
 import { NgxOtpInputModule } from "ngx-otp-input";
@@ -214,6 +215,7 @@ import { EditProfilePopupComponent } from './components/edit-profile-popup/edit-
     NgbAlertModule,
     BrowserModule,
     AppRoutingModule,
+    ImageCropperModule,
     ReactiveFormsModule,
     NgxOtpInputModule,
     HttpClientModule,

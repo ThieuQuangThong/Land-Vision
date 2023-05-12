@@ -22,10 +22,10 @@
                     <div class="flex flex-wrap justify-center">
                         <div class="w-full lg:w-3/12 px-4 lg:order-2 flex justify-center">
                             <div class="relative">
-                                <div style=" width: 150px !important; height: 150px !important; background-image: url({{userInfor.avatarLink}}); background-size: cover;" class="shadow-xl rounded-full h-auto align-middle border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-150-px">
+                                <div style=" width: 160px !important; height: 160px !important; background-image: url({{userInfor.avatarLink}}); background-size: cover;" class="shadow-xl rounded-full border-none absolute -m-16 -ml-20 lg:-ml-16 max-w-170-px">
                                   <label *ngIf="isMyProfile" for="fileInput" class="choose-image">
                                   </label>
-                                  <input  *ngIf="isMyProfile" id="fileInput" type="file" style="display: none;" (change)="fileChangeEvent($event)">
+                                  <input  *ngIf="isMyProfile" id="fileInput" type="file" style="display: none;" (change)="fileChangeEvent($event)" (click)="openImageDialog();dialogImage.showModal();">
                                   <div  *ngIf="isMyProfile" style="border-radius: 50%; position: absolute; width: 35px; height: 35px; background-color: rgb(83, 81, 81); bottom: 8px; right: 8px; display: flex; align-items: center; justify-content: center;" >
                                     <i style="color: white;" class="fa-solid fa-camera"></i>
                                   </div>
@@ -100,6 +100,8 @@
 
         </div>
     </section>
+
+
     <dialog [ngClass]="openDialog ? 'hidden':'flex'" class="flex-col bg-blueGray-200 rounded-lg w-1/3" #dialog>
       <p class="text-xl font-medium">Edit your information</p>
       <div class="w-full mb-3 pt-0">
@@ -117,5 +119,24 @@
       </div>
       <ngx-loading [config]="{fullScreenBackdrop: true}" [show]="ischangingProfile"></ngx-loading>
     </dialog>
+
+    <dialog class="flex flex-col bg-blueGray-200 rounded-lg w-1/3" #dialogImage>
+      <div class="w-full">
+        <image-cropper [imageChangedEvent]="imgChangeEvt" [maintainAspectRatio]="true" [aspectRatio]="1"
+          [resizeToWidth]="100" [resizeToHeight]="100" [onlyScaleDown]="true" format="png" (imageCropped)="cropImg($event)"
+          (imageLoaded)="imgLoad()" (cropperReady)="initCropper()" (loadImageFailed)="imgFailed()">
+        </image-cropper>
+
+        <div class="w-full flex items-center text-center justify-around">
+          <button
+            class="w-3/12 border border-solid border-black bg-emerald-500 text-black active:bg-emerald-600 font-bold uppercase text-xs px-4 py-2 rounded-lg shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+            (click)="saveImage()">Save</button>
+          <button
+            class="w-3/12 border border-solid border-black bg-red-500 text-black active:bg-red-600 font-bold uppercase text-xs px-4 py-2 rounded-lg shadow hover:shadow-md outline-none focus:outline-none mr-1 mb-1 ease-linear transition-all duration-150"
+            (click)="close()">Cancel</button>
+        </div>
+      </div>
+    </dialog>
+
 </main>
 <app-footer></app-footer>
