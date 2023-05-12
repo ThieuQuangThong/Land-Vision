@@ -144,9 +144,9 @@ namespace Land_Vision.Controllers
         /// <summary>
         /// Get post by Id
         /// </summary>
-        [HttpGet("{postId}")]
+        [HttpGet("getPostDetail/{postId}&{sawNotification}")]
         [ProducesResponseType(200, Type = typeof(PostDto))]
-        public async Task<IActionResult> GetPostAsync(int postId)
+        public async Task<IActionResult> GetPostAsync(int postId, bool sawNotification = false)
         {
             if (!ModelState.IsValid)
             {
@@ -160,6 +160,10 @@ namespace Land_Vision.Controllers
                 return BadRequest(ModelState);
             }
 
+            if(sawNotification){
+                post.IsChangingStatus = false;
+                await _postRepository.UpdatePostAsync(post);
+            }
             return Ok(_mapper.Map<PostDto>(post));
         }
 
@@ -204,11 +208,39 @@ namespace Land_Vision.Controllers
                 return NotFound(); 
             }
 
-            if(post.ApproveStatus != NumberFiled.Unapproved){
+            if(post.ApproveStatus != NumberFiled.UNAPPROVED){
                 throw new Exception(); 
             }
 
             return Ok(_mapper.Map<PostDto>(post));
+        }
+
+        //POST reject post by id
+        /// <summary>
+        /// reject post by id
+        /// </summary>
+        [Authorize(Roles = "Admin")]
+        [HttpPost("rejectPost/{postId}")]
+        [ProducesResponseType(200)]
+        public async Task<IActionResult> RejectPostById(int postId,[FromBody] RejectReasonDto rejectReasonDto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var post = await _postRepository.GetPostAsync(postId);
+            if(post == null){
+                return NotFound(); 
+            }
+
+            post.ApproveStatus = NumberFiled.REJECTED;
+            post.RejectReason = rejectReasonDto.RejectReason;
+            post.IsChangingStatus = true;
+
+            await _postRepository.UpdatePostAsync(post);
+
+            return Ok();
         }
 
         // Get get approved post by user id
@@ -347,6 +379,7 @@ namespace Land_Vision.Controllers
                 }
                 
                 post.ApproveStatus = NumberFiled.APPROVED;
+                post.IsChangingStatus = true;
 
                 await _postRepository.UpdatePostAsync(post);
 

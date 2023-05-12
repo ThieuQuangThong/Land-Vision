@@ -117,6 +117,7 @@ import { ApproveDetailComponent } from './views/admin/approve-detail/approve-det
 import { CardPackageDetailComponent } from './components/cards/card-package-detail/card-package-detail.component';
 import { CardAccountDetailComponent } from './components/cards/card-account-detail/card-account-detail.component';
 import { EditProfilePopupComponent } from './components/edit-profile-popup/edit-profile-popup.component';
+import {ToastrModule} from 'ngx-toastr'
 
 @NgModule({
   declarations: [
@@ -219,6 +220,7 @@ import { EditProfilePopupComponent } from './components/edit-profile-popup/edit-
     ReactiveFormsModule,
     NgxOtpInputModule,
     HttpClientModule,
+    ToastrModule.forRoot(),
     AgmCoreModule.forRoot({
       apiKey : 'AIzaSyDomFYPpQGSvKFE02VovMc-PaqcZ1KCAzE'
     }),

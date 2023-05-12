@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { PagingModel } from '../models/paging-model';
 import { Observable } from 'rxjs';
@@ -9,6 +9,7 @@ import { PostModel } from '../models/post-model';
 import { SearchModel } from '../models/search-model';
 import { PositonPostModel } from '../models/positonPost-model';
 import { MoneyTranformPipe } from '../_pipes/money-tranform.pipe';
+import { RejectModel } from '../models/reject-model';
 
 @Injectable({
   providedIn: 'root'
@@ -33,8 +34,8 @@ export class PostService {
     return this.http.post<any>(API_URL.ADD_POST(userId),postRequest);
   }
 
-  getPostById(id: number):Observable<PostModel>{
-    return this.http.get<PostModel>(API_URL.GET_POST_BY_ID(id));
+  getPostById(id: number, sawNotification:boolean = false):Observable<PostModel>{
+    return this.http.get<PostModel>(API_URL.GET_POST_BY_ID(id,sawNotification));
   }
 
   getSearchedPost(pagingModel: PagingModel, searchModel: SearchModel):Observable<PostResponeModel>{
@@ -81,4 +82,7 @@ export class PostService {
     return this.http.get<PostModel[]>(API_URL.GET_APPROVED_POST_BY_USER_ID(userId));
   }
 
+  rejectPostById(postId: number, rejectReason: RejectModel): Observable<any> {
+    return this.http.post(API_URL.REJECT_POST_BY_ID(postId),rejectReason);
+  }
 }
