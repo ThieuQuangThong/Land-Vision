@@ -16,65 +16,54 @@
       <form action="" class="flex flex-col gap-3"  [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
         <div class="mb-1">
           <label for="email" class="block mb-1 text-xs font-medium text-[#002D74]">Your full name</label>
-          <input type="text" id="name" formControlName="name" placeholder="Full name" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:[#002D74]e-500
-           focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400" [ngClass]="{ 'is-invalid': submitted && f['name'].errors }">
+          <input type="text" id="name" formControlName="name" placeholder="Full name" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
+            block w-full p-2.5 " [ngClass]="{ 'is-invalid': submitted && f['name'].errors }">
 
-           <div *ngIf="submitted && f['name'].errors" class="invalid-feedback">
-            <div *ngIf="f['name'].errors['required']">First Name is required</div>
+           <div class="invalid" *ngIf="registrationForm.get('name')?.invalid && (registrationForm.get('name')?.dirty || registrationForm.get('name')?.touched)">
+            <div *ngIf="registrationForm.get('name')?.errors?.['required']">Name is required.</div>
+            <div *ngIf="registrationForm.get('name')?.errors?.['pattern']">Name must not contain number.</div>
           </div>
         </div>
         <div class="mb-1">
           <label for="phone" class="block mb-1 text-xs font-medium text-[#002D74]">Your phone number</label>
-          <input type="text" formControlName="phone" placeholder="Phone number" id="phone" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:[#002D74]e-500
-           focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400" [ngClass]="{ 'is-invalid': submitted && f['phone'].errors }" >
-           <div *ngIf="submitted && f['phone'].errors" class="invalid-feedback">
-            <div *ngIf="f['phone'].errors['required']">
-              Phone Number is required.
-            </div>
-            <div *ngIf="f['phone'].errors['pattern']">
-              Please Follow your pattern: Enter 10 digit phone Number.
-            </div>
+          <input type="text" formControlName="phone" placeholder="Phone number" id="phone" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
+            block w-full p-2.5 " [ngClass]="{ 'is-invalid': submitted && f['phone'].errors }" >
+           <div class="invalid" *ngIf="registrationForm.get('phone')?.invalid && (registrationForm.get('phone')?.dirty || registrationForm.get('phone')?.touched)">
+            <div *ngIf="registrationForm.get('phone')?.errors?.['required']">Phone is required.</div>
+            <div *ngIf="registrationForm.get('phone')?.errors?.['pattern']">Phone must have a length of 10 numbers.</div>
           </div>
         </div>
         <div class="mb-1">
           <label for="email" class="block mb-1 text-xs font-medium text-[#002D74]">Your email</label>
-          <input type="email" id="email" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:[#002D74]e-500
-           focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400" formControlName="email" placeholder="name@gmail.com"
+          <input type="email" id="email" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
+            block w-full p-2.5 " formControlName="email" placeholder="name@gmail.com"
            [ngClass]="{ 'is-invalid': submitted && f['email'].errors }">
 
-           <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
-            <div *ngIf="f['email'].errors['required']">Email is required</div>
-            <div *ngIf="f['email'].errors['email']">Email must be a valid email address</div>
+           <div class="invalid" *ngIf="registrationForm.get('email')?.invalid && (registrationForm.get('email')?.dirty || registrationForm.get('email')?.touched)">
+            <div *ngIf="registrationForm.get('email')?.errors?.['required']">Email is required.</div>
+            <div *ngIf="registrationForm.get('email')?.errors?.['email']">Invalid email format.</div>
           </div>
         </div>
         <div class="mb-1">
           <label for="password" class="block mb-1 text-xs font-medium text-[#002D74]">Your password</label>
-          <input type="password" formControlName="password" placeholder="New password"id="password" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:[#002D74]e-500
-           focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400"
+          <input type="password" formControlName="password" placeholder="New password"id="password" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
+            block w-full p-2.5 "
            [ngClass]="{ 'is-invalid': submitted && f['password'].errors }" >
-           <div *ngIf="submitted && f['password'].errors" class="invalid-feedback">
-            <div class="" *ngIf="f['password'].errors['required']">
-              Password is required
-            </div>
-            <div class="" *ngIf="f['password'].errors['required']">
-              Password must be at least 8 characters
-            </div>
-            <div class="" *ngIf="f['password'].errors['pattern']">
-              at least one letter and one number
-            </div>
+           <div class="invalid" *ngIf="registrationForm.get('password')?.invalid && (registrationForm.get('password')?.dirty || registrationForm.get('password')?.touched)">
+            <div *ngIf="registrationForm.get('password')?.errors?.['required']">Password is required.</div>
+            <div *ngIf="registrationForm.get('password')?.errors?.['minlength']">Password must have to be at least 6 characters long.</div>
+            <div *ngIf="registrationForm.get('password')?.errors?.['pattern']">At least one uppercase letter.</div>
           </div>
         </div>
 
         <div class="mb-1">
           <label for="repeat-password" class="block mb-1 text-xs font-medium text-[#002D74]">Repeat password</label>
-          <input type="password" formControlName="confirmPassword" placeholder="Confirm password" id="repeat-password" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:[#002D74]e-500
-           focus:border-blue-500 block w-full p-2.5  dark:border-gray-600 dark:placeholder-gray-400"
+          <input type="password" formControlName="confirmPassword" placeholder="Confirm password" id="repeat-password" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
+            block w-full p-2.5 "
            [ngClass]="{ 'is-invalid': submitted && f['password'].errors }">
 
-           <div *ngIf="submitted && f['confirmPassword'].errors" class="invalid-feedback">
-            <div class="inputerror" *ngIf="f['confirmPassword'].errors['required']">
-              Password not match!
-            </div>
+           <div class="invalid" *ngIf="registrationForm.get('confirmPassword')?.invalid && (registrationForm.get('confirmPassword')?.dirty || registrationForm.get('confirmPassword')?.touched)">
+            <div *ngIf="registrationForm.get('confirmPassword')?.errors?.['passwordMismatch']">Password not match.</div>
           </div>
         </div>
         <label  class="block text-sm font-medium text-[#002D74]">Your ID card</label>
@@ -88,15 +77,15 @@
         </div>
         <div class="flex items-start mb-1">
           <div class="flex  items-center h-5">
-            <input id="terms" type="radio" value="" class="w h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800 " required>
+            <input id="terms" type="radio" value="" class="w h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 dark:focus:ring-blue-600 dark:ring-offset-gray-800 " required>
           </div>
           <label for="terms" class="ml-2 text-sm font-medium text-[#002D74] dark:text-gray-400">I agree with the <a href="#" class="text-blue-600 hover:underline dark:text-blue-500">terms and conditions</a></label>
         </div>
         <div class="flex items-start mb-1">
-          <label for="terms" class="ml-2 text-sm font-medium text-[#002D74] dark:text-gray-400">Already have an account? <a href="#" class="text-blue-600 hover:underline dark:text-blue-500">Login</a></label>
+          <label for="terms" class="ml-2 text-sm font-medium text-[#002D74] dark:text-gray-400">Already have an account? <a routerLink="/login" class="text-blue-600 hover:underline dark:text-blue-500">Login</a></label>
 
         </div>
-        <button  type="submit" class="text-white bg-[#38C390] p-3 rounded-xl hover:bg-[#55be97] focus:ring-4 focus:outline-none">Register new account</button>
+        <button  type="submit"  [disabled]="registrationForm.invalid" class="text-white bg-[#38C390] p-3 rounded-xl hover:bg-[#55be97] focus:ring-4 focus:outline-none">Register new account</button>
       </form>
 
     </div>
