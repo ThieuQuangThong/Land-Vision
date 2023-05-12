@@ -1,8 +1,9 @@
 <a class="text-blueGray-500 block" href="#pablo" (click)="toggleDropdown($event)" #btnDropdownRef>
   <div class="items-center flex">
     <span class="w-8 h-8 text-sm text-white bg-blueGray-200 inline-flex items-center justify-center rounded-full">
-      <img alt="..." class="w-full h-full rounded-full align-middle border-none shadow-lg"
-        src="{{avatarLink}}" />
+      <div class="w-full h-full rounded-full align-middle border-none shadow-lg  bg-cover" style="background-image: url({{avatarLink}});"></div>
+      <!-- <img alt="..." class="w-full h-full rounded-full align-middle border-none shadow-lg bg-cover"
+        src="{{avatarLink}}" /> -->
     </span>
   </div>
 </a>

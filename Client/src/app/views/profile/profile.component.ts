@@ -11,6 +11,7 @@ import { UserService } from "src/app/_service/user.service";
 import { PATCH_PATH } from "src/assets/API_URL";
 import { ContactInformation } from "src/app/models/update-contact-information-model";
 import { FileUploadService } from "src/app/_service/file-upload.service";
+import { ImageCroppedEvent } from 'ngx-image-cropper';
 
 @Component({
   selector: "app-profile",
@@ -21,8 +22,13 @@ import { FileUploadService } from "src/app/_service/file-upload.service";
 export class ProfileComponent implements OnInit {
 
   @ViewChild('dialog') myDialog: ElementRef | undefined;
+  @ViewChild('dialogImage') myDialogImage: ElementRef | undefined;
+
+  imgChangeEvt: any = '';
+  cropImgPreview: string ='' ;
 
   openDialog:boolean = true;
+  openDialogImage:boolean = true;
   ischangingProfile: boolean = false;
   status:number = PROPERTY_INFOR.isUpdate;
   isMyProfile: boolean = false;
@@ -104,20 +110,9 @@ export class ProfileComponent implements OnInit {
   }
 
   fileChangeEvent(event: any){
-    const user = this.auth.getUserProfile() ?? new User();
-    const file = event.target.files[0];
-    this.imageService.convertFileToUrl(file)
-    .subscribe(
-      respone => {
-        this.userService.editSingleFieldUser(user.nameid,respone,PATCH_PATH.USER.AVAVAR_LINK)
-        .subscribe(
-          _ => {
-            this.userInfor.avatarLink = respone;
-            this.auth.setUserInfor(this.userInfor);
-          }
-        )
-      }
-    );
+    this.imgChangeEvt = event;
+    console.log(event.target.files[0]);
+
   }
 
   save(){
@@ -139,14 +134,56 @@ export class ProfileComponent implements OnInit {
     }
   )
   }
+  saveImage(){
 
+    const user = this.auth.getUserProfile() ?? new User();
+
+
+    const file = this.imageService.base64toFile(this.cropImgPreview,'huy.png')
+
+    // this.imageService.convertFileToUrl(file)
+    // .subscribe(
+    //   respone => {
+    //     this.userService.editSingleFieldUser(user.nameid,respone,PATCH_PATH.USER.AVAVAR_LINK)
+    //     .subscribe(
+    //       _ => {
+    //         this.userInfor.avatarLink = respone;
+    //         this.auth.setUserInfor(this.userInfor);
+    //       }
+    //     )
+    //   }
+    // );
+  }
   open(){
     this.openDialog = false;
+  }
+  openImageDialog(){
+    this.openDialogImage = false;
   }
   close(){
     this.openDialog = true;
     this.contactInformationChanging = JSON.parse(JSON.stringify(this.initContactInformation));
     this.myDialog?.nativeElement.close();
+  }
+
+
+  onFileChange(event: any): void {
+    this.imgChangeEvt = event;
+  }
+  cropImg(e: ImageCroppedEvent) {
+    this.cropImgPreview = e.base64!;
+    console.log(e.base64);
+
+  }
+  imgLoad() {
+    // display cropper tool
+  }
+  initCropper() {
+    // init cropper
+  }
+
+  imgFailed() {
+    // error msg
   }
 
 }
