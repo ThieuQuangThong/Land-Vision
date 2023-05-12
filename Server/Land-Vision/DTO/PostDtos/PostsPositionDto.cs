@@ -7,6 +7,8 @@ namespace Land_Vision.DTO.PostDtos
     {
         public int Id {get;set;}
         public string AddressNumber {get; set;}
+        public string Title {get; set;}
+        public double Area {get; set;}
         public int UserId {get; set;}
         public string Name {get; set;}
         public double Price {get; set;}

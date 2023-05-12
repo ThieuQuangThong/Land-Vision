@@ -77,11 +77,12 @@ namespace Land_Vision.Repositories
             .Select(x => new Post
             {
                 Id = x.Id,
-                Property = new Property
-                {
+                Title = x.Title,
+                Property = new Property{
                     AddressNumber = x.Property.AddressNumber,
                     Positions = x.Property.Positions.OrderBy(m => m.Id).ToList(),
-                    Price = x.Property.Price
+                    Price = x.Property.Price,
+                    Area = x.Property.Area              
                 },
                 Images = x.Images,
                 User = new User
