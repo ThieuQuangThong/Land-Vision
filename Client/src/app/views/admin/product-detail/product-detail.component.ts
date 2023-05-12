@@ -51,4 +51,7 @@ export class ProductDetailComponent implements OnInit {
     const idSeller = this.postItem.user.id.toString()
     this.Router.navigateByUrl('/profile/'+idSeller)
   }
+  zaloDirect(){
+    this.Router.navigateByUrl('https://zalo.me/0794217184')
+  }
 }

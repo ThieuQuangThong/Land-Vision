@@ -64,9 +64,16 @@
                 <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
                   <h2 class="text-sm title-font text-gray-500 tracking-widest">{{postItem.property.addressNumber}}</h2>
                   <h1 class="text-gray-900 text-3xl title-font font-medium mb-48">{{postItem.title}}</h1>
-                  <button (click)="MyProfile()" class="directSeller">
-                    <span>Seller Info</span>
-                  </button>
+
+                  <div class="flex">
+                    <button (click)="MyProfile()" class="directSeller inline-block">
+                      <span>Seller Info</span>
+                    </button>
+                    <div class="ml-5 bg-cover object-cover m-1 w-9 h-9 p-2 right-0 top-0" style="background-image: url(https://upload.wikimedia.org/wikipedia/commons/9/91/Icon_of_Zalo.svg);"></div>
+                    <button onclick="window.open('https://zalo.me/0794217184', '_blank')" class=" directSeller max-h-9 " style="min-width: 175px; background-color: #0091e6;" >
+                      Chat Zalo with Seller
+                    </button>
+                  </div>
                   <div class="flex">
                     <span class="title-font font-medium text-2xl text-gray-900">{{postItem.property.price |
                       moneyTransform}}</span>
