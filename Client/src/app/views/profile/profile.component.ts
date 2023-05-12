@@ -138,21 +138,19 @@ export class ProfileComponent implements OnInit {
 
     const user = this.auth.getUserProfile() ?? new User();
 
-
-    const file = this.imageService.base64toFile(this.cropImgPreview,'huy.png')
-
-    // this.imageService.convertFileToUrl(file)
-    // .subscribe(
-    //   respone => {
-    //     this.userService.editSingleFieldUser(user.nameid,respone,PATCH_PATH.USER.AVAVAR_LINK)
-    //     .subscribe(
-    //       _ => {
-    //         this.userInfor.avatarLink = respone;
-    //         this.auth.setUserInfor(this.userInfor);
-    //       }
-    //     )
-    //   }
-    // );
+    this.imageService.convertBase64ToUrl(this.cropImgPreview)
+    .subscribe(
+      respone => {
+        this.userService.editSingleFieldUser(user.nameid,respone,PATCH_PATH.USER.AVAVAR_LINK)
+        .subscribe(
+          _ => {
+            this.userInfor.avatarLink = respone;
+            this.myDialogImage?.nativeElement.close();
+            this.auth.setUserInfor(this.userInfor);
+          }
+        )
+      }
+    );
   }
   open(){
     this.openDialog = false;
@@ -166,14 +164,18 @@ export class ProfileComponent implements OnInit {
     this.myDialog?.nativeElement.close();
   }
 
+  closeImagePopup(){
+    this.imgChangeEvt ='';
+    this.cropImgPreview = '';
+    this.myDialogImage?.nativeElement.close();
+  }
+
 
   onFileChange(event: any): void {
     this.imgChangeEvt = event;
   }
   cropImg(e: ImageCroppedEvent) {
     this.cropImgPreview = e.base64!;
-    console.log(e.base64);
-
   }
   imgLoad() {
     // display cropper tool

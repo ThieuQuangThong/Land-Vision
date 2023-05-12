@@ -13,6 +13,7 @@ export const API_URL = {
   REFRESH_TOKEN: () => `${DOMAIN}/api/Account/refresh`,
   VALIDATE_CODE:() => `${DOMAIN}/api/Account/validateCode`,
   CONVERT_FILE_IMAGE_TO_URL:() =>`${DOMAIN}/api/Image/convertFileImageToUrl`,
+  CONVERT_BASE64_TO_URL:() =>`${DOMAIN}/api/Image/convertBase64ToUrl`,
   RESET_PASSWORD:() =>`${DOMAIN}/api/Account/resetPassword`,
   LOGIN:() => `${DOMAIN}/api/Account/login`,
   REGISTER_ACCOUNT:() => `${DOMAIN}/api/Account/RegisterAccount`,

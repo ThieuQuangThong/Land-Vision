@@ -1,4 +1,4 @@
-import { HttpClient, HttpEvent, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AuthService } from './auth.service';
@@ -51,6 +51,12 @@ export class FileUploadService {
 
     this.onUpload2()
     this.onUpload1()
+  }
+
+  convertBase64ToUrl(base64: string):Observable<string>{
+    return this.http.post(API_URL.CONVERT_BASE64_TO_URL(),JSON.stringify(base64),
+    {responseType: 'text',
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })})
   }
 
   convertFileToUrl(file: File): Observable<any>{

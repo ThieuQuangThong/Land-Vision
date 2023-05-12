@@ -46,5 +46,21 @@ namespace Land_Vision.service
             await formFile.CopyToAsync(memoryStream);
             return memoryStream.ToArray();
         }
+
+        public async Task<string> ConvertBase64ToUrlAsync(string base64)
+        {
+                var base64String = base64.Split("base64,")[1];
+                byte[] bytesImage = Convert.FromBase64String(base64String);
+                var stream = new MemoryStream(bytesImage);
+
+                long ticks = DateTime.Now.Ticks;
+                byte[] bytesTime = BitConverter.GetBytes(ticks);
+                string id = Convert.ToBase64String(bytesTime)
+                                        .Replace('+', '_')
+                                        .Replace('/', '-')
+                                        .TrimEnd('=');
+                                        
+                return await _firebaseStorage.Child("images_by_months/" + DateTime.Now.Month + "/img" + "_" + id).PutAsync(stream);
+        }
     }
 }
