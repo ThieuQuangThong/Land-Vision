@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Authorization;
 using Land_Vision.Dto.DateTimeDtos;
 using Land_Vision.Repositories;
+using Land_Vision.Dto.TypeDtos;
 
 namespace Land_Vision.Controllers
 {
@@ -64,11 +65,32 @@ namespace Land_Vision.Controllers
         /// Count revenue by date time
         /// </summary>
         [Authorize(Roles = "Admin")]
-        [HttpGet("countPostByDateTime")]
+        [HttpGet("countRevenueByDateTime")]
         [ProducesResponseType(200, Type = typeof(DateTimeRevenueDto))]
         public async Task<ActionResult<DateTimeRevenueDto>> SumRevenueByDateTime()
         {
             var dateTimeDto = await _detailPurchaseRepository.SumRevenueByDateTimeAsync();
+            if (dateTimeDto == null)
+            {
+                return NotFound();
+            }
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+
+            return Ok(dateTimeDto);
+        }
+
+        /// <summary>
+        /// Count detail purchase by vip type
+        /// </summary>
+        [Authorize(Roles = "Admin")]
+        [HttpGet("countRevenueByVipType")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<VipTypeDto>))]
+        public async Task<ActionResult<VipTypeDto>> CountDetailByVipType()
+        {
+            var dateTimeDto = await _detailPurchaseRepository.CountRevenueByTypeOfVip();
             if (dateTimeDto == null)
             {
                 return NotFound();

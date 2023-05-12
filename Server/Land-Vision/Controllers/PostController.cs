@@ -3,6 +3,7 @@ using Land_Vision.Common;
 using Land_Vision.Data;
 using Land_Vision.Dto.DateTimeDtos;
 using Land_Vision.Dto.PostDtos;
+using Land_Vision.Dto.TypeDtos;
 using Land_Vision.DTO;
 using Land_Vision.DTO.PostDtos;
 using Land_Vision.Interface.IRepositories;
@@ -137,6 +138,27 @@ namespace Land_Vision.Controllers
 
 
             return Ok(dateTimeDto);
+        }
+
+        /// <summary>
+        /// Count post by type
+        /// </summary>
+        [Authorize(Roles = "Admin")]
+        [HttpGet("countPostByType")]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<PostTypeDto>))]
+        public async Task<ActionResult<TypeDto>> CountPostByType()
+        {
+            var typeDto = await _postRepository.CountPostByType();
+            if (typeDto == null)
+            {
+                return NotFound();
+            }
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+
+            return Ok(typeDto);
         }
 
         // GET Posts By Time

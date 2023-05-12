@@ -1,4 +1,5 @@
 ﻿using Land_Vision.Dto.DateTimeDtos;
+using Land_Vision.Dto.TypeDtos;
 using Land_Vision.DTO;
 using Land_Vision.DTO.PostDtos;
 using Land_Vision.Models;
@@ -20,6 +21,7 @@ namespace Land_Vision.Interface.IRepositories
         Task<List<Post>> GetPostsAsync(Pagination pagination);
         Task<List<Post>> GetPostsByTimeAsync(Pagination pagination, DateTime startDate, DateTime endDate);
         Task<Post> GetPostAsync(int postId);
+        Task<List<PostTypeDto>> CountPostByType();
         Task<Post> GetPostByTitleAsync(string postName);
         Task<int> GetPostCountAsync();
         Task<bool> AddPostAsync(int userId, Post post);

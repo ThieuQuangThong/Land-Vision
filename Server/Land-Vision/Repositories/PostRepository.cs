@@ -1,6 +1,7 @@
 ﻿using Land_Vision.Common;
 using Land_Vision.Data;
 using Land_Vision.Dto.DateTimeDtos;
+using Land_Vision.Dto.TypeDtos;
 using Land_Vision.DTO;
 using Land_Vision.DTO.PostDtos;
 using Land_Vision.Interface.IRepositories;
@@ -57,6 +58,21 @@ namespace Land_Vision.Repositories
             };
         }
 
+        public async Task<List<PostTypeDto>> CountPostByType()
+        {
+            var posts = await _dbContext.Posts.ToListAsync();
+
+            var postCountByType = posts
+                .GroupBy(p => p.transactionType)
+        .Select(g => new PostTypeDto
+        {
+            key = g.Key,
+            value = g.Count()
+        })
+        .ToList();
+            return postCountByType;
+        }
+
         public async Task<int> CountPostByUserIdAsync(int userId)
         {
             return await _dbContext.Posts.Where(x => x.User.Id == userId && x.isHide == false).CountAsync();
@@ -78,11 +94,12 @@ namespace Land_Vision.Repositories
             {
                 Id = x.Id,
                 Title = x.Title,
-                Property = new Property{
+                Property = new Property
+                {
                     AddressNumber = x.Property.AddressNumber,
                     Positions = x.Property.Positions.OrderBy(m => m.Id).ToList(),
                     Price = x.Property.Price,
-                    Area = x.Property.Area              
+                    Area = x.Property.Area
                 },
                 Images = x.Images,
                 User = new User

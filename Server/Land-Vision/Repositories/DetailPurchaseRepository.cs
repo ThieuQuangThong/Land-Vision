@@ -1,5 +1,6 @@
 ﻿using Land_Vision.Data;
 using Land_Vision.Dto.DateTimeDtos;
+using Land_Vision.Dto.TypeDtos;
 using Land_Vision.Interface.IRepositories;
 using Land_Vision.Models;
 using Microsoft.EntityFrameworkCore;
@@ -36,6 +37,21 @@ namespace Land_Vision.Repositories
             return sum;
         }
 
+        public async Task<List<VipTypeDto>> CountRevenueByTypeOfVip()
+        {
+            var detailPurchases = await _dbContext.DetailPurchases.Include(d => d.Vip).ToListAsync();
+
+            var detailPurchaseCountByType = detailPurchases.GroupBy(p => p.Vip.Name)
+        .Select(g => new VipTypeDto
+        {
+           name = g.Key,
+           num = g.Count()
+
+        })
+        .ToList();
+            return detailPurchaseCountByType;
+        }
+
         public async Task<List<DetailPurchase>> GetAllDetailPurchase()
         {
             return await _dbContext.DetailPurchases.OrderByDescending(x => x.TransactionDate)
@@ -58,7 +74,7 @@ namespace Land_Vision.Repositories
 
         public async Task<DateTimeRevenueDto> SumRevenueByDateTimeAsync()
         {
-            var purchases = await _dbContext.DetailPurchases.Include(p=> p.Vip).ToListAsync();
+            var purchases = await _dbContext.DetailPurchases.Include(p => p.Vip).ToListAsync();
             var sumRevenueByYear = purchases
                 .GroupBy(r => r.TransactionDate.Year)
                 .Select(r => new
@@ -76,13 +92,13 @@ namespace Land_Vision.Repositories
                 .ToDictionary(x => x.Year + "-" + x.Month, x => x.Sum);
             var sumRevenueByDay = purchases
                 .GroupBy(r => r.TransactionDate.Date)
-                .Select(r => new { Day = r.Key.ToString("yyyy-MM-dd"), Sum = r.Sum(g=>g.Vip.Price) })
+                .Select(r => new { Day = r.Key.ToString("yyyy-MM-dd"), Sum = r.Sum(g => g.Vip.Price) })
                 .OrderBy(x => x.Day)
-                .ToDictionary(x=>x.Day, x=> x.Sum);
+                .ToDictionary(x => x.Day, x => x.Sum);
             return new DateTimeRevenueDto
             {
                 NumbByYears = sumRevenueByYear,
-                NumbByMonths= sumRevenueByMonth,
+                NumbByMonths = sumRevenueByMonth,
                 NumbByDays = sumRevenueByDay,
             };
         }

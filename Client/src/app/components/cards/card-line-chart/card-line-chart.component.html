@@ -2,20 +2,43 @@
     <div class="rounded-t mb-0 px-4 py-3 bg-transparent">
         <div class="flex flex-wrap items-center">
             <div class="relative w-full max-w-full flex-grow flex-1">
-                <h6 class="uppercase text-blueGray-100 mb-1 text-xs font-semibold">
+                <h6 class="uppercase text-gray-800 mb-1 text-xs font-semibold">
                     Overview
                 </h6>
-                <h2 class="text-white text-xl font-semibold">
-                    Sales value
+                <h2 class="text-gray-800 text-xl font-semibold">
+                    Chart
                 </h2>
             </div>
         </div>
     </div>
-    <div class="p-4 flex-auto">
+    <div class=" flex-auto">
         <!-- Chart -->
-        <div class="relative h-350-px">
+        <div class="relative w-full">
             <div class="chart-container">
-                <div echarts [options]="chartOptions" class="demo-chart"></div>
+                <mat-tab-group>
+                    <mat-tab label="Posts">
+                        <div class="p-4 ">
+                            <p class="text-center text-xl ">Chart view of posts</p>
+                            <div class="grid grid-cols-3 gap-4 border border-indigo-600 rounded-2xl">
+                                <div echarts [options]="chartPostOptions" class="demo-chart col-span-2"></div>
+                                <div echarts [options]="chartPostPieOptions" class="demo-chart"></div>
+                            </div>
+                        </div>
+
+                    </mat-tab>
+
+                    <mat-tab label="Revenue">
+                        <p class="text-center text-xl ">Chart view of posts</p>
+                        <div class="grid grid-cols-3 gap-4 border border-indigo-600 rounded-2xl">
+                            <div echarts [options]="chartRevenueOptions" class="demo-chart col-span-2"></div>
+                            <div echarts [options]="chartRevenuePieOptions" class="demo-chart"></div>
+                        </div>
+                    </mat-tab>
+                    <mat-tab label="Accounts">
+                        <div echarts [options]="chartAccountOptions" class="demo-chart"></div>
+
+                    </mat-tab>
+                </mat-tab-group>
             </div>
         </div>
     </div>
