@@ -1,10 +1,12 @@
 using Land_Vision.Common;
 using Land_Vision.Data;
+using Land_Vision.Dto.DateTimeDtos;
 using Land_Vision.DTO;
 using Land_Vision.DTO.UserDtos;
 using Land_Vision.Interface.IRepositories;
 using Land_Vision.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 
 namespace Land_Vision.Repositories
 {
@@ -122,5 +124,31 @@ namespace Land_Vision.Repositories
             return await SaveChangesAsync();
         }
 
+        public async Task<DateTimeDto> CountUserByDateTimeAsync()
+        {
+            var accounts = await _dbContext.Users.ToListAsync();
+            var accountCountByYear = accounts
+                .GroupBy(a => a.EmailExpiresTime.Year)
+                .Select(g => new { Year = g.Key.ToString(), Count = g.Count() })
+                .OrderBy(x => x.Year)
+                .ToDictionary(x => x.Year, x => x.Count);
+            var accountCountByMonth = accounts
+               .GroupBy(c => new { c.EmailExpiresTime.Year, c.EmailExpiresTime.Month })
+               .Select(g => new { Year = g.Key.Year.ToString(), Month = g.Key.Month.ToString(), Count = g.Count() })
+               .OrderBy(x => x.Year)
+               .ThenBy(x => x.Month)
+               .ToDictionary(x => x.Year + "-" + x.Month, x => x.Count);
+            var accountCountByDay = accounts
+                .GroupBy(c => c.EmailExpiresTime.Date)
+                .Select(g => new { Day = g.Key.ToString("yyyy-MM-dd"), Count = g.Count() })
+                .OrderBy(x => x.Day)
+                .ToDictionary(x => x.Day, x => x.Count);
+            return new DateTimeDto
+            {
+                NumbByMonths = accountCountByMonth,
+                NumbByYears = accountCountByYear,
+                NumbByDays = accountCountByDay
+            };
+        }
     }
 }

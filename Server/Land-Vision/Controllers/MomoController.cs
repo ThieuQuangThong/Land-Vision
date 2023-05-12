@@ -14,7 +14,7 @@ namespace Land_Vision.Controllers
     {
         public MomoController() { }
 
-        [Authorize(Roles = "User")]
+        [Authorize(Roles = "Admin,User")]
         [HttpPost("momoQR/{orderInfoo}&{amountt}")]
         public IActionResult PostQR(string orderInfoo, string amountt)
         {

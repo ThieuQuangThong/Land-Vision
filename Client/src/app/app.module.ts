@@ -117,7 +117,8 @@ import { ApproveDetailComponent } from './views/admin/approve-detail/approve-det
 import { CardPackageDetailComponent } from './components/cards/card-package-detail/card-package-detail.component';
 import { CardAccountDetailComponent } from './components/cards/card-account-detail/card-account-detail.component';
 import { EditProfilePopupComponent } from './components/edit-profile-popup/edit-profile-popup.component';
-import {ToastrModule} from 'ngx-toastr'
+import { NgxEchartsModule } from 'ngx-echarts';
+import {ToastrModule} from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -197,6 +198,14 @@ import {ToastrModule} from 'ngx-toastr'
     // RegisterComponent,
   ],
   imports: [
+    NgxEchartsModule.forRoot({
+      /**
+       * This will import all modules from echarts.
+       * If you only need custom modules,
+       * please refer to [Custom Build] section.
+       */
+      echarts: () => import('echarts'), // or import('./path-to-my-custom-echarts')
+    }),
     MatDialogModule,
     ClipboardModule,
     MatTooltipModule,

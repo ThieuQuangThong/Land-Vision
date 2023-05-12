@@ -1,5 +1,7 @@
 ﻿using Land_Vision.Common;
 using Land_Vision.Data;
+using Land_Vision.Dto.DateTimeDtos;
+using Land_Vision.Dto.TypeDtos;
 using Land_Vision.DTO;
 using Land_Vision.DTO.PostDtos;
 using Land_Vision.Interface.IRepositories;
@@ -26,12 +28,54 @@ namespace Land_Vision.Repositories
 
         public async Task<bool> CheckIsPostExistByIdAsync(int postId)
         {
-            return await _dbContext.Posts.AnyAsync(x => x.Id == postId );
+            return await _dbContext.Posts.AnyAsync(x => x.Id == postId);
+        }
+
+        public async Task<DateTimeDto> CountPostByDateTimeAsync()
+        {
+            var posts = await _dbContext.Posts.ToListAsync();
+            var postCountByYear = posts
+                .GroupBy(a => a.CreateDate.Year)
+                .Select(g => new { Year = g.Key.ToString(), Count = g.Count() })
+                .OrderBy(x => x.Year)
+                .ToDictionary(x => x.Year, x => x.Count);
+            var postCountByMonth = posts
+               .GroupBy(c => new { c.CreateDate.Year, c.CreateDate.Month })
+               .Select(g => new { Year = g.Key.Year.ToString(), Month = g.Key.Month.ToString(), Count = g.Count() })
+               .OrderBy(x => x.Year)
+               .ThenBy(x => x.Month)
+               .ToDictionary(x => x.Year + "-" + x.Month, x => x.Count);
+            var postCountByDay = posts
+                .GroupBy(c => c.CreateDate.Date)
+                .Select(g => new { Day = g.Key.ToString("yyyy-MM-dd"), Count = g.Count() })
+                .OrderBy(x => x.Day)
+                .ToDictionary(x => x.Day, x => x.Count);
+            return new DateTimeDto
+            {
+                NumbByMonths = postCountByMonth,
+                NumbByYears = postCountByYear,
+                NumbByDays = postCountByDay
+            };
+        }
+
+        public async Task<List<PostTypeDto>> CountPostByType()
+        {
+            var posts = await _dbContext.Posts.ToListAsync();
+
+            var postCountByType = posts
+                .GroupBy(p => p.transactionType)
+        .Select(g => new PostTypeDto
+        {
+            name = g.Key == 0 ? "Sell" : "Rent",
+            value = g.Count()
+        })
+        .ToList();
+            return postCountByType;
         }
 
         public async Task<int> CountPostByUserIdAsync(int userId)
         {
-            return await _dbContext.Posts.Where(x => x.User.Id == userId && x.isHide == false ).CountAsync();
+            return await _dbContext.Posts.Where(x => x.User.Id == userId && x.isHide == false).CountAsync();
         }
 
         public async Task<bool> DeletePostAsync(Post post)
@@ -42,21 +86,24 @@ namespace Land_Vision.Repositories
 
         public async Task<List<Post>> GetAllInforPositionOfPostAsync()
         {
-            return  await _dbContext.Posts
+            return await _dbContext.Posts
             .Include(l => l.Property.Positions.OrderByDescending(x => x.Id))
             .Include(o => o.Images)
             .Where(x => x.isHide == false)
-            .Select(x => new Post {
+            .Select(x => new Post
+            {
                 Id = x.Id,
                 Title = x.Title,
-                Property = new Property{
+                Property = new Property
+                {
                     AddressNumber = x.Property.AddressNumber,
                     Positions = x.Property.Positions.OrderBy(m => m.Id).ToList(),
                     Price = x.Property.Price,
-                    Area = x.Property.Area              
+                    Area = x.Property.Area
                 },
                 Images = x.Images,
-                User = new User {
+                User = new User
+                {
                     Name = x.User.Name,
                     AvatarLink = x.User.AvatarLink,
                     Id = x.User.Id
@@ -67,7 +114,7 @@ namespace Land_Vision.Repositories
 
         public Task<List<Post>> GetApprovedPostByUserIdAsync(int userId)
         {
-            return _dbContext.Posts.OrderByDescending(p => p.CreateDate)            
+            return _dbContext.Posts.OrderByDescending(p => p.CreateDate)
             .Include(x => x.User)
             .Include(l => l.Images)
             .Include(k => k.Property.Ward)
@@ -148,7 +195,7 @@ namespace Land_Vision.Repositories
         public async Task<List<Post>> GetPostsByUserIdAsync(int userId)
         {
             return await _dbContext.Posts
-            .OrderByDescending(p => p.CreateDate)            
+            .OrderByDescending(p => p.CreateDate)
             .Include(x => x.User)
             .Include(l => l.Images)
             .Include(k => k.Property.Ward)
@@ -163,27 +210,28 @@ namespace Land_Vision.Repositories
         public async Task<List<Post>> GetSearchedPosts(Pagination pagination, PostSearchDto postSearchDto)
         {
             var text = postSearchDto.Text;
-            if(!String.IsNullOrEmpty(text)){
+            if (!String.IsNullOrEmpty(text))
+            {
                 text = text.Trim();
             }
 
             return await _dbContext.Posts
             .Where(x => x.ApproveStatus == NumberFiled.APPROVED && x.isHide == false
             && (postSearchDto.TransactionType == NumberFiled.ALL || x.transactionType == postSearchDto.TransactionType)
-            && (postSearchDto.CategoryId == NumberFiled.ALL_CATEGORY ||x.Property.CategoryId == postSearchDto.CategoryId)
-            && (postSearchDto.Price == NumberFiled.ALL ||x.Property.Price <= postSearchDto.Price
-                ||(postSearchDto.Price == NumberFiled.OVER_THREE_BILLION && postSearchDto.Price <= x.Property.Price))
+            && (postSearchDto.CategoryId == NumberFiled.ALL_CATEGORY || x.Property.CategoryId == postSearchDto.CategoryId)
+            && (postSearchDto.Price == NumberFiled.ALL || x.Property.Price <= postSearchDto.Price
+                || (postSearchDto.Price == NumberFiled.OVER_THREE_BILLION && postSearchDto.Price <= x.Property.Price))
 
-            && (postSearchDto.NumberOfFloor == NumberFiled.ALL ||x.Property.NumberOfFloor == postSearchDto.NumberOfFloor
-                ||(postSearchDto.NumberOfFloor == NumberFiled.OVER_SIX && x.Property.NumberOfFloor >= NumberFiled.OVER_SIX))
+            && (postSearchDto.NumberOfFloor == NumberFiled.ALL || x.Property.NumberOfFloor == postSearchDto.NumberOfFloor
+                || (postSearchDto.NumberOfFloor == NumberFiled.OVER_SIX && x.Property.NumberOfFloor >= NumberFiled.OVER_SIX))
 
-            && (postSearchDto.NumberOfBed == NumberFiled.ALL ||x.Property.NumberOfBed == postSearchDto.NumberOfBed
-                ||(postSearchDto.NumberOfBed == NumberFiled.OVER_SIX && x.Property.NumberOfBed >= NumberFiled.OVER_SIX))
+            && (postSearchDto.NumberOfBed == NumberFiled.ALL || x.Property.NumberOfBed == postSearchDto.NumberOfBed
+                || (postSearchDto.NumberOfBed == NumberFiled.OVER_SIX && x.Property.NumberOfBed >= NumberFiled.OVER_SIX))
 
-            && (postSearchDto.NumberOfBath == NumberFiled.ALL ||x.Property.NumberOfBath == postSearchDto.NumberOfBath 
-                ||(postSearchDto.NumberOfBath == NumberFiled.OVER_SIX && x.Property.NumberOfBath >= NumberFiled.OVER_SIX))
+            && (postSearchDto.NumberOfBath == NumberFiled.ALL || x.Property.NumberOfBath == postSearchDto.NumberOfBath
+                || (postSearchDto.NumberOfBath == NumberFiled.OVER_SIX && x.Property.NumberOfBath >= NumberFiled.OVER_SIX))
 
-            && (postSearchDto.Direction == NumberFiled.ALL ||x.Property.Direction == postSearchDto.Direction)
+            && (postSearchDto.Direction == NumberFiled.ALL || x.Property.Direction == postSearchDto.Direction)
             && (String.IsNullOrEmpty(text) || x.Title.Contains(text) || x.Description.Contains(text)))
             .Skip(pagination.SkipCount)
             .Take(pagination.MaxResultCount)
@@ -201,26 +249,27 @@ namespace Land_Vision.Repositories
         public Task<int> GetTotalCountSearchedPostAsync(PostSearchDto postSearchDto)
         {
             var text = postSearchDto.Text;
-            if(!String.IsNullOrEmpty(text)){
+            if (!String.IsNullOrEmpty(text))
+            {
                 text = text.Trim();
             }
 
             return _dbContext.Posts.Where(x => x.ApproveStatus == NumberFiled.APPROVED && x.isHide == false
-            &&(postSearchDto.TransactionType == NumberFiled.ALL || x.transactionType == postSearchDto.TransactionType)
-            && ( postSearchDto.CategoryId == NumberFiled.ALL_CATEGORY ||x.Property.Interior == postSearchDto.CategoryId)
-            && ( postSearchDto.Price == NumberFiled.ALL || x.Property.Price <= postSearchDto.Price
-                ||(postSearchDto.Price == NumberFiled.OVER_THREE_BILLION && postSearchDto.Price <= x.Property.Price))
+            && (postSearchDto.TransactionType == NumberFiled.ALL || x.transactionType == postSearchDto.TransactionType)
+            && (postSearchDto.CategoryId == NumberFiled.ALL_CATEGORY || x.Property.Interior == postSearchDto.CategoryId)
+            && (postSearchDto.Price == NumberFiled.ALL || x.Property.Price <= postSearchDto.Price
+                || (postSearchDto.Price == NumberFiled.OVER_THREE_BILLION && postSearchDto.Price <= x.Property.Price))
 
-            && ( postSearchDto.NumberOfFloor == NumberFiled.ALL ||x.Property.NumberOfFloor == postSearchDto.NumberOfFloor
-                ||(postSearchDto.NumberOfFloor == NumberFiled.OVER_SIX && x.Property.NumberOfFloor >= NumberFiled.OVER_SIX))
+            && (postSearchDto.NumberOfFloor == NumberFiled.ALL || x.Property.NumberOfFloor == postSearchDto.NumberOfFloor
+                || (postSearchDto.NumberOfFloor == NumberFiled.OVER_SIX && x.Property.NumberOfFloor >= NumberFiled.OVER_SIX))
 
-            && ( postSearchDto.NumberOfBed == NumberFiled.ALL ||x.Property.NumberOfBed == postSearchDto.NumberOfBed
-                ||(postSearchDto.NumberOfBed == NumberFiled.OVER_SIX && x.Property.NumberOfBed >= NumberFiled.OVER_SIX))
+            && (postSearchDto.NumberOfBed == NumberFiled.ALL || x.Property.NumberOfBed == postSearchDto.NumberOfBed
+                || (postSearchDto.NumberOfBed == NumberFiled.OVER_SIX && x.Property.NumberOfBed >= NumberFiled.OVER_SIX))
 
-            && ( postSearchDto.NumberOfBath == NumberFiled.ALL ||x.Property.NumberOfBath == postSearchDto.NumberOfBath
-                ||(postSearchDto.NumberOfBath == NumberFiled.OVER_SIX && x.Property.NumberOfBath >= NumberFiled.OVER_SIX))
+            && (postSearchDto.NumberOfBath == NumberFiled.ALL || x.Property.NumberOfBath == postSearchDto.NumberOfBath
+                || (postSearchDto.NumberOfBath == NumberFiled.OVER_SIX && x.Property.NumberOfBath >= NumberFiled.OVER_SIX))
 
-            && ( postSearchDto.Direction == NumberFiled.ALL ||x.Property.Direction == postSearchDto.Direction)
+            && (postSearchDto.Direction == NumberFiled.ALL || x.Property.Direction == postSearchDto.Direction)
             && (String.IsNullOrEmpty(text) || x.Title.Contains(text) || x.Description.Contains(text)))
             .CountAsync();
         }

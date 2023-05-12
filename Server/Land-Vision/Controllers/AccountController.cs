@@ -1,6 +1,7 @@
 using AutoMapper;
 using Land_Vision.Common;
 using Land_Vision.Data;
+using Land_Vision.Dto.DateTimeDtos;
 using Land_Vision.DTO;
 using Land_Vision.DTO.UserDtos;
 using Land_Vision.Interface.IRepositories;
@@ -22,7 +23,7 @@ namespace Land_Vision.Controllers
         private readonly IUserService _userSevice;
         private readonly IUserRepository _userRepository;
         private readonly IPostRepository _postRepository;
-         private readonly IDetailPurchaseRepository _detailPurchaseRepository;
+        private readonly IDetailPurchaseRepository _detailPurchaseRepository;
         private readonly IMapper _mapper;
 
         public AccountController(
@@ -91,10 +92,32 @@ namespace Land_Vision.Controllers
             }
 
             var userDto = _mapper.Map<UserDto>(user);
-            userDto.NumberOfUserCanPost =  await _detailPurchaseRepository.CountPostUserBuy(userId);
+            userDto.NumberOfUserCanPost = await _detailPurchaseRepository.CountPostUserBuy(userId);
             userDto.Posted = await _postRepository.CountPostByUserIdAsync(user.Id);
             return Ok(userDto);
         }
+
+        /// <summary>
+        /// Count account by date time
+        /// </summary>
+        [Authorize(Roles = "Admin")]
+        [HttpGet("countUserByDateTime")]
+        [ProducesResponseType(200, Type = typeof(DateTimeDto))]
+        public async Task<ActionResult<DateTimeDto>> CountAccountByDateTime()
+        {
+            var dateTimeDto = await _userRepository.CountUserByDateTimeAsync();
+            if (dateTimeDto == null)
+            {
+                return NotFound();
+            }
+
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+
+            return Ok(dateTimeDto);
+        }
+
 
         /// <summary>
         /// Confirm Email
@@ -124,27 +147,27 @@ namespace Land_Vision.Controllers
             try
             {
                 if (await _userRepository.CheckIsExistIdentificationCardAsync(registerUserDto.IdentityNumber))
-                    {
-                        ModelState.AddModelError("error", "Id card is already exist!");
-                        return StatusCode(400, ModelState);
-                    }
+                {
+                    ModelState.AddModelError("error", "Id card is already exist!");
+                    return StatusCode(400, ModelState);
+                }
 
-                    if (!ModelState.IsValid)
-                    {
-                        return BadRequest(ModelState);
-                    }
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
 
-                    if (!await _accountService.RegisterAccountAsync(registerUserDto))
-                    {
-                        throw new Exception("Some thing went wrong when add user!");
-                    }
-                    await transaction.CommitAsync();
-                    return Ok();
+                if (!await _accountService.RegisterAccountAsync(registerUserDto))
+                {
+                    throw new Exception("Some thing went wrong when add user!");
+                }
+                await transaction.CommitAsync();
+                return Ok();
             }
             catch (System.Exception ex)
             {
                 await transaction.RollbackAsync();
-                
+
                 throw ex;
             }
         }

@@ -125,7 +125,6 @@ export class CardTableComponent implements OnInit {
       respone =>{
         this.postRespone = respone.listItem;
         this.dataSourcePost = new MatTableDataSource(this.postRespone);
-
         this.dataSourcePost.sort = this.sort;
         this.dataSourcePost.paginator = this.postPaginator;
       }

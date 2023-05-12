@@ -1,3 +1,4 @@
+import { QuantityByTime } from "src/app/models/chart-model";
 import { PagingModel } from "src/app/models/paging-model";
 
 export const DOMAIN ='https://localhost:7165';
@@ -49,7 +50,12 @@ export const API_URL = {
   QR_MOMO: (orderInfor: string, amount: number) => `https://localhost:7165/api/Momo/momoQR/${orderInfor}&${amount}`,
   GET_APPROVED_POST_BY_USER_ID:(userId: number) => `${DOMAIN}/api/Post/getPostIsApproved/${userId}`,
   UPDATE_USER_PATCH_BY_USER_ID: (userId: number) => `${DOMAIN}/api/Account/updateFlexible/${userId}`,
-  REJECT_POST_BY_ID: (postId: number) => `${DOMAIN}/api/Post/rejectPost/${postId}`
+  REJECT_POST_BY_ID: (postId: number) => `${DOMAIN}/api/Post/rejectPost/${postId}`,
+  GET_ACCOUNT_BY_TIME : () => `${DOMAIN}/api/Account/countUserByDateTime`,
+  GET_POST_BY_TIME : () => `${DOMAIN}/api/Post/countPostByDateTime`,
+  GET_REVENUE_BY_TIME : () => `${DOMAIN}/api/DetailPurchase/countRevenueByDateTime`,
+  GET_POST_BY_TRANS_TYPE : () => `${DOMAIN}/api/Post/countPostByType`,
+  GET_DETAIL_PURCHASE_BY_VIP_TYPE : () => `${DOMAIN}/api/DetailPurchase/countRevenueByVipType`
 };
 
 export const PATCH_PATH = {

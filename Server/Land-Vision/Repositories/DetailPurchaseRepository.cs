@@ -1,4 +1,6 @@
 ﻿using Land_Vision.Data;
+using Land_Vision.Dto.DateTimeDtos;
+using Land_Vision.Dto.TypeDtos;
 using Land_Vision.Interface.IRepositories;
 using Land_Vision.Models;
 using Microsoft.EntityFrameworkCore;
@@ -35,6 +37,22 @@ namespace Land_Vision.Repositories
             return sum;
         }
 
+        public async Task<List<VipTypeDto>> CountRevenueByTypeOfVip()
+        {
+            var detailPurchases = await _dbContext.DetailPurchases.Include(d => d.Vip).ToListAsync();
+
+            var detailPurchaseCountByType = detailPurchases.GroupBy(p => p.Vip.Name)
+        .Select(g => new VipTypeDto
+        {
+
+            name = g.Key,
+            value = g.Count()
+
+        })
+        .ToList();
+            return detailPurchaseCountByType;
+        }
+
         public async Task<List<DetailPurchase>> GetAllDetailPurchase()
         {
             return await _dbContext.DetailPurchases.OrderByDescending(x => x.TransactionDate)
@@ -48,10 +66,42 @@ namespace Land_Vision.Repositories
             return await _dbContext.DetailPurchases.SumAsync(x => x.Vip.Price);
         }
 
+
         public async Task<bool> SaveChangeAsync()
         {
             var saved = await _dbContext.SaveChangesAsync();
             return saved > 0 ? true : false;
+        }
+
+        public async Task<DateTimeRevenueDto> SumRevenueByDateTimeAsync()
+        {
+            var purchases = await _dbContext.DetailPurchases.Include(p => p.Vip).ToListAsync();
+            var sumRevenueByYear = purchases
+                .GroupBy(r => r.TransactionDate.Year)
+                .Select(r => new
+                {
+                    Year = r.Key.ToString(),
+                    Sum = r.Sum(g => g.Vip.Price)
+                })
+                .OrderBy(x => x.Year)
+                .ToDictionary(x => x.Year, x => x.Sum);
+            var sumRevenueByMonth = purchases
+                .GroupBy(r => new { r.TransactionDate.Year, r.TransactionDate.Month })
+                .Select(g => new { Year = g.Key.Year.ToString(), Month = g.Key.Month.ToString(), Sum = g.Sum(r => r.Vip.Price) })
+                .OrderBy(x => x.Year)
+                .ThenBy(x => x.Month)
+                .ToDictionary(x => x.Year + "-" + x.Month, x => x.Sum);
+            var sumRevenueByDay = purchases
+                .GroupBy(r => r.TransactionDate.Date)
+                .Select(r => new { Day = r.Key.ToString("yyyy-MM-dd"), Sum = r.Sum(g => g.Vip.Price) })
+                .OrderBy(x => x.Day)
+                .ToDictionary(x => x.Day, x => x.Sum);
+            return new DateTimeRevenueDto
+            {
+                NumbByYears = sumRevenueByYear,
+                NumbByMonths = sumRevenueByMonth,
+                NumbByDays = sumRevenueByDay,
+            };
         }
     }
 }
