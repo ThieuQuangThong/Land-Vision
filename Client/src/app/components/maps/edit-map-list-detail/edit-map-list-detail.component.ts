@@ -67,6 +67,7 @@ export class EditMapListDetailComponent {
         Sketch,
         Locate,
         BasemapGallery,
+        Expand,
         Fullscreen,
         Search,
         webMercatorUtils
@@ -80,6 +81,7 @@ export class EditMapListDetailComponent {
         'esri/widgets/Sketch',
         'esri/widgets/Locate',
         'esri/widgets/BasemapGallery',
+        "esri/widgets/Expand",
         "esri/widgets/Fullscreen",
         'esri/widgets/Search',
         'esri/geometry/support/webMercatorUtils',
@@ -146,7 +148,12 @@ export class EditMapListDetailComponent {
         view: mapView
       });
 
-      mapView.ui.add(basemapGallery, "bottom-left");
+      // mapView.ui.add(basemapGallery, "bottom-left");
+      const bgExpand = new Expand({
+        view: mapView,
+        content: basemapGallery
+      });
+      mapView.ui.add(bgExpand, "top-left");
 
       mapView.when(() => {
         const sketch = new Sketch({
