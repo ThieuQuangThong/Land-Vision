@@ -31,3 +31,8 @@ width: 15rem;
   width: 250px;
   height: auto;
 }
+.invalid{
+  margin-top: 10px;
+  color: rgb(248, 76, 76);
+  font-size: 12px;
+}

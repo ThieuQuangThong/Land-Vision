@@ -36,15 +36,16 @@ export class SignupComponent implements OnInit {
   ) { }
   ngOnInit(): void {
     this.registrationForm = this.fb.group({
-      name: ['', Validators.required, Validators.name],
+      name: ['', [Validators.required, Validators.pattern('[^0-9]*')]],
       email: ['', [Validators.required, Validators.email]],
       frontOfIdentityCard: ['', Validators.required, Validators.name],
       backOfIdentityCard: ['', Validators.required, Validators.maxLength(15)],
-      password: ['', [Validators.required, Validators.maxLength(15)]],
+      password: ['', [Validators.required, Validators.minLength(6), Validators.pattern('^(?=.*[A-Z]).*$')]],
       confirmPassword: ['', Validators.required],
       identityNumber: ['', [Validators.required, Validators.maxLength(15)]],
       phone: ['', [Validators.required, Validators.pattern("[0-9]{10}")]],
-
+    }, {
+      validator: this.passwordMatchValidator
     })
   }
 
@@ -58,9 +59,17 @@ export class SignupComponent implements OnInit {
         AlertService.setAlertModel("danger","Some thing went wrong")
       })
   }
+  passwordMatchValidator(formGroup: FormGroup) {
+    const password = formGroup.get('password')?.value;
+    const confirmPassword = formGroup.get('confirmPassword')?.value;
 
+    if (password !== confirmPassword) {
+      formGroup.get('confirmPassword')?.setErrors({ passwordMismatch: true });
+    } else {
+      formGroup.get('confirmPassword')?.setErrors(null);
+    }
+  }
   onSubmit() {
-    this.submitted = true;
     // stop here if form is invalid
     if (this.registrationForm.invalid) {
         return ;

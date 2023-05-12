@@ -1,5 +1,6 @@
 import { ShareDataService } from './../../_service/share-data.service';
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { AlertService } from 'src/app/_service/alert.service';
@@ -48,7 +49,33 @@ export class PostingComponent implements OnInit {
     private postService: PostService,
     private auth:AuthService,
     private categgoryService: CategoryService,
-    private cityService: CityInformationService) {
+    private cityService: CityInformationService,
+    private formBuilder: FormBuilder) {
+      this.postForm = this.formBuilder.group({
+        title: ['', Validators.required],
+        description: ['', Validators.required],
+        area: ['', Validators.required],
+        price: ['', Validators.required],
+        direction: ['', Validators.required],
+        interior: ['', Validators.required],
+        juridical: ['', Validators.required],
+        frontangeArea: ['', Validators.required],
+        wayIn: ['', Validators.required],
+        numberOfFloor: ['', Validators.required],
+        numberOfBed: ['', Validators.required],
+        numberOfBath: ['', Validators.required]
+      });
+  }
+
+
+  postForm!: FormGroup;
+
+  submitForm() {
+
+  }
+  // Accessor for easy form control access
+  get f() {
+    return this.postForm.controls;
   }
 
   toggleTabs($tabNumber: number){
@@ -181,6 +208,10 @@ export class PostingComponent implements OnInit {
   }
 
   submit(){
+    if (this.postForm.invalid) {
+      // Mark all fields as touched to display validation errors
+      this.postForm.markAllAsTouched();
+    }
     this.isPosting = true;
     const userId = this.auth.getUserId();
     this.postRequest.property.positions = this.shareDataService.getPositionsValue();

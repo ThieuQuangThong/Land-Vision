@@ -15,7 +15,7 @@ declare const gapi: any;
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit{
-
+  rememberMe: boolean = false;
   req: HttpRequest<any> | undefined;
   email: any;
   password: any;
@@ -67,7 +67,7 @@ export class LoginComponent implements OnInit{
         // console.log(this.userProfile)
     },err=>{
       this.loading = false;
-      // this.toast.error({detail: "Error Message", summary:"Something was wrong !", duration: 5000})
+      AlertService.setAlertModel('error',err.error.message)
     })
   }
 
