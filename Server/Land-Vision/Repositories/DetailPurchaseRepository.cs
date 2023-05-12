@@ -44,8 +44,9 @@ namespace Land_Vision.Repositories
             var detailPurchaseCountByType = detailPurchases.GroupBy(p => p.Vip.Name)
         .Select(g => new VipTypeDto
         {
-           name = g.Key,
-           num = g.Count()
+
+            name = g.Key,
+            value = g.Count()
 
         })
         .ToList();

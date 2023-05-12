@@ -40,8 +40,7 @@ export class CardLineChartComponent implements OnInit {
         this.dataPostByType =response
         this.chartPostPieOptions = {
           title: {
-            text: 'Referer of a Website',
-            subtext: 'Fake Data',
+            text: 'Type of post',
             left: 'center'
           },
           tooltip: {
@@ -81,7 +80,6 @@ export class CardLineChartComponent implements OnInit {
         this.chartRevenuePieOptions = {
           title: {
             text: 'Type of package',
-            subtext: 'Fake Data',
             left: 'center'
           },
           tooltip: {
@@ -93,7 +91,7 @@ export class CardLineChartComponent implements OnInit {
           },
           series: [
             {
-              name: 'Access From',
+              name: 'Package type',
               type: 'pie',
               radius: '50%',
               data: this.dataDetailPurchaseByVipType,

@@ -7,11 +7,12 @@
     public class VipTypeDto
     {
         public string name { get; set; }
-        public int num { get; set; }
+        public int value { get; set; }
     }
     public class PostTypeDto
     {
-        public int key { get; set; }
+        public string name { get; set; }
+
         public int value { get; set; }
     }
 }

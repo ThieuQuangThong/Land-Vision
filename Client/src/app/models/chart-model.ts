@@ -9,6 +9,6 @@ export class DetailPurchaseQuantityByType {
   value : number = 0;
 }
 export class PostQuantityByType {
-  key: number=0;
+  name : string = '';
   value : number=0
 }
