@@ -86,6 +86,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AgmCoreModule } from '@agm/core';
 import {IvyCarouselModule} from 'carousel-angular';
+import { ImageCropperModule } from 'ngx-image-cropper';
 import { EmailConfirmSucceededComponent } from './views/email-confirm-succeeded/email-confirm-succeeded.component';
 import { PageNotFoundComponent } from './views/page-not-found/page-not-found.component';
 import { NgxOtpInputModule } from "ngx-otp-input";
@@ -117,6 +118,7 @@ import { CardPackageDetailComponent } from './components/cards/card-package-deta
 import { CardAccountDetailComponent } from './components/cards/card-account-detail/card-account-detail.component';
 import { EditProfilePopupComponent } from './components/edit-profile-popup/edit-profile-popup.component';
 import { NgxEchartsModule } from 'ngx-echarts';
+import {ToastrModule} from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -223,9 +225,11 @@ import { NgxEchartsModule } from 'ngx-echarts';
     NgbAlertModule,
     BrowserModule,
     AppRoutingModule,
+    ImageCropperModule,
     ReactiveFormsModule,
     NgxOtpInputModule,
     HttpClientModule,
+    ToastrModule.forRoot(),
     AgmCoreModule.forRoot({
       apiKey : 'AIzaSyDomFYPpQGSvKFE02VovMc-PaqcZ1KCAzE'
     }),

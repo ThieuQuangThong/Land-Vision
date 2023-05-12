@@ -128,7 +128,7 @@ namespace Land_Vision.Repositories
 
         public async Task<int> GetCountUnapprovedPostsAsync()
         {
-            return await _dbContext.Posts.Where(x => x.ApproveStatus == NumberFiled.Unapproved && x.isHide == false)
+            return await _dbContext.Posts.Where(x => x.ApproveStatus == NumberFiled.UNAPPROVED && x.isHide == false)
             .CountAsync();
         }
 
@@ -276,7 +276,7 @@ namespace Land_Vision.Repositories
 
         public Task<List<Post>> GetUnapprovedPostsAsync(Pagination pagination)
         {
-            return _dbContext.Posts.Where(d => d.ApproveStatus == NumberFiled.Unapproved && d.isHide == false)
+            return _dbContext.Posts.Where(d => d.ApproveStatus == NumberFiled.UNAPPROVED && d.isHide == false)
             .Skip(pagination.SkipCount)
             .Take(pagination.MaxResultCount)
             .Include(x => x.User)

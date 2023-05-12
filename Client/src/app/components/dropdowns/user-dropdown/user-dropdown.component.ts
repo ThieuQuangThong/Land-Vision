@@ -2,6 +2,7 @@ import { Router } from '@angular/router';
 import { Component, AfterViewInit, ViewChild, ElementRef } from "@angular/core";
 import { createPopper } from "@popperjs/core";
 import { AuthService } from "src/app/_service/auth.service";
+import { User, UserInfor } from "src/app/_service/user.model";
 import { StorageService } from "src/app/_service/storage.service";
 import { PROPERTY_INFOR } from 'src/assets/common/propertyInfor';
 
@@ -21,6 +22,7 @@ export class UserDropdownComponent implements AfterViewInit {
   popoverDropdownRef!: ElementRef;
   isAdmin: boolean = false;
   avatarLink:string = "";
+  userInfor: UserInfor = new UserInfor();
 
   ngAfterViewInit() {
     createPopper(
@@ -43,11 +45,14 @@ export class UserDropdownComponent implements AfterViewInit {
   this.auth.getUserProfileAsTracking()
     .subscribe(
       respone => {
-        if (respone?.role === PROPERTY_INFOR.Role.admin) {
+        if(!respone){
+          return;
+        }
+        if (respone.role === PROPERTY_INFOR.Role.admin) {
           this.isAdmin = true;
         }
         else this.isAdmin = false
-        this.auth.getUserInforById(respone?.nameid!)
+        this.auth.getUserInforById(respone.nameid!)
         .subscribe(
           user => {
             this.avatarLink = user.avatarLink;

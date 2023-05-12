@@ -11,9 +11,11 @@ import { PROPERTY_INFOR } from 'src/assets/common/propertyInfor';
 })
 export class SingleProductComponent {
   @Input() postUserId: number = 0;
-  @Input() status: number = PROPERTY_INFOR.isView;
+  @Input() status: number = PROPERTY_INFOR.isToView;
   @Input() postItem: PostModel = new PostModel();
+  @Input() showNotification: boolean = false;
 
+  statuses: string[] = PROPERTY_INFOR.ApproveStatus;
   transactionTypes: string[] = PROPERTY_INFOR.TransactionTypes;
   id : number = 0;
 constructor(private router: Router, private auth: AuthService, private route: ActivatedRoute) {}
@@ -22,13 +24,13 @@ constructor(private router: Router, private auth: AuthService, private route: Ac
     const user = this.auth.getUserProfile();
     const encodedPostId = this.auth.encode(this.postItem.id.toString());
 
-    if(this.status === PROPERTY_INFOR.isApprove && user?.role === PROPERTY_INFOR.Role.admin ){
+    if(this.status === PROPERTY_INFOR.isToApprove && user?.role === PROPERTY_INFOR.Role.admin ){
       this.router.navigate([`/admin/approveDetail/${this.postItem.id}`])
     }
-    else if( user=== null || this.status === PROPERTY_INFOR.isView || user.role === PROPERTY_INFOR.Role.admin || this.postUserId !== user.nameid ){
+    else if( user=== null || this.status === PROPERTY_INFOR.isToView || user.role === PROPERTY_INFOR.Role.admin || this.postUserId !== user.nameid ){
       this.router.navigate([`productdetails/${encodedPostId}`])
     }
-    else if(this.status === PROPERTY_INFOR.isUpdate && user.role !== PROPERTY_INFOR.Role.admin ){
+    else if(this.status === PROPERTY_INFOR.isToUpdate && user.role !== PROPERTY_INFOR.Role.admin ){
       this.router.navigate([`update-posting/${encodedPostId}`])
     }
   }

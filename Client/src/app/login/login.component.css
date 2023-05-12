@@ -10,3 +10,8 @@ input:focus-visible {
 body{
   background-color: aquamarine;
 }
+.invalid{
+  margin-top: 10px;
+  color: rgb(248, 76, 76);
+  font-size: 12px;
+}

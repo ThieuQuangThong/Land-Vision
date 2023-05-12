@@ -10,7 +10,7 @@ import { PROPERTY_INFOR } from 'src/assets/common/propertyInfor';
   styleUrls: ['./card-approve-table.component.css']
 })
 export class CardApproveTableComponent {
-  status: number = PROPERTY_INFOR.isApprove;
+  status: number = PROPERTY_INFOR.isToApprove;
   unapprovedPosts: PostModel[]=  [];
 
   defaultPaging: PagingModel = {

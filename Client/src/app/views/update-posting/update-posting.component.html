@@ -269,6 +269,9 @@
               </button>
             </div>
           </div>
+          <textarea readonly id="w3review" name="w3review" rows="4" cols="50" *ngIf="isReject">
+              {{rejectReasonText}}
+          </textarea>
         </div>
       </div>
       </div>

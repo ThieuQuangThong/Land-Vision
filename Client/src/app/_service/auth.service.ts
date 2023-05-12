@@ -24,7 +24,7 @@ export class AuthService {
   userInfor =new BehaviorSubject<UserInfor>(new UserInfor());
   constructor(private cookieService: CookieService, private http: HttpClient, private storage: StorageService, private jwtHelper: JwtHelperService, private router: Router) {
     const token = this.storage.getAccessToken();
-    if( token != null){
+    if( token !== null){
       this.setUserProfileByToken(token);
     }
    }
@@ -39,11 +39,10 @@ export class AuthService {
   }
 
   setUserProfileByToken(token:string|null ){
-    if(token === null){
+    if(!token){
       this.userProfile.next(null);
       return;
     }
-
     var userInfo = this.jwtService.decodeToken(token) as User;
 
     this.getUserInforById(userInfo.nameid)
@@ -57,6 +56,9 @@ export class AuthService {
 
   getUserInforAsTracking(): Observable<UserInfor>{
     return this.userInfor.asObservable();
+  }
+  getUserInfor(): UserInfor{
+    return this.userInfor.getValue();
   }
 
   setUserInfor(userInfor: UserInfor){
@@ -135,8 +137,8 @@ export class AuthService {
   logout(): void {
     // Xóa thông tin người dùng khỏi localStorage hoặc sessionStorage khi đăng xuất
     this.storage.deleteToken();
+
     this.setUserProfileByToken(null);
-    this.cookieService.deleteAll();
     this.router.navigate([''])
   }
 

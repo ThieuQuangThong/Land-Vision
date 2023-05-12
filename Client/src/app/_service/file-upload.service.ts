@@ -1,9 +1,10 @@
-import { HttpClient, HttpEvent, HttpRequest } from '@angular/common/http';
+import { HttpClient, HttpEvent, HttpHeaders, HttpRequest } from '@angular/common/http';
 import { Injectable, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AuthService } from './auth.service';
 import { API_URL } from 'src/assets/API_URL';
 import { Observable } from 'rxjs';
+import * as type from 'esri/smartMapping/renderers/type';
 
 @Injectable({
   providedIn: 'root'
@@ -52,6 +53,12 @@ export class FileUploadService {
     this.onUpload1()
   }
 
+  convertBase64ToUrl(base64: string):Observable<string>{
+    return this.http.post(API_URL.CONVERT_BASE64_TO_URL(),JSON.stringify(base64),
+    {responseType: 'text',
+    headers: new HttpHeaders({ 'Content-Type': 'application/json' })})
+  }
+
   convertFileToUrl(file: File): Observable<any>{
     const formData = new FormData();
     formData.append('formFile', file, file.name);
@@ -80,6 +87,26 @@ export class FileUploadService {
         }
       );
     }
+  }
+   base64toFile(base64String: string, filename: string): File {
+
+    const byteCharacters = atob(btoa(base64String));
+    const byteArrays = [];
+
+    for (let offset = 0; offset < byteCharacters.length; offset += 512) {
+      const slice = byteCharacters.slice(offset, offset + 512);
+
+      const byteNumbers = new Array(slice.length);
+      for (let i = 0; i < slice.length; i++) {
+        byteNumbers[i] = slice.charCodeAt(i);
+      }
+
+      const byteArray = new Uint8Array(byteNumbers);
+      byteArrays.push(byteArray);
+    }
+
+    const blob = new Blob(byteArrays);
+    return new File([blob], filename, { type: 'image/png'});
   }
   onUpload2(): void {
     if (this.imageFile2) {

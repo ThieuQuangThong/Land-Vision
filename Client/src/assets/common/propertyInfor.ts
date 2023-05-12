@@ -6,9 +6,12 @@ export const PROPERTY_INFOR = {
   },
   currentUser: 'currentUser',
   maxResultCount: 12,
-  isView: 0,
-  isUpdate: 1,
-  isApprove: 2,
+  isToView: -1,
+  isToUpdate: -2,
+  isToApprove: -3,
+  isApprove: 0,
+  isUnapprove: 1,
+  isReject: 2,
   allTransaction: ['AllTransaction'],
   allCategory: 'AllCategory',
   allPrice: ['AnyPrice'],
@@ -27,5 +30,7 @@ export const PROPERTY_INFOR = {
   TransactionTypes: ['Sale', 'Rent'],
   Interior: ['True', 'False'],
   VipName: ['','Fortune', 'Wealth','Prosperous'],
-  ApproveStatus: ['Approved','Pending','Reject']
+  ApproveStatus: ['Approved','Pending','Reject'],
+
+  RejectReasons: ['Content is not suitable', 'Information and location are not the same','Other reason']
 };

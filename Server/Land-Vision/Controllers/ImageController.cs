@@ -28,6 +28,21 @@ namespace Land_Vision.Controllers
             }
             var url = await _imageService.ConvertFileToUrl(formFile);
             return Ok(url);
+        }
+
+        // POST Image
+        /// <summary>
+        /// Convert image base64 to Url
+        /// </summary>
+        [HttpPost("convertBase64ToUrl")]
+        [ProducesResponseType(200, Type = typeof(string))]
+        public async Task<IActionResult> ConvertBase64ToUrl([FromBody] string base64)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+            return Ok(await _imageService.ConvertBase64ToUrlAsync(base64));
         }  
     }
 }

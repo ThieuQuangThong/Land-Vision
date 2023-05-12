@@ -50,6 +50,7 @@ export class AuthTokenInterceptor implements HttpInterceptor {
             switchMap((newToken: string) => {
               this.authService.setToken(newToken);
               this.store.setToken(newToken);
+
               this.authService.setUserProfileByToken(newToken);
               request = request.clone({
                 setHeaders: {
