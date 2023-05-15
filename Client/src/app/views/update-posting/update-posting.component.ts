@@ -91,7 +91,8 @@ export class UpdatePostingComponent {
 
   ngOnInit() {
     const encodeId = this.route.snapshot.params['postId'];
-     this.postId = Number(this.auth.decode(encodeId));
+
+    this.postId = Number(this.auth.decode(encodeId));
     this.postService.getPostById(this.postId,true)
     .subscribe(
       respone => {

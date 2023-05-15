@@ -44,9 +44,10 @@ namespace Land_Vision.Repositories
         {
             return await _dbContext.Users.Include(x => x.Role)
             .Where(J => J.Role.Name == RoleField.USER)
-            .AsNoTracking()
             .Skip(pagination.SkipCount)
             .Take(pagination.MaxResultCount)
+            .Include(v => v.Posts)
+            .AsNoTracking()
             .ToListAsync();
         }
 
