@@ -1,4 +1,5 @@
 import { CategoryService } from './../../_service/category.service';
+import { Router } from '@angular/router';
 import { Component, OnInit } from "@angular/core";
 import { PostService } from "src/app/_service/post.service";
 import { CategoryModel } from "src/app/models/category-model";
@@ -62,6 +63,7 @@ export class LandingComponent implements OnInit {
 
   paddingTop: string = '';
   constructor(
+    private router: Router,
     public toastr: ToastrService,
     private postService:PostService,
     private categoryService: CategoryService,
@@ -86,9 +88,12 @@ export class LandingComponent implements OnInit {
   }
 
   showChangingStatusNotfication(numberOfNotification: number){
-    this.toastr.warning(`You have ${numberOfNotification} changing in your posts from Admin`, 'Major Error', {
+    const userId = this.auth.getUserId();
+    this.toastr.warning(`You have ${numberOfNotification} changing in your posts from Admin`, 'Information:', {
       timeOut: 3000,
-   });
+    }).onTap.subscribe(() => {
+      this.router.navigateByUrl('/profile/'+userId);
+    });
   }
 
   receiveHeight($event: any){
