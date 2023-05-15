@@ -42,10 +42,7 @@ export class PricingDialogComponent implements OnInit {
           this.vipResponse = response;
         }
       );
-
-
   }
-
 
   receiveHeight($event: any){
     console.log($event);
