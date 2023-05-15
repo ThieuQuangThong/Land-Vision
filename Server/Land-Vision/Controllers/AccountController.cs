@@ -334,7 +334,7 @@ namespace Land_Vision.Controllers
             if (freshToken == null || !await _userRepository.CheckFreshTokenIsValidAsync(freshToken))
             {
                 ModelState.AddModelError("error", "Please login again");
-                return StatusCode(404, ModelState);
+                return StatusCode(403, ModelState);
             }
 
             if (!ModelState.IsValid)
