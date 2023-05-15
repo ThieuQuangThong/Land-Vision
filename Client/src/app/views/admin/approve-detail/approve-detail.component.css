@@ -104,3 +104,6 @@
  .shape {
   fill: #0E1822;
  }
+.makeBackground{
+    background: rgba(0,0, 0, 0.75);
+}

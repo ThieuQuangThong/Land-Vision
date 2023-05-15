@@ -159,6 +159,16 @@ export class EditMapListDetailComponent {
         const sketch = new Sketch({
           layer: graphicsLayer,
           view: mapView,
+          visibleElements: {
+            selectionTools: {
+              "lasso-selection": false,
+              "rectangle-selection": false
+            },
+            createTools: {
+              "point": false,
+              "polyline": false
+            }
+          },
           // graphic will be selected as soon as it is created
           creationMode: "update"
         });
