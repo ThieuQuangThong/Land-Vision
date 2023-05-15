@@ -2,6 +2,7 @@ using AutoMapper;
 using Land_Vision.Dto.DetailPurchaseDtos;
 using Land_Vision.DTO.CategoryDtos;
 using Land_Vision.DTO.CityDtos;
+using Land_Vision.DTO.DetailPurchaseDtos;
 using Land_Vision.DTO.DistrictDtos;
 using Land_Vision.DTO.ImageDtos;
 using Land_Vision.DTO.PositionDtos;
@@ -89,6 +90,8 @@ namespace Land_Vision.Mapper
             //Detail purchase
             CreateMap<DetailPurchaseDto, DetailPurchase>();
             CreateMap<DetailPurchase, DetailPurchaseDto>();
+            CreateMap<DetailPurchase, DetailListDto>();
+            CreateMap<DetailListDto, DetailPurchase>();
         }
     }
 }

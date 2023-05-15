@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 using Land_Vision.Dto.DateTimeDtos;
 using Land_Vision.Repositories;
 using Land_Vision.Dto.TypeDtos;
+using Land_Vision.DTO.DetailPurchaseDtos;
 
 namespace Land_Vision.Controllers
 {
@@ -33,7 +34,7 @@ namespace Land_Vision.Controllers
         /// </summary>
         [Authorize(Roles = "Admin")]
         [HttpGet]
-        [ProducesResponseType(200, Type = typeof(IEnumerable<DetailPurchase>))]
+        [ProducesResponseType(200, Type = typeof(IEnumerable<DetailListDto>))]
         public async Task<IActionResult> GetDetailPurchases()
         {
             if (!ModelState.IsValid)
@@ -41,7 +42,7 @@ namespace Land_Vision.Controllers
                 return BadRequest(ModelState);
             }
             var detailPurchases = await _detailPurchaseRepository.GetAllDetailPurchase();
-            return Ok(detailPurchases);
+            return Ok(_mapper.Map<IEnumerable<DetailListDto>>(detailPurchases));
         }
 
         // GET Revenue
