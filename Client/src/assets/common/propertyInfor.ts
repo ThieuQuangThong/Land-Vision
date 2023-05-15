@@ -29,7 +29,7 @@ export const PROPERTY_INFOR = {
   priceValues: [0, 500000000, 1000000000, 1500000000,2000000000, 2500000000, 3000000000],
   TransactionTypes: ['Sale', 'Rent'],
   Interior: ['True', 'False'],
-  VipName: ['','Fortune', 'Wealth','Prosperous'],
+  VipName: ['Fortune', 'Wealth','Prosperous'],
   ApproveStatus: ['Approved','Pending','Reject'],
 
   RejectReasons: ['Content is not suitable', 'Information and location are not the same','Other reason']

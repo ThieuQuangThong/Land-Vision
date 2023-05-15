@@ -107,7 +107,7 @@ namespace Land_Vision.Controllers
         /// <summary>
         /// Add DetailPurchase
         /// </summary>
-        [Authorize(Roles = "User")]
+        [Authorize(Roles = "User,Admin")]
         [HttpPost("{userId}&{vipId}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]
