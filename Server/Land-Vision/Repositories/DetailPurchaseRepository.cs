@@ -57,6 +57,7 @@ namespace Land_Vision.Repositories
         {
             return await _dbContext.DetailPurchases.OrderByDescending(x => x.TransactionDate)
                 .Include(x => x.User)
+                .ThenInclude(k => k.Posts)
                 .Include(x => x.Vip)
                 .ToListAsync();
         }
