@@ -251,7 +251,7 @@ export class UpdatePostingComponent {
   }
 
   delete(){
-    if(confirm("Are you to delete")){
+    if(confirm("Are you sure to delete")){
       this.postService.deletePostById(this.postId, this.auth.getUserId())
       .subscribe(
         _ =>{

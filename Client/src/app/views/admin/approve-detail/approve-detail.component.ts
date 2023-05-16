@@ -63,7 +63,7 @@ export class ApproveDetailComponent {
   }
 
   delete(){
-    if(confirm("Are you to delete")){
+    if(confirm("Are you sure to delete")){
       const userId = this.auth.getUserId();
       this.postService.deletePostById(this.postId, userId)
       .subscribe(

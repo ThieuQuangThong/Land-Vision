@@ -8,6 +8,7 @@ export class PostWithoutProperty {
   description: string = "";
   transactionType: number =0;
   numberOfView: number = 0;
+  rejectReason: string ="";
   createDate! : Date;
   isVerified:boolean = false;
   isHide:boolean = false;
