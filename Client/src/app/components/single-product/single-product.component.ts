@@ -25,7 +25,7 @@ constructor(private router: Router, private auth: AuthService, private route: Ac
     const encodedPostId = this.auth.encode(this.postItem.id.toString());
 
     if(this.status === PROPERTY_INFOR.isToApprove && user?.role === PROPERTY_INFOR.Role.admin ){
-      this.router.navigate([`/admin/approveDetail/${this.postItem.id}`])
+      this.router.navigate([`/admin/approveDetail/${encodedPostId}`])
     }
     else if( user=== null || this.status === PROPERTY_INFOR.isToView || user.role === PROPERTY_INFOR.Role.admin || this.postUserId !== user.nameid ){
       this.router.navigate([`productdetails/${encodedPostId}`])

@@ -89,11 +89,11 @@ namespace Land_Vision.service
             return true;
         }
 
-        public async Task<PaginationRespone<PostDto>> GetPostsAsync(Pagination pagination)
+        public async Task<PaginationRespone<PostDto>> GetApprovedPostsAsync(Pagination pagination)
         {
-            var posts = await _postRepository.GetPostsAsync(pagination);
+            var posts = await _postRepository.GetApprovedPostsAsync(pagination);
 
-            var postTotal = await _postRepository.GetPostCountAsync();
+            var postTotal = await _postRepository.GetApprovedPostCountAsync();
             var postDtos = _mapper.Map<List<PostDto>>(posts);
 
             var paginResult = new PaginationRespone<PostDto>(postDtos)
@@ -111,7 +111,7 @@ namespace Land_Vision.service
         public async Task<PaginationRespone<PostDto>> GetPostsByTimeAsync(Pagination pagination, DateTime startDate, DateTime endDate)
         {
             var posts = await _postRepository.GetPostsByTimeAsync(pagination, startDate, endDate);
-            var postTotal = await _postRepository.GetPostCountAsync();
+            var postTotal = await _postRepository.GetApprovedPostCountAsync();
             var postDtos = _mapper.Map<List<PostDto>>(posts);
 
             var paginResult = new PaginationRespone<PostDto>(postDtos)
@@ -251,6 +251,44 @@ namespace Land_Vision.service
                 TotalCount = postTotal,
             };
             return paginResult;  
+        }
+
+        public async Task<PaginationRespone<PostDto>> GetALLPostsAsync(Pagination pagination)
+        {
+            var posts = await _postRepository.GetAllPostsAsync(pagination);
+
+            var postTotal = await _postRepository.GetAllPostCountAsync();
+            var postDtos = _mapper.Map<List<PostDto>>(posts);
+
+            var paginResult = new PaginationRespone<PostDto>(postDtos)
+            {
+                pagination = new Pagination
+                {
+                    SkipCount = pagination.SkipCount,
+                    MaxResultCount = pagination.MaxResultCount,
+                },
+                TotalCount = postTotal,
+            };
+            return paginResult;  
+        }
+
+        public async Task<PaginationRespone<PostDto>> GetRejectedPostsAsync(Pagination pagination)
+        {
+            var posts = await _postRepository.GetAllRejectedPostsAsync(pagination);
+
+            var postTotal = await _postRepository.GetAllRejectedCountPostsAsync();
+            var postDtos = _mapper.Map<List<PostDto>>(posts);
+
+            var paginResult = new PaginationRespone<PostDto>(postDtos)
+            {
+                pagination = new Pagination
+                {
+                    SkipCount = pagination.SkipCount,
+                    MaxResultCount = pagination.MaxResultCount,
+                },
+                TotalCount = postTotal,
+            };
+            return paginResult; 
         }
     }
 }
