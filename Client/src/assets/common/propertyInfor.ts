@@ -28,7 +28,7 @@ export const PROPERTY_INFOR = {
   prices: ['500','1000','1500','2000','2500','3000'],
   priceValues: [0, 500000000, 1000000000, 1500000000,2000000000, 2500000000, 3000000000],
   TransactionTypes: ['Sale', 'Rent'],
-  Interior: ['True', 'False'],
+  Interior: ['Available', 'None'],
   VipName: ['Fortune', 'Wealth','Prosperous'],
   ApproveStatus: ['Approved','Pending','Reject'],
 
