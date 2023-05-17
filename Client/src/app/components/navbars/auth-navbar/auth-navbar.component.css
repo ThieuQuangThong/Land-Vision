@@ -9,7 +9,7 @@
 }
 @media only screen and (max-width: 850px) {
   .width-items-center{
-    width: 10rem !important;
+    width: 14rem !important;
   }
   a.button{
     margin: -60px;

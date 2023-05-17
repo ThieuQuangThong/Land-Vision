@@ -1,21 +1,60 @@
 #two-line {
-    /* white-space: nowrap; */
-    /* -webkit-line-clamp:2; */
-    overflow: hidden;
-    text-overflow: ellipsis;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    display: -webkit-box;
-    width: 100%;
+  /* white-space: nowrap; */
+  /* -webkit-line-clamp:2; */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
+  width: 100%;
 }
 
 #four-line {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical;
-    display: -webkit-box;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  display: -webkit-box;
 }
 .text-length{
-  width: 72%;
+width: 72%;
+}
+.pading-item{
+
+}
+.category-color-Land {
+padding: 9px;
+background: linear-gradient(to right, #ee0979, #ff6a00);
+}
+
+.category-color-House {
+padding: 9px;
+
+background: linear-gradient(to right, #ff7e5f, #feb47b);
+}
+
+.category-color-Apartment  {
+padding: 9px;
+
+background: linear-gradient(to right, #e49b2e, #df7731);
+}
+.category-color-Office  {
+padding: 9px;
+
+background: linear-gradient(to right, #2c3e50, #4ca1af);
+}
+.category-color-Condo  {
+padding: 9px;
+
+background: linear-gradient(to right, #3a7bd5, #3a6073);
+}
+.category-color-Building  {
+padding: 9px;
+
+background: linear-gradient(to right, #4ca1af, #c4e0e5);
+}
+.category-color-Villa  {
+padding: 9px;
+
+background: linear-gradient(to right, #eacda3, #d6ae7b);
 }
