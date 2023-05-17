@@ -1,10 +1,11 @@
-import { QuantityByTime } from "src/app/models/chart-model";
 import { PagingModel } from "src/app/models/paging-model";
 
 export const DOMAIN ='https://localhost:7165';
 
 export const API_URL = {
   GET_ALL_POST: (pagingModel: PagingModel) =>`${DOMAIN}/api/Post/${pagingModel.skipCount}&${pagingModel.maxResultCount}`,
+  GET_ALL_APPROVED_POST: (pagingModel: PagingModel) =>`${DOMAIN}/api/Post/getAllApprovedPost/${pagingModel.skipCount}&${pagingModel.maxResultCount}`,
+  GET_ALL_REJECTED_POST: (pagingModel: PagingModel) =>`${DOMAIN}/api/Post/getAllRejectedPost/${pagingModel.skipCount}&${pagingModel.maxResultCount}`,
   GET_POST_COUNT : () => `${DOMAIN}/api/Post/getPostCount`,
   GET_ALL_POST_BY_TIME: (pagingModel: PagingModel,startDate : string,endDate : string) =>`${DOMAIN}/api/Post/PostByTime/${pagingModel.skipCount}&${pagingModel.maxResultCount}&${startDate}&${endDate}`,
   HIDE_UNHIDE:(postId : number) => `${DOMAIN}/api/Post/hideUnhide/${postId}`,

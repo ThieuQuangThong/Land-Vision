@@ -11,6 +11,8 @@ import {MatSort, Sort} from '@angular/material/sort';
 import { Router } from "@angular/router";
 import { DetailPurchaseModel } from "src/app/models/detailPurchase-model";
 import { DetailPurchaseService } from "src/app/_service/detail-purchase.service";
+import { PROPERTY_INFOR } from "src/assets/common/propertyInfor";
+import { AuthService } from "src/app/_service/auth.service";
 
 
 @Component({
@@ -21,21 +23,21 @@ import { DetailPurchaseService } from "src/app/_service/detail-purchase.service"
 })
 
 export class CardTableComponent implements OnInit {
-  displayedPostsColumns: string[] = ['#', 'title', 'transactionType', 'createAt','poster', 'isHide'];
+  displayedPostsColumns: string[] = ['#', 'title', 'transactionType', 'createAt','seller','status', 'isHide'];
   displayedSellersColumns: string[] = ['#', 'name', 'email', 'phone', 'isHide'];
   displayedRevenuesColumns: string[] = ['#', 'id', 'transactionDate', 'userId', 'vipName','vipPrice'];
-
 
   dataSourcePost = new MatTableDataSource<any>();
   dataSourceSeller = new MatTableDataSource<any>();
   dataSourceRevenue = new MatTableDataSource<any>();
 
+  filterOptionOfPosts: string[] = PROPERTY_INFOR.FilterOptionOfPost
+  propertyInfor = PROPERTY_INFOR;
 
   @ViewChild('postPaginator', { static: true }) postPaginator!: MatPaginator;
-@ViewChild('sellerPaginator', { static: true }) sellerPaginator!: MatPaginator;
-@ViewChild('revenuePaginator', { static: true }) revenuePaginator!: MatPaginator;
-
-@ViewChild('empTbSort') empTbSort = new MatSort();
+  @ViewChild('sellerPaginator', { static: true }) sellerPaginator!: MatPaginator;
+  @ViewChild('revenuePaginator', { static: true }) revenuePaginator!: MatPaginator;
+  @ViewChild('empTbSort') empTbSort = new MatSort();
 
   @ViewChild(MatSort, { static: true }) sort!: MatSort;
   options : object = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
@@ -51,8 +53,14 @@ export class CardTableComponent implements OnInit {
     maxResultCount : 100,
   }
 
-  goToDetail(id : number){
-    this.router.navigate([`productdetails/${id}`])
+  goToDetail(id : number, approveStatus: number){
+    const encodeId = this.auth.encode(id.toString());
+    if(approveStatus === this.propertyInfor.isApprove || approveStatus === this.propertyInfor.isReject ){
+      this.router.navigate([`/admin/productdetails/${encodeId}`])
+    }
+    else if(approveStatus === this.propertyInfor.isPending){
+      this.router.navigate([`/admin/approveDetail/${encodeId}`])
+    }
   }
 
   postRespone: PostModel[] = [];
@@ -68,20 +76,48 @@ export class CardTableComponent implements OnInit {
   }
   private _color = "light";
 
-  constructor(private postService:PostService, private userService : UserService, private router : Router, private detailPurchaseService : DetailPurchaseService) {
-    const now = new Date();
+  constructor(private postService:PostService, private auth: AuthService, private userService : UserService, private router : Router, private detailPurchaseService : DetailPurchaseService) {}
 
+  filterOption(event: any){
+    const value = Number(this.getEventValue(event));
+    switch (value) {
+      case PROPERTY_INFOR.ApproveFilterOption:
+        this.getApprovedPost();
+        break;
 
+      case PROPERTY_INFOR.PendingFilterOption:
+        this.getUnApprovedPost();
+        break;
+
+      case PROPERTY_INFOR.RejectFilterOption:
+        this.getRejectedPost();
+        break;
+
+      case PROPERTY_INFOR.all:
+        this.getAll();
+        break;
+
+      default:
+        break;
+    }
+  }
+
+  getEventValue(event: any): string{
+    const selectElement = event.target as HTMLSelectElement;
+    const selectedOption = selectElement.selectedOptions[0];
+    const selectedOptionText = selectedOption.value;
+    return selectedOptionText ?? "";
   }
 
   ngOnInit(): void {
-    this.getAll(this.paging);
+    this.getAll();
   }
+
   ngAfterViewInit() {
     this.dataSourcePost.sort = this.empTbSort;
     this.dataSourceSeller.sort = this.empTbSort;
+  }
 
-}
   applyDateFilter()  {
       this.dataSourcePost.filterPredicate = (data, filter) =>{
         const day = new Date(data.createDate).getDate(); // Lấy ngày trong tháng (1-31)
@@ -113,14 +149,12 @@ export class CardTableComponent implements OnInit {
         this.dataSourcePost.sort = this.sort;
         this.dataSourcePost.paginator = this.postPaginator;
       }
-
     );
-
   }
 
 
-  getAll(paging: PagingModel) :void{
-    this.postService.getAllPost(paging)
+  getAll() :void{
+    this.postService.getAllPost(this.paging)
     .subscribe(
       respone =>{
         this.postRespone = respone.listItem;
@@ -129,24 +163,40 @@ export class CardTableComponent implements OnInit {
         this.dataSourcePost.paginator = this.postPaginator;
       }
     )
-    this.userService.getAllUser(paging)
+  }
+
+  getRejectedPost(){
+    this.postService.getRejectedPost(this.paging)
     .subscribe(
       respone =>{
-        this.userRespone = respone.listItem;
-        this.dataSourceSeller = new MatTableDataSource(this.userRespone);
-        this.dataSourceSeller.sort = this.sort;
-        this.dataSourceSeller.paginator = this.sellerPaginator;
+        this.postRespone = respone.listItem;
+        this.dataSourcePost = new MatTableDataSource(this.postRespone);
+        this.dataSourcePost.sort = this.sort;
+        this.dataSourcePost.paginator = this.postPaginator;
       }
     )
+  }
 
-    this.detailPurchaseService.getDetailPurchase().subscribe(
-      response =>{
-      this.detailPurchase = response;
-      console.log(this.detailPurchase);
+  getApprovedPost(): void{
+    this.postService.getAllApprovePost(this.paging)
+    .subscribe(
+      respone =>{
+        this.postRespone = respone.listItem;
+        this.dataSourcePost = new MatTableDataSource(this.postRespone);
+        this.dataSourcePost.sort = this.sort;
+        this.dataSourcePost.paginator = this.postPaginator;
+      }
+    )
+  }
 
-        this.dataSourceRevenue = new MatTableDataSource(this.detailPurchase);
-        this.dataSourceRevenue.sort = this.sort;
-        this.dataSourceRevenue.paginator = this.revenuePaginator;
+  getUnApprovedPost(): void{
+    this.postService.getUnapprovedPosts(this.paging)
+    .subscribe(
+      respone =>{
+        this.postRespone = respone.listItem;
+        this.dataSourcePost = new MatTableDataSource(this.postRespone);
+        this.dataSourcePost.sort = this.sort;
+        this.dataSourcePost.paginator = this.postPaginator;
       }
     )
   }
