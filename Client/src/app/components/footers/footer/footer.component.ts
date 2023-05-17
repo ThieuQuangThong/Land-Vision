@@ -1,4 +1,5 @@
 import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
 
 @Component({
   selector: "app-footer",
@@ -6,7 +7,14 @@ import { Component, OnInit } from "@angular/core";
 })
 export class FooterComponent implements OnInit {
   date = new Date().getFullYear();
-  constructor() {}
+  constructor(private router: Router) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+
+  }
+  redirectToDiscord() {
+    // const discordLink = 'https://discord.gg/hjQFGP7HP4';
+    // this.router.navigateByUrl('https://discord.gg/hjQFGP7HP4');
+    this.router.navigateByUrl('https://zalo.me/0794217184')
+  }
 }
