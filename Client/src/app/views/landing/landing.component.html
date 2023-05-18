@@ -36,7 +36,7 @@
       <div class="relative flex flex-col min-w-0 break-words bg-white w-full rounded-lg">
         <div class=" sticky-search flex flex-wrap text-sm title-font text-gray-500 tracking-widest;" style="z-index: 10">
           <div class=" stickybar top-0 left-0 z-50  w-full p-2 md:w-full pt-3 shadow rounded-lg bg-white">
-            <div style="width: 102%;" class="flex ">
+            <div style="width: 100%;" class="flex ">
                 <select  [(ngModel)]="selectedcategoryId"
                 class="filter-width px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
                 <option *ngFor="let category of categories; let i = index" value="{{category.id}}">{{category.name| translate}}
@@ -46,7 +46,7 @@
                   class=" ml-2 py-4 w-5/6  rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white border-spacing-0 text-sm"
                   placeholder="Search by listing, location, bedroom number...">
               <div  class=" w-1/62 flex items-center ml-2 h-full">
-                <button style="  top: 24px;right: 20px;" (click)="search()"
+                <button style="  top: 24px;right: 20px; margin-right: 20px;" (click)="search()"
                   class=" absolute bg-emerald-500 text-white active:bg-emerald-600 font-bold text-sm  px-10 py-3 rounded  hover:bg-emerald-600 outline-none focus:outline-none ease-linear transition-all duration-150"
                   type="button">
                   <i class="fas fa-search"></i> {{'Search' | translate}}
@@ -54,7 +54,7 @@
               </div>
             </div>
 
-            <div class=" items-center justify-between mt-4">
+            <div class=" items-center justify-between mt-2">
 
               <div>
                 <div class="grid grid-cols-4  md:grid-cols-4 xl:grid-cols-5  gap-4 mt-1">
