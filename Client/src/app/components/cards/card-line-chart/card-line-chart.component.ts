@@ -1,8 +1,7 @@
-import { Component, OnInit, AfterViewInit } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { EChartsOption } from 'echarts';
 import { ChartService } from "src/app/_service/chart.service";
-import { PostQuantityByType, QuantityByTime, DetailPurchaseQuantityByType } from "src/app/models/chart-model";
-import {forkJoin} from "rxjs";
+import { DetailPurchaseQuantityByType, PostQuantityByType, QuantityByTime } from "src/app/models/chart-model";
 
 
 @Component({
@@ -84,7 +83,6 @@ export class CardLineChartComponent implements OnInit {
     this.chartService.getDetailPurchaseByVipType().subscribe(
       response => {
         this.dataDetailPurchaseByVipType =response;
-        console.log(this.dataDetailPurchaseByVipType);
 
         this.chartRevenuePieOptions = {
           title: {
@@ -122,161 +120,6 @@ export class CardLineChartComponent implements OnInit {
     )
 
   }
-  // getByTime(options : string) :void{
-  //   forkJoin([
-  //     this.chartService.getAccountByTime(),
-  //     this.chartService.getPostByTime(),
-  //     this.chartService.getRevenueByTime(),
-  //     this.chartService.getPostByTransType()
-  //   ]).subscribe(([accountData, postData,revenueData, postTypeData]) =>{
-  //     this.accountByTime = accountData;
-  //     this.postByTime = postData;
-  //     this.revenueByTime = revenueData;
-  //     this.dataPostByType = postTypeData;
-
-  //     if(options == 'day'){
-  //       this.accountKeys = Object.keys(this.accountByTime.numbByDays || {});
-  //       this.accountKeys.sort();
-  //       this.dataAccount = this.accountKeys.map( key => {
-  //         const monthValue = this.accountByTime.numbByDays ? this.accountByTime.numbByDays[key] : null;
-  //         return monthValue;
-  //       })
-  //       this.postKeys = Object.keys(this.postByTime.numbByDays || {});
-  //       this.postKeys.sort();
-  //       this.dataPost = this.postKeys.map( key => {
-  //         const monthValue = this.postByTime.numbByDays ? this.postByTime.numbByDays[key] : null;
-  //         return monthValue;
-  //       })
-  //       this.revenueKeys = Object.keys(this.revenueByTime.numbByDays || {});
-  //       this.revenueKeys.sort();
-  //       this.dataRevenue = this.revenueKeys.map( key => {
-  //       const monthValue = this.revenueByTime.numbByDays ? this.revenueByTime.numbByDays[key] : null;
-  //       return monthValue;
-  //     })
-  //     } else if( options == 'month'){
-  //       this.accountKeys = Object.keys(this.accountByTime.numbByMonths || {});
-  //       this.accountKeys.sort();
-  //       this.dataAccount = this.accountKeys.map( key => {
-  //         const monthValue = this.accountByTime.numbByMonths ? this.accountByTime.numbByMonths[key] : null;
-  //         return monthValue;
-  //       })
-  //       this.postKeys = Object.keys(this.postByTime.numbByMonths || {});
-  //       this.postKeys.sort();
-  //       this.dataPost = this.postKeys.map( key => {
-  //         const monthValue = this.postByTime.numbByMonths ? this.postByTime.numbByMonths[key] : null;
-  //         return monthValue;
-  //       })
-  //       this.revenueKeys = Object.keys(this.revenueByTime.numbByMonths || {});
-  //       this.revenueKeys.sort();
-  //       this.dataRevenue = this.revenueKeys.map( key => {
-  //       const monthValue = this.revenueByTime.numbByMonths ? this.revenueByTime.numbByMonths[key] : null;
-  //       return monthValue;
-  //     })
-  //     } else if ( options == 'year'){
-  //       this.accountKeys = Object.keys(this.accountByTime.numbByYears || {});
-  //       this.accountKeys.sort();
-  //       this.dataAccount = this.accountKeys.map( key => {
-  //         const monthValue = this.accountByTime.numbByYears ? this.accountByTime.numbByYears[key] : null;
-  //         return monthValue;
-  //       })
-  //       this.postKeys = Object.keys(this.postByTime.numbByYears || {});
-  //       this.postKeys.sort();
-  //       this.dataPost = this.postKeys.map( key => {
-  //         const monthValue = this.postByTime.numbByYears ? this.postByTime.numbByYears[key] : null;
-  //         return monthValue;
-  //       })
-  //       this.revenueKeys = Object.keys(this.revenueByTime.numbByYears || {});
-  //       this.revenueKeys.sort();
-  //       this.dataRevenue = this.revenueKeys.map( key => {
-  //       const monthValue = this.revenueByTime.numbByYears ? this.revenueByTime.numbByYears[key] : null;
-  //       return monthValue;
-  //     })
-  //     }
-
-
-
-  //     this.chartAccountOptions = {
-
-  //       tooltip: {
-  //         trigger: 'axis'
-  //       },
-  //       xAxis: {
-  //         type: 'category',
-  //         boundaryGap: false,
-  //         data:this.accountKeys,
-  //       },
-  //       yAxis: {
-  //         name: 'Number of accounts',
-  //         type: 'value',
-
-  //       },
-  //       series: [
-  //         {
-  //           name: "Account",
-  //             type: "line",
-  //             color: '#3b82f6',
-  //           data : this.dataAccount
-  //         },
-
-  //       ]
-  //     }
-
-
-  //     this.chartPostOptions = {
-  //       tooltip: {
-  //         trigger: 'axis'
-  //       },
-  //       xAxis: {
-  //         type: 'category',
-  //         data: this.postKeys,
-  //         boundaryGap: false,
-
-  //       },
-  //       yAxis: {
-  //         name: 'Number of posts',
-  //         type: 'value',
-  //       },
-  //       series: [
-  //         {
-
-  //           name: "Post",
-  //             type: "line",
-  //             color: '#ef4444',
-  //           data : this.dataPost
-  //         },
-
-  //       ]
-  //     }
-
-
-  //     this.chartRevenueOptions = {
-  //       tooltip: {
-  //         trigger: 'axis'
-  //       },
-  //       xAxis: {
-  //         type: 'category',
-  //         data: this.revenueKeys,
-  //         boundaryGap: false,
-  //       },
-  //       yAxis: {
-  //         name: 'VND',
-  //         type: 'value',
-  //       },
-  //       series: [
-
-  //         {
-  //           name: "Revenue",
-  //             type: "line",
-  //             color: '#11b981',
-  //           data : this.dataRevenue
-  //         },
-  //       ]
-  //     }
-
-  //   }
-  //   )
-
-  // }
 
   getPostByDateTime(options : string) :void{
       this.chartService.getPostByTime().subscribe(response =>{

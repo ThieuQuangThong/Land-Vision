@@ -1,11 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { catchError, first, tap } from 'rxjs';
-import { AuthService } from '../_service/auth.service';
-import { AlertService } from '../_service/alert.service';
 import { NgxOtpInputConfig } from "ngx-otp-input";
+import { AlertService } from '../_service/alert.service';
+import { AuthService } from '../_service/auth.service';
 @Component({
   selector: 'app-code-verify',
   templateUrl: './code-verify.component.html',
@@ -85,11 +84,8 @@ export class CodeVerifyComponent implements OnInit {
   }
   OnSubmit() {
 
-    console.log(this.email)
-
     const code = this.getcode
     this.getData(this.email, code);
-    // console.log(getcode)
   }
 
 

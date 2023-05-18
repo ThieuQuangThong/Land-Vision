@@ -19,26 +19,26 @@ import { TablesComponent } from "./views/admin/tables/tables.component";
 import { AuthGuard } from './_helper/http.guard';
 
 // no layouts views
+import { PROPERTY_INFOR } from 'src/assets/common/propertyInfor';
+import { CodeVerifyComponent } from './code-verify/code-verify.component';
+import { CardAccountTableComponent } from './components/cards/card-account-table/card-account-table.component';
+import { CardApproveTableComponent } from './components/cards/card-approve-table/card-approve-table.component';
+import { CardPackageDetailComponent } from './components/cards/card-package-detail/card-package-detail.component';
+import { CardPackageTableComponent } from './components/cards/card-package-table/card-package-table.component';
+import { CardRevenueTableComponent } from './components/cards/card-revenue-table/card-revenue-table.component';
+import { MapExampleComponent } from './components/maps/map-example/map-example.component';
+import { PricingDialogComponent } from './components/pricing-dialog/pricing-dialog.component';
+import { SuccessPaymentComponent } from './components/success-payment/success-payment.component';
+import { NewPasswordComponent } from './new-password/new-password.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { ApproveDetailComponent } from './views/admin/approve-detail/approve-detail.component';
+import { EmailConfirmSucceededComponent } from './views/email-confirm-succeeded/email-confirm-succeeded.component';
 import { IndexComponent } from "./views/index/index.component";
 import { LandingComponent } from "./views/landing/landing.component";
-import { ProfileComponent } from "./views/profile/profile.component";
-import { ResetPasswordComponent } from './reset-password/reset-password.component';
-import { MapExampleComponent } from './components/maps/map-example/map-example.component';
-import { NewPasswordComponent } from './new-password/new-password.component';
-import { CodeVerifyComponent } from './code-verify/code-verify.component';
-import { PostingComponent } from './views/posting/posting.component';
-import { EmailConfirmSucceededComponent } from './views/email-confirm-succeeded/email-confirm-succeeded.component';
 import { PageNotFoundComponent } from './views/page-not-found/page-not-found.component';
-import { SuccessPaymentComponent } from './components/success-payment/success-payment.component';
-import { CardAccountTableComponent } from './components/cards/card-account-table/card-account-table.component';
-import { CardRevenueTableComponent } from './components/cards/card-revenue-table/card-revenue-table.component';
-import { CardPackageTableComponent } from './components/cards/card-package-table/card-package-table.component';
+import { PostingComponent } from './views/posting/posting.component';
+import { ProfileComponent } from "./views/profile/profile.component";
 import { UpdatePostingComponent } from './views/update-posting/update-posting.component';
-import { PricingDialogComponent } from './components/pricing-dialog/pricing-dialog.component';
-import { CardApproveTableComponent } from './components/cards/card-approve-table/card-approve-table.component';
-import { ApproveDetailComponent } from './views/admin/approve-detail/approve-detail.component';
-import { PROPERTY_INFOR } from 'src/assets/common/propertyInfor';
-import { CardPackageDetailComponent } from './components/cards/card-package-detail/card-package-detail.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'landing', pathMatch: 'full'},

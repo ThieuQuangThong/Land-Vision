@@ -208,7 +208,6 @@ export class EditMapListDetailComponent {
 
               }
               // In kết quả ra console
-              console.log(geographicRings);
               this.shareDataService.setPositionPost(geographicRings);
             }
           }
@@ -238,7 +237,6 @@ export class EditMapListDetailComponent {
 
             if (event.toolEventInfo && (event.toolEventInfo.type === "move-stop" || event.toolEventInfo.type === "reshape-stop")) {
               // In kết quả ra console
-              console.log(geographicRings);
               this.shareDataService.setPositionPost(geographicRings);
             }
           }
@@ -250,7 +248,6 @@ export class EditMapListDetailComponent {
             if(i > 0){
               return;
             }
-            console.log('fsfef');
 
            const popUpOb = this.shareDataService.setPopUpObject(`<p>Tên: ${positionPosts[i].name} </p><a href="http://localhost:4200/productdetails/${positionPosts[i].id}">Địa chỉ: ${positionPosts[i].addressNumber}</a>`)
             const polygon = {

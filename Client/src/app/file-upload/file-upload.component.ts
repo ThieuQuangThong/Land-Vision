@@ -74,14 +74,12 @@ export class FileUploadComponent implements OnInit {
 
           },
           erorr =>{
-              console.log(erorr.error.errorMessage);
 
             AlertService.setAlertModel("danger",erorr.error.errorMessage)
           }
          )
 
          this.fileService.imageFile1 = response
-        //  console.log(this.imageUrl1)
         },
         (error: any) => {
           AlertService.setAlertModel('danger','Some thing went wrong')

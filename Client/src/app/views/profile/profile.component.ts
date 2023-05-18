@@ -111,7 +111,6 @@ export class ProfileComponent implements OnInit {
 
   fileChangeEvent(event: any){
     this.imgChangeEvt = event;
-    console.log(event.target.files[0]);
 
   }
 

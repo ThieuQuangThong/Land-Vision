@@ -99,7 +99,6 @@ export class AuthNavbarComponent implements OnInit {
         }
       },
       erorr =>{
-        console.log(0);
 
       }
     )

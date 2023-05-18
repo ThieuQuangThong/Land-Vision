@@ -53,7 +53,6 @@ export class NearByServiceService {
             }
           }
         )
-        console.log(finalResults);
 
         this.shareService.setRelativePlaces(finalResults);
       }

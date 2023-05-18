@@ -2,10 +2,8 @@ import { HttpRequest } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../_service/auth.service';
-import { TokenModel } from '../_service/token.model';
 import { AlertService } from '../_service/alert.service';
-import { TranslateService } from '@ngx-translate/core';
+import { AuthService } from '../_service/auth.service';
 
 declare const gapi: any;
 
@@ -64,7 +62,6 @@ export class LoginComponent implements OnInit{
           this.route.navigate(['landing'])
           // this.toast.success({detail: "Welcome you !", summary:response.message, duration: 5000})
 
-        // console.log(this.userProfile)
     },err=>{
       this.loading = false;
       AlertService.setAlertModel('error',err.error.message)

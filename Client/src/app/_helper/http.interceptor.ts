@@ -1,27 +1,19 @@
 import {
-  HttpErrorResponse,
   HttpEvent,
   HttpHandler,
   HttpInterceptor,
-  HttpRequest,
+  HttpRequest
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import {
-  BehaviorSubject,
-  catchError,
-  filter,
   Observable,
-  of,
+  catchError,
   switchMap,
-  take,
-  throwError,
+  throwError
 } from 'rxjs';
 import { AuthService } from '../_service/auth.service';
-import { TokenModel } from '../_service/token.model';
-import { User } from '../_service/user.model';
-import { Token } from '@angular/compiler';
 import { StorageService } from '../_service/storage.service';
 
 @Injectable()

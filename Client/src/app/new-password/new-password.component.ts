@@ -37,7 +37,6 @@ export class NewPasswordComponent implements OnInit {
     };
     const url = API_URL.RESET_PASSWORD();
     return this.http.post(url, data,{withCredentials:true}).subscribe((response: any) => {
-      console.log(response);
       AlertService.setAlertModel("success","Change password successfully");
       this.router.navigate(['/login'])
 
@@ -48,8 +47,6 @@ export class NewPasswordComponent implements OnInit {
   }
 
   OnSubmit() {
-    console.log(this)
-    console.log(this.newpassForm.value['password'])
     this.getData(this.email, this.code, this.newpassForm.value['password'])
   }
 }

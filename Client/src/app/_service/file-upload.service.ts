@@ -1,10 +1,9 @@
-import { HttpClient, HttpEvent, HttpHeaders, HttpRequest } from '@angular/common/http';
-import { Injectable, OnInit } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { AuthService } from './auth.service';
-import { API_URL } from 'src/assets/API_URL';
 import { Observable } from 'rxjs';
-import * as type from 'esri/smartMapping/renderers/type';
+import { API_URL } from 'src/assets/API_URL';
+import { AuthService } from './auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -80,7 +79,6 @@ export class FileUploadService {
       this.http.post(url, formFile,{responseType: 'text'}).subscribe(
         (response: any) => {
          this.imageUrl1 =response
-         console.log(this.imageUrl1)
         },
         (error: any) => {
           console.error(error);
@@ -117,7 +115,6 @@ export class FileUploadService {
       this.http.post(url, formFile2,{responseType: 'text'}).subscribe(
         (response2: any) => {
          this.imageUrl2 =response2
-         console.log(this.imageUrl2)
         },
         (error: any) => {
           console.error(error);

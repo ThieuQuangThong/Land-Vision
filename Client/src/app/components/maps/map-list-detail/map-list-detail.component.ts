@@ -210,8 +210,6 @@ export class MapListDetailComponent {
             attributes: popUpObect.Attributes,
             popupTemplate: popUpObect.PopupTemplate
          });
-          console.log(point1);
-
            graphicsLayer.add(polygonGraphic);
            realEstateGraphic.add(pointGraphic1);
            i++;

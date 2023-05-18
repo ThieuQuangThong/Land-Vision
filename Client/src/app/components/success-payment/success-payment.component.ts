@@ -30,7 +30,6 @@ export class SuccessPaymentComponent implements OnInit{
     if(this.message =='Successful.'){
       this.upDateVip();
     }
-    console.log(this.message);
 
   }
   constructor(private http :HttpClient,

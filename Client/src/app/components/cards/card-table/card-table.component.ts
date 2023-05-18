@@ -1,18 +1,18 @@
-import { Component, OnInit, Input, OnChanges,SimpleChanges, ViewChild } from "@angular/core";
+import { Component, Input, OnInit, ViewChild } from "@angular/core";
+import { FormControl, FormGroup } from "@angular/forms";
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { Router } from "@angular/router";
+import { AuthService } from "src/app/_service/auth.service";
+import { DetailPurchaseService } from "src/app/_service/detail-purchase.service";
 import { PostService } from "src/app/_service/post.service";
+import { UserService } from "src/app/_service/user.service";
+import { DetailPurchaseModel } from "src/app/models/detailPurchase-model";
 import { PagingModel } from "src/app/models/paging-model";
 import { PostModel } from "src/app/models/post-model";
-import { MatPaginator, PageEvent } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
-import { FormControl, FormGroup, Validators } from "@angular/forms";
-import { UserService } from "src/app/_service/user.service";
 import { UserModel } from "src/app/models/user-model";
-import {MatSort, Sort} from '@angular/material/sort';
-import { Router } from "@angular/router";
-import { DetailPurchaseModel } from "src/app/models/detailPurchase-model";
-import { DetailPurchaseService } from "src/app/_service/detail-purchase.service";
 import { PROPERTY_INFOR } from "src/assets/common/propertyInfor";
-import { AuthService } from "src/app/_service/auth.service";
 
 
 @Component({
@@ -124,7 +124,6 @@ export class CardTableComponent implements OnInit {
         const year = new Date(data.createDate).getFullYear(); // Lấy năm (4 chữ số)
         const month = new Date(data.createDate).getMonth() + 1; // Lấy tháng (0-11) và cộng thêm 1 để đưa về dạng 1-12
           const createDate = new Date(year, month - 1, day);
-          console.log(createDate+","+this.fromDate+','+this.toDate);
         if (this.fromDate && this.toDate) {
           return createDate >= this.fromDate && createDate <= this.toDate;
         }
