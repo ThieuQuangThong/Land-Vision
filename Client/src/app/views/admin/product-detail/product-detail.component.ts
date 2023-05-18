@@ -6,6 +6,7 @@ import { PostService } from "src/app/_service/post.service";
 import { PostModel } from "src/app/models/post-model";
 import { AuthService } from 'src/app/_service/auth.service';
 import { Router } from '@angular/router';
+import { PROPERTY_INFOR } from 'src/assets/common/propertyInfor';
 
 @Component({
   selector: "app-product-detail",
@@ -21,6 +22,11 @@ export class ProductDetailComponent implements OnInit {
   selectedStreet: string ='';
   selectedAddress: string ='';
 
+  isReject: boolean = false;
+  rejectReasonText: string ='';
+
+  showHeader: boolean = true;
+
   constructor(private  shareDataService: ShareDataService,private route: ActivatedRoute, private postService:PostService, private auth: AuthService,private Router: Router,) {}
 
 
@@ -29,6 +35,11 @@ export class ProductDetailComponent implements OnInit {
   }
 
   ngOnInit() {
+    const adminRoute = this.route.pathFromRoot.find(route => route.snapshot.routeConfig?.path === 'admin');
+    if (adminRoute) {
+      this.showHeader = false;
+    }
+
 
     const encodeId = this.route.snapshot.params['postId'];
     this.postId = Number(this.auth.decode(encodeId))
@@ -37,6 +48,10 @@ export class ProductDetailComponent implements OnInit {
     this.postService.getPostById(this.postId)
     .subscribe(
       respone => {
+        if(respone.approveStatus === PROPERTY_INFOR.isReject){
+          this.isReject = true;
+          this.rejectReasonText = respone.rejectReason;
+        }
         this.postItem = respone;
         this.shareDataService.setPositionPost(respone.property.positions);
         this.shareDataService.setImageSlideValue(this.postItem.images.map(x => x.linkImage));

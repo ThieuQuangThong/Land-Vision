@@ -11,7 +11,7 @@
 
 <main class="mt-8">
 
-  <div class="relative pt-16 pb-32 flex content-center items-center justify-center min-h-screen-75">
+  <div *ngIf="showHeader" class="relative pt-16 pb-32 flex content-center items-center justify-center min-h-screen-75">
     <div class="absolute top-0 w-full h-full bg-center bg-cover" style="
         background-image: url('https://www.vietnamairlines.com/~/media/Images/HeroBannerDestination/Vietnam/Herro%20banner/DANANG/Hero%20banner/1300x450/VNA-DaNang-HeroBanner-1300x450.jpg');
       ">
@@ -48,6 +48,18 @@
 
       <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded-lg bg-blueGray-200 ">
         <div class="flex-auto p-5 lg:p-10">
+          <div *ngIf="isReject">
+            <div class="bg-red-100 border-t-4 border-red-500 rounded-b text-red-900 px-4 py-3 shadow-md" role="alert">
+              <div class="flex">
+                <div class="py-1"><svg class="fill-current h-6 w-6 text-red-500 mr-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M2.93 17.07A10 10 0 1 1 17.07 2.93 10 10 0 0 1 2.93 17.07zm12.73-1.41A8 8 0 1 0 4.34 4.34a8 8 0 0 0 11.32 11.32zM9 11V9h2v6H9v-4zm0-6h2v2H9V5z"/></svg></div>
+                <div>
+                  <p class="font-bold">Your post has been rejected and here is the reason why:</p>
+                  <p class="text-sm">{{rejectReasonText}}</p>
+                </div>
+              </div>
+            </div>
+            <br>
+          </div>
           <p class="text-2xl font-semibold">Product Information</p>
           <section class="text-gray-700 body-font overflow-hidden rounded-lg  bg-white">
             <div class="container px-5 py-12 mx-auto">

@@ -4,13 +4,14 @@ export const PROPERTY_INFOR = {
     user: 'User',
     UserAndAdmin: 'Admin,User'
   },
+  all: 0,
   currentUser: 'currentUser',
   maxResultCount: 12,
   isToView: -1,
   isToUpdate: -2,
   isToApprove: -3,
   isApprove: 0,
-  isUnapprove: 1,
+  isPending: 1,
   isReject: 2,
   allTransaction: ['AllTransaction'],
   allCategory: 'AllCategory',
@@ -31,6 +32,9 @@ export const PROPERTY_INFOR = {
   Interior: ['Available', 'None'],
   VipName: ['Fortune', 'Wealth','Prosperous'],
   ApproveStatus: ['Approved','Pending','Reject'],
-
+  FilterOptionOfPost: ['All post','Approved post','Pending post','Reject post'],
+  ApproveFilterOption: 1,
+  PendingFilterOption: 2,
+  RejectFilterOption: 3,
   RejectReasons: ['Content is not suitable', 'Information and location are not the same','Other reason']
 };

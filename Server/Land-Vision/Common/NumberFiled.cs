@@ -18,7 +18,7 @@ namespace Land_Vision.Common
         public static int SALE = 2;
         public static int VIP_LEVEL_DEFAULT = 0;
         public static int APPROVED = 0;
-        public static int UNAPPROVED = 1;
+        public static int PENDING = 1;
         public static int REJECTED = 2;
         
     }
