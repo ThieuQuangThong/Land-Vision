@@ -70,7 +70,6 @@ export class CardRevenueTableComponent implements OnInit {
         const year = new Date(data.transactionDate).getFullYear(); // Lấy năm (4 chữ số)
         const month = new Date(data.transactionDate).getMonth() + 1; // Lấy tháng (0-11) và cộng thêm 1 để đưa về dạng 1-12
           const createDate = new Date(year, month - 1, day);
-          console.log(createDate+","+this.fromDate+','+this.toDate);
         if (this.fromDate && this.toDate) {
           return createDate >= this.fromDate && createDate <= this.toDate;
         }
@@ -106,7 +105,6 @@ export class CardRevenueTableComponent implements OnInit {
     this.detailPurchaseService.getDetailPurchase().subscribe(
       response =>{
       this.detailPurchase = response;
-      console.log(this.detailPurchase);
 
         this.dataSourceRevenue = new MatTableDataSource(this.detailPurchase);
         this.dataSourceRevenue.sort = this.sort;

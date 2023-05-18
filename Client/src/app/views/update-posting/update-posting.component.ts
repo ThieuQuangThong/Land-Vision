@@ -1,4 +1,6 @@
+import { Location } from '@angular/common';
 import { Component } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
 import { AlertService } from 'src/app/_service/alert.service';
 import { AuthService } from 'src/app/_service/auth.service';
@@ -9,14 +11,12 @@ import { ShareDataService } from 'src/app/_service/share-data.service';
 import { CategoryModel } from 'src/app/models/category-model';
 import { DistrictModel } from 'src/app/models/district-model';
 import { ImageModel } from 'src/app/models/image-model';
+import { PostModel } from 'src/app/models/post-model';
 import { PostRequest, PostWithoutProperty } from 'src/app/models/post-request';
 import { StreetModel } from 'src/app/models/street-model';
 import { WardModel } from 'src/app/models/ward-model';
 import { PROPERTY_INFOR } from 'src/assets/common/propertyInfor';
 import { inforStreet } from '../posting/posting.component';
-import { ActivatedRoute, Router } from '@angular/router';
-import { PostModel } from 'src/app/models/post-model';
-import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-update-posting',
@@ -103,7 +103,6 @@ export class UpdatePostingComponent {
         this.postRequest.property = respone.property;
         this.postRequest.post = respone as PostWithoutProperty
         this.openTab = respone.transactionType
-        console.log(this.openTab);
 
         this.shareDataService.setImageSlideValue(respone.images.map(
           x => x.linkImage

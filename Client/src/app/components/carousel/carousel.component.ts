@@ -1,18 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { transition, animate, style } from '@angular/animations'
-import {  Input,  } from "@angular/core";
-import { trigger,  useAnimation } from "@angular/animations";
-import { Slide} from '../carousel/carousel.interface'
+import { transition, trigger, useAnimation } from '@angular/animations';
+import { Component, Input, OnInit } from '@angular/core';
+import { Slide } from '../carousel/carousel.interface';
 import {
   AnimationType,
-  scaleIn,
-  scaleOut,
   fadeIn,
   fadeOut,
   flipIn,
   flipOut,
   jackIn,
-  jackOut
+  jackOut,
+  scaleIn,
+  scaleOut
 } from "./carousel.animation";
 @Component({
   selector: 'app-carousel',
@@ -66,13 +64,11 @@ export class CarouselComponent implements OnInit {
   onPreviousClick() {
     const previous = this.currentSlide - 1;
     this.currentSlide = previous < 0 ? this.slides.length - 1 : previous;
-    console.log("previous clicked, new current slide is: ", this.currentSlide);
   }
 
   onNextClick() {
     const next = this.currentSlide + 1;
     this.currentSlide = next === this.slides.length ? 0 : next;
-    console.log("next clicked, new current slide is: ", this.currentSlide);
   }
 
   ngOnInit() {

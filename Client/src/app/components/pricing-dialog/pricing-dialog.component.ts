@@ -1,11 +1,9 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AlertService } from 'src/app/_service/alert.service';
 import { AuthService } from 'src/app/_service/auth.service';
 import { PostService } from "src/app/_service/post.service";
 import { VipService } from 'src/app/_service/vip.service';
-import { PagingModel } from "src/app/models/paging-model";
 import { PostModel } from "src/app/models/post-model";
 import { SearchModel } from "src/app/models/search-model";
 import { VipModel } from 'src/app/models/vip-model';
@@ -45,7 +43,6 @@ export class PricingDialogComponent implements OnInit {
   }
 
   receiveHeight($event: any){
-    console.log($event);
 
   this.paddingTop = $event.toString()+"px";
   }

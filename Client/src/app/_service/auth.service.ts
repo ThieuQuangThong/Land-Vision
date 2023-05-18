@@ -80,8 +80,6 @@ export class AuthService {
           return true;
         }),
         catchError((error) => {
-          console.log(error);
-
           const errorObject = JSON.parse(error.error);
           const errorMessage = errorObject.detail;
           AlertService.setAlertModel('danger',errorMessage)
@@ -106,7 +104,6 @@ export class AuthService {
 
 
   sendEmailForVarification(user: any) {
-    console.log(user);
     user.sendEmailVerification().then((res: any) => {
       this.router.navigate(['/verify-email']);
     }, (err: any) => {
@@ -188,7 +185,6 @@ export class AuthService {
     };
     const url = API_URL.VALIDATE_CODE();
     return this.http.post(url, data).subscribe((response: any) => {
-      console.log(response);
       alert("ok")
       this.router.navigate(['new-password/'+this.code])
     });

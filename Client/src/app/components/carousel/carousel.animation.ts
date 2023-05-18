@@ -1,4 +1,4 @@
-import { style, animate, animation, keyframes } from "@angular/animations";
+import { animate, animation, keyframes, style } from "@angular/animations";
 
 // =========================
 // Enum for referencing animations

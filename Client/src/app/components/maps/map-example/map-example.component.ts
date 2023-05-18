@@ -54,7 +54,6 @@ export class MapExampleComponent implements OnInit  {
   constructor(private shareDataService: ShareDataService) {}
 
   async initializeMap() {
-    console.log(12345555);
     try {
       const [
         EsriMap,
@@ -215,7 +214,6 @@ export class MapExampleComponent implements OnInit  {
 
               }
               // In kết quả ra console
-              console.log(geographicRings);
               this.shareDataService.setPositionPost(geographicRings);
             }
           }
@@ -244,8 +242,6 @@ export class MapExampleComponent implements OnInit  {
             }
 
             if (event.toolEventInfo && (event.toolEventInfo.type === "move-stop" || event.toolEventInfo.type === "reshape-stop")) {
-              // In kết quả ra console
-              console.log(geographicRings);
               this.shareDataService.setPositionPost(geographicRings);
             }
           }

@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { VipModel } from 'src/app/models/vip-model';
 import { API_URL } from 'src/assets/API_URL';
 

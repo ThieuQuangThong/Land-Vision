@@ -122,7 +122,6 @@ export class PostImageComponent implements  OnInit {
 
 
   moveImages(e: any){
-    console.log(-this.limitDrag);
 
     const movedDistance = this.startDragPos - Number(e.clientX);
     const leftPos =  this.distanNumber - movedDistance;

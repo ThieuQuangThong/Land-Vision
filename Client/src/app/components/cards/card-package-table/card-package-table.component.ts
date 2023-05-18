@@ -1,5 +1,6 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -8,7 +9,6 @@ import { VipService } from 'src/app/_service/vip.service';
 import { PagingModel } from 'src/app/models/paging-model';
 import { VipModel } from 'src/app/models/vip-model';
 import { VipRequestModel } from 'src/app/models/vip-request-model';
-import {MatDialog, MatDialogRef} from '@angular/material/dialog';
 import { CardPackageDetailComponent } from '../card-package-detail/card-package-detail.component';
 @Component({
   selector: 'app-card-package-table',
@@ -129,7 +129,6 @@ deletePackge(packageId : number){
         const year = new Date(data.createDate).getFullYear(); // Lấy năm (4 chữ số)
         const month = new Date(data.createDate).getMonth() + 1; // Lấy tháng (0-11) và cộng thêm 1 để đưa về dạng 1-12
           const createDate = new Date(year, month - 1, day);
-          console.log(createDate+","+this.fromDate+','+this.toDate);
         if (this.fromDate && this.toDate) {
           return createDate >= this.fromDate && createDate <= this.toDate;
         }
@@ -193,7 +192,6 @@ deletePackge(packageId : number){
       this.vipRequestModel.name = result.name;
       this.vipRequestModel.price = result.price;
       this.vipRequestModel.postLimit = result.postLimit;
-      console.log(result);
 
       this.vipService.updateVip(idDeleted, this.vipRequestModel).subscribe(
         () => {

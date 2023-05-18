@@ -81,7 +81,6 @@ export class CardAccountTableComponent implements OnInit {
         const year = new Date(data.createDate).getFullYear(); // Lấy năm (4 chữ số)
         const month = new Date(data.createDate).getMonth() + 1; // Lấy tháng (0-11) và cộng thêm 1 để đưa về dạng 1-12
           const createDate = new Date(year, month - 1, day);
-          console.log(createDate+","+this.fromDate+','+this.toDate);
         if (this.fromDate && this.toDate) {
           return createDate >= this.fromDate && createDate <= this.toDate;
         }

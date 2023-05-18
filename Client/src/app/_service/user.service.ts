@@ -33,7 +33,6 @@ export class UserService {
   editUserContactInformation(userId: number, value: ContactInformation):Observable<any>{
     let patchModels: PatchModel[] = [];
     const keyNames = Object.keys(value);
-    console.log(keyNames);
 
     const valueAny = value as any;
     keyNames.forEach(
