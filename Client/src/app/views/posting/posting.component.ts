@@ -31,7 +31,7 @@ export class PostingComponent implements OnInit {
   isPosting: boolean = false;
   postRequest: PostRequest = new PostRequest();
 
-  openTab = 1;
+  openTab = 0;
   interiors: string[] = PROPERTY_INFOR.Interior;
   directions: string[] = [];
   juridicals: string[] = PROPERTY_INFOR.juridicals;

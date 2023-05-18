@@ -176,12 +176,12 @@
                 </div>
                 <div class="w-full lg:w-6/12 pl-1">
                   <div class="tab-content tab-space">
-                    <div [ngClass]="{'hidden': openTab !== 1, 'block': openTab === 1}">
+                    <div [ngClass]="{'hidden': openTab !== 0, 'block': openTab === 0}">
                       <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="title">
                         Price
                       </label>
                     </div>
-                    <div [ngClass]="{'hidden': openTab !== 2, 'block': openTab === 2}">
+                    <div [ngClass]="{'hidden': openTab !== 1, 'block': openTab === 1}">
                       <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="title">
                         Price Per Month
                       </label>

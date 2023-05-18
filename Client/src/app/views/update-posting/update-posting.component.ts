@@ -103,6 +103,7 @@ export class UpdatePostingComponent {
         this.postRequest.property = respone.property;
         this.postRequest.post = respone as PostWithoutProperty
         this.openTab = respone.transactionType
+        console.log(this.openTab);
 
         this.shareDataService.setImageSlideValue(respone.images.map(
           x => x.linkImage
