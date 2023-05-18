@@ -28,8 +28,14 @@ export class CardLineChartComponent implements OnInit {
   chartRevenuePieOptions : EChartsOption = {};
   constructor(private chartService : ChartService) {}
 
+  accountKeys : any[] = [];
+  postKeys : any[] = [];
+  revenueKeys : any [] = [];
+
   ngOnInit(): void {
-    this.getByTime();
+    this.getPostByDateTime('day');
+    this.getAccountByDateTime('day');
+    this.getRevenueByDateTime('day');
     this.getByPostByType();
     this.getDetailPurchaseByType();
   }
@@ -52,9 +58,11 @@ export class CardLineChartComponent implements OnInit {
           },
           series: [
             {
-              name: 'Access From',
               type: 'pie',
               radius: '50%',
+              label: {
+                formatter: '{b}: {@2012} ({d}%)'
+              },
               data: this.dataPostByType,
               emphasis: {
                 itemStyle: {
@@ -63,6 +71,7 @@ export class CardLineChartComponent implements OnInit {
                   shadowColor: 'rgba(0, 0, 0, 0.5)'
                 }
               }
+
             }
           ]
         };
@@ -94,6 +103,9 @@ export class CardLineChartComponent implements OnInit {
               name: 'Package type',
               type: 'pie',
               radius: '50%',
+              label: {
+                formatter: '{b}: {@2012} ({d}%)'
+              },
               data: this.dataDetailPurchaseByVipType,
               emphasis: {
                 itemStyle: {
@@ -110,91 +122,269 @@ export class CardLineChartComponent implements OnInit {
     )
 
   }
-  getByTime() :void{
-    forkJoin([
-      this.chartService.getAccountByTime(),
-      this.chartService.getPostByTime(),
-      this.chartService.getRevenueByTime(),
-    ]).subscribe(([accountData, postData,revenueData]) =>{
-      this.accountByTime = accountData;
-      this.postByTime = postData;
-      this.revenueByTime = revenueData;
+  // getByTime(options : string) :void{
+  //   forkJoin([
+  //     this.chartService.getAccountByTime(),
+  //     this.chartService.getPostByTime(),
+  //     this.chartService.getRevenueByTime(),
+  //     this.chartService.getPostByTransType()
+  //   ]).subscribe(([accountData, postData,revenueData, postTypeData]) =>{
+  //     this.accountByTime = accountData;
+  //     this.postByTime = postData;
+  //     this.revenueByTime = revenueData;
+  //     this.dataPostByType = postTypeData;
+
+  //     if(options == 'day'){
+  //       this.accountKeys = Object.keys(this.accountByTime.numbByDays || {});
+  //       this.accountKeys.sort();
+  //       this.dataAccount = this.accountKeys.map( key => {
+  //         const monthValue = this.accountByTime.numbByDays ? this.accountByTime.numbByDays[key] : null;
+  //         return monthValue;
+  //       })
+  //       this.postKeys = Object.keys(this.postByTime.numbByDays || {});
+  //       this.postKeys.sort();
+  //       this.dataPost = this.postKeys.map( key => {
+  //         const monthValue = this.postByTime.numbByDays ? this.postByTime.numbByDays[key] : null;
+  //         return monthValue;
+  //       })
+  //       this.revenueKeys = Object.keys(this.revenueByTime.numbByDays || {});
+  //       this.revenueKeys.sort();
+  //       this.dataRevenue = this.revenueKeys.map( key => {
+  //       const monthValue = this.revenueByTime.numbByDays ? this.revenueByTime.numbByDays[key] : null;
+  //       return monthValue;
+  //     })
+  //     } else if( options == 'month'){
+  //       this.accountKeys = Object.keys(this.accountByTime.numbByMonths || {});
+  //       this.accountKeys.sort();
+  //       this.dataAccount = this.accountKeys.map( key => {
+  //         const monthValue = this.accountByTime.numbByMonths ? this.accountByTime.numbByMonths[key] : null;
+  //         return monthValue;
+  //       })
+  //       this.postKeys = Object.keys(this.postByTime.numbByMonths || {});
+  //       this.postKeys.sort();
+  //       this.dataPost = this.postKeys.map( key => {
+  //         const monthValue = this.postByTime.numbByMonths ? this.postByTime.numbByMonths[key] : null;
+  //         return monthValue;
+  //       })
+  //       this.revenueKeys = Object.keys(this.revenueByTime.numbByMonths || {});
+  //       this.revenueKeys.sort();
+  //       this.dataRevenue = this.revenueKeys.map( key => {
+  //       const monthValue = this.revenueByTime.numbByMonths ? this.revenueByTime.numbByMonths[key] : null;
+  //       return monthValue;
+  //     })
+  //     } else if ( options == 'year'){
+  //       this.accountKeys = Object.keys(this.accountByTime.numbByYears || {});
+  //       this.accountKeys.sort();
+  //       this.dataAccount = this.accountKeys.map( key => {
+  //         const monthValue = this.accountByTime.numbByYears ? this.accountByTime.numbByYears[key] : null;
+  //         return monthValue;
+  //       })
+  //       this.postKeys = Object.keys(this.postByTime.numbByYears || {});
+  //       this.postKeys.sort();
+  //       this.dataPost = this.postKeys.map( key => {
+  //         const monthValue = this.postByTime.numbByYears ? this.postByTime.numbByYears[key] : null;
+  //         return monthValue;
+  //       })
+  //       this.revenueKeys = Object.keys(this.revenueByTime.numbByYears || {});
+  //       this.revenueKeys.sort();
+  //       this.dataRevenue = this.revenueKeys.map( key => {
+  //       const monthValue = this.revenueByTime.numbByYears ? this.revenueByTime.numbByYears[key] : null;
+  //       return monthValue;
+  //     })
+  //     }
 
 
-      console.log(this.postCountByType);
-      for (let i = 1; i <= 12 ; i++) {
-        let checkDataAccount: number[] = []
-        let checkDataPost: number[] = []
-        let checkDataRevenue: number[] = []
 
-        //add data Account
-        Object.keys(this.accountByTime.numbByMonths!).map(key => {
-          let m = key.split("-")[1]
-          if (i.toString() == m) {
-            checkDataAccount.push(this.accountByTime.numbByMonths![key])
-            return
-          }
-          checkDataAccount.push(0)
+  //     this.chartAccountOptions = {
+
+  //       tooltip: {
+  //         trigger: 'axis'
+  //       },
+  //       xAxis: {
+  //         type: 'category',
+  //         boundaryGap: false,
+  //         data:this.accountKeys,
+  //       },
+  //       yAxis: {
+  //         name: 'Number of accounts',
+  //         type: 'value',
+
+  //       },
+  //       series: [
+  //         {
+  //           name: "Account",
+  //             type: "line",
+  //             color: '#3b82f6',
+  //           data : this.dataAccount
+  //         },
+
+  //       ]
+  //     }
+
+
+  //     this.chartPostOptions = {
+  //       tooltip: {
+  //         trigger: 'axis'
+  //       },
+  //       xAxis: {
+  //         type: 'category',
+  //         data: this.postKeys,
+  //         boundaryGap: false,
+
+  //       },
+  //       yAxis: {
+  //         name: 'Number of posts',
+  //         type: 'value',
+  //       },
+  //       series: [
+  //         {
+
+  //           name: "Post",
+  //             type: "line",
+  //             color: '#ef4444',
+  //           data : this.dataPost
+  //         },
+
+  //       ]
+  //     }
+
+
+  //     this.chartRevenueOptions = {
+  //       tooltip: {
+  //         trigger: 'axis'
+  //       },
+  //       xAxis: {
+  //         type: 'category',
+  //         data: this.revenueKeys,
+  //         boundaryGap: false,
+  //       },
+  //       yAxis: {
+  //         name: 'VND',
+  //         type: 'value',
+  //       },
+  //       series: [
+
+  //         {
+  //           name: "Revenue",
+  //             type: "line",
+  //             color: '#11b981',
+  //           data : this.dataRevenue
+  //         },
+  //       ]
+  //     }
+
+  //   }
+  //   )
+
+  // }
+
+  getPostByDateTime(options : string) :void{
+      this.chartService.getPostByTime().subscribe(response =>{
+      this.postByTime = response;
+
+      if(options == 'day'){
+
+        this.postKeys = Object.keys(this.postByTime.numbByDays || {});
+        this.postKeys.sort();
+        this.dataPost = this.postKeys.map( key => {
+          const monthValue = this.postByTime.numbByDays ? this.postByTime.numbByDays[key] : null;
+          return monthValue;
         })
-        let nonZeroAccountElement = checkDataAccount.find(element => element !== 0);
-        if (nonZeroAccountElement) {
-          this.dataAccount.push(nonZeroAccountElement)
-        }
-        else {
-          this.dataAccount.push(0)
-        }
-        //add data Post
-        Object.keys(this.postByTime.numbByMonths!).map(key => {
-          let m = key.split("-")[1]
-          if (i.toString() == m) {
-            checkDataPost.push(this.postByTime.numbByMonths![key])
-            return
-          }
-          checkDataPost.push(0)
+
+      } else if( options == 'month'){
+
+        this.postKeys = Object.keys(this.postByTime.numbByMonths || {});
+        this.postKeys.sort();
+        this.dataPost = this.postKeys.map( key => {
+          const monthValue = this.postByTime.numbByMonths ? this.postByTime.numbByMonths[key] : null;
+          return monthValue;
         })
-        let nonZeroPostElement = checkDataPost.find(element => element !== 0);
-        if (nonZeroPostElement) {
-          this.dataPost.push(nonZeroPostElement)
-        }
-        else {
-          this.dataPost.push(0)
-        }
-        //add data Revenue
-        Object.keys(this.revenueByTime.numbByMonths!).map(key => {
-          let m = key.split("-")[1]
-          if (i.toString() == m) {
-            checkDataRevenue.push(this.revenueByTime.numbByMonths![key])
-            return
-          }
-          checkDataRevenue.push(0)
-        })
-        let nonZeroRevenueElement = checkDataRevenue.find(element => element !== 0);
-        if (nonZeroRevenueElement) {
-          this.dataRevenue.push(nonZeroRevenueElement)
-        }
-        else {
-          this.dataRevenue.push(0)
-        }
+
+      } else if ( options == 'year'){
+
+        this.postKeys = Object.keys(this.postByTime.numbByYears || {});
+        this.postKeys.sort();
+        this.dataPost = this.postKeys.map( key => {
+          const monthValue = this.postByTime.numbByYears ? this.postByTime.numbByYears[key] : null;
+          return monthValue;
+
+      })
       }
-      this.chartAccountOptions = {
+
+      this.chartPostOptions = {
+        tooltip: {
+          trigger: 'axis'
+        },
         xAxis: {
           type: 'category',
-          data: [
-                  'Jan',
-                  'Feb',
-                  'Mar',
-                  'Apr',
-                  'May',
-                  'Jun',
-                  'Jul',
-                  'Aug',
-                  'Sep',
-                  'Oct',
-                  'Nov',
-                  'Dec'],
+          data: this.postKeys,
+          boundaryGap: false,
+
         },
         yAxis: {
+          name: 'Number of posts',
           type: 'value',
+        },
+        series: [
+          {
+
+            name: "Post",
+              type: "line",
+              color: '#ef4444',
+            data : this.dataPost
+          },
+
+        ]
+      }
+    }
+    )
+  }
+  getAccountByDateTime(options : string) :void{
+      this.chartService.getAccountByTime().subscribe(response  =>{
+      this.accountByTime = response;
+
+      if(options == 'day'){
+        this.accountKeys = Object.keys(this.accountByTime.numbByDays || {});
+        this.accountKeys.sort();
+        this.dataAccount = this.accountKeys.map( key => {
+          const monthValue = this.accountByTime.numbByDays ? this.accountByTime.numbByDays[key] : null;
+          return monthValue;
+        })
+
+      } else if( options == 'month'){
+        this.accountKeys = Object.keys(this.accountByTime.numbByMonths || {});
+        this.accountKeys.sort();
+        this.dataAccount = this.accountKeys.map( key => {
+          const monthValue = this.accountByTime.numbByMonths ? this.accountByTime.numbByMonths[key] : null;
+          return monthValue;
+        })
+
+      } else if ( options == 'year'){
+        this.accountKeys = Object.keys(this.accountByTime.numbByYears || {});
+        this.accountKeys.sort();
+        this.dataAccount = this.accountKeys.map( key => {
+          const monthValue = this.accountByTime.numbByYears ? this.accountByTime.numbByYears[key] : null;
+          return monthValue;
+        })
+
+      }
+
+
+
+      this.chartAccountOptions = {
+
+        tooltip: {
+          trigger: 'axis'
+        },
+        xAxis: {
+          type: 'category',
+          boundaryGap: false,
+          data:this.accountKeys,
+        },
+        yAxis: {
+          name: 'Number of accounts',
+          type: 'value',
+
         },
         series: [
           {
@@ -203,55 +393,51 @@ export class CardLineChartComponent implements OnInit {
               color: '#3b82f6',
             data : this.dataAccount
           },
+
         ]
       }
-      this.chartPostOptions = {
-        xAxis: {
-          type: 'category',
-          data: [
-            'Jan',
-            'Feb',
-            'Mar',
-            'Apr',
-            'May',
-            'Jun',
-            'Jul',
-            'Aug',
-            'Sep',
-            'Oct',
-            'Nov',
-            'Dec'],
-        },
-        yAxis: {
-          type: 'value',
-        },
-        series: [
-          {
-            name: "Post",
-              type: "line",
-              color: '#ef4444',
-            data : this.dataPost
-          },
-        ]
+    }
+    )
+  }
+  getRevenueByDateTime(options : string) :void{
+      this.chartService.getRevenueByTime().subscribe(response =>{
+      this.revenueByTime = response;
+
+      if(options == 'day'){
+
+        this.revenueKeys = Object.keys(this.revenueByTime.numbByDays || {});
+        this.revenueKeys.sort();
+        this.dataRevenue = this.revenueKeys.map( key => {
+        const monthValue = this.revenueByTime.numbByDays ? this.revenueByTime.numbByDays[key] : null;
+        return monthValue;
+      })
+      } else if( options == 'month'){
+
+        this.revenueKeys = Object.keys(this.revenueByTime.numbByMonths || {});
+        this.revenueKeys.sort();
+        this.dataRevenue = this.revenueKeys.map( key => {
+        const monthValue = this.revenueByTime.numbByMonths ? this.revenueByTime.numbByMonths[key] : null;
+        return monthValue;
+      })
+      } else if ( options == 'year'){
+        this.revenueKeys = Object.keys(this.revenueByTime.numbByYears || {});
+        this.revenueKeys.sort();
+        this.dataRevenue = this.revenueKeys.map( key => {
+        const monthValue = this.revenueByTime.numbByYears ? this.revenueByTime.numbByYears[key] : null;
+        return monthValue;
+      })
       }
       this.chartRevenueOptions = {
+        tooltip: {
+          trigger: 'axis'
+        },
         xAxis: {
           type: 'category',
-          data: [
-            'Jan',
-            'Feb',
-            'Mar',
-            'Apr',
-            'May',
-            'Jun',
-            'Jul',
-            'Aug',
-            'Sep',
-            'Oct',
-            'Nov',
-            'Dec'],
+          data: this.revenueKeys,
+          boundaryGap: false,
         },
         yAxis: {
+          name: 'VND',
           type: 'value',
         },
         series: [
@@ -267,6 +453,5 @@ export class CardLineChartComponent implements OnInit {
 
     }
     )
-
   }
 }

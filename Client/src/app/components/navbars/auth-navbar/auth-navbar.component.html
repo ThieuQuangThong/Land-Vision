@@ -1,37 +1,38 @@
 <header>
-  <nav id="auth-nav"  class=" z-20 bg-blueGray-800 fixed top-0 left-0 right-0 border-gray-200 w-screen  dark:bg-gray-800">
-      <div  class=" flex flex-wrap justify-between items-center mx-auto max-w-screen-xl" style="text-decoration-style: none;">
-          <a [routerLink]="['/landing']" class="flex items-center hover:no-underline">
-              <span class="self-center text-xl font-semibold whitespace-nowrap text-green-500">Land Vision</span>
-          </a>
-          <div class="flex items-center width-items-center lg:order-2">
-              <a   (click)="onPosting()"  *ngIf="!(router.url.includes('posting')) && isSeller" class="cursor-pointer text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"> <i class="fas fa-plus"></i> Posting</a>
-              <div class=" dark:text-white hover:bg-green focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">
-                <ul class="flex flex-col lg:flex-row list-none lg:ml-auto">
+    <nav id="auth-nav" class=" z-20 bg-blueGray-800 fixed top-0 left-0 right-0 border-gray-200 w-screen  dark:bg-gray-800">
+        <div class=" flex flex-wrap justify-between items-center mx-auto max-w-screen-xl" style="text-decoration-style: none;">
+            <a [routerLink]="['/landing']" class="flex items-center hover:no-underline">
+                <span class="self-center text-xl font-semibold whitespace-nowrap text-green-500">Land Vision</span>
+            </a>
+            <div class="flex items-center width-items-center lg:order-2">
+                <a (click)="onPosting()" *ngIf="!(router.url.includes('posting')) && isSeller" class="cursor-pointer text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800">
+                <i class="fas fa-plus"></i> Posting</a>
+                <div class=" dark:text-white hover:bg-green focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5 mr-2 dark:hover:bg-gray-700 focus:outline-none dark:focus:ring-gray-800">
+                    <ul class="flex flex-col lg:flex-row list-none lg:ml-auto">
 
-                  <li class="mr-8 ">
-                    <select class="rounded-2xl" #selLang (change)="translateLanguageTo(selLang.value)">
+                        <li class="mr-8 ">
+                            <select class="rounded-md" #selLang (change)="translateLanguageTo(selLang.value)">
                       <option *ngFor="let language of translate.getLangs()" [value]="language">{{ language }}</option>
                     </select>
-                  </li>
+                        </li>
 
-                  <li class="flex items-center account" *ngIf="isSeller">
-                    <app-user-dropdown class="block"></app-user-dropdown>
-                  </li>
-                  <li class="flex items-center account"  *ngIf="!isSeller">
-                    <button [routerLink]="['/login']" class="animated-button block rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5">Login</button>
-                  </li>
-                </ul>
-              </div>
-
-
-          </div>
+                        <li class="flex items-center account" *ngIf="isSeller">
+                            <app-user-dropdown class="block"></app-user-dropdown>
+                        </li>
+                        <li class="flex items-center account" *ngIf="!isSeller">
+                            <button [routerLink]="['/login']" class="animated-button block rounded-lg text-sm px-4 lg:px-5 py-2 lg:py-2.5">Login</button>
+                        </li>
+                    </ul>
+                </div>
 
 
-          <div class=" hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1" id="navbar-default">
+            </div>
 
-          </div>
-      </div>
 
-  </nav>
+            <div class=" hidden justify-between items-center w-full lg:flex lg:w-auto lg:order-1" id="navbar-default">
+
+            </div>
+        </div>
+
+    </nav>
 </header>

@@ -22,6 +22,7 @@ export class UserDropdownComponent implements AfterViewInit {
   popoverDropdownRef!: ElementRef;
   isAdmin: boolean = false;
   avatarLink:string = "";
+  userName:string="";
   userInfor: UserInfor = new UserInfor();
 
   ngAfterViewInit() {
@@ -29,7 +30,7 @@ export class UserDropdownComponent implements AfterViewInit {
       this.btnDropdownRef.nativeElement,
       this.popoverDropdownRef.nativeElement,
       {
-        placement: "bottom-start",
+        placement: "bottom-end",
       }
     );
   }
@@ -39,6 +40,8 @@ export class UserDropdownComponent implements AfterViewInit {
     .subscribe(
       respone => {
         this.avatarLink = respone.avatarLink;
+        this.userName = respone.name;
+        console.log(respone.name)
       }
     )
 
