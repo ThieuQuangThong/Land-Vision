@@ -27,10 +27,10 @@ constructor(private router: Router, private auth: AuthService, private route: Ac
     if(this.status === PROPERTY_INFOR.isToApprove && user?.role === PROPERTY_INFOR.Role.admin ){
       this.router.navigate([`/admin/approveDetail/${encodedPostId}`])
     }
-    else if( user=== null || this.status === PROPERTY_INFOR.isToView || user.role === PROPERTY_INFOR.Role.admin || this.postUserId !== user.nameid ){
+    else if( user=== null || this.status === PROPERTY_INFOR.isToView|| this.postUserId !== user.nameid ){
       this.router.navigate([`productdetails/${encodedPostId}`])
     }
-    else if(this.status === PROPERTY_INFOR.isToUpdate && user.role !== PROPERTY_INFOR.Role.admin ){
+    else if(this.status === PROPERTY_INFOR.isToUpdate ){
       this.router.navigate([`update-posting/${encodedPostId}`])
     }
   }
