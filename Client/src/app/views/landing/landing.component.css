@@ -14,7 +14,7 @@
 .sticky-search{
   position: -webkit-sticky;
   position: sticky !important;
-  top: 94px;
+  top: 57px;
   z-index: 50;
 }
 .filter-width{
