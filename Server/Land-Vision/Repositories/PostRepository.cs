@@ -128,7 +128,7 @@ namespace Land_Vision.Repositories
 
         public async Task<int> GetCountUnapprovedPostsAsync()
         {
-            return await _dbContext.Posts.Where(x => x.ApproveStatus == NumberFiled.UNAPPROVED && x.isHide == false)
+            return await _dbContext.Posts.Where(x => x.ApproveStatus == NumberFiled.PENDING && x.isHide == false)
             .CountAsync();
         }
 
@@ -152,12 +152,12 @@ namespace Land_Vision.Repositories
             return await _dbContext.Posts.AsNoTracking().Where(p => p.Title == postTitle).FirstOrDefaultAsync();
         }
 
-        public async Task<int> GetPostCountAsync()
+        public async Task<int> GetApprovedPostCountAsync()
         {
             return await _dbContext.Posts.Where(d => d.ApproveStatus == NumberFiled.APPROVED).CountAsync();
         }
 
-        public async Task<List<Post>> GetPostsAsync(Pagination pagination)
+        public async Task<List<Post>> GetApprovedPostsAsync(Pagination pagination)
         {
             return await _dbContext.Posts.AsNoTracking()
             .Where(d => d.ApproveStatus == NumberFiled.APPROVED)
@@ -276,7 +276,7 @@ namespace Land_Vision.Repositories
 
         public Task<List<Post>> GetUnapprovedPostsAsync(Pagination pagination)
         {
-            return _dbContext.Posts.Where(d => d.ApproveStatus == NumberFiled.UNAPPROVED && d.isHide == false)
+            return _dbContext.Posts.Where(d => d.ApproveStatus == NumberFiled.PENDING && d.isHide == false)
             .Skip(pagination.SkipCount)
             .Take(pagination.MaxResultCount)
             .Include(x => x.User)
@@ -331,5 +331,49 @@ namespace Land_Vision.Repositories
             return await SaveChangeAsync();
         }
 
+        public async Task<List<Post>> GetAllPostsAsync(Pagination pagination)
+        {
+            return await _dbContext.Posts.AsNoTracking()
+            .OrderByDescending(p => p.CreateDate)
+            .Skip(pagination.SkipCount)
+            .Take(pagination.MaxResultCount)
+            .Include(x => x.User)
+            .Include(l => l.Images)
+            .Include(k => k.Property.Ward)
+            .Include(c => c.Property.Street)
+            .Include(j => j.Property.Street.District)
+            .Include(i => i.Property.Street.District.City)
+            .Include(m => m.Property.Category)
+            .Include(n => n.Property.Positions)
+            .ToListAsync();
+        }
+
+        public async Task<int> GetAllPostCountAsync()
+        {
+            return await _dbContext.Posts.CountAsync();
+        }
+
+        public async Task<List<Post>> GetAllRejectedPostsAsync(Pagination pagination)
+        {
+            return await _dbContext.Posts.AsNoTracking()
+            .Where(n => n.ApproveStatus == NumberFiled.REJECTED)
+            .OrderByDescending(p => p.CreateDate)
+            .Skip(pagination.SkipCount)
+            .Take(pagination.MaxResultCount)
+            .Include(x => x.User)
+            .Include(l => l.Images)
+            .Include(k => k.Property.Ward)
+            .Include(c => c.Property.Street)
+            .Include(j => j.Property.Street.District)
+            .Include(i => i.Property.Street.District.City)
+            .Include(m => m.Property.Category)
+            .Include(n => n.Property.Positions)
+            .ToListAsync();
+        }
+
+        public async Task<int> GetAllRejectedCountPostsAsync()
+        {
+            return await _dbContext.Posts.Where(j => j.ApproveStatus == NumberFiled.REJECTED).CountAsync();
+        }
     }
 }

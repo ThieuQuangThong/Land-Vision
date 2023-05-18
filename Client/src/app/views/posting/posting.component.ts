@@ -31,7 +31,7 @@ export class PostingComponent implements OnInit {
   isPosting: boolean = false;
   postRequest: PostRequest = new PostRequest();
 
-  openTab = 1;
+  openTab = 0;
   interiors: string[] = PROPERTY_INFOR.Interior;
   directions: string[] = [];
   juridicals: string[] = PROPERTY_INFOR.juridicals;
@@ -88,7 +88,7 @@ export class PostingComponent implements OnInit {
 
   onDropdownDistrictChange(event: any) {
 
-    this.currentSeletedInfor.districtName = this.filterTextContent(event);
+    this.currentSeletedInfor.districtName = this.getEventTextContent(event);
     this.currentSeletedInforTracking.next(this.currentSeletedInfor);
 
     this.getAndSetWardByDistrictId(this.postRequest.property.districtId);
@@ -98,16 +98,16 @@ export class PostingComponent implements OnInit {
   onDropdownCategoryChange(event: any) {}
 
   onDropdownWardChange(event: any) {
-    this.currentSeletedInfor.wardName = this.filterTextContent(event);
+    this.currentSeletedInfor.wardName = this.getEventTextContent(event);
     this.currentSeletedInforTracking.next(this.currentSeletedInfor);
   }
 
   onDropdownStreetChange(event: any) {
-    this.currentSeletedInfor.streetName = this.filterTextContent(event);
+    this.currentSeletedInfor.streetName = this.getEventTextContent(event);
     this.currentSeletedInforTracking.next(this.currentSeletedInfor);
   }
 
-  filterTextContent(event: any): string{
+  getEventTextContent(event: any): string{
     const selectElement = event.target as HTMLSelectElement;
     const selectedOption = selectElement.selectedOptions[0];
     const selectedOptionText = selectedOption.textContent;

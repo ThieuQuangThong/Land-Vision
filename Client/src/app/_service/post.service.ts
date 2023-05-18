@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { PagingModel } from '../models/paging-model';
 import { Observable } from 'rxjs';
@@ -22,6 +22,9 @@ export class PostService {
     return this.http.get<number>(API_URL.GET_POST_COUNT(),{withCredentials: true})
   }
 
+  getAllApprovePost(pagingModel: PagingModel):Observable<PostResponeModel> {
+    return this.http.get<PostResponeModel>(API_URL.GET_ALL_APPROVED_POST(pagingModel),{withCredentials: true})
+  }
   getAllPost(pagingModel: PagingModel):Observable<PostResponeModel> {
     return this.http.get<PostResponeModel>(API_URL.GET_ALL_POST(pagingModel),{withCredentials: true})
   }
@@ -80,6 +83,10 @@ export class PostService {
 
   getApprovedPostByUserId(userId: number):  Observable<PostModel[]>{
     return this.http.get<PostModel[]>(API_URL.GET_APPROVED_POST_BY_USER_ID(userId));
+  }
+
+  getRejectedPost(pagingModel: PagingModel):Observable<PostResponeModel>{
+    return this.http.get<PostResponeModel>(API_URL.GET_ALL_REJECTED_POST(pagingModel));
   }
 
   rejectPostById(postId: number, rejectReason: RejectModel): Observable<any> {

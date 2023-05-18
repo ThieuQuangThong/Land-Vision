@@ -18,12 +18,16 @@ namespace Land_Vision.Interface.IRepositories
         Task<bool> VerifyPostAsync(int postId);
         Task<bool> CheckIsPostExistByIdAsync(int postId);
         Task<bool> IncreaseViewByPostIdAsync(int postId);
-        Task<List<Post>> GetPostsAsync(Pagination pagination);
+        Task<List<Post>> GetAllPostsAsync(Pagination pagination);
+        Task<List<Post>> GetAllRejectedPostsAsync(Pagination pagination);
+        Task<int> GetAllRejectedCountPostsAsync();
+        Task<int> GetAllPostCountAsync();
+        Task<List<Post>> GetApprovedPostsAsync(Pagination pagination);
         Task<List<Post>> GetPostsByTimeAsync(Pagination pagination, DateTime startDate, DateTime endDate);
         Task<Post> GetPostAsync(int postId);
         Task<List<PostTypeDto>> CountPostByType();
         Task<Post> GetPostByTitleAsync(string postName);
-        Task<int> GetPostCountAsync();
+        Task<int> GetApprovedPostCountAsync();
         Task<bool> AddPostAsync(int userId, Post post);
         Task<bool> UpdatePostAsync(Post post);
         Task<bool> DeletePostAsync(Post post);

@@ -33,7 +33,7 @@ export class ApproveDetailComponent {
     ) {}
 
   ngOnInit() {
-    this.postId = this.route.snapshot.params['postId'];
+    this.postId = Number(this.auth.decode(this.route.snapshot.params['postId']));
 
     this.shareDataService.setPositionPost([]);
     this.postService.getPostById(this.postId)
@@ -53,7 +53,7 @@ export class ApproveDetailComponent {
     this.postService.approvePost(this.postId)
     .subscribe(
       _ =>{
-        this.router.navigate(['/admin/approveTables'])
+        this.router.navigate(['/admin/tables'])
         AlertService.setAlertModel('success','Successfully approve')
       },
       erorr =>{

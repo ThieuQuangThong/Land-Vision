@@ -36,11 +36,11 @@ namespace Land_Vision.Controllers
             _dbContext = dbContext;
         }
 
-        // GET Posts
+        // GET approved Posts
         /// <summary>
-        /// Get all posts
+        /// Get approved Posts
         /// </summary>
-        [HttpGet("{skipCount}&{maxResultCount}")]
+        [HttpGet("getAllApprovedPost/{skipCount}&{maxResultCount}")]
         [ProducesResponseType(200, Type = typeof(PaginationRespone<PostDto>))]
         public async Task<ActionResult<PaginationRespone<PostDto>>> GetPosts(int skipCount, int maxResultCount)
         {
@@ -49,12 +49,54 @@ namespace Land_Vision.Controllers
                 return BadRequest(ModelState);
             }
 
-            var Paginposts = await _postService.GetPostsAsync(new Pagination
+            var pagingPosts = await _postService.GetApprovedPostsAsync(new Pagination
             {
                 SkipCount = skipCount,
                 MaxResultCount = maxResultCount
             });
-            return Ok(Paginposts);
+            return Ok(pagingPosts);
+        }
+
+        // GET rejected Posts
+        /// <summary>
+        /// Get rejected Posts
+        /// </summary>
+        [HttpGet("getAllRejectedPost/{skipCount}&{maxResultCount}")]
+        [ProducesResponseType(200, Type = typeof(PaginationRespone<PostDto>))]
+        public async Task<ActionResult<PaginationRespone<PostDto>>> GetRejectedPosts(int skipCount, int maxResultCount)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var pagingPosts = await _postService.GetRejectedPostsAsync(new Pagination
+            {
+                SkipCount = skipCount,
+                MaxResultCount = maxResultCount
+            });
+            return Ok(pagingPosts);
+        }
+
+        // GET all posts
+        /// <summary>
+        /// Get all posts
+        /// </summary>
+        [HttpGet("{skipCount}&{maxResultCount}")]
+        [ProducesResponseType(200, Type = typeof(PaginationRespone<PostDto>))]
+        public async Task<ActionResult<PaginationRespone<PostDto>>> GetAllPosts(int skipCount, int maxResultCount)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var pagingPosts = await _postService.GetALLPostsAsync(new Pagination
+            {
+                SkipCount = skipCount,
+                MaxResultCount = maxResultCount
+            });
+            return Ok(pagingPosts);
         }
 
         // GET Posts by userId
@@ -93,7 +135,7 @@ namespace Land_Vision.Controllers
                 return BadRequest(ModelState);
             }
 
-            var PostsCount = await _postRepository.GetPostCountAsync();
+            var PostsCount = await _postRepository.GetApprovedPostCountAsync();
             return Ok(PostsCount);
         }
 
@@ -254,7 +296,7 @@ namespace Land_Vision.Controllers
                 return NotFound();
             }
 
-            if(post.ApproveStatus != NumberFiled.UNAPPROVED){
+            if(post.ApproveStatus != NumberFiled.PENDING){
                 throw new Exception(); 
             }
 
@@ -359,7 +401,7 @@ namespace Land_Vision.Controllers
         /// <summary>
         /// Add post
         /// </summary>
-        [Authorize(Roles = "User")]
+        [Authorize(Roles = "User, Admin")]
         [HttpPost("{userId}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]

@@ -3,7 +3,6 @@ import { TranslateService } from "@ngx-translate/core";
 import { DetailPurchaseService } from "src/app/_service/detail-purchase.service";
 import { PostService } from "src/app/_service/post.service";
 import { UserService } from "src/app/_service/user.service";
-import { PagingModel } from "src/app/models/paging-model";
 
 @Component({
   selector: "app-header-stats",

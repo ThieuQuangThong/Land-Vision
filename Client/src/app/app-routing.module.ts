@@ -1,4 +1,3 @@
-import { User } from './_service/user.model';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -189,6 +188,13 @@ const routes: Routes = [
       canActivate: [AuthGuard]},
       {
         path: "approveDetail/:postId", component: ApproveDetailComponent,
+        data:{
+          requiredRole: PROPERTY_INFOR.Role.admin
+        },
+        canActivate: [AuthGuard]
+      },
+      {
+        path: "productdetails/:postId", component: ProductDetailComponent,
         data:{
           requiredRole: PROPERTY_INFOR.Role.admin
         },

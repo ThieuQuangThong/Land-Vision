@@ -176,12 +176,12 @@
                 </div>
                 <div class="w-full lg:w-6/12 pl-1">
                   <div class="tab-content tab-space">
-                    <div [ngClass]="{'hidden': openTab !== 1, 'block': openTab === 1}">
+                    <div [ngClass]="{'hidden': openTab !== 0, 'block': openTab === 0}">
                       <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="title">
                         Price
                       </label>
                     </div>
-                    <div [ngClass]="{'hidden': openTab !== 2, 'block': openTab === 2}">
+                    <div [ngClass]="{'hidden': openTab !== 1, 'block': openTab === 1}">
                       <label class="block uppercase text-blueGray-600 text-xs font-bold mb-2" htmlFor="title">
                         Price Per Month
                       </label>
@@ -226,13 +226,13 @@
                   </select>
 
                   <label class="block uppercase text-blueGray-600 mt-2 text-xs font-bold mb-2" htmlFor="title">
-                    Frontage Area
+                    Frontal
                   </label>
                   <input type="number" formControlName="frontangeArea" [(ngModel)]="postRequest.property.frontangeArea"
                     class="number-input border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow focus:outline-none focus:ring w-full ease-linear transition-all duration-150"
-                    placeholder="Frontage Area" />
+                    placeholder="Frontal" />
                     <div *ngIf="f['frontangeArea'].invalid && (f['frontangeArea'].dirty || f['frontangeArea'].touched)" class="text-red-500 mt-1">
-                      <div *ngIf="f['frontangeArea']?.errors?.['required']">Frontage Area is required</div>
+                      <div *ngIf="f['frontangeArea']?.errors?.['required']">Frontal is required</div>
                     </div>
                   <label for="countries" class="block uppercase text-blueGray-600 text-xs font-bold mb-2">Way
                     in(m²)</label>
@@ -248,11 +248,11 @@
                   <div *ngIf="f['numberOfFloor'].invalid && (f['numberOfFloor'].dirty || f['numberOfFloor'].touched)" class="text-red-500 mt-1">
                     <div *ngIf="f['numberOfFloor']?.errors?.['required']">Number of floor is required</div>
                   </div>
-                  <label for="countries" class="block uppercase text-blueGray-600 text-xs font-bold mb-2">Number of Bed</label>
-                  <input formControlName="numberOfBed" type="number" placeholder="Number of Bed" [(ngModel)]="postRequest.property.numberOfBed"
+                  <label for="countries" class="block uppercase text-blueGray-600 text-xs font-bold mb-2">Number of Bedrooms</label>
+                  <input formControlName="numberOfBed" type="number" placeholder="Number of Bedrooms" [(ngModel)]="postRequest.property.numberOfBed"
                     class="number-input border-0 px-3 py-3 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-sm shadow outline-none focus:outline-none focus:ring w-full " />
                     <div *ngIf="f['numberOfBed'].invalid && (f['numberOfBed'].dirty || f['numberOfBed'].touched)" class="text-red-500 mt-1">
-                      <div *ngIf="f['numberOfBed']?.errors?.['required']">Number of Bed is required</div>
+                      <div *ngIf="f['numberOfBed']?.errors?.['required']">Number of Bedrooms is required</div>
                     </div>
                   <label for="countries" class="block uppercase text-blueGray-600 text-xs font-bold mb-2">Number of Bath</label>
                   <input formControlName="numberOfBath" type="number" placeholder="Number of Bath" [(ngModel)]="postRequest.property.numberOfBath"
