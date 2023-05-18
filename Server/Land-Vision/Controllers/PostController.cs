@@ -401,7 +401,7 @@ namespace Land_Vision.Controllers
         /// <summary>
         /// Add post
         /// </summary>
-        [Authorize(Roles = "User")]
+        [Authorize(Roles = "User, Admin")]
         [HttpPost("{userId}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]

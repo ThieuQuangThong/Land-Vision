@@ -38,16 +38,16 @@
           <div class=" stickybar top-0 left-0 z-50  w-full p-2 md:w-full pt-3 shadow rounded-lg bg-white">
             <div style="width: 100%;" class="flex ">
                 <select  [(ngModel)]="selectedcategoryId"
-                class="filter-width px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
+                class="filter-width px-4 py-1 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
                 <option *ngFor="let category of categories; let i = index" value="{{category.id}}">{{category.name| translate}}
                 </option>
               </select>
                 <input [(ngModel)]="text" type="text"
-                  class=" ml-2 py-4 w-5/6  rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white border-spacing-0 text-sm"
+                  class=" ml-2 py-3 w-5/6  rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white border-spacing-0 text-sm"
                   placeholder="Search by listing, location, bedroom number...">
               <div  class=" w-1/62 flex items-center ml-2 h-full">
                 <button style="  top: 24px;right: 20px; margin-right: 20px;" (click)="search()"
-                  class=" absolute bg-emerald-500 text-white active:bg-emerald-600 font-bold text-sm  px-10 py-3 rounded  hover:bg-emerald-600 outline-none focus:outline-none ease-linear transition-all duration-150"
+                  class=" absolute bg-emerald-500 text-white active:bg-emerald-600 font-bold text-sm  px-10 py-2 rounded  hover:bg-emerald-600 outline-none focus:outline-none ease-linear transition-all duration-150"
                   type="button">
                   <i class="fas fa-search"></i> {{'Search' | translate}}
                 </button>
@@ -59,7 +59,7 @@
               <div>
                 <div class="grid grid-cols-4  md:grid-cols-4 xl:grid-cols-5  gap-4 mt-1">
                   <select [(ngModel)]="selectedTransactionTypes"
-                    class="w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
+                    class="py-2 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
                     <option *ngFor="let transactionType of transactionTypes; let i = index" value="{{i}}">
                       {{transactionType | translate}} </option>
                   </select>
@@ -67,7 +67,7 @@
 
 
                   <select [(ngModel)]="selectedPrice"
-                    class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
+                    class="px-4 py-2 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
                     <option *ngFor="let price of prices; let i = index" value="{{i}}">{{price | translate}} </option>
 
                   </select>
@@ -79,19 +79,19 @@
                   </select> -->
 
                   <select [(ngModel)]="selectedBedroom"
-                    class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
+                    class="px-4 py-2 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
                     <option *ngFor="let bedRoom of bedRooms; let i = index" value="{{i}}">{{bedRoom | translate}}
                     </option>
                   </select>
 
                   <select [(ngModel)]="selectedBathroom"
-                    class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
+                    class="px-4 py-2 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
                     <option *ngFor="let bathRoom of bathRooms; let i = index" value="{{i}}">{{bathRoom | translate}}
                     </option>
                   </select>
 
                   <select [(ngModel)]="selectedDirection"
-                    class="px-4 py-3 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
+                    class="px-4 py-2 w-full rounded-md bg-gray-100 border-transparent focus:border-gray-500 focus:bg-white text-sm">
                     <option *ngFor="let direction of directions; let i = index" value="{{i}}">{{direction | translate}}
                     </option>
                   </select>
