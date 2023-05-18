@@ -1,41 +1,32 @@
 <a class="text-blueGray-500 block" href="#pablo" (click)="toggleDropdown($event)" #btnDropdownRef>
-  <div class="items-center flex">
-    <span class="w-8 h-8 text-sm text-white bg-blueGray-200 inline-flex items-center justify-center rounded-full">
+    <div class="items-center flex">
+        <span class="w-8 h-8 text-sm text-white bg-blueGray-200 inline-flex items-center justify-center rounded-full">
       <div class="w-full h-full rounded-full align-middle border-none shadow-lg  bg-cover" style="background-image: url({{avatarLink}});"></div>
       <!-- <img alt="..." class="w-full h-full rounded-full align-middle border-none shadow-lg bg-cover"
         src="{{avatarLink}}" /> -->
     </span>
-  </div>
+    </div>
 </a>
-<div class="min-w-48 z-50" #popoverDropdownRef>
-  <div class="bg-white text-base z-50 float-left py-2 list-none text-left rounded shadow-lg mt-1 min-w-48"
-    [ngClass]="dropdownPopoverShow ? 'block' : 'hidden'">
-    <a
-      (click)="MyProfile()"
-      class="pointerHover text-sm py-2 px-4 font-normal block w-full whitespace-nowrap hover:bg-gray-200 text-blueGray-700">
+<div class="min-w-48 z-50 mt-2" #popoverDropdownRef>
+    <div class="bg-white text-base z-50  list-none text-left rounded-md shadow-md border-2 mt-1 min-w-48 " [ngClass]="dropdownPopoverShow ? 'block' : 'hidden'">
+        <label class=" text-sm pt-2 px-4 font-normal block w-full whitespace-nowrap text-blueGray-700 mb-0 pb-0">Signed in as</label>
+        <label class=" text-sm font-bold py-2 px-4 font-normal block w-full whitespace-nowrap text-blueGray-700 border-b-2 m-0">{{userName}}</label>
+        <a (click)="MyProfile()" class="pointerHover text-sm py-2 px-4 font-normal block w-full whitespace-nowrap hover:bg-gray-200 text-blueGray-700">
       My profile
     </a>
-    <a
-      *ngIf="isAdmin"
-      [routerLink]="['/admin/dashboard']"
-      class="pointerHover text-sm py-2 px-4 font-normal block w-full whitespace-nowrap hover:bg-gray-200 text-blueGray-700 hover:no-underline hover:text-blueGray-700">
-      Management
-    </a>
-    <a
-      (click)="BuyPackage()"
-      class="pointerHover text-sm py-2 px-4 font-normal block w-full whitespace-nowrap hover:bg-gray-200 text-blueGray-700">
+
+        <a (click)="BuyPackage()" class="pointerHover text-sm py-2 px-4 font-normal block w-full whitespace-nowrap hover:bg-gray-200 text-blueGray-700">
       Buy post package
     </a>
-    <a
-      class="pointerHover text-sm py-2 px-4 font-normal block w-full whitespace-nowrap hover:bg-gray-200 text-blueGray-700">
+        <!-- <a class="pointerHover text-sm py-2 px-4 font-normal block w-full whitespace-nowrap hover:bg-gray-200 text-blueGray-700">
       Another action
+    </a> -->
+        <a *ngIf="isAdmin" [routerLink]="['/admin/dashboard']" class="border-t-2 pointerHover text-sm py-2 px-4 font-normal block w-full whitespace-nowrap hover:bg-gray-200 text-blueGray-700 hover:no-underline hover:text-blueGray-700">
+      Management
     </a>
-
-    <div class="h-0 my-2 border border-solid border-blueGray-100"></div>
-    <a
-      (click)="logout()"
-      class="pointerHover text-sm py-2 px-4 font-normal block w-full whitespace-nowrap hover:bg-gray-200 text-blueGray-700">
+        <div class="h-0 border border-solid border-blueGray-100"></div>
+        <a (click)="logout()" class="pointerHover text-sm py-2 px-4 font-normal block w-full whitespace-nowrap hover:bg-gray-200 text-blueGray-700 m-0">
       Logout
     </a>
-  </div>
+    </div>
 </div>

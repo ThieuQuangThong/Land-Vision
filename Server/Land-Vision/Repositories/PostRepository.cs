@@ -66,7 +66,7 @@ namespace Land_Vision.Repositories
                 .GroupBy(p => p.transactionType)
         .Select(g => new PostTypeDto
         {
-            name = g.Key == 0 ? "Sell" : "Rent",
+            name = g.Key == 0 ? "For Sell" : "For Rent",
             value = g.Count()
         })
         .ToList();

@@ -6,8 +6,13 @@
                     Overview
                 </h6>
                 <h2 class="text-gray-800 text-xl font-semibold">
-                    Chart View Post
+                    Posts
                 </h2>
+                <select class="rounded-md border-none focus:outline-none outline-none" #optionsShowChart (change)="getPostByDateTime(optionsShowChart.value)">
+                  <option value="day">Day</option>
+                  <option value="month">Month</option>
+                  <option value="year">Year</option>
+                </select>
             </div>
         </div>
     </div>
@@ -16,7 +21,7 @@
         <div class="relative w-full">
             <div class="chart-container">
                 <div>
-                    <div class="grid grid-cols-3 gap-4 ">
+                    <div class="grid grid-cols-3 gap-1 ">
                         <div echarts [options]="chartPostOptions" class="demo-chart col-span-2"></div>
                         <div echarts [options]="chartPostPieOptions" class="demo-chart"></div>
                     </div>
@@ -35,8 +40,13 @@
                     Overview
                 </h6>
                 <h2 class="text-gray-800 text-xl font-semibold">
-                    Chart View Revenue
+                    Revenue
                 </h2>
+                <select class="rounded-md border-none focus:outline-none outline-none" #optionsShowChart (change)="getRevenueByDateTime(optionsShowChart.value)">
+                  <option value="day">Day</option>
+                  <option value="month">Month</option>
+                  <option value="year">Year</option>
+                </select>
             </div>
         </div>
     </div>
@@ -44,7 +54,7 @@
         <!-- Chart -->
         <div class="relative w-full">
             <div class="chart-container">
-                <div class="grid grid-cols-3 gap-4 ">
+                <div class="grid grid-cols-3 gap-1 ">
                     <div echarts [options]="chartRevenueOptions" class="demo-chart col-span-2"></div>
                     <div echarts [options]="chartRevenuePieOptions" class="demo-chart"></div>
                 </div>
@@ -62,8 +72,13 @@
                     Overview
                 </h6>
                 <h2 class="text-gray-800 text-xl font-semibold">
-                    Chart View Account
+                    Sellers
                 </h2>
+                <select class="rounded-md border-none focus:outline-none outline-none" #optionsShowChart (change)="getAccountByDateTime(optionsShowChart.value)">
+                  <option value="day">Day</option>
+                  <option value="month">Month</option>
+                  <option value="year">Year</option>
+                </select>
             </div>
         </div>
     </div>
