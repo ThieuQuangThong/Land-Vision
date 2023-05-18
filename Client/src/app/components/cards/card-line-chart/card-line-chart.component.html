@@ -42,7 +42,7 @@
                 <h2 class="text-gray-800 text-xl font-semibold">
                     Revenue
                 </h2>
-                <select class="rounded-md border-none focus:outline-none outline-none" #optionsShowChart (change)="getRevenueByDateTime(optionsShowChart.value)">
+                <select class="rounded-md border-none focus:outline-none outline-none" #optionsShowChartRevenue (change)="getRevenueByDateTime(optionsShowChartRevenue.value)">
                   <option value="day">Day</option>
                   <option value="month">Month</option>
                   <option value="year">Year</option>
@@ -74,7 +74,7 @@
                 <h2 class="text-gray-800 text-xl font-semibold">
                     Sellers
                 </h2>
-                <select class="rounded-md border-none focus:outline-none outline-none" #optionsShowChart (change)="getAccountByDateTime(optionsShowChart.value)">
+                <select class="rounded-md border-none focus:outline-none outline-none" #optionsShowChartAccount (change)="getAccountByDateTime(optionsShowChartAccount.value)">
                   <option value="day">Day</option>
                   <option value="month">Month</option>
                   <option value="year">Year</option>
