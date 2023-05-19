@@ -14,7 +14,7 @@ export class AuthenIdentifyCardService {
   checkIdentifyCard(urlImage: string): Observable<any>{
     const headers = new HttpHeaders({
       'content-type': "multipart/form-data; boundary=----WebKitFormBoundary7MA4YWxkTrZu0gW",
-      'api_key': 'pZX7LOoZiSsHSYzWE2bwL8hIHvqdcNFq'
+      'api_key': 'ZsNu9rpL3xWdp4OtcTjQvUX1J4jtP76H'
     });
     const payload = `------WebKitFormBoundary7MA4YWxkTrZu0gW\r\nContent-Disposition: form-data; name=\"image_url\"\r\n\r\n${urlImage}\r\n------WebKitFormBoundary7MA4YWxkTrZu0gW--`
 
