@@ -42,9 +42,9 @@ export class SuccessPaymentComponent implements OnInit{
   }
   upDateVip() {
     switch (this.orderInfo){
-      case 'Gói Fortune' : this.vipId = 1; break;
-      case 'Gói Wealth' : this.vipId = 2; break;
-      case 'Gói Prosperous' : this.vipId = 4; break;
+      case 'Fortune' : this.vipId = 1; break;
+      case 'Wealth' : this.vipId = 2; break;
+      case 'Prosperous' : this.vipId = 4; break;
     }
     const userId = this.auth.getUserId();
     this.userService.updateVip(userId,this.vipId).subscribe();

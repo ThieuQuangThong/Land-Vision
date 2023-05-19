@@ -74,7 +74,7 @@ export class HeaderStatsComponent implements OnInit {
         this.postGrowthValue =  ((currentValueOfCurrentMonth[0]!- currentValueOfPreviousMonth[0]!) / currentValueOfPreviousMonth[0]!) * 100;
         if(this.postGrowthValue > 0){
           this.postStatus = "up"
-          this.postColor = "bg-green-500"
+          this.postColor = "text-green-500"
         }else if(this.postGrowthValue < 0) {
           this.postStatus = "down"
           this.postColor = "text-red-500"
@@ -115,11 +115,12 @@ export class HeaderStatsComponent implements OnInit {
         this.accountGrowthValue =  ((currentValueOfCurrentMonth[0]!- currentValueOfPreviousMonth[0]!) / currentValueOfPreviousMonth[0]!) * 100;
         if(this.accountGrowthValue > 0){
           this.accountStatus = "up"
-          this.accountColor = "bg-green-500"
+          this.accountColor = "text-green-500"
         }else if(this.accountGrowthValue < 0) {
           this.accountStatus = "down"
           this.accountColor = "text-red-500"
         }
+        this.accountGrowthValue = this.accountGrowthValue.toFixed(2);
 
       }
     )
@@ -153,7 +154,7 @@ export class HeaderStatsComponent implements OnInit {
         })
 
         // console.log(`Giá trị của tháng trước ${previousMonth} là ${currentValueOfPreviousMonth[0]}`);
-        this.revenueGrowthValue =  parseFloat((((currentValueOfCurrentMonth[0]!- currentValueOfPreviousMonth[0]!) / currentValueOfPreviousMonth[0]!) * 100).toFixed(2));
+        this.revenueGrowthValue =  (((currentValueOfCurrentMonth[0]!- currentValueOfPreviousMonth[0]!) / currentValueOfPreviousMonth[0]!) * 100);
         if(this.revenueGrowthValue > 0){
           this.revenueStatus = "up"
           this.revenueColor = "text-green-500"
@@ -161,6 +162,7 @@ export class HeaderStatsComponent implements OnInit {
           this.revenueStatus = "down"
           this.revenueColor = "text-red-500"
         }
+        this.revenueGrowthValue =  this.revenueGrowthValue.toFixed(2);
 
       }
     )
