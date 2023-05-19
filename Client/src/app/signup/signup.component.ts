@@ -71,9 +71,10 @@ export class SignupComponent implements OnInit {
   }
   onSubmit() {
     // stop here if form is invalid
-    if (this.registrationForm.invalid) {
-        return ;
-    }
+    // this.submitted = true;
+    // if (this.registrationForm.invalid) {
+    //     return ;
+    // }
 
     this.registrationForm.value['frontOfIdentityCard']= this.fileService.imageFile1
     this.registrationForm.value['backOfIdentityCard']= this.fileService.imageFile2
