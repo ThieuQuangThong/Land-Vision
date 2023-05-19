@@ -128,7 +128,7 @@ namespace Land_Vision.Controllers
                 ModelState.AddModelError("", "Something went wrong while saving");
                 return StatusCode(500, ModelState);
             }
-            return Ok(detailPurchase);
+            return Ok();
         }
     }
 }

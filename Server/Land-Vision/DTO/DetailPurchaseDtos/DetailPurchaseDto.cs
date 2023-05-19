@@ -6,5 +6,6 @@ namespace Land_Vision.Dto.DetailPurchaseDtos
     {
         public int Id { get; set; }
         public DateTime TransactionDate { get; set; }
+
     }
 }

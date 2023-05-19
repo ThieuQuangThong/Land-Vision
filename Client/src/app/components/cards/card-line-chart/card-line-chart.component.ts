@@ -60,7 +60,7 @@ export class CardLineChartComponent implements OnInit {
               type: 'pie',
               radius: '50%',
               label: {
-                formatter: '{b}: {@2012} ({d}%)'
+                formatter: '({d}%)'
               },
               data: this.dataPostByType,
               emphasis: {
@@ -102,7 +102,7 @@ export class CardLineChartComponent implements OnInit {
               type: 'pie',
               radius: '50%',
               label: {
-                formatter: '{b}: {@2012} ({d}%)'
+                formatter: '({d}%)'
               },
               data: this.dataDetailPurchaseByVipType,
               emphasis: {

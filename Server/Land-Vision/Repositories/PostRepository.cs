@@ -60,7 +60,7 @@ namespace Land_Vision.Repositories
 
         public async Task<List<PostTypeDto>> CountPostByType()
         {
-            var posts = await _dbContext.Posts.ToListAsync();
+            var posts = await _dbContext.Posts.Where(x => x.ApproveStatus == NumberFiled.APPROVED).ToListAsync();
 
             var postCountByType = posts
                 .GroupBy(p => p.transactionType)
