@@ -1,19 +1,19 @@
 <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-gray-100">
     <div class="rounded-t mb-0 px-4 py-3 bg-transparent">
-        <div class="flex flex-wrap items-center">
+        <div class="flex flex-wrap items-center w-3/5">
             <div class="relative w-full max-w-full flex-grow flex-1">
-                <h6 class="uppercase text-gray-800 mb-1 text-xs font-semibold">
+                <p class="uppercase text-gray-800 mb-1 text-xs font-semibold">
                     Overview
-                </h6>
-                <h2 class="text-gray-800 text-xl font-semibold">
+                </p>
+                <p class="text-gray-800 text-xl font-semibold">
                     Posts
-                </h2>
-                <select class="rounded-md border-none focus:outline-none outline-none" #optionsShowChart (change)="getPostByDateTime(optionsShowChart.value)">
-                  <option value="day">Day</option>
-                  <option value="month">Month</option>
-                  <option value="year">Year</option>
-                </select>
-            </div>
+                </p>
+              </div>
+              <select class="rounded-md border-none focus:outline-none outline-none" #optionsShowChart (change)="getPostByDateTime(optionsShowChart.value)">
+                <option value="day">Day</option>
+                <option value="month">Month</option>
+                <option value="year">Year</option>
+              </select>
         </div>
     </div>
     <div class=" flex-auto">
@@ -34,20 +34,20 @@
 
 <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-gray-100">
     <div class="rounded-t mb-0 px-4 py-3 bg-transparent">
-        <div class="flex flex-wrap items-center">
+        <div class="flex flex-wrap items-center w-3/5">
             <div class="relative w-full max-w-full flex-grow flex-1">
-                <h6 class="uppercase text-gray-800 mb-1 text-xs font-semibold">
+                <p class="uppercase text-gray-800 mb-1 text-xs font-semibold">
                     Overview
-                </h6>
-                <h2 class="text-gray-800 text-xl font-semibold">
+                </p>
+                <p class="text-gray-800 text-xl font-semibold">
                     Revenue
-                </h2>
-                <select class="rounded-md border-none focus:outline-none outline-none" #optionsShowChartRevenue (change)="getRevenueByDateTime(optionsShowChartRevenue.value)">
-                  <option value="day">Day</option>
-                  <option value="month">Month</option>
-                  <option value="year">Year</option>
-                </select>
-            </div>
+                </p>
+              </div>
+              <select class="rounded-md border-none focus:outline-none outline-none" #optionsShowChartRevenue (change)="getRevenueByDateTime(optionsShowChartRevenue.value)">
+                <option value="day">Day</option>
+                <option value="month">Month</option>
+                <option value="year">Year</option>
+              </select>
         </div>
     </div>
     <div class=" flex-auto">
@@ -66,20 +66,20 @@
 
 <div class="relative flex flex-col min-w-0 break-words w-full mb-6 shadow-lg rounded bg-gray-100">
     <div class="rounded-t mb-0 px-4 py-3 bg-transparent">
-        <div class="flex flex-wrap items-center">
+        <div class="flex flex-wrap items-center w-11/12">
             <div class="relative w-full max-w-full flex-grow flex-1">
-                <h6 class="uppercase text-gray-800 mb-1 text-xs font-semibold">
+                <p class="uppercase text-gray-800 mb-1 text-xs font-semibold">
                     Overview
-                </h6>
-                <h2 class="text-gray-800 text-xl font-semibold">
+                </p>
+                <p class="text-gray-800 text-xl font-semibold">
                     Sellers
-                </h2>
-                <select class="rounded-md border-none focus:outline-none outline-none" #optionsShowChartAccount (change)="getAccountByDateTime(optionsShowChartAccount.value)">
-                  <option value="day">Day</option>
-                  <option value="month">Month</option>
-                  <option value="year">Year</option>
-                </select>
-            </div>
+                </p>
+              </div>
+              <select class="rounded-md border-none focus:outline-none outline-none" #optionsShowChartAccount (change)="getAccountByDateTime(optionsShowChartAccount.value)">
+                <option value="day">Day</option>
+                <option value="month">Month</option>
+                <option value="year">Year</option>
+              </select>
         </div>
     </div>
     <div class=" flex-auto">
