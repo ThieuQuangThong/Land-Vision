@@ -1,95 +1,90 @@
 <section class="bg-gray-50 min-h-screen flex items-center justify-center transition-signup">
-  <!-- login container -->
+    <!-- login container -->
 
 
-  <div class="bg-gray-50 pt-6 flex rounded-2xl shadow-lg items-center">
-    <!-- image -->
-    <div class=" px-8 md:block hidden w-3/2 ml-20">
-      <img class="logo-img rounded-2xl" src="../../assets/img/logo-no-background.png" alt="">
-      <img class="rounded-2xl " src="https://img.freepik.com/premium-vector/modern-handcrafted-flat-illustration-food-delivery_203633-8769.jpg?w=740">
-    </div>
-    <!-- form -->
-    <div class=" px-8 md:px-24 pb-11">
-      <h2 class="font-bold text-3xl pt-2 text-[#002D74]">Signup</h2>
-      <p class="text-sm mt-3 mb-3 text-[#002D74]">Create an account</p>
+    <div class="bg-gray-50 pt-6 flex rounded-2xl shadow-lg items-center">
+        <!-- image -->
+        <div class=" px-8 md:block hidden w-3/2 ml-20">
+            <img class="logo-img rounded-2xl" src="../../assets/img/logo-no-background.png" alt="">
+            <img class="rounded-2xl " src="https://img.freepik.com/premium-vector/modern-handcrafted-flat-illustration-food-delivery_203633-8769.jpg?w=740">
+        </div>
+        <!-- form -->
+        <div class=" px-8 md:px-24 pb-11">
+            <h2 class="font-bold text-3xl pt-2 text-[#002D74]">Signup</h2>
+            <p class="text-sm mt-3 mb-3 text-[#002D74]">Create an account</p>
 
-      <form action="" class="flex flex-col gap-3"  [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
-        <div class="mb-1">
-          <label for="email" class="block mb-1 text-xs font-medium text-[#002D74]">Your full name</label>
-          <input type="text" id="name" formControlName="name" placeholder="Full name" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
+            <form action="" class="flex flex-col gap-3" [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+                <div class="mb-1">
+                    <label for="email" class="block mb-1 text-xs font-medium text-[#002D74]">Your full name</label>
+                    <input type="text" id="name" formControlName="name" placeholder="Full name" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
             block w-full p-2.5 " [ngClass]="{ 'is-invalid': submitted && f['name'].errors }">
 
-           <div class="invalid" *ngIf="registrationForm.get('name')?.invalid && (registrationForm.get('name')?.dirty || registrationForm.get('name')?.touched)">
-            <div *ngIf="registrationForm.get('name')?.errors?.['required']">Name is required.</div>
-            <div *ngIf="registrationForm.get('name')?.errors?.['pattern']">Name must not contain number.</div>
-          </div>
+                    <div class="invalid" *ngIf="registrationForm.get('name')?.invalid && (registrationForm.get('name')?.dirty || registrationForm.get('name')?.touched)">
+                        <div *ngIf="registrationForm.get('name')?.errors?.['required']">Name is required.</div>
+                        <div *ngIf="registrationForm.get('name')?.errors?.['pattern']">Name must not contain number.</div>
+                    </div>
+                </div>
+                <div class="mb-1">
+                    <label for="phone" class="block mb-1 text-xs font-medium text-[#002D74]">Your phone number</label>
+                    <input type="text" formControlName="phone" placeholder="Phone number" id="phone" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
+            block w-full p-2.5 " [ngClass]="{ 'is-invalid': submitted && f['phone'].errors }">
+                    <div class="invalid" *ngIf="registrationForm.get('phone')?.invalid && (registrationForm.get('phone')?.dirty || registrationForm.get('phone')?.touched)">
+                        <div *ngIf="registrationForm.get('phone')?.errors?.['required']">Phone is required.</div>
+                        <div *ngIf="registrationForm.get('phone')?.errors?.['pattern']">Phone must have a length of 10 numbers.</div>
+                    </div>
+                </div>
+                <div class="mb-1">
+                    <label for="email" class="block mb-1 text-xs font-medium text-[#002D74]">Your email</label>
+                    <input type="email" id="email" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
+            block w-full p-2.5 " formControlName="email" placeholder="name@gmail.com" [ngClass]="{ 'is-invalid': submitted && f['email'].errors }">
+
+                    <div class="invalid" *ngIf="registrationForm.get('email')?.invalid && (registrationForm.get('email')?.dirty || registrationForm.get('email')?.touched)">
+                        <div *ngIf="registrationForm.get('email')?.errors?.['required']">Email is required.</div>
+                        <div *ngIf="registrationForm.get('email')?.errors?.['email']">Invalid email format.</div>
+                    </div>
+                </div>
+                <div class="mb-1">
+                    <label for="password" class="block mb-1 text-xs font-medium text-[#002D74]">Your password</label>
+                    <input type="password" formControlName="password" placeholder="New password" id="password" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
+            block w-full p-2.5 " [ngClass]="{ 'is-invalid': submitted && f['password'].errors }">
+                    <div class="invalid" *ngIf="registrationForm.get('password')?.invalid && (registrationForm.get('password')?.dirty || registrationForm.get('password')?.touched)">
+                        <div *ngIf="registrationForm.get('password')?.errors?.['required']">Password is required.</div>
+                        <div *ngIf="registrationForm.get('password')?.errors?.['minlength']">Password must have to be at least 6 characters long.</div>
+                        <div *ngIf="registrationForm.get('password')?.errors?.['pattern']">At least one uppercase letter.</div>
+                    </div>
+                </div>
+
+                <div class="mb-1">
+                    <label for="repeat-password" class="block mb-1 text-xs font-medium text-[#002D74]">Repeat password</label>
+                    <input type="password" formControlName="confirmPassword" placeholder="Confirm password" id="repeat-password" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
+            block w-full p-2.5 " [ngClass]="{ 'is-invalid': submitted && f['password'].errors }">
+
+                    <div class="invalid" *ngIf="registrationForm.get('confirmPassword')?.invalid && (registrationForm.get('confirmPassword')?.dirty || registrationForm.get('confirmPassword')?.touched)">
+                        <div *ngIf="registrationForm.get('confirmPassword')?.errors?.['passwordMismatch']">Password not match.</div>
+                    </div>
+                </div>
+                <label class="block text-sm font-medium text-[#002D74]">Your ID card</label>
+
+                <div class="mb-1 gap-1 flex">
+
+                    <app-file-upload>
+
+                    </app-file-upload>
+
+                </div>
+                <div class="flex items-start mb-1">
+                    <div class="flex  items-center h-5">
+                        <input id="terms" type="radio" value="" class="w h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 dark:focus:ring-blue-600 dark:ring-offset-gray-800 " required>
+                    </div>
+                    <label for="terms" class="ml-2 text-sm font-medium text-[#002D74] dark:text-gray-400">I agree with the <a href="#" class="text-blue-600 hover:underline dark:text-blue-500">terms and conditions</a></label>
+                </div>
+                <div class="flex items-start mb-1">
+                    <label for="terms" class="ml-2 text-sm font-medium text-[#002D74] dark:text-gray-400">Already have an account? <a routerLink="/login" class="text-blue-600 hover:underline dark:text-blue-500">Login</a></label>
+
+                </div>
+                <button type="submit" class="text-white bg-[#38C390] p-3 rounded-xl hover:bg-[#55be97] focus:ring-4 focus:outline-none">Register new account</button>
+            </form>
+
         </div>
-        <div class="mb-1">
-          <label for="phone" class="block mb-1 text-xs font-medium text-[#002D74]">Your phone number</label>
-          <input type="text" formControlName="phone" placeholder="Phone number" id="phone" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
-            block w-full p-2.5 " [ngClass]="{ 'is-invalid': submitted && f['phone'].errors }" >
-           <div class="invalid" *ngIf="registrationForm.get('phone')?.invalid && (registrationForm.get('phone')?.dirty || registrationForm.get('phone')?.touched)">
-            <div *ngIf="registrationForm.get('phone')?.errors?.['required']">Phone is required.</div>
-            <div *ngIf="registrationForm.get('phone')?.errors?.['pattern']">Phone must have a length of 10 numbers.</div>
-          </div>
-        </div>
-        <div class="mb-1">
-          <label for="email" class="block mb-1 text-xs font-medium text-[#002D74]">Your email</label>
-          <input type="email" id="email" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
-            block w-full p-2.5 " formControlName="email" placeholder="name@gmail.com"
-           [ngClass]="{ 'is-invalid': submitted && f['email'].errors }">
-
-           <div class="invalid" *ngIf="registrationForm.get('email')?.invalid && (registrationForm.get('email')?.dirty || registrationForm.get('email')?.touched)">
-            <div *ngIf="registrationForm.get('email')?.errors?.['required']">Email is required.</div>
-            <div *ngIf="registrationForm.get('email')?.errors?.['email']">Invalid email format.</div>
-          </div>
-        </div>
-        <div class="mb-1">
-          <label for="password" class="block mb-1 text-xs font-medium text-[#002D74]">Your password</label>
-          <input type="password" formControlName="password" placeholder="New password"id="password" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
-            block w-full p-2.5 "
-           [ngClass]="{ 'is-invalid': submitted && f['password'].errors }" >
-           <div class="invalid" *ngIf="registrationForm.get('password')?.invalid && (registrationForm.get('password')?.dirty || registrationForm.get('password')?.touched)">
-            <div *ngIf="registrationForm.get('password')?.errors?.['required']">Password is required.</div>
-            <div *ngIf="registrationForm.get('password')?.errors?.['minlength']">Password must have to be at least 6 characters long.</div>
-            <div *ngIf="registrationForm.get('password')?.errors?.['pattern']">At least one uppercase letter.</div>
-          </div>
-        </div>
-
-        <div class="mb-1">
-          <label for="repeat-password" class="block mb-1 text-xs font-medium text-[#002D74]">Repeat password</label>
-          <input type="password" formControlName="confirmPassword" placeholder="Confirm password" id="repeat-password" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
-            block w-full p-2.5 "
-           [ngClass]="{ 'is-invalid': submitted && f['password'].errors }">
-
-           <div class="invalid" *ngIf="registrationForm.get('confirmPassword')?.invalid && (registrationForm.get('confirmPassword')?.dirty || registrationForm.get('confirmPassword')?.touched)">
-            <div *ngIf="registrationForm.get('confirmPassword')?.errors?.['passwordMismatch']">Password not match.</div>
-          </div>
-        </div>
-        <label  class="block text-sm font-medium text-[#002D74]">Your ID card</label>
-
-        <div class="mb-1 gap-1 flex">
-
-         <app-file-upload>
-
-         </app-file-upload>
-
-        </div>
-        <div class="flex items-start mb-1">
-          <div class="flex  items-center h-5">
-            <input id="terms" type="radio" value="" class="w h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 dark:focus:ring-blue-600 dark:ring-offset-gray-800 " required>
-          </div>
-          <label for="terms" class="ml-2 text-sm font-medium text-[#002D74] dark:text-gray-400">I agree with the <a href="#" class="text-blue-600 hover:underline dark:text-blue-500">terms and conditions</a></label>
-        </div>
-        <div class="flex items-start mb-1">
-          <label for="terms" class="ml-2 text-sm font-medium text-[#002D74] dark:text-gray-400">Already have an account? <a routerLink="/login" class="text-blue-600 hover:underline dark:text-blue-500">Login</a></label>
-
-        </div>
-        <button  type="submit"  class="text-white bg-[#38C390] p-3 rounded-xl hover:bg-[#55be97] focus:ring-4 focus:outline-none">Register new account</button>
-      </form>
-
     </div>
-  </div>
 </section>
-
-

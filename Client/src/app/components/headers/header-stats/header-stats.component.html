@@ -13,13 +13,14 @@
             <!-- Card stats -->
             <div class="flex flex-wrap">
                 <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
-                    <app-card-stats statSubtitle="POSTS" statTitle={{postCount}} statArrow="up" statPercent="3.48" statPercentColor="text-emerald-500" statDescripiron="Since last month" statIconName="fa-sharp fa-regular fa-newspaper" statIconColor="bg-red-500"></app-card-stats>
+                    <app-card-stats statSubtitle="POSTS" statTitle={{postCount}} statArrow={{postStatus}} statPercent={{postGrowthValue}} statPercentColor={{postColor}} statDescripiron="Since last month" statIconName="fa-sharp fa-regular fa-newspaper" statIconColor="bg-red-500"></app-card-stats>
                 </div>
                 <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
-                    <app-card-stats statSubtitle="SELLERS" statTitle={{userCount}} statArrow="down" statPercent="3.48" statPercentColor="text-red-500" statDescripiron="Since last week" statIconName="fas fa-users" statIconColor="bg-blue-500"></app-card-stats>
+                    <app-card-stats statSubtitle="SELLERS" statTitle={{userCount}} statArrow={{accountStatus}} statPercent={{accountGrowthValue}} statPercentColor={{accountColor}} statDescripiron="Since last month" statIconName="fas fa-users" statIconColor="bg-blue-500"></app-card-stats>
                 </div>
                 <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
-                    <app-card-stats statSubtitle="REVENUE" statTitle="{{revenue | currency : 'VND' : 'VND'}}" statArrow="down" statPercent="1.10" statPercentColor="text-orange-500" statDescripiron="Since yesterday" statIconName="fa-solid fa-dollar-sign" statIconColor="bg-emerald-500"></app-card-stats>
+                    <app-card-stats statSubtitle="REVENUE" statTitle="{{revenue | currency : 'VND' : 'VND'}}" statArrow={{revenueStatus}} statPercent={{revenueGrowthValue}} statPercentColor={{revenueColor}} statDescripiron="Since last month" statIconName="fa-solid fa-dollar-sign"
+                        statIconColor="bg-emerald-500"></app-card-stats>
                 </div>
                 <!-- <div class="w-full lg:w-6/12 xl:w-3/12 px-4">
                     <app-card-stats statSubtitle="VISITS" statTitle="15 962" statArrow="up" statPercent="12" statPercentColor="text-emerald-500" statDescripiron="Since last month" statIconName="fas fa-percent" statIconColor="bg-yellow-500"></app-card-stats>

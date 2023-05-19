@@ -1,10 +1,12 @@
 import { Component, OnInit, Input } from "@angular/core";
-
+import { DecimalPipe } from '@angular/common';
 @Component({
   selector: "app-card-stats",
   templateUrl: "./card-stats.component.html",
+  providers: [DecimalPipe]
 })
 export class CardStatsComponent implements OnInit {
+  // statArrow: string = ""
   @Input()
   get statSubtitle(): string {
     return this._statSubtitle;
@@ -29,6 +31,7 @@ export class CardStatsComponent implements OnInit {
     return this._statArrow;
   }
   set statArrow(statArrow: string) {
+
     this._statArrow =
       statArrow !== "down" && statArrow !== "up" ? "up" : statArrow;
   }
@@ -39,7 +42,7 @@ export class CardStatsComponent implements OnInit {
     return this._statPercent;
   }
   set statPercent(statPercent: string) {
-    this._statPercent = statPercent === undefined ? "3.48" : statPercent;
+    this._statPercent = statPercent === undefined ? "3.48" : Math.abs(Number(statPercent)).toString();
   }
   private _statPercent = "3.48";
 
