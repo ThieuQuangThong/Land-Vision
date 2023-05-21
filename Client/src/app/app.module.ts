@@ -119,6 +119,7 @@ import { EmailConfirmSucceededComponent } from './views/email-confirm-succeeded/
 import { PageNotFoundComponent } from './views/page-not-found/page-not-found.component';
 import { PostingComponent } from './views/posting/posting.component';
 import { UpdatePostingComponent } from './views/update-posting/update-posting.component';
+import { CapitalizePipe } from './_pipes/capitalize.pipe';
 
 @NgModule({
   declarations: [
@@ -194,6 +195,7 @@ import { UpdatePostingComponent } from './views/update-posting/update-posting.co
     CardPackageDetailComponent,
     CardAccountDetailComponent,
     EditProfilePopupComponent,
+    CapitalizePipe,
     // LoginComponent,
     // RegisterComponent,
   ],
@@ -269,6 +271,7 @@ import { UpdatePostingComponent } from './views/update-posting/update-posting.co
     DistanceTransferPipe,
     TranferVipPipe,
     TranformTransactionTypePipe,
+    CapitalizePipe,
   ]
 
 })
