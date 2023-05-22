@@ -217,9 +217,8 @@ const routes: Routes = [
   {
     path: "profile/:userId", component: ProfileComponent,
     data: {
-      requiredAuth: true
+      requiredAuth: false
     },
-    canActivate: [AuthGuard]
   },
   {
     path: "landing", component: LandingComponent,

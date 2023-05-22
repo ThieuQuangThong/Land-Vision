@@ -51,7 +51,7 @@ export class ProfileComponent implements OnInit {
     const userId = this.route.snapshot.params['userId'];
     this.postUserId = userId;
     const user = this.auth.getUserProfile();
-    if(user!.nameid !== userId){
+    if(user ===null || user!.nameid !== userId){
       this.getApprovedPostByUserId(userId);
     }
     else{
