@@ -5,6 +5,7 @@ import esri = __esri;
 import { PostService } from 'src/app/_service/post.service';
 import { PositonPostModel } from 'src/app/models/positonPost-model';
 import { MoneyTranformPipe } from 'src/app/_pipes/money-tranform.pipe';
+import { AuthService } from 'src/app/_service/auth.service';
 
 
 @Component({
@@ -58,7 +59,7 @@ export class MapListDetailComponent {
     return this._basemap;
   }
 
-  constructor(private moneyTranformPipe: MoneyTranformPipe, private shareDataService: ShareDataService, private postService: PostService) {}
+  constructor(private moneyTranformPipe: MoneyTranformPipe, private shareDataService: ShareDataService, private postService: PostService,private auth: AuthService ) {}
 
   async initializeMap(centerPos: number[][] =[], otherPos:number[][][],positionPosts:PositonPostModel[] ) {
 
@@ -180,7 +181,7 @@ export class MapListDetailComponent {
 
              const popUpObect =
              this.shareDataService.setPopUpObject(`<div class="flex flex-col"><a class="text-base font-bold mb-0" target="_blank">${positionPosts[i].title}</a>
-             <a href="http://localhost:4200/profile/${positionPosts[i].userId}" class="mb-0" target="_blank"><span class="font-bold mb-0 text-black">Tên:</span>${positionPosts[i].name}</a><p class="mb-0"><span class="font-bold mb-0">Giá:</span>${this.moneyTranformPipe.transform(positionPosts[i].price)}</p><p class="mb-0"><span class="font-bold mb-0">Diện tích:</span>${positionPosts[i].area} m²</p><a href="http://localhost:4200/productdetails/73" class="flex items-center" target="_blank"><span class="font-bold mr-2">Địa chỉ:</span>${positionPosts[i].addressNumber}</a><a><img src="${positionPosts[i].images[0].linkImage}" alt="Ảnh bất động sản đẹp" class="w-150 h-150"></a></div>`)
+             <a href="http://localhost:4200/profile/${positionPosts[i].userId}" class="mb-0" target="_blank"><span class="font-bold mb-0 text-black">Tên:</span>${positionPosts[i].name}</a><p class="mb-0"><span class="font-bold mb-0">Giá:</span>${this.moneyTranformPipe.transform(positionPosts[i].price)}</p><p class="mb-0"><span class="font-bold mb-0">Diện tích:</span>${positionPosts[i].area} m²</p><a href="http://localhost:4200/productdetails/${this.auth.encode(positionPosts[i].id.toString())}" class="flex items-center" target="_blank"><span class="font-bold mr-2">Địa chỉ:</span>${positionPosts[i].addressNumber}</a><a><img src="${positionPosts[i].images[0].linkImage}" alt="Ảnh bất động sản đẹp" class="w-150 h-150"></a></div>`)
               const polygon = {
                 type: "polygon",
                 rings: x
