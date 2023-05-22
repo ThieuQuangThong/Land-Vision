@@ -12,7 +12,7 @@
 
                         <li class="mr-8 ">
                             <select class="rounded-md" #selLang (change)="translateLanguageTo(selLang.value)">
-                      <option *ngFor="let language of translate.getLangs()" [value]="language">{{ language }}</option>
+                      <option *ngFor="let language of translate.getLangs()" [value]="language">{{ language | uppercase}} </option>
                     </select>
                         </li>
 

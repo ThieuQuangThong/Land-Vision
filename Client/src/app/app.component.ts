@@ -13,8 +13,8 @@ export class AppComponent  implements OnInit{
   constructor(
     public translate: TranslateService
   ){
-    translate.addLangs(['EN','VI']);
-    translate.setDefaultLang('EN');
+    translate.addLangs(['en','vi']);
+    translate.setDefaultLang('en');
   }
 
   ngOnInit() {
