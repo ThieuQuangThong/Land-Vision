@@ -35,6 +35,7 @@ export class ProfileComponent implements OnInit {
   postUserId: number = 0;
   userPosts: PostModel[] = [];
   userInfor: UserInfor = new UserInfor();
+  isShowPostRemain: boolean = false;
 
   contactInformationChanging: ContactInformation = new ContactInformation();
   initContactInformation: ContactInformation = new ContactInformation();
@@ -51,13 +52,18 @@ export class ProfileComponent implements OnInit {
     const userId = this.route.snapshot.params['userId'];
     this.postUserId = userId;
     const user = this.auth.getUserProfile();
-    if(user ===null || user!.nameid !== userId){
+    if(user === null || user!.nameid !== userId){
+      if(user?.role === PROPERTY_INFOR.Role.admin){
+        this.isShowPostRemain = true;
+      }
       this.getApprovedPostByUserId(userId);
     }
     else{
+      this.isShowPostRemain = true;
       this.isMyProfile = true;
       this.getPostByUserId(userId);
     }
+
 
     this.getUserInforById(userId)
   }
