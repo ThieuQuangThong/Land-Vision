@@ -131,6 +131,7 @@
                       <div class="flex flex-wrap items-center justify-start mt-4">
 
                         <app-single-product *ngFor="let post of postRespone" [postItem]="post"></app-single-product>
+                        <p *ngIf="postRespone.length == 0">Sorry, no estate match with your selection.</p>
                       </div>
                       <div class="w-full mt-7 flex flex-wrap items-center lg: justify-center">
                         <button *ngIf="!isFullItem && !isLoading" (click)="loadMore()"

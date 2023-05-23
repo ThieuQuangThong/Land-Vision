@@ -12,7 +12,7 @@ import { PositionModel } from 'src/app/models/position-model';
 export class RelativeBuildingTabComponent {
   openTab = 1;
   @Input() positions: PositionModel[] = [];
-  icons: string[] =['fas fa-space-shuttle text-base mr-1','fas fa-cog text-base mr-1','fas fa-briefcase text-base mr-1','fas fa-briefcase text-base mr-1','fas fa-briefcase text-base mr-1','fas fa-briefcase text-base mr-1'];
+  icons: string[] =['fa-solid fa-school text-base mr-1','fa-solid fa-store mr-1','fas fa-briefcase text-base mr-1','fas fa-briefcase text-base mr-1','fas fa-briefcase text-base mr-1','fas fa-briefcase text-base mr-1'];
   texts: string[] = ['Schools','Markets','Parks','Hopitals', 'restaurants','MyPosition'];
   buildingSearch: string[] = ['trường', 'siêu thị', 'Công viên', 'Bệnh', 'Nhà hàng']
   currentBuildingSearchs: PlaceModel[] =[]
