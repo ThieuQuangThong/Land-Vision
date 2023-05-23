@@ -4,7 +4,8 @@
     <ul class="flex mb-0 list-none flex-wrap pt-3 pb-4 flex-row">
       <li *ngFor="let text of texts; let i = index" class="-mb-px mr-1 last:mr-0 flex-auto text-center">
         <a class="text-xs font-bold uppercase py-3 shadow-lg rounded block leading-normal" (click)="toggleTabs(i+1)" [ngClass]="{'text-violet-600 bg-white': openTab !== i+1, 'text-white bg-violet-600': openTab === i+1}">
-    <i class="{{icons[i]}}"></i> {{text | translate}}
+            <!-- <i class="{{icons[i]}}"></i> -->
+          {{text | translate}}
         </a>
       </li>
 

@@ -68,7 +68,7 @@ export class ApproveDetailComponent {
       this.postService.deletePostById(this.postId, userId)
       .subscribe(
         _ => {
-          this.router.navigate(['/admin/approveTables'])
+          this.router.navigate(['/admin/tables'])
           AlertService.setAlertModel('success','Successfully delete')
         },
         erorr =>{
@@ -114,7 +114,7 @@ export class ApproveDetailComponent {
     this.postService.rejectPostById(this.postId,rejectModel)
     .subscribe(
       respone =>{
-        this.router.navigate(['/admin/approveTables'])
+        this.router.navigate(['/admin/tables'])
       },
       erorr =>{
 
