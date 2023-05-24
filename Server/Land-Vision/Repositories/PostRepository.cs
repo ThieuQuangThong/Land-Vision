@@ -232,7 +232,7 @@ namespace Land_Vision.Repositories
                 || (postSearchDto.NumberOfBath == NumberFiled.OVER_SIX && x.Property.NumberOfBath >= NumberFiled.OVER_SIX))
 
             && (postSearchDto.Direction == NumberFiled.ALL || x.Property.Direction == postSearchDto.Direction)
-            && (String.IsNullOrEmpty(text) || x.Title.Contains(text) || x.Description.Contains(text)))
+            && (String.IsNullOrEmpty(text) || EF.Functions.Like(x.Title, $"%{text}%") || EF.Functions.Like(x.Description, $"%{text}%")))
             .Skip(pagination.SkipCount)
             .Take(pagination.MaxResultCount)
             .Include(x => x.User)
@@ -270,7 +270,7 @@ namespace Land_Vision.Repositories
                 || (postSearchDto.NumberOfBath == NumberFiled.OVER_SIX && x.Property.NumberOfBath >= NumberFiled.OVER_SIX))
 
             && (postSearchDto.Direction == NumberFiled.ALL || x.Property.Direction == postSearchDto.Direction)
-            && (String.IsNullOrEmpty(text) || x.Title.Contains(text) || x.Description.Contains(text)))
+            && (String.IsNullOrEmpty(text) || EF.Functions.Like(x.Title, $"%{text}%")  || EF.Functions.Like(x.Description, $"%{text}%")))
             .CountAsync();
         }
 

@@ -88,8 +88,8 @@ export class AuthService {
           return of(false);
         }),
       );
-
   }
+
   getToken(): string {
     return this.token;
   }
