@@ -120,9 +120,11 @@ import { PageNotFoundComponent } from './views/page-not-found/page-not-found.com
 import { PostingComponent } from './views/posting/posting.component';
 import { UpdatePostingComponent } from './views/update-posting/update-posting.component';
 import { CapitalizePipe } from './_pipes/capitalize.pipe';
-
+import { ChatBotRasaComponent } from './components/chat-bot-rasa/chat-bot-rasa.component';
 @NgModule({
+
   declarations: [
+
     AppComponent,
     ProfileComponent,
     CardSettingsComponent,
@@ -196,6 +198,8 @@ import { CapitalizePipe } from './_pipes/capitalize.pipe';
     CardAccountDetailComponent,
     EditProfilePopupComponent,
     CapitalizePipe,
+    ChatBotRasaComponent,
+
     // LoginComponent,
     // RegisterComponent,
   ],
@@ -276,7 +280,9 @@ import { CapitalizePipe } from './_pipes/capitalize.pipe';
 
 })
 
-export class AppModule { }
+export class AppModule {
+
+ }
 export function jwtOptionsFactor(storage:StorageService){
   return {
      tokenGetter:() => {

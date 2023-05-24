@@ -1,0 +1,103 @@
+<div class="fixed bottom-5 right-5 z-50  hover:cursor-pointer " (click)="showBoxChat()" *ngIf="popUp" #tooltip="matTooltip" matTooltip="Xin chào, tôi có thể giúp gì cho bạn?">
+
+    <img class=" w-20 h-20" src="https://cdn-icons-png.flaticon.com/512/3562/3562793.png" alt="Robot Image" />
+</div>
+<div class="fixed bottom-5 right-5 z-50 " *ngIf="showBox">
+    <!-- flex to align chat box side by side -->
+    <div class="flex space-x-4">
+        <div class="w-80 h-96 flex flex-col border shadow-md bg-white rounded-lg">
+            <div class="flex items-center justify-between border-b p-2 bg-emerald-500 text-white rounded-lg">
+                <!-- user info -->
+                <div class="flex items-center">
+                    <img class="rounded-full w-10 h-10" src="https://cdn-icons-png.flaticon.com/512/3562/3562793.png" alt="Robot Image" />
+
+                    <div class="pl-2">
+                        <div class="font-semibold">
+                            Nero Agent
+                        </div>
+                        <div class="text-xs text-gray-200">Online 24/7</div>
+                    </div>
+                </div>
+                <!-- end user info -->
+                <!-- chat box action -->
+                <div>
+
+
+                    <button (click)="hideBoxChat()" class="inline-flex hover:bg-emerald-700 rounded-full p-2 focus:outline-none" type="button">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+        </svg>
+      </button>
+                </div>
+                <!-- end chat box action -->
+            </div>
+
+            <div class="flex-1 px-2 py-4 overflow-y-auto">
+                <!-- chat message -->
+
+                <div class="flex items-center mb-4 mr-16">
+                    <div class="flex-none flex flex-col self-end space-y-1 mr-1">
+                        <img class="rounded-full w-7 h-7" src="https://cdn-icons-png.flaticon.com/512/3562/3562793.png" />
+                    </div>
+                    <div class="flex-1 bg-emerald-400 text-white p-2 rounded-lg mb-2 relative">
+                        <div>Chào bạn, tôi là Nero chuyên viên tư vấn bất động sản của Land Vision. Tôi có thể giúp gì cho bạn?</div>
+                        <button class="hover:bg-gray-600 w-full p-1 bg-white text-emerald-500 rounded-md  mt-2 mb-1">Tôi là chủ bất động sản</button>
+                        <button class="hover:bg-gray-600 w-full p-1 bg-white text-emerald-500 rounded-md  mt-1 mb-1">Tôi muốn thuê nhà</button>
+                        <button class="hover:bg-gray-600 w-full p-1 bg-white text-emerald-500 rounded-md  mt-1 mb-1">Tôi muốn mua nhà</button>
+
+
+                        <!-- arrow -->
+                        <!-- <div class="absolute left-0 top-1/2 transform -translate-x-1/2 rotate-45 w-2 h-2 bg-indigo-400"></div> -->
+                        <!-- end arrow -->
+                    </div>
+                </div>
+
+                <!-- end chat message -->
+
+                <!-- chat message -->
+                <div *ngFor="let msg of messages">
+                    <div class="flex items-center flex-row-reverse mb-4 ml-16" *ngIf="msg.name==1">
+                        <div class="flex-1 bg-emerald-100 text-gray-800 p-2 rounded-lg mb-2 relative">
+                            <div>{{msg.message}}</div>
+                            <!-- arrow -->
+                            <!-- end arrow -->
+                        </div>
+                    </div>
+
+                    <div class="flex items-center mb-4 mr-16" *ngIf="msg.name==0">
+                        <div class="flex-none flex flex-col self-end space-y-1 mr-1">
+                            <img class="rounded-full w-7 h-7" src="https://cdn-icons-png.flaticon.com/512/3562/3562793.png" />
+                        </div>
+                        <div class="flex-1 bg-emerald-400 text-white p-2 rounded-lg mb-2 relative">
+                            <div>{{msg.message}}</div>
+
+                            <!-- arrow -->
+                            <!-- <div class="absolute left-0 top-1/2 transform -translate-x-1/2 rotate-45 w-2 h-2 bg-indigo-400"></div> -->
+                            <!-- end arrow -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- end chat message -->
+            </div>
+
+            <div class="flex items-center border-t p-2">
+
+                <div class="w-full mx-2">
+                    <input (keyup.enter)="text && sendMessage()" class="w-full rounded-full border border-gray-200" type="text" value="" placeholder="Aa" [(ngModel)]="text" autofocus />
+                </div>
+
+                <!-- chat send action -->
+
+                <div>
+                    <button (click)="text && sendMessage()" class="focus:outline-none inline-flex hover:bg-indigo-50 rounded-full text-center align-middle text-4xl" type="button">
+
+                      <i class="fa-brands fa-telegram h-10 w-10 hover:text-emerald-200" style="color: #11b981;"></i>
+      </button>
+                </div>
+
+                <!-- end chat send action -->
+            </div>
+        </div>
+    </div>
+</div>
