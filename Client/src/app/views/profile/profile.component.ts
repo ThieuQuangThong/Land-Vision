@@ -64,8 +64,6 @@ export class ProfileComponent implements OnInit {
       this.isMyProfile = true;
       this.getPostByUserId(userId);
     }
-
-
     this.getUserInforById(userId)
   }
 

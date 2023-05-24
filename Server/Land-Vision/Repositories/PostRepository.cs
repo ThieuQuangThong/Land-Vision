@@ -89,7 +89,7 @@ namespace Land_Vision.Repositories
             return await _dbContext.Posts
             .Include(l => l.Property.Positions.OrderByDescending(x => x.Id))
             .Include(o => o.Images)
-            .Where(x => x.isHide == false)
+            .Where(x => x.isHide == false && x.ApproveStatus == NumberFiled.APPROVED)
             .Select(x => new Post
             {
                 Id = x.Id,
