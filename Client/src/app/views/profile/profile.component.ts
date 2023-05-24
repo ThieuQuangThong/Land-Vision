@@ -12,6 +12,7 @@ import { PATCH_PATH } from "src/assets/API_URL";
 import { ContactInformation } from "src/app/models/update-contact-information-model";
 import { FileUploadService } from "src/app/_service/file-upload.service";
 import { ImageCroppedEvent } from 'ngx-image-cropper';
+import { log } from "esri/config";
 
 @Component({
   selector: "app-profile",
@@ -138,6 +139,7 @@ export class ProfileComponent implements OnInit {
       this.myDialog?.nativeElement.close();
     }
   )
+  this.openDialog = true;
   }
   saveImage(){
 
