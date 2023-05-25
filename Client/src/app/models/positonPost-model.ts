@@ -4,6 +4,7 @@ export class PositonPostModel {
   id: number =0;
   userId: number = 0;
   title: string = '';
+  approveStatus: number = 0;
   area: string = '';
   addressNumber: string = '';
   images: ImageModel[] = [];

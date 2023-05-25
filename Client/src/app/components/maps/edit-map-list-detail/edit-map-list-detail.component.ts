@@ -265,7 +265,6 @@ export class EditMapListDetailComponent {
           }
         )
 
-
         this.mapLoaded.emit(true);
       });
     } catch (error) {

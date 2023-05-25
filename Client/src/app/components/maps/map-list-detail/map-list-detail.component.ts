@@ -6,7 +6,7 @@ import { PostService } from 'src/app/_service/post.service';
 import { PositonPostModel } from 'src/app/models/positonPost-model';
 import { MoneyTranformPipe } from 'src/app/_pipes/money-tranform.pipe';
 import { AuthService } from 'src/app/_service/auth.service';
-
+import { PROPERTY_INFOR } from 'src/assets/common/propertyInfor';
 
 @Component({
   selector: 'app-map-list-detail',
@@ -179,42 +179,44 @@ export class MapListDetailComponent {
                 }
               }
 
-             const popUpObect =
-             this.shareDataService.setPopUpObject(`<div class="flex flex-col"><a class="text-base font-bold mb-0" target="_blank">${positionPosts[i].title}</a>
-             <a href="http://localhost:4200/profile/${positionPosts[i].userId}" class="mb-0" target="_blank"><span class="font-bold mb-0 text-black">Tên:</span>${positionPosts[i].name}</a><p class="mb-0"><span class="font-bold mb-0">Giá:</span>${this.moneyTranformPipe.transform(positionPosts[i].price)}</p><p class="mb-0"><span class="font-bold mb-0">Diện tích:</span>${positionPosts[i].area} m²</p><a href="http://localhost:4200/productdetails/${this.auth.encode(positionPosts[i].id.toString())}" class="flex items-center" target="_blank"><span class="font-bold mr-2">Địa chỉ:</span>${positionPosts[i].addressNumber}</a><a><img src="${positionPosts[i].images[0].linkImage}" alt="Ảnh bất động sản đẹp" class="w-150 h-150"></a></div>`)
-              const polygon = {
-                type: "polygon",
-                rings: x
-             };
-             const polygonGraphic = new Graphic({
-              geometry: polygon,
-              symbol: polygonSymbol,
-              attributes: popUpObect.Attributes,
-              popupTemplate: popUpObect.PopupTemplate
-           });
+              if(i === 0 || positionPosts[i].approveStatus === PROPERTY_INFOR.isApprove){
+                const popUpObect =
+                this.shareDataService.setPopUpObject(`<div class="flex flex-col"><a class="text-base font-bold mb-0" target="_blank">${positionPosts[i].title}</a>
+                <a href="http://localhost:4200/profile/${positionPosts[i].userId}" class="mb-0" target="_blank"><span class="font-bold mb-0 text-black">Tên:</span>${positionPosts[i].name}</a><p class="mb-0"><span class="font-bold mb-0">Giá:</span>${this.moneyTranformPipe.transform(positionPosts[i].price)}</p><p class="mb-0"><span class="font-bold mb-0">Diện tích:</span>${positionPosts[i].area} m²</p><a href="http://localhost:4200/productdetails/${this.auth.encode(positionPosts[i].id.toString())}" class="flex items-center" target="_blank"><span class="font-bold mr-2">Địa chỉ:</span>${positionPosts[i].addressNumber}</a><a><img src="${positionPosts[i].images[0].linkImage}" alt="Ảnh bất động sản đẹp" class="w-150 h-150"></a></div>`)
+                 const polygon = {
+                   type: "polygon",
+                   rings: x
+                };
+                const polygonGraphic = new Graphic({
+                 geometry: polygon,
+                 symbol: polygonSymbol,
+                 attributes: popUpObect.Attributes,
+                 popupTemplate: popUpObect.PopupTemplate
+              });
 
-           pointGraphics = new GraphicsLayer();
-           const simpleMarkerSymbol1 = {
-             type: "picture-marker",  // autocasts as new PictureMarkerSymbol()
-             url: "https://static.arcgis.com/images/Symbols/Shapes/RedPin1LargeB.png",
-             width: "40px",
-             height: "40px"
-          };
-          let point1 = { //Create a point
-            type: "point",
-            longitude: Number(positionPosts[i].positions[0].longtitude),
-            latitude: Number(positionPosts[i].positions[0].latitude)
-         };
-          let pointGraphic1 = new Graphic({
-            geometry: point1,
-            symbol: simpleMarkerSymbol1,
-            attributes: popUpObect.Attributes,
-            popupTemplate: popUpObect.PopupTemplate
-         });
-           graphicsLayer.add(polygonGraphic);
-           realEstateGraphic.add(pointGraphic1);
-           i++;
-            }
+              pointGraphics = new GraphicsLayer();
+              const simpleMarkerSymbol1 = {
+                type: "picture-marker",  // autocasts as new PictureMarkerSymbol()
+                url: "https://static.arcgis.com/images/Symbols/Shapes/RedPin1LargeB.png",
+                width: "40px",
+                height: "40px"
+             };
+             let point1 = { //Create a point
+               type: "point",
+               longitude: Number(positionPosts[i].positions[0].longtitude),
+               latitude: Number(positionPosts[i].positions[0].latitude)
+            };
+             let pointGraphic1 = new Graphic({
+               geometry: point1,
+               symbol: simpleMarkerSymbol1,
+               attributes: popUpObect.Attributes,
+               popupTemplate: popUpObect.PopupTemplate
+            });
+              graphicsLayer.add(polygonGraphic);
+              realEstateGraphic.add(pointGraphic1);
+               }
+               i++;
+              }
           )
       if( !this.isShowAll){
         this.shareDataService.getRelativePlaceAsTracking()
