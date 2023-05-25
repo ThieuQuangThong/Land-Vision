@@ -1,7 +1,7 @@
 import { PagingModel } from "src/app/models/paging-model";
 
 export const DOMAIN ='https://localhost:7165';
-export const DOMAINCHATBOT = 'http://ec2-13-250-102-212.ap-southeast-1.compute.amazonaws.com:8001'
+export const DOMAINCHATBOT = 'http://58.186.76.206:84/docs'
 
 export const API_URL = {
   GET_ALL_POST: (pagingModel: PagingModel) =>`${DOMAIN}/api/Post/${pagingModel.skipCount}&${pagingModel.maxResultCount}`,

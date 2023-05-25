@@ -15,7 +15,18 @@ export class ChatBotService {
           const formData = new FormData();
           formData.append('user_text', message);
 
-          const url: string = 'http://ec2-13-250-102-212.ap-southeast-1.compute.amazonaws.com:8001/message';
+          const url: string = 'http://58.186.76.206/message';
+
+          return this.http.post(url, formData);
+      }
+
+      search(data: any): Observable<any>{
+        const formData = new FormData();
+        formData.append('name_address', data.name_address);
+        formData.append('latitude', data.latitude);
+        formData.append('longitude', data.longitude);
+
+        const url: string = 'http://58.186.76.206/real_estate_search';
 
           return this.http.post(url, formData);
       }
