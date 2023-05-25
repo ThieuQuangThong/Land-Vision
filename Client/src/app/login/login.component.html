@@ -5,9 +5,10 @@
   <div class="bg-gray-60 flex
   rounded-2xl shadow-lg max-w-4xl p-8 items-center">
     <!-- image -->
-    <div class="md:block hidden w-3/2">
+    <div class="md:block hidden w-3/2 relative">
       <img class="rounded-2xl "
         src="https://img.freepik.com/premium-vector/modern-handcrafted-flat-illustration-food-delivery_203633-8769.jpg?w=740">
+      <a [routerLink]="['/landing']" class="absolute top-2 left-2 text-xl font-semibold text-green-500">Land Vision</a>
     </div>
     <!-- form -->
     <div class="md:w-2/3 px-8 md:px-16">
@@ -76,13 +77,13 @@
 
         <button type="submit" [disabled]="loginForm.invalid">Login</button>
       </form> -->
-      <div class="mt-2 grid grid-cols-3 items-center text-gray-400">
+      <!-- <div class="mt-2 grid grid-cols-3 items-center text-gray-400">
         <hr class="border-gray-400">
         <p class="text-center text-sm">OR</p>
         <hr class="border-gray-400">
-      </div>
+      </div> -->
 
-      <button
+      <!-- <button
         class="bg-white border py-2 w-full rounded-xl mt-1 flex justify-center items-center text-sm hover:scale-105 duration-300 text-[#002D74]">
         <svg class="mr-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="25px">
           <path fill="#FFC107"
@@ -95,7 +96,7 @@
             d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z" />
         </svg>
         Login with Google
-      </button>
+      </button> -->
 
       <div class=" text-xs border-b border-[#002D74] py-4 text-[#002D74]">
         <a [routerLink]="['/reset-password']">Forgot your password?</a>
