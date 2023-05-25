@@ -37,6 +37,13 @@ export class UserDropdownComponent implements AfterViewInit {
 
   ngOnInit(): void {
 
+  this.auth.getUserInforAsTracking()
+  .subscribe(
+    respone => {
+      this.avatarLink = respone.avatarLink
+    }
+  )
+
   this.auth.getUserProfileAsTracking()
     .subscribe(
       respone => {

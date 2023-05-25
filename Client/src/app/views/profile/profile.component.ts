@@ -159,6 +159,7 @@ export class ProfileComponent implements OnInit {
         )
       }
     );
+  this.openDialogImage = true;
   }
   open(){
     this.openDialog = false;
