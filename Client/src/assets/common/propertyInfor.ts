@@ -22,7 +22,7 @@ export const PROPERTY_INFOR = {
   allBathroom: ['bathrooms'],
 
   bathRoom: ['1Bathroom','2Bathrooms','3Bathrooms','4Bathrooms','5Bathrooms','MoreBathroom'],
-  directions : ['North', 'South', 'East', 'West', 'Northeast', 'Northwest', 'Southeast', 'Southwest'],
+  directions : ['AllDirection', 'North', 'South', 'East', 'West', 'Northeast', 'Northwest', 'Southeast', 'Southwest'],
   juridicals : ['White', 'Blue', 'Red', 'Pink'],
   floors: ['1Floor','2Floor','3Floor','4Floor','5Floor','MoreFloor'],
   bedRooms:['1BedRoom','2BedRooms','3BedRooms','4BedRooms','5BedRooms','MoreBedRoom'],
