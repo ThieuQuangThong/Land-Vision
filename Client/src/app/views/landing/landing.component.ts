@@ -43,7 +43,7 @@ export class LandingComponent implements OnInit {
   bathRooms: string[] = [...PROPERTY_INFOR.allBathroom, ...PROPERTY_INFOR.bathRoom]
   selectedBathroom: number = 0;
 
-  directions: string[] =[...PROPERTY_INFOR.allDirection, ...PROPERTY_INFOR.directions]
+  directions: string[] =PROPERTY_INFOR.directions
   selectedDirection: number = 0;
 
   openTab = 1;
