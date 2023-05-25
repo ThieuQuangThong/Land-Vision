@@ -37,6 +37,7 @@ export class ProfileComponent implements OnInit {
   userPosts: PostModel[] = [];
   userInfor: UserInfor = new UserInfor();
   isShowPostRemain: boolean = false;
+  isLoading: boolean = false;
 
   contactInformationChanging: ContactInformation = new ContactInformation();
   initContactInformation: ContactInformation = new ContactInformation();
@@ -95,10 +96,12 @@ export class ProfileComponent implements OnInit {
   }
 
   getPostByUserId(userId: number){
+    this.isLoading = true;
     this.postService.getPostsByUserId(userId)
     .subscribe(
       respone =>{
         this.userPosts = respone;
+        this.isLoading = false
       },
       error => {
         AlertService.setAlertModel('danger', 'Some thing went wrong');

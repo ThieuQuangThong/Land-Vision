@@ -82,6 +82,7 @@
                     </div>
                     <div class="mt-10 py-10 border-t border-blueGray-200 text-center">
                         <div class="flex flex-wrap justify-center">
+                          <app-loading [isLoading]="isLoading"></app-loading>
                         </div>
                     </div>
 
@@ -95,7 +96,6 @@
                 <div class="flex" style="flex-wrap: wrap;">
                   <app-single-product *ngFor="let userPost of userPosts" [postUserId] ="postUserId" [postItem]="userPost" [status]="status" [showNotification]="true" ></app-single-product>
                 </div>
-
             </div>
 
         </div>
