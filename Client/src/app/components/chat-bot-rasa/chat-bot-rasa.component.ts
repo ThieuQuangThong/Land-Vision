@@ -2,8 +2,10 @@ import { HttpClient } from '@angular/common/http';
 import { Component, ViewChild } from '@angular/core';
 import { MatTooltip } from '@angular/material/tooltip';
 import { webSocket } from 'rxjs/webSocket';
+import { AuthService } from 'src/app/_service/auth.service';
 import { ChatBotService } from 'src/app/_service/chat-bot.service';
-import { message } from 'src/app/models/chat-model';
+import {  message } from 'src/app/models/chat-model';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -12,14 +14,15 @@ import { message } from 'src/app/models/chat-model';
   styleUrls: ['./chat-bot-rasa.component.css']
 })
 export class ChatBotRasaComponent {
+  
 @ViewChild('tooltip') manualTooltip!: MatTooltip;
 
   text : string = '';
-  messages : message [] =[];
+  messages : message [] = [];
   showBox = false;
   popUp = true;
 
-  constructor(private chatBotService : ChatBotService, private http : HttpClient){}
+  constructor(private chatBotService : ChatBotService, private http : HttpClient,private router: Router, private auth: AuthService, private route: ActivatedRoute){}
   showBoxChat(){
     this.showBox = true;
     this.popUp = false;
@@ -31,27 +34,51 @@ export class ChatBotRasaComponent {
     this.manualTooltip.show();
   }
   sendMessage() {
-    const name = 1; // Người gửi tin nhắn (có thể thay đổi tùy theo nhu cầu)
-    const message = this.text; // Nội dung tin nhắn (có thể thay đổi tùy theo nhu cầu)
-    const chatMessage: message = {
-      name: name,
-      message: message
-    };
-    this.messages.push(chatMessage);
+      const data:message = {
+        name: 1,
+        type_response: 'text',
+        response: this.text
+      }
+
+      this.messages.unshift(data)
+    // const name = 1; // Người gửi tin nhắn (có thể thay đổi tùy theo nhu cầu)
+    // const message = this.text; // Nội dung tin nhắn (có thể thay đổi tùy theo nhu cầu)
+    // this.messages.push(this.text);
     this.chatBotService.chatChit(this.text).subscribe(
       response  => {
-    const name = 0; // Người gửi tin nhắn (có thể thay đổi tùy theo nhu cầu)
-    const message = response.response; // Nội dung tin nhắn (có thể thay đổi tùy theo nhu cầu)
-    const chatMessage: message = {
-      name: name,
-      message: message
-    };
-    this.messages.push(chatMessage);
-
+        
+          const botResponse = response;
+          botResponse.name = 0;
+          this.messages.unshift(botResponse);
+        
+        console.log( this.messages)
+        
         // Xử lý phản hồi từ dịch vụ chatBotService tại đây
       }
     );
     this.text  = '';
-      console.log(this.messages)
+      
+  }
+
+  onClickAddress(address: any){
+    this.chatBotService.search(address).subscribe(
+      {
+        next: (res: message)=> {
+          const botResponse: message = res;
+          botResponse.name = 0;
+          this.messages.unshift(botResponse);
+          
+        },
+        error: (err)=> {
+          console.log(err)
+        }
+      }
+    )
+    
+  }
+  goToDetail(value : any):void{
+    const encodedPostId = this.auth.encode(value.toString());
+    this.router.navigate([`productdetails/${encodedPostId}`])
+
   }
 }
