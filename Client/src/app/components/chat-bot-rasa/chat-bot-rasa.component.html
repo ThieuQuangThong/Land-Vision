@@ -73,8 +73,8 @@
                             <button *ngFor='let address of msg?.addresses' (click)="onClickAddress(address)" class="hover:bg-gray-600 w-full p-1 bg-white text-emerald-500 rounded-md  mt-2 mb-1">{{address.name_address}}</button>
                             </div>
 
-                            <div *ngIf="msg?.values">
-                            <a  type="button" *ngFor='let value of msg?.values' (click)="goToDetail(value.url)"  target="_blank" rel="noopener noreferrer"  class="hover:bg-gray-600 w-full p-1 bg-white text-emerald-500 rounded-md  mt-2 mb-1">{{value.name_post}}</a>
+                            <div *ngIf="msg?.values" class="text-emerald-500">
+                            <a  type="button" *ngFor='let value of msg?.values' (click)="goToDetail(value.url)"  target="_blank" rel="noopener noreferrer"  class="hover:bg-gray-600 w-full p-1 bg-white  rounded-md  mt-2 mb-1">{{value.name_post}}</a>
                             </div>
                             <!-- arrow -->
                             <!-- <div class="absolute left-0 top-1/2 transform -translate-x-1/2 rotate-45 w-2 h-2 bg-indigo-400"></div> -->
