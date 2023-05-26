@@ -3,7 +3,7 @@ namespace Land_Vision.Common
     public static class NumberFiled
     {
         public static int REFRESH_TOKEN_EXPIRE_TIME  = 2;
-        public static int ACCESS_TOKEN_EXPIRE_TIME  = 50;
+        public static int ACCESS_TOKEN_EXPIRE_TIME  = 5;
         public static int VALIDATE_PASSWORD_TOKEN_EXPIRE_TIME  = 5;
         public static int CODE_EXPIRE_TIME = 5;
         public static int OVER_SIX = 6;
