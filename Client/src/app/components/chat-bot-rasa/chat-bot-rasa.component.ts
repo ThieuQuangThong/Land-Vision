@@ -1,10 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, ViewChild } from '@angular/core';
 import { MatTooltip } from '@angular/material/tooltip';
-import { response } from 'express';
 import { webSocket } from 'rxjs/webSocket';
+import { AuthService } from 'src/app/_service/auth.service';
 import { ChatBotService } from 'src/app/_service/chat-bot.service';
 import {  message } from 'src/app/models/chat-model';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -21,7 +22,7 @@ export class ChatBotRasaComponent {
   showBox = false;
   popUp = true;
 
-  constructor(private chatBotService : ChatBotService, private http : HttpClient){}
+  constructor(private chatBotService : ChatBotService, private http : HttpClient,private router: Router, private auth: AuthService, private route: ActivatedRoute){}
   showBoxChat(){
     this.showBox = true;
     this.popUp = false;
@@ -74,5 +75,10 @@ export class ChatBotRasaComponent {
       }
     )
     
+  }
+  goToDetail(value : any):void{
+    const encodedPostId = this.auth.encode(value.toString());
+    this.router.navigate([`productdetails/${encodedPostId}`])
+
   }
 }
