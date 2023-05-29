@@ -293,16 +293,7 @@ namespace Land_Vision.Controllers
                 }
                 var TokenRespone = await _accountService.LoginAsync(loginDto);
 
-                HttpContext.Response.Cookies.Append(TextField.COOKIE_NAME_OF_REFRESH_TOKEN, TokenRespone.FreshToken,
-                    new CookieOptions
-                    {
-                        Expires = DateTime.Now.AddDays(NumberFiled.REFRESH_TOKEN_EXPIRE_TIME),
-                        HttpOnly = true,
-                        Secure = true,
-                        IsEssential = true,
-                        SameSite = SameSiteMode.None
-                    }
-                );
+                AppendfreshTokenToCookie(TokenRespone.FreshToken);
                 return Ok(TokenRespone.AccessToken);
             }
             catch (CustomException ex)
@@ -319,6 +310,51 @@ namespace Land_Vision.Controllers
                     StatusCode = problemDetails.Status
                 };
             }
+        }
+
+        /// <summary>
+        /// Login with google
+        /// </summary>
+        [HttpPost("loginWithGoogle")]
+        [ProducesResponseType(200, Type = typeof(string))]
+        public async Task<ActionResult<TokenDto>> LoginWithGoogle(LoginWithGoogleDto loginWithGoogleDto)
+        {
+            try
+            {
+                if (!await _userRepository.CheckIsExistUserByEmailAsync(loginWithGoogleDto.Email) && string.IsNullOrEmpty(loginWithGoogleDto.IdentityNumber))
+                {
+                    return StatusCode(400, "Please enter your id card");
+                }
+
+                if (!ModelState.IsValid)
+                {
+                    return BadRequest(ModelState);
+                }
+
+                var TokenRespone = await _accountService.LoginWithGoogleAsync(loginWithGoogleDto);
+
+                AppendfreshTokenToCookie(TokenRespone.FreshToken);
+                return Ok(TokenRespone.AccessToken);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        [NonAction]     
+        public void AppendfreshTokenToCookie(string freshToken)
+        {
+            HttpContext.Response.Cookies.Append(TextField.COOKIE_NAME_OF_REFRESH_TOKEN, freshToken,
+                new CookieOptions
+                {
+                    Expires = DateTime.Now.AddDays(NumberFiled.REFRESH_TOKEN_EXPIRE_TIME),
+                    HttpOnly = true,
+                    Secure = true,
+                    IsEssential = true,
+                    SameSite = SameSiteMode.None
+                }
+            );
         }
 
         /// <summary>

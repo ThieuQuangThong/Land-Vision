@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { AlertService } from './alert.service';
 import { API_URL } from 'src/assets/API_URL';
 import { CookieService } from 'ngx-cookie-service';
+import { LoginGooleModel } from '../models/LoginGoole-model';
 
 HttpClient;
 @Injectable({
@@ -86,6 +87,22 @@ export class AuthService {
           error.
           this.toast.error({ detail: "Error Message", summary: " Please check your email or password again!", duration: 5000 })
           return of(false);
+        }),
+      );
+  }
+
+  loginWithGoogle(loginGooleModel: LoginGooleModel){
+    return this.http.post(API_URL.LOGIN_WITH_GOOGLE(), loginGooleModel, { responseType: 'text', withCredentials: true }
+    )
+      .pipe(
+        tap((response) => {
+          this.storage.setToken(response);
+          this.setUserProfileByToken(response);
+
+          return true;
+        }),
+        catchError((error) => {
+          throw error
         }),
       );
   }

@@ -28,6 +28,8 @@ namespace Land_Vision.Mapper
             CreateMap<User, UserDto>()
             .ForMember(x => x.Role, y => y.MapFrom(src => src.Role.Name))
             .ForMember(x => x.NumberOfUserCanPost, y => y.MapFrom(src => src.Vip.PostLimit));
+            CreateMap<RegisterUserDto, LoginWithGoogleDto>();
+            CreateMap<LoginWithGoogleDto, RegisterUserDto>();       
 
             //Role
             CreateMap<RoleDto, Role>();

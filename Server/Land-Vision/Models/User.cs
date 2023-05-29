@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Land_Vision.Common;
 using Microsoft.EntityFrameworkCore;
 
 namespace Land_Vision.Models
@@ -10,7 +11,7 @@ namespace Land_Vision.Models
         [Required]
         public string Name { get; set; } = string.Empty;
 
-        public string AvatarLink { get; set; } = "https://firebasestorage.googleapis.com/v0/b/test-ec310.appspot.com/o/images%2Fef8014f9-8f7d-421a-b411-9ea0dbfa5a68?alt=media&token=f558c2c8-0197-436e-a6de-03e8113e4e5f";
+        public string AvatarLink { get; set; } = TextField.AVATAR_DEFAULT;
 
         [Required]
         public string FrontOfIdentityCard { get; set; }

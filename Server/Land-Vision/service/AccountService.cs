@@ -10,6 +10,7 @@ using Land_Vision.Interface.IRepositories;
 using Land_Vision.Interface.IServices;
 using Land_Vision.Models;
 using Microsoft.IdentityModel.Tokens;
+using Google.Apis.Auth;
 
 namespace Land_Vision.service
 {
@@ -218,6 +219,35 @@ namespace Land_Vision.service
             return tokenDto; 
         }
 
+        public async Task<TokenDto> LoginWithGoogleAsync(LoginWithGoogleDto loginWithGoogle)
+        {
+
+            await GoogleJsonWebSignature.ValidateAsync(loginWithGoogle.Password);
+
+            if(!await _userRepository.CheckIsExistUserByEmailAsync(loginWithGoogle.Email)){
+                var registerUserDto = _mapper.Map<RegisterUserDto>(loginWithGoogle);
+                var newUser = await CreateUserObjectAsync(registerUserDto);
+                await _userRepository.CreateUserAsync(newUser);
+                await AddDetailPurchaseAsync(newUser);
+            }
+            
+            var user = await _userRepository.GetUserByEmailAsync(loginWithGoogle.Email);
+            var freshToken = GenerateRefreshToken();
+            user.RefreshToken = freshToken;
+            user.RefreshTokenExpireTime = DateTime.Now.AddDays(NumberFiled.REFRESH_TOKEN_EXPIRE_TIME);
+
+            if(!await _userRepository.UpdateUserAsync(user)){
+                throw new CustomException("Some thing went worng!", 500);                  
+            }
+
+            var tokenDto = new TokenDto {
+                AccessToken = GenerateToken(user),
+                FreshToken = freshToken
+            };
+   
+            return tokenDto; 
+        }
+
         public async Task<TokenDto> RefreshTokenAsync(string freshToken)
         {
             if(!await _userRepository.CheckFreshTokenIsValidAsync(freshToken)){
@@ -244,25 +274,10 @@ namespace Land_Vision.service
             if(await _userRepository.GetUserByEmailAsync(registerUserDto.Email) != null){
                 throw new Exception("Email is already taken!");
             }
-            var role = await _roleRepository.GetRoleByNameAsync(RoleField.USER);
-            var vip = await _vipRepository.GetVipByNameAsync(TextField.DEFAULT_VIP);
-            var user = _mapper.Map<User>(registerUserDto);
-            var newPasswordObject = HashPassword(registerUserDto.password);
-            user.PasswordHash = newPasswordObject.hashedPassword;
-            user.PasswordSalt = newPasswordObject.PasswordSalt;
-            user.EmailExpiresTime = DateTime.Now.AddMinutes(5);
-            user.Role = role;
 
-            if(!await _userRepository.CreateUserAsync(user)){
-                return false; 
-            };
-            var detailPurchase = new DetailPurchase(){
-                TransactionDate = DateTime.Now,
-                User = user,
-                Vip = vip,
-            };
+            var user = await CreateUserObjectAsync(registerUserDto);
 
-            await _detailPurchaseRepository.AddDetailPurchaseAsync(detailPurchase);
+            await AddDetailPurchaseAsync(user);
             
             var confirmEmailToken = _emailService.GenerateEmailConfirmToken(user);
             var confirmationLinkUrl = _config["Url"] + "api/Account/confirmEmail/" + confirmEmailToken.ToString();
@@ -278,6 +293,29 @@ namespace Land_Vision.service
             _emailService.SendMail(message);
 
             return true;
+        }
+
+        public async Task AddDetailPurchaseAsync(User user){
+            var vip = await _vipRepository.GetVipByNameAsync(TextField.DEFAULT_VIP);
+            var detailPurchase = new DetailPurchase(){
+                TransactionDate = DateTime.Now,
+                User = user,
+                Vip = vip,
+            };
+
+            await _detailPurchaseRepository.AddDetailPurchaseAsync(detailPurchase);
+        }
+
+        public async Task<User> CreateUserObjectAsync(RegisterUserDto registerUserDto){
+            var user = _mapper.Map<User>(registerUserDto);
+            var role = await _roleRepository.GetRoleByNameAsync(RoleField.USER);
+            var newPasswordObject = HashPassword(registerUserDto.password);
+            user.PasswordHash = newPasswordObject.hashedPassword;
+            user.PasswordSalt = newPasswordObject.PasswordSalt;
+            user.EmailExpiresTime = DateTime.Now.AddMinutes(5);
+            user.Role = role;
+
+            return user;
         }
 
         public async Task<bool> ResetPassword(ResetPasswordDto resetPasswordDto)

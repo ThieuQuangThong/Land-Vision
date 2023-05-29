@@ -11,6 +11,8 @@ export class AlertService {
   constructor() { }
   isTimeOutRunning : boolean = false;
   static setAlertModel(type:string = "success", text:string =""){
+    console.log(46564564564);
+
     const alert : AlertModel = {
       isAlert : true,
       type : type,
