@@ -83,7 +83,8 @@
         <hr class="border-gray-400">
       </div> -->
 
-      <!-- <button
+      <button #loginRef
+      (click)="callLoginButton()"
         class="bg-white border py-2 w-full rounded-xl mt-1 flex justify-center items-center text-sm hover:scale-105 duration-300 text-[#002D74]">
         <svg class="mr-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" width="25px">
           <path fill="#FFC107"
@@ -96,7 +97,7 @@
             d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571c0.001-0.001,0.002-0.001,0.003-0.002l6.19,5.238C36.971,39.205,44,34,44,24C44,22.659,43.862,21.35,43.611,20.083z" />
         </svg>
         Login with Google
-      </button> -->
+      </button>
 
       <div class=" text-xs border-b border-[#002D74] py-4 text-[#002D74]">
         <a [routerLink]="['/reset-password']">Forgot your password?</a>
@@ -112,6 +113,26 @@
     </div>
     <ngx-loading [config]="{fullScreenBackdrop: true}" [show]="loading"></ngx-loading>
   </div>
+
+  <dialog #dialog>
+    <div>
+      <input type="text" [(ngModel)]="loginWithGoogleModel.phone" placeholder="Phone number" id="phone" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg
+      block w-full p-2.5">
+      FrontOfIdCard
+      <input id="fileInputFront" type="file"  (change)="FrontOfCardEvent($event)">
+      <div style="height: 150px; width: 150px; background-image: url({{frontOfIdCard}});background-size: cover;"></div>
+      BackOfIdCard
+      <input id="fileInputBack" type="file"  (change)="BackOfCardEvent($event)">
+      <div style="height: 150px; width: 150px; background-image: url({{backOfIdCard}}); background-size: cover;"></div>
+    </div>
+    <div>
+      <button (click)="dialog.close()">Cancel</button>
+    </div>
+    <div>
+      <button (click)="submitAgain()">Submit</button>
+    </div>
+  </dialog>
+
 </section>
 
 

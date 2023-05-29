@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Land_Vision.DTO.UserDtos;
 using Land_Vision.Models;
 
@@ -9,6 +5,7 @@ namespace Land_Vision.Interface.IServices
 {
     public interface IAccountService
     {
+        Task<TokenDto> LoginWithGoogleAsync(LoginWithGoogleDto loginWithGoogleDto);
         string? GetValueFromCookieByName(string cookieObject, string name);
         Task<string> UpdateValidateForgotPasswordTokenAsync(string email);
         Task<TokenDto> RefreshTokenAsync(string freshToken);
