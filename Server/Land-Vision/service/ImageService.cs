@@ -16,7 +16,7 @@ namespace Land_Vision.service
 
         public ImageService(IImageRepository imageRepository ,IPostRepository postRepository, IMapper mapper)
         {
-            _firebaseStorage = new FirebaseStorage("test-ec310.appspot.com");
+            _firebaseStorage = new FirebaseStorage("supply-chain-9ea64.appspot.com");
             _postRepository = postRepository;
             _mapper = mapper;
             _imageRepository = imageRepository;
