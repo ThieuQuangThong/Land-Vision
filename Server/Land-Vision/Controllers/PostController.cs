@@ -490,7 +490,7 @@ namespace Land_Vision.Controllers
         /// <summary>
         /// Update post
         /// </summary>
-        [Authorize(Roles = "User")]
+        [Authorize(Roles = "User, Admin")]
         [HttpPut("{postId}&{userId}")]
         [ProducesResponseType(204)]
         [ProducesResponseType(400)]

@@ -119,7 +119,6 @@ export class AuthService {
     return this.http.get(API_URL.REFRESH_TOKEN(), {responseType: 'text',withCredentials: true});
   }
 
-
   sendEmailForVarification(user: any) {
     user.sendEmailVerification().then((res: any) => {
       this.router.navigate(['/verify-email']);
